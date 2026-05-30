@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ServiceSteps from '../../components/ServiceSteps.astro';
+import DashboardMockup from '../../components/DashboardMockup.astro';
+import { SITE } from '../../config/site';
+import { SERVICES_CONTENT } from '../../data/services';
+
+const service = SERVICES_CONTENT.find((s) => s.slug === 'dashboards-ejecutivos')!;
+const path = '/servicios/dashboards-ejecutivos';
+const others = SERVICES_CONTENT.filter((s) => s.slug !== service.slug);
+
+const steps = [
+  {
+    icon: 'target',
+    title: 'Definimos los KPI que importan',
+    body: 'Partimos de las decisiones que tomas, no de los gráficos. Identificamos los indicadores críticos de tu negocio aplicando un enfoque top-down: primero la foto ejecutiva, luego el detalle.',
+  },
+  {
+    icon: 'account_tree',
+    title: 'Diseñamos el drill-down',
+    body: 'Cada número se puede abrir hacia su origen: de la venta total al canal, al vendedor, al SKU. Navegas del resumen al dato fino sin salir del dashboard ni pedir otro reporte.',
+  },
+  {
+    icon: 'lightbulb',
+    title: 'Incorporamos el criterio Buffo',
+    body: 'El dashboard no solo muestra: señala lo que está fuera de lo esperado y sugiere dónde actuar, con parámetros construidos sobre experiencia comercial real y las mejores escuelas de negocios.',
+  },
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.navTitle,
+  description: service.metaDescription,
+  serviceType: service.navTitle,
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  url: new URL(path, SITE.url).href,
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: service.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  path={path}
+  schema={[serviceSchema, faqSchema]}
+>
+  <!-- HERO con mockup al lado -->
+  <section class="hero-bg px-8 md:px-12 pt-12 pb-24 border-b border-white/5 overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-10">
+        <Breadcrumbs items={[{ label: 'Servicios', href: '/servicios' }, { label: service.navTitle, href: path }]} />
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-7">
+            <span class="material-symbols-outlined text-sm">{service.icon}</span>
+            Dashboards ejecutivos
+          </div>
+          <h1 class="text-[2.4rem] md:text-[3.3rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
+            {service.h1}
+          </h1>
+          <p class="text-lg text-on-surface-variant leading-relaxed mb-8">
+            {service.lead}
+          </p>
+          <a
+            href={SITE.calendly}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-glow bg-primary text-on-primary px-9 py-4 font-extrabold text-base inline-block"
+          >
+            Quiero un dashboard así
+          </a>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <DashboardMockup />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS (pasos) -->
+  <ServiceSteps title="Cómo construimos tu dashboard" steps={steps} />
+
+  <!-- METODOLOGÍA top-down / drill-down explicada -->
+  <section class="px-8 md:px-12 py-20 bg-background">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Enfoque analítico</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-6 leading-tight">
+          Del titular a la causa, en un clic
+        </h2>
+        <p class="text-on-surface-variant leading-relaxed mb-4">
+          Un buen dashboard ejecutivo respeta cómo decide un gerente: primero la vista general
+          <strong class="text-on-surface">(top-down)</strong> y, cuando algo llama la atención, la
+          posibilidad de profundizar <strong class="text-on-surface">(drill-down)</strong> hasta el
+          dato que lo explica.
+        </p>
+        <p class="text-on-surface-variant leading-relaxed">
+          No tienes que pedir otro reporte ni esperar a que alguien lo arme: la respuesta ya está en
+          el mismo tablero.
+        </p>
+      </div>
+      <!-- diagrama drill-down -->
+      <div class="space-y-2 reveal reveal-delay-1">
+        {
+          [
+            { l: 'Venta total de la compañía', w: 'w-full', o: 'opacity-100' },
+            { l: 'Por canal / sucursal', w: 'w-[82%]', o: 'opacity-90' },
+            { l: 'Por vendedor', w: 'w-[64%]', o: 'opacity-80' },
+            { l: 'Por categoría / marca', w: 'w-[46%]', o: 'opacity-70' },
+            { l: 'Por SKU', w: 'w-[30%]', o: 'opacity-60' },
+          ].map((row, i) => (
+            <div class={`flex items-center gap-3 ${row.o}`}>
+              <span class="material-symbols-outlined text-primary/50 text-base" style={`margin-left:${i * 14}px`}>
+                subdirectory_arrow_right
+              </span>
+              <div class={`${row.w} bg-gradient-to-r from-primary/25 to-primary/5 border-l-2 border-primary px-4 py-3`}>
+                <span class="text-sm text-on-surface/90">{row.l}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTREGABLES en grilla visual -->
+  <section class="px-8 md:px-12 py-20 bg-surface-container-lowest border-y border-white/5">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-12 reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Qué entregamos</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Incluido en el servicio</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 border border-white/5">
+        {
+          service.deliverables.map((d, i) => (
+            <div class:list={['bg-background p-7 flex items-start gap-4 card-hover reveal', i % 3 === 1 && 'reveal-delay-1', i % 3 === 2 && 'reveal-delay-2']}>
+              <span class="material-symbols-outlined text-primary text-2xl flex-shrink-0">check_circle</span>
+              <span class="text-sm text-on-surface/90 leading-snug">{d}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA QUIÉN -->
+  <section class="px-8 md:px-12 py-20 bg-background">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-12 reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Para quién</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Pensado para quienes deciden</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {
+          service.forWhom.map((d, i) => (
+            <div class:list={['bg-surface-container-low border border-white/5 p-7 card-hover reveal', i === 1 && 'reveal-delay-1', i === 2 && 'reveal-delay-2']}>
+              <span class="material-symbols-outlined text-primary text-3xl mb-4 block">person</span>
+              <p class="text-sm text-on-surface/90 leading-relaxed">{d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="px-8 md:px-12 py-20 bg-surface-container-lowest border-y border-white/5">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-[2rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
+      <div class="space-y-2">
+        {
+          service.faq.map((f, i) => (
+            <details class:list={['faq-item border border-white/5 bg-surface-container-low group reveal', i === 1 && 'reveal-delay-1']}>
+              <summary class="flex justify-between items-center px-8 py-6 cursor-pointer hover:bg-surface-container transition-colors list-none">
+                <span class="font-semibold text-on-surface">{f.q}</span>
+                <span class="material-symbols-outlined text-primary transition-transform group-open:rotate-45">add</span>
+              </summary>
+              <div class="px-8 pb-6">
+                <p class="text-on-surface-variant leading-relaxed">{f.a}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Otros servicios -->
+  <section class="px-8 md:px-12 py-20 bg-background">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-display mb-8 reveal">Otros servicios</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {
+          others.map((o, i) => (
+            <a href={`/servicios/${o.slug}`} class:list={['bg-surface-container-low border border-white/5 p-7 card-hover group block reveal', i === 1 && 'reveal-delay-1', i === 2 && 'reveal-delay-2']}>
+              <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">{o.icon}</span>
+              <h3 class="font-display text-lg mb-1">{o.navTitle}</h3>
+              <span class="text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">Ver más →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
+        ¿Quieres ver cómo se vería con los datos de tu empresa?
+      </h2>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base">
+          Agenda una llamada de 30 minutos
+        </a>
+        <a href="/contacto" class="border border-outline-variant text-on-surface px-10 py-5 font-bold text-base hover:border-primary/30 transition-all">
+          Enviar un mensaje
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

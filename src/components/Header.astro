@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { NAV } from '../config/site';
+
+const current = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current.startsWith(href);
+---
+
+<header
+  class="bg-background/90 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5 section-glow"
+>
+  <nav class="flex justify-between items-center px-8 md:px-12 py-5 max-w-screen-2xl mx-auto">
+    <a href="/" class="flex items-center" aria-label="Inicio — Buffo IA Consulting">
+      <Image src={logo} alt="Buffo IA Consulting" class="h-9 w-auto object-contain" loading="eager" />
+    </a>
+
+    <div class="hidden md:flex items-center gap-10">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'nav-link text-sm font-semibold transition-colors tracking-wide',
+              isActive(item.href) ? 'text-primary' : 'text-white/55 hover:text-white',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <a
+      href="/contacto"
+      class="btn-glow bg-primary text-on-primary px-7 py-3 text-sm font-extrabold tracking-tight hidden sm:inline-block"
+    >
+      Solicitar conversación
+    </a>
+
+    <!-- Botón menú móvil -->
+    <button
+      id="menu-toggle"
+      class="md:hidden text-on-surface"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+
+  <!-- Menú móvil desplegable -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-white/5 bg-background px-8 py-6 space-y-4">
+    {
+      NAV.map((item) => (
+        <a
+          href={item.href}
+          class="block text-base font-semibold text-white/70 hover:text-primary transition-colors"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <a
+      href="/contacto"
+      class="block btn-glow bg-primary text-on-primary px-6 py-3 text-sm font-extrabold text-center mt-4"
+    >
+      Solicitar conversación
+    </a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    toggle.querySelector('.material-symbols-outlined')!.textContent = isOpen ? 'menu' : 'close';
+  });
+</script>

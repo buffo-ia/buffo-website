@@ -1,0 +1,101 @@
+---
+// Automatización de procesos — visual: flujo "antes (manual)" vs "después (automático)"
+// + un pipeline animado de tareas ejecutándose. 100% SVG/CSS animado.
+
+const pasosManual = [
+  { icon: 'download', label: 'Descargar reportes' },
+  { icon: 'content_paste', label: 'Copiar y pegar' },
+  { icon: 'calculate', label: 'Consolidar a mano' },
+  { icon: 'mail', label: 'Enviar informe' },
+];
+const pipeline = [
+  { icon: 'cloud_sync', label: 'Extrae datos' },
+  { icon: 'auto_fix_high', label: 'Procesa' },
+  { icon: 'insert_chart', label: 'Genera reporte' },
+  { icon: 'send', label: 'Distribuye' },
+];
+---
+
+<div class="dash bg-surface-container-lowest border border-white/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+  <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center gap-2.5">
+      <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
+      <span class="text-xs font-semibold text-on-surface/85 tracking-wide">Flujo Automatizado · Reportería</span>
+    </div>
+    <span class="text-[0.6rem] text-on-surface-variant/70 border border-white/10 px-2 py-1">24/7</span>
+  </div>
+
+  <!-- ANTES: manual -->
+  <div class="bg-surface-container-low border border-error/20 p-3.5 mb-3">
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-[0.65rem] font-semibold text-error/90 flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-sm">schedule</span>Antes · proceso manual
+      </p>
+      <span class="text-[0.6rem] text-error/70 font-bold">~6 h / semana</span>
+    </div>
+    <div class="flex items-center gap-1">
+      {pasosManual.map((p, i) => (
+        <>
+          <div class="manual-step flex-1 bg-error/5 border border-error/15 p-2 flex flex-col items-center gap-1" style={`--d:${i * 0.15}s`}>
+            <span class="material-symbols-outlined text-error/60 text-base">{p.icon}</span>
+            <span class="text-[0.5rem] text-on-surface-variant text-center leading-tight">{p.label}</span>
+          </div>
+          {i < pasosManual.length - 1 && <span class="material-symbols-outlined text-error/30 text-sm">chevron_right</span>}
+        </>
+      ))}
+    </div>
+  </div>
+
+  <!-- flecha transformación -->
+  <div class="flex justify-center mb-3">
+    <span class="material-symbols-outlined text-primary text-2xl transform-arrow">south</span>
+  </div>
+
+  <!-- DESPUÉS: pipeline automático -->
+  <div class="bg-surface-container-low border border-primary/30 p-3.5">
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-[0.65rem] font-semibold text-primary flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-sm">bolt</span>Después · flujo automático
+      </p>
+      <span class="text-[0.6rem] text-primary font-bold">0 intervención</span>
+    </div>
+    <div class="relative flex items-center gap-1">
+      {pipeline.map((p, i) => (
+        <>
+          <div class="auto-step flex-1 bg-primary/10 border border-primary/25 p-2 flex flex-col items-center gap-1 relative" style={`--d:${i * 0.4}s`}>
+            <span class="material-symbols-outlined text-primary text-base">{p.icon}</span>
+            <span class="text-[0.5rem] text-on-surface/80 text-center leading-tight">{p.label}</span>
+            <span class="check-badge material-symbols-outlined text-primary text-[0.7rem] absolute -top-1.5 -right-1.5 bg-surface-container-lowest rounded-full" style={`--d:${1.6 + i * 0.4}s`}>check_circle</span>
+          </div>
+          {i < pipeline.length - 1 && <span class="material-symbols-outlined text-primary/40 text-sm pipe-arrow" style={`--d:${0.2 + i * 0.4}s`}>chevron_right</span>}
+        </>
+      ))}
+    </div>
+    <!-- barra de progreso del flujo -->
+    <div class="h-1 bg-white/5 mt-3 overflow-hidden">
+      <div class="flow-bar h-full bg-gradient-to-r from-primary/60 to-primary"></div>
+    </div>
+  </div>
+
+  <p class="text-[0.6rem] text-on-surface-variant/55 mt-3.5 italic">
+    Ejemplo ilustrativo. Cada flujo se diseña según los procesos reales de tu empresa.
+  </p>
+</div>
+
+<style>
+  .manual-step { opacity: 0; animation: fade 0.4s ease forwards; animation-delay: var(--d); }
+  .transform-arrow { opacity: 0; animation: arrowDrop 0.6s ease forwards 0.9s; }
+  @keyframes arrowDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .auto-step { opacity: 0; transform: scale(0.9); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; animation-delay: var(--d); }
+  .pipe-arrow { opacity: 0; animation: fade 0.3s ease forwards; animation-delay: var(--d); }
+  .check-badge { opacity: 0; transform: scale(0.4); animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards; animation-delay: var(--d); }
+  .flow-bar { width: 0; animation: grow 2s ease forwards 1.6s; }
+  .live-dot { animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes fade { to { opacity: 1; } }
+  @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+  @keyframes grow { to { width: 100%; } }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,182,107,0.5); } 70% { box-shadow: 0 0 0 6px rgba(22,182,107,0); } 100% { box-shadow: 0 0 0 0 rgba(22,182,107,0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .manual-step,.transform-arrow,.auto-step,.pipe-arrow,.check-badge,.flow-bar,.live-dot { animation: none; opacity: 1; transform: none; width: 100%; }
+  }
+</style>

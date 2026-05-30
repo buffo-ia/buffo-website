@@ -1,0 +1,86 @@
+---
+// Agentes IA — visual: un agente monitoreando en vivo que detecta algo y dispara una alerta/acción.
+// Simula una "consola del agente" con eventos que van apareciendo. 100% SVG/CSS animado.
+
+const eventos = [
+  { icon: 'visibility', txt: 'Monitoreando pipeline comercial…', type: 'idle', d: '0.3s' },
+  { icon: 'search', txt: 'Revisando 142 cuentas por cobrar', type: 'idle', d: '1.1s' },
+  { icon: 'warning', txt: 'Detectada cobranza en riesgo: $8,4M', type: 'alert', d: '2.0s' },
+  { icon: 'bolt', txt: 'Acción: alerta enviada a Comercial', type: 'action', d: '3.0s' },
+  { icon: 'check_circle', txt: 'Resumen diario generado', type: 'done', d: '3.9s' },
+];
+---
+
+<div class="dash bg-surface-container-lowest border border-white/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+  <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center gap-2.5">
+      <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
+      <span class="text-xs font-semibold text-on-surface/85 tracking-wide">Agente Buffo · activo</span>
+    </div>
+    <span class="text-[0.6rem] text-primary/80 border border-primary/20 px-2 py-1 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[0.7rem]">smart_toy</span>autónomo
+    </span>
+  </div>
+
+  <!-- estado del agente -->
+  <div class="grid grid-cols-3 gap-2.5 mb-4">
+    <div class="bg-surface-container-low border border-white/5 p-3 text-center">
+      <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Vigilando</p>
+      <p class="text-base font-display text-on-surface">142</p>
+      <p class="text-[0.55rem] text-on-surface-variant/70">cuentas</p>
+    </div>
+    <div class="bg-surface-container-low border border-white/5 p-3 text-center">
+      <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Frecuencia</p>
+      <p class="text-base font-display text-on-surface">24/7</p>
+      <p class="text-[0.55rem] text-on-surface-variant/70">sin pausa</p>
+    </div>
+    <div class="bg-surface-container-low border border-primary/25 p-3 text-center">
+      <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Alertas hoy</p>
+      <p class="text-base font-display text-primary">3</p>
+      <p class="text-[0.55rem] text-primary/70">accionadas</p>
+    </div>
+  </div>
+
+  <!-- consola de eventos -->
+  <div class="bg-surface-container-low border border-white/5 p-3.5">
+    <p class="text-[0.7rem] font-semibold text-on-surface/80 mb-3 flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-sm text-primary">terminal</span>Actividad en vivo
+    </p>
+    <div class="space-y-2">
+      {eventos.map((e) => (
+        <div
+          class="evt flex items-center gap-2.5 p-2 border-l-2"
+          class:list={[
+            e.type === 'alert' && 'bg-error/5 border-error',
+            e.type === 'action' && 'bg-primary/5 border-primary',
+            e.type === 'done' && 'bg-primary/5 border-primary/50',
+            (e.type === 'idle') && 'bg-white/[0.02] border-white/10',
+          ]}
+          style={`--d:${e.d}`}
+        >
+          <span
+            class="material-symbols-outlined text-base flex-shrink-0"
+            class:list={[
+              e.type === 'alert' ? 'text-error' : e.type === 'idle' ? 'text-on-surface-variant' : 'text-primary',
+            ]}
+          >{e.icon}</span>
+          <span class="text-[0.62rem] text-on-surface/85 leading-tight">{e.txt}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <p class="text-[0.6rem] text-on-surface-variant/55 mt-3.5 italic">
+    Ejemplo ilustrativo. Cada agente se diseña para una tarea concreta de tu negocio.
+  </p>
+</div>
+
+<style>
+  .evt { opacity: 0; transform: translateX(-10px); animation: evtIn 0.5s ease forwards; animation-delay: var(--d); }
+  @keyframes evtIn { to { opacity: 1; transform: translateX(0); } }
+  .live-dot { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,182,107,0.5); } 70% { box-shadow: 0 0 0 6px rgba(22,182,107,0); } 100% { box-shadow: 0 0 0 0 rgba(22,182,107,0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .evt { animation: none; opacity: 1; transform: none; }
+  }
+</style>

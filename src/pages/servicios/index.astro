@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../config/site';
+import { SERVICES_CONTENT } from '../../data/services';
+
+const title = 'Servicios de Inteligencia Artificial para Empresas | Buffo IA';
+const description =
+  'Servicios de Buffo IA Consulting para empresas en Chile: dashboards ejecutivos, modelamiento de datos, automatización de procesos y agentes de inteligencia artificial.';
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: SERVICES_CONTENT.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: s.navTitle,
+    url: new URL(`/servicios/${s.slug}`, SITE.url).href,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} path="/servicios" schema={itemListSchema}>
+  <section class="hero-bg px-8 md:px-12 pt-12 pb-20 border-b border-white/5">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-10">
+        <Breadcrumbs items={[{ label: 'Servicios', href: '/servicios' }]} />
+      </div>
+      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-4">Servicios</p>
+      <h1 class="text-[2.6rem] md:text-[3.8rem] font-display leading-[1.08] mb-7 tracking-[-0.02em] max-w-4xl">
+        Inteligencia artificial aplicada a la gestión de tu empresa
+      </h1>
+      <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-3xl">
+        Cuatro formas de transformar tus datos en decisiones. Cada solución se diseña para la
+        realidad de empresas en Chile, con la mirada de quien conoce el negocio por dentro — no solo
+        la tecnología.
+      </p>
+    </div>
+  </section>
+
+  <section class="px-8 md:px-12 py-20 bg-background">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+      {
+        SERVICES_CONTENT.map((s) => (
+          <a
+            href={`/servicios/${s.slug}`}
+            class="bg-background p-12 card-hover border border-transparent group block"
+          >
+            <span class="material-symbols-outlined text-primary text-4xl mb-6 block group-hover:scale-110 transition-transform duration-300">
+              {s.icon}
+            </span>
+            <h2 class="text-2xl font-display mb-3">{s.navTitle}</h2>
+            <p class="text-on-surface-variant leading-relaxed mb-6">{s.lead}</p>
+            <span class="text-primary text-sm font-bold">Conocer más →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
+        ¿No sabes cuál necesitas? Conversemos.
+      </h2>
+      <p class="text-on-surface-variant mb-8 leading-relaxed">
+        En 30 minutos entendemos tu situación y te decimos honestamente por dónde partir. La primera
+        conversación es sin costo.
+      </p>
+      <a
+        href={SITE.calendly}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-glow bg-primary text-on-primary px-12 py-5 font-extrabold text-base inline-block"
+      >
+        Agenda una llamada
+      </a>
+    </div>
+  </section>
+</BaseLayout>

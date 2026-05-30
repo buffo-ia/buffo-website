@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SERVICES } from '../config/site';
+
+// Schema de servicios para la home
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#service`,
+  name: SITE.name,
+  provider: { '@id': `${SITE.url}/#organization` },
+  serviceType: 'Consultoría en Inteligencia Artificial y Análisis de Datos',
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios Buffo IA',
+    itemListElement: SERVICES.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.title, description: s.short },
+    })),
+  },
+};
+---
+
+<BaseLayout schema={serviceSchema}>
+  <!-- HERO -->
+  <section class="hero-bg relative min-h-[92vh] flex items-center px-8 md:px-12 overflow-hidden">
+    <div
+      class="absolute bottom-0 left-0 w-[700px] h-[500px] bg-primary/5 blur-[130px] rounded-full pointer-events-none"
+    >
+    </div>
+    <div
+      class="absolute top-10 right-0 w-[350px] h-[350px] bg-primary/4 blur-[100px] rounded-full pointer-events-none"
+    >
+    </div>
+
+    <div class="relative z-10 max-w-5xl">
+      <div
+        class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-8"
+      >
+        <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+        Estrategia Basada en Inteligencia Artificial
+      </div>
+      <h1
+        class="reveal reveal-delay-1 text-[3rem] md:text-[4.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em] max-w-4xl"
+      >
+        Tus datos ya hablan.<br /><span class="text-primary">Buffo IA</span> te dice qué hacer con ellos.
+      </h1>
+      <p
+        class="reveal reveal-delay-2 text-lg md:text-xl text-on-surface-variant max-w-2xl mb-12 leading-relaxed"
+      >
+        Consultora especializada en modelamiento de datos, dashboards ejecutivos, automatización de
+        procesos y agentes de inteligencia artificial aplicada a la gestión.
+      </p>
+      <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4">
+        <a
+          href="/contacto"
+          class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base text-center"
+        >
+          Solicitar una conversación
+        </a>
+        <a
+          href="/servicios"
+          class="border border-outline-variant bg-surface-container-highest/20 backdrop-blur-sm text-on-surface px-10 py-5 font-bold text-base text-center hover:bg-surface-container-highest/40 hover:border-primary/25 transition-all"
+        >
+          Ver servicios
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMA + SOLUCIÓN -->
+  <section class="py-28 px-8 md:px-12 bg-surface-container-low border-y border-white/5" id="approach">
+    <div class="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+      <div class="space-y-7 reveal">
+        <div class="text-error uppercase tracking-widest text-xs font-bold">El Conflicto</div>
+        <h2 class="text-3xl md:text-[2.5rem] font-display leading-tight">
+          Tienes datos. Tienes reportes. Tienes herramientas. Y aun así llegas al lunes sin saber qué
+          corregir primero.
+        </h2>
+        <p class="text-on-surface-variant leading-relaxed">
+          Las organizaciones no tienen déficit de información — tienen déficit de interpretación. Los
+          datos están. La inteligencia para actuar sobre ellos, no.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-2 relative p-10 gradient-border">
+        <div class="absolute -top-5 -left-5 bg-primary p-3.5">
+          <span class="material-symbols-outlined text-on-primary text-2xl">lightbulb</span>
+        </div>
+        <div class="text-primary uppercase tracking-widest text-xs font-bold mb-5">La Respuesta</div>
+        <p class="text-xl md:text-2xl mb-6 leading-relaxed text-on-surface-variant">
+          "Buffo IA no solo visualiza. Detecta, interpreta, sugiere el siguiente paso y lo ejecuta.
+          Nace de las áreas comerciales: hablamos el idioma del negocio, no de TI."
+        </p>
+        <div class="w-12 h-px bg-primary/50"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="py-28 px-8 md:px-12 bg-background" id="services">
+    <div class="max-w-screen-2xl mx-auto">
+      <div class="mb-20 reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Capacidades</p>
+          <h2 class="text-[2.4rem] font-display">Nuestra Experticia</h2>
+        </div>
+        <a
+          href="/servicios"
+          class="text-primary text-sm font-bold hover:underline whitespace-nowrap"
+        >
+          Ver todos los servicios →
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+        {
+          SERVICES.map((s, i) => (
+            <a
+              href={`/servicios/${s.slug}`}
+              class:list={[
+                'bg-background p-14 card-hover border border-transparent group reveal block',
+                i === 1 && 'reveal-delay-1',
+                i === 2 && 'reveal-delay-2',
+                i === 3 && 'reveal-delay-3',
+              ]}
+            >
+              <span class="material-symbols-outlined text-primary text-4xl mb-7 block group-hover:scale-110 transition-transform duration-300">
+                {s.icon}
+              </span>
+              <h3 class="text-2xl font-display mb-3">{s.title}</h3>
+              <p class="text-on-surface-variant leading-relaxed">{s.short}</p>
+              <span class="inline-block mt-6 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                Conocer más →
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS (cualitativo, sin cifras inventadas) -->
+  <section class="py-28 px-8 md:px-12 bg-surface-container-lowest border-y border-white/5">
+    <div class="max-w-screen-2xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-6">
+        <div class="reveal">
+          <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Resultados</p>
+          <h2 class="text-[2.4rem] font-display">Qué cambia en tu gestión</h2>
+        </div>
+        <div class="hidden md:block h-px flex-grow bg-white/8 mx-10"></div>
+        <div class="reveal">
+          <span class="text-primary font-display text-lg">Decisiones, no solo datos</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-10 bg-surface-container-low border border-white/5 card-hover reveal">
+          <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
+            >schedule</span
+          >
+          <h4 class="text-lg font-display mb-3">Menos reportería manual</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">
+            Recupera horas de tu equipo eliminando la consolidación manual de planillas y reportes.
+          </p>
+        </div>
+        <div class="p-10 bg-surface-container-low border border-white/5 card-hover reveal reveal-delay-1">
+          <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
+            >bolt</span
+          >
+          <h4 class="text-lg font-display mb-3">Decisiones más rápidas</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">
+            La información llega lista para actuar, no para seguir analizándola.
+          </p>
+        </div>
+        <div class="p-10 bg-surface-container-low border border-white/5 card-hover reveal reveal-delay-2">
+          <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
+            >verified_user</span
+          >
+          <h4 class="text-lg font-display mb-3">Visibilidad y control</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">
+            Una vista centralizada sobre equipos, procesos y resultados críticos del negocio.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LO QUE CONSTRUIMOS -->
+  <section class="py-28 px-8 md:px-12 bg-surface-container-lowest" id="portfolio">
+    <div class="max-w-screen-2xl mx-auto">
+      <div class="mb-16 reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Portafolio</p>
+        <h2 class="text-[2.4rem] font-display">Lo que construimos</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div
+          class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden border border-white/5 card-hover reveal"
+        >
+          <div class="relative z-10">
+            <h3 class="text-primary font-display text-2xl mb-7">Área Comercial y Ventas</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-on-surface/80">
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Reportería automatizada de
+                ventas
+              </li>
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Seguimiento por vendedor o
+                canal
+              </li>
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Dashboard vs presupuesto
+              </li>
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Análisis y tendencias por
+                categoría
+              </li>
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Alertas y cálculos de
+                quiebres de stock
+              </li>
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Forecasting y preparación de
+                presupuestos
+              </li>
+            </ul>
+          </div>
+          <div class="absolute right-0 bottom-0 opacity-[0.025] scale-150 rotate-6 pointer-events-none">
+            <span class="material-symbols-outlined text-[18rem] text-primary">trending_up</span>
+          </div>
+        </div>
+        <div
+          class="md:col-span-4 bg-surface-container p-12 border border-white/5 card-hover reveal reveal-delay-1"
+        >
+          <h3 class="text-primary font-display text-xl mb-7">Área de Marketing</h3>
+          <ul class="space-y-3 text-on-surface/80">
+            <li class="flex items-center gap-3 text-sm">
+              <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Análisis de Google Ads
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Análisis de Meta Ads
+            </li>
+          </ul>
+        </div>
+        <div
+          class="md:col-span-4 bg-surface-container-high p-12 border border-white/5 card-hover reveal reveal-delay-2"
+        >
+          <h3 class="text-primary font-display text-xl mb-7">Área Financiera</h3>
+          <ul class="space-y-3 text-on-surface/80">
+            <li class="flex items-center gap-3 text-sm">
+              <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Análisis de Estado de
+              Resultados
+            </li>
+            <li class="flex items-center gap-3 text-sm">
+              <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Elaboración de flujo de caja
+            </li>
+          </ul>
+        </div>
+        <div class="md:col-span-8 gradient-border p-12 reveal reveal-delay-3">
+          <span class="material-symbols-outlined text-primary/40 text-4xl mb-4 block">format_quote</span>
+          <p class="text-xl md:text-2xl font-display leading-relaxed text-on-surface">
+            "Cada solución incorpora las sugerencias estratégicas de Buffo: parámetros construidos
+            tras años de experiencia comercial real y las mejores prácticas de escuelas de negocios."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA CONTACTO -->
+  <section class="py-28 px-8 md:px-12 bg-surface-container-low">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-4 reveal">Contacto</p>
+      <h2 class="text-4xl md:text-5xl font-display mb-10 leading-tight reveal">
+        ¿Listo para pasar de observar datos a tomar decisiones?
+      </h2>
+      <div class="reveal reveal-delay-1 flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={SITE.calendly}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block btn-glow bg-primary text-on-primary px-12 py-5 text-base font-extrabold tracking-tight"
+        >
+          Agenda una llamada de 30 minutos
+        </a>
+        <a
+          href="/contacto"
+          class="inline-block border border-outline-variant text-on-surface px-12 py-5 text-base font-bold hover:border-primary/30 transition-all"
+        >
+          Enviar un mensaje
+        </a>
+      </div>
+      <p class="text-on-surface-variant text-xs mt-4 tracking-wide reveal reveal-delay-1">
+        Elige el horario que más te acomode — Google Meet incluido. La primera conversación es sin
+        costo.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

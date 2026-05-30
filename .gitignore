@@ -1,0 +1,22 @@
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Astro
+.astro/
+
+# Logs y temporales
+*.log
+_b.log
+_build.log
+
+# Entorno
+.env
+.env.production
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

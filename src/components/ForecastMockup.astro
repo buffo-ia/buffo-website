@@ -1,0 +1,122 @@
+---
+// Modelamiento de datos — visual: fuentes que convergen a un modelo + curva de forecast con banda.
+// 100% SVG/CSS animado, datos ilustrativos.
+
+// Curva: histórico (sólido) + proyección (punteado) con banda de confianza
+const FW = 360, FH = 150;
+const fpad = { t: 14, r: 10, b: 22, l: 26 };
+const fiW = FW - fpad.l - fpad.r;
+const fiH = FH - fpad.t - fpad.b;
+const fMax = 100;
+const hist = [40, 46, 44, 55, 60, 66]; // 6 meses reales
+const proj = [66, 72, 77, 85];          // 4 meses proyectados (continúa)
+const all = [...hist, ...proj.slice(1)];
+const n = all.length;
+const fx = (i: number) => fpad.t !== null ? fpad.l + (i * fiW) / (n - 1) : 0;
+const fy = (v: number) => fpad.t + fiH - (v / fMax) * fiH;
+const histLine = hist.map((v, i) => `${fx(i)},${fy(v)}`).join(' ');
+const projIdxStart = hist.length - 1;
+const projLine = proj.map((v, i) => `${fx(projIdxStart + i)},${fy(v)}`).join(' ');
+// banda de confianza alrededor de la proyección
+const bandTop = proj.map((v, i) => `${fx(projIdxStart + i)},${fy(v + 8 + i * 2)}`);
+const bandBot = proj.map((v, i) => `${fx(projIdxStart + i)},${fy(v - 8 - i * 2)}`).reverse();
+const bandPath = `M ${bandTop.join(' L ')} L ${bandBot.join(' L ')} Z`;
+
+const fuentes = [
+  { icon: 'table_chart', label: 'Excel / planillas' },
+  { icon: 'database', label: 'ERP' },
+  { icon: 'point_of_sale', label: 'Ventas' },
+  { icon: 'inventory_2', label: 'Inventario' },
+];
+---
+
+<div class="dash bg-surface-container-lowest border border-white/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+  <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center gap-2.5">
+      <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
+      <span class="text-xs font-semibold text-on-surface/85 tracking-wide">Modelo Predictivo · Demanda</span>
+    </div>
+    <span class="text-[0.6rem] text-on-surface-variant/70 border border-white/10 px-2 py-1">12 meses</span>
+  </div>
+
+  <!-- fuentes que convergen -->
+  <div class="grid grid-cols-5 gap-2 items-center mb-4">
+    <div class="col-span-2 grid grid-cols-2 gap-2">
+      {fuentes.map((f, i) => (
+        <div class="src bg-surface-container-low border border-white/5 p-2 flex items-center gap-1.5" style={`--d:${i * 0.12}s`}>
+          <span class="material-symbols-outlined text-primary text-base">{f.icon}</span>
+          <span class="text-[0.55rem] text-on-surface-variant truncate">{f.label}</span>
+        </div>
+      ))}
+    </div>
+    <div class="flex justify-center">
+      <span class="material-symbols-outlined text-primary/60 text-2xl flow-arrow">arrow_forward</span>
+    </div>
+    <div class="col-span-2 bg-primary/10 border border-primary/30 p-3 flex flex-col items-center justify-center model-box">
+      <span class="material-symbols-outlined text-primary text-2xl mb-1">model_training</span>
+      <span class="text-[0.6rem] font-bold text-on-surface text-center leading-tight">Modelo único<br>estructurado</span>
+    </div>
+  </div>
+
+  <!-- forecast -->
+  <div class="bg-surface-container-low border border-white/5 p-3.5">
+    <div class="flex items-center justify-between mb-2">
+      <p class="text-[0.7rem] font-semibold text-on-surface/80">Proyección de demanda</p>
+      <div class="flex items-center gap-3 text-[0.55rem] text-on-surface-variant">
+        <span class="flex items-center gap-1"><span class="w-2.5 h-0.5 bg-primary inline-block"></span>Real</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-0 border-t border-dashed border-primary inline-block"></span>Proyección</span>
+      </div>
+    </div>
+    <svg viewBox={`0 0 ${FW} ${FH}`} class="w-full h-auto" role="img" aria-label="Curva de proyección de demanda con banda de confianza">
+      <defs>
+        <linearGradient id="histFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#16B66B" stop-opacity="0.3" />
+          <stop offset="100%" stop-color="#16B66B" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      {[0, 50, 100].map((g) => (
+        <line x1={fpad.l} x2={FW - fpad.r} y1={fy(g)} y2={fy(g)} stroke="rgba(255,255,255,0.05)" />
+      ))}
+      <!-- banda de confianza -->
+      <path d={bandPath} fill="#16B66B" fill-opacity="0.12" class="band" />
+      <!-- relleno histórico -->
+      <path d={`M ${fx(0)},${fy(hist[0])} ${hist.map((v,i)=>`L ${fx(i)},${fy(v)}`).join(' ')} L ${fx(hist.length-1)},${fpad.t+fiH} L ${fx(0)},${fpad.t+fiH} Z`} fill="url(#histFill)" class="area-fill" />
+      <!-- línea histórica -->
+      <polyline points={histLine} fill="none" stroke="#16B66B" stroke-width="2.5" stroke-linecap="round" class="ventas-line" />
+      <!-- línea proyección punteada -->
+      <polyline points={projLine} fill="none" stroke="#16B66B" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round" class="proj-line" />
+      <!-- separador hoy -->
+      <line x1={fx(projIdxStart)} x2={fx(projIdxStart)} y1={fpad.t} y2={fpad.t+fiH} stroke="rgba(255,255,255,0.2)" stroke-dasharray="2 2" />
+      <text x={fx(projIdxStart)} y={fpad.t - 3} text-anchor="middle" font-size="6.5" fill="rgba(255,255,255,0.45)">hoy</text>
+      <!-- etiqueta proyección final -->
+      <g class="last-label">
+        <rect x={fx(n-1) - 30} y={fy(85) - 18} width="34" height="14" rx="2" fill="#16B66B" />
+        <text x={fx(n-1) - 13} y={fy(85) - 8} text-anchor="middle" font-size="7.5" font-weight="700" fill="#000">+29%</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="text-[0.6rem] text-on-surface-variant/55 mt-3.5 italic">
+    Ejemplo ilustrativo. El modelo se construye con las fuentes reales de tu empresa.
+  </p>
+</div>
+
+<style>
+  .src { opacity: 0; transform: translateX(-8px); animation: srcIn 0.4s ease forwards; animation-delay: var(--d); }
+  @keyframes srcIn { to { opacity: 1; transform: translateX(0); } }
+  .flow-arrow { opacity: 0; animation: fade 0.5s ease forwards 0.6s; }
+  .model-box { opacity: 0; transform: scale(0.9); animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards 0.8s; }
+  .ventas-line { stroke-dasharray: 600; stroke-dashoffset: 600; animation: draw 1.4s ease forwards 1s; }
+  .proj-line { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.2s ease forwards 2.2s; }
+  .area-fill { opacity: 0; animation: fade 0.8s ease forwards 1.8s; }
+  .band { opacity: 0; animation: fade 0.8s ease forwards 2.4s; }
+  .last-label { opacity: 0; transform: scale(0.6); transform-origin: center; animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards 3s; }
+  .live-dot { animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fade { to { opacity: 1; } }
+  @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,182,107,0.5); } 70% { box-shadow: 0 0 0 6px rgba(22,182,107,0); } 100% { box-shadow: 0 0 0 0 rgba(22,182,107,0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .src,.flow-arrow,.model-box,.ventas-line,.proj-line,.area-fill,.band,.last-label,.live-dot { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none; }
+  }
+</style>

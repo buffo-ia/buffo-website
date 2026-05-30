@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://buffoconsulting.cl/sitemap-index.xml
