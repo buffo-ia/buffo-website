@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, WEB3FORMS_KEY } from '../config/site';
+
+const path = '/contacto';
+const metaTitle = 'Contacto | Buffo IA Consulting';
+const metaDescription =
+  'Conversemos sobre cómo aplicar inteligencia artificial a la gestión de tu empresa en Chile. Agenda una llamada de 30 minutos o escríbenos.';
+
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: metaTitle,
+  description: metaDescription,
+  url: new URL(path, SITE.url).href,
+  mainEntity: { '@id': `${SITE.url}/#organization` },
+};
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} path={path} schema={contactSchema}>
+  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 min-h-[90vh] border-b border-white/5">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-14 max-w-2xl">
+        <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-8">
+          <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+          Contacto
+        </div>
+        <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
+          Conversemos sobre tu empresa
+        </h1>
+        <p class="reveal reveal-delay-2 text-lg text-on-surface-variant leading-relaxed">
+          Cuéntanos qué quieres resolver. La primera conversación es sin costo y sirve para entender
+          si Buffo IA es lo que tu negocio necesita.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
+        <!-- FORMULARIO -->
+        <div class="md:col-span-3 reveal">
+          <form id="contact-form" class="space-y-5">
+            <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+            <input type="hidden" name="subject" value="Nuevo mensaje desde buffoconsulting.cl" />
+            <input type="hidden" name="from_name" value="Sitio Buffo IA" />
+            <!-- Honeypot anti-spam -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div>
+              <label for="name" class="block text-sm font-semibold text-on-surface mb-2">Nombre</label>
+              <input
+                type="text" id="name" name="name" required
+                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
+                placeholder="Tu nombre"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-semibold text-on-surface mb-2">Email</label>
+              <input
+                type="email" id="email" name="email" required
+                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
+                placeholder="tucorreo@empresa.cl"
+              />
+            </div>
+            <div>
+              <label for="company" class="block text-sm font-semibold text-on-surface mb-2">Empresa</label>
+              <input
+                type="text" id="company" name="company"
+                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
+                placeholder="Nombre de tu empresa"
+              />
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-semibold text-on-surface mb-2">Mensaje</label>
+              <textarea
+                id="message" name="message" rows="4" required
+                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors resize-y"
+                placeholder="¿Qué te gustaría resolver?"></textarea>
+            </div>
+
+            <button
+              type="submit" id="submit-btn"
+              class="btn-glow bg-primary text-on-primary px-9 py-4 font-extrabold text-base w-full sm:w-auto"
+            >
+              Enviar mensaje
+            </button>
+
+            <p id="form-status" class="text-sm hidden" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <!-- VÍAS DIRECTAS -->
+        <div class="md:col-span-2 reveal reveal-delay-1 space-y-4">
+          <a
+            href={SITE.calendly} target="_blank" rel="noopener noreferrer"
+            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+          >
+            <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">event_available</span>
+            <h3 class="font-display text-lg mb-1">Agenda directo</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Reserva una llamada de 30 minutos con Google Meet incluido.</p>
+          </a>
+          <a
+            href={`mailto:${SITE.email}`}
+            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+          >
+            <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">mail</span>
+            <h3 class="font-display text-lg mb-1">Escríbenos</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed break-all">{SITE.email}</p>
+          </a>
+          <a
+            href={SITE.linkedin} target="_blank" rel="noopener noreferrer"
+            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+          >
+            <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">link</span>
+            <h3 class="font-display text-lg mb-1">LinkedIn</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Conéctate con nosotros.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const status = document.getElementById('form-status') as HTMLParagraphElement;
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+    const show = (msg: string, ok: boolean) => {
+      status.textContent = msg;
+      status.classList.remove('hidden');
+      status.style.color = ok ? 'var(--md-sys-color-primary, #16B66B)' : '#ef4444';
+    };
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+
+      if (data.get('access_key') === 'TU_ACCESS_KEY_AQUI') {
+        show('El formulario aún no está configurado. Usa el correo o agenda una llamada por ahora.', false);
+        return;
+      }
+
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Enviando…';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        });
+        const json = await res.json();
+        if (json.success) {
+          form.reset();
+          show('¡Gracias! Recibimos tu mensaje y te responderemos pronto.', true);
+        } else {
+          show('No pudimos enviar el mensaje. Intenta de nuevo o escríbenos por correo.', false);
+        }
+      } catch {
+        show('No pudimos enviar el mensaje. Intenta de nuevo o escríbenos por correo.', false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  </script>
+</BaseLayout>

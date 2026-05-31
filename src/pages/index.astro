@@ -1,6 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, SERVICES } from '../config/site';
+import DashboardMockup from '../components/DashboardMockup.astro';
+import ForecastMockup from '../components/ForecastMockup.astro';
+import AutomationMockup from '../components/AutomationMockup.astro';
+import AgentMockup from '../components/AgentMockup.astro';
+
+// Mapeo slug → mockup animado, para el escaparate de servicios.
+const MOCKS: Record<string, any> = {
+  'dashboards-ejecutivos': DashboardMockup,
+  'modelamiento-predictivo': ForecastMockup,
+  'automatizacion-procesos': AutomationMockup,
+  'agentes-ia': AgentMockup,
+};
+
+// Escaparate de servicios del home: cada fila combina texto + su mockup.
+const SHOWCASE = [
+  {
+    slug: 'dashboards-ejecutivos',
+    eyebrow: 'Visualización',
+    title: 'Dashboards ejecutivos',
+    desc: 'Tu negocio en tiempo real, sin reportería manual. Cada indicador se abre hasta su origen —del total al canal, al vendedor, al producto— para que decidas en el momento, no a fin de mes.',
+  },
+  {
+    slug: 'modelamiento-predictivo',
+    eyebrow: 'Datos',
+    title: 'Modelamiento de datos',
+    desc: 'Conectamos tus fuentes dispersas y les damos estructura. Sobre esa base proyectamos ventas y preparamos presupuestos: del caos de planillas a una sola fuente confiable.',
+  },
+  {
+    slug: 'automatizacion-procesos',
+    eyebrow: 'Eficiencia',
+    title: 'Automatización de procesos',
+    desc: 'Eliminamos las tareas repetitivas que consumen a tu equipo. La reportería que tomaba un día se genera sola, sin errores y sin que nadie mueva un dato.',
+  },
+  {
+    slug: 'agentes-ia',
+    eyebrow: 'Autonomía',
+    title: 'Agentes IA',
+    desc: 'Software que trabaja solo: monitorea tus datos, detecta lo importante y ejecuta tareas sin que se las pidas. Se adelanta a los problemas en vez de esperar la pregunta.',
+  },
+];
+
+// Stack tecnológico real para el marquee (logos en public/stack/).
+const STACK = [
+  { src: '/stack/anthropic.svg', name: 'Anthropic' },
+  { src: '/stack/openai.svg', name: 'OpenAI' },
+  { src: '/stack/perplexity.svg', name: 'Perplexity' },
+  { src: '/stack/gemini.svg', name: 'Gemini' },
+  { src: '/stack/googlecloud.svg', name: 'Google Cloud' },
+  { src: '/stack/python.svg', name: 'Python' },
+  { src: '/stack/pandas.svg', name: 'pandas' },
+  { src: '/stack/numpy.svg', name: 'NumPy' },
+  { src: '/stack/react.svg', name: 'React' },
+  { src: '/stack/typescript.svg', name: 'TypeScript' },
+  { src: '/stack/nodedotjs.svg', name: 'Node.js' },
+  { src: '/stack/supabase.svg', name: 'Supabase' },
+  { src: '/stack/postgresql.svg', name: 'PostgreSQL' },
+  { src: '/stack/tailwindcss.svg', name: 'Tailwind CSS' },
+  { src: '/stack/vercel.svg', name: 'Vercel' },
+  { src: '/stack/railway.svg', name: 'Railway' },
+];
 
 // Schema de servicios para la home
 const serviceSchema = {
@@ -24,35 +84,34 @@ const serviceSchema = {
 
 <BaseLayout schema={serviceSchema}>
   <!-- HERO -->
-  <section class="hero-bg relative min-h-[92vh] flex items-center px-8 md:px-12 overflow-hidden">
+  <section class="hero-bg relative px-8 md:px-12 pt-12 pb-14 md:pt-14 md:pb-16 overflow-hidden">
     <div
-      class="absolute bottom-0 left-0 w-[700px] h-[500px] bg-primary/5 blur-[130px] rounded-full pointer-events-none"
-    >
-    </div>
-    <div
-      class="absolute top-10 right-0 w-[350px] h-[350px] bg-primary/4 blur-[100px] rounded-full pointer-events-none"
+      class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[360px] bg-primary/6 blur-[140px] rounded-full pointer-events-none"
     >
     </div>
 
-    <div class="relative z-10 max-w-5xl">
+    <div class="relative z-10 max-w-4xl mx-auto text-center">
       <div
-        class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-8"
+        class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-6"
       >
         <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
-        Estrategia Basada en Inteligencia Artificial
+        Inteligencia artificial aplicada al negocio
       </div>
       <h1
-        class="reveal reveal-delay-1 text-[3rem] md:text-[4.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em] max-w-4xl"
+        class="reveal reveal-delay-1 text-[2.3rem] md:text-[3.4rem] font-display leading-[1.05] tracking-[-0.02em]"
       >
-        Tus datos ya hablan.<br /><span class="text-primary">Buffo IA</span> te dice qué hacer con ellos.
+        Consultoría en<br /><span class="text-primary">Inteligencia Artificial</span>
       </h1>
+      <p class="reveal reveal-delay-1 text-lg md:text-xl font-display text-on-surface mt-4 mb-5" style="font-weight:600; letter-spacing:-0.01em;">
+        Convertimos tus datos en decisiones.
+      </p>
       <p
-        class="reveal reveal-delay-2 text-lg md:text-xl text-on-surface-variant max-w-2xl mb-12 leading-relaxed"
+        class="reveal reveal-delay-2 text-base md:text-lg text-on-surface-variant max-w-2xl mx-auto mb-8 leading-relaxed"
       >
         Consultora especializada en modelamiento de datos, dashboards ejecutivos, automatización de
         procesos y agentes de inteligencia artificial aplicada a la gestión.
       </p>
-      <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4">
+      <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href="/contacto"
           class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base text-center"
@@ -70,40 +129,48 @@ const serviceSchema = {
   </section>
 
   <!-- PROBLEMA + SOLUCIÓN -->
-  <section class="py-28 px-8 md:px-12 bg-surface-container-low border-y border-white/5" id="approach">
-    <div class="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-      <div class="space-y-7 reveal">
+  <section class="py-20 px-8 md:px-12 bg-surface-container-low border-y border-white/5" id="approach">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <div class="space-y-5 reveal">
         <div class="text-error uppercase tracking-widest text-xs font-bold">El Conflicto</div>
-        <h2 class="text-3xl md:text-[2.5rem] font-display leading-tight">
-          Tienes datos. Tienes reportes. Tienes herramientas. Y aun así llegas al lunes sin saber qué
-          corregir primero.
+        <h2 class="text-xl md:text-2xl font-display leading-snug">
+          Tienes datos, reportes y herramientas. Y aun así llegas al lunes sin saber qué corregir
+          primero ni qué tarea soltar.
         </h2>
-        <p class="text-on-surface-variant leading-relaxed">
-          Las organizaciones no tienen déficit de información — tienen déficit de interpretación. Los
-          datos están. La inteligencia para actuar sobre ellos, no.
+        <p class="text-on-surface-variant leading-relaxed text-sm md:text-base">
+          Las organizaciones no tienen déficit de información — tienen déficit de interpretación y de
+          tiempo. Los datos están; la inteligencia para actuar sobre ellos y la mano que ejecuta, no.
         </p>
       </div>
-      <div class="reveal reveal-delay-2 relative p-10 gradient-border">
+      <div class="reveal reveal-delay-2 relative p-8 gradient-border">
         <div class="absolute -top-5 -left-5 bg-primary p-3.5">
           <span class="material-symbols-outlined text-on-primary text-2xl">lightbulb</span>
         </div>
-        <div class="text-primary uppercase tracking-widest text-xs font-bold mb-5">La Respuesta</div>
-        <p class="text-xl md:text-2xl mb-6 leading-relaxed text-on-surface-variant">
-          "Buffo IA no solo visualiza. Detecta, interpreta, sugiere el siguiente paso y lo ejecuta.
-          Nace de las áreas comerciales: hablamos el idioma del negocio, no de TI."
+        <div class="text-primary uppercase tracking-widest text-xs font-bold mb-4">La Respuesta</div>
+        <p class="text-base md:text-lg mb-6 leading-relaxed text-on-surface-variant">
+          "Buffo IA cubre el ciclo completo: <strong class="text-on-surface font-semibold">visualiza</strong>
+          tus datos, los <strong class="text-on-surface font-semibold">proyecta</strong>, <strong class="text-on-surface font-semibold">automatiza</strong>
+          lo repetitivo y despliega <strong class="text-on-surface font-semibold">agentes que actúan solos</strong>.
+          Nace de las áreas comerciales: habla el idioma del negocio, no de TI."
         </p>
-        <div class="w-12 h-px bg-primary/50"></div>
+        <div class="flex flex-wrap gap-2">
+          {['Visualiza', 'Proyecta', 'Automatiza', 'Actúa'].map((t) => (
+            <span class="text-[0.7rem] tracking-wide uppercase font-bold text-primary border border-primary/25 bg-primary/5 px-3 py-1.5">{t}</span>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICIOS -->
+  <!-- SERVICIOS — escaparate visual con mockups -->
   <section class="py-28 px-8 md:px-12 bg-background" id="services">
-    <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       <div class="mb-20 reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
           <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Capacidades</p>
-          <h2 class="text-[2.4rem] font-display">Nuestra Experticia</h2>
+          <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight max-w-2xl">
+            No solo mostramos tus datos. Te decimos qué hacer con ellos.
+          </h2>
         </div>
         <a
           href="/servicios"
@@ -112,28 +179,34 @@ const serviceSchema = {
           Ver todos los servicios →
         </a>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+
+      <div class="space-y-24 md:space-y-32">
         {
-          SERVICES.map((s, i) => (
-            <a
-              href={`/servicios/${s.slug}`}
-              class:list={[
-                'bg-background p-14 card-hover border border-transparent group reveal block',
-                i === 1 && 'reveal-delay-1',
-                i === 2 && 'reveal-delay-2',
-                i === 3 && 'reveal-delay-3',
-              ]}
-            >
-              <span class="material-symbols-outlined text-primary text-4xl mb-7 block group-hover:scale-110 transition-transform duration-300">
-                {s.icon}
-              </span>
-              <h3 class="text-2xl font-display mb-3">{s.title}</h3>
-              <p class="text-on-surface-variant leading-relaxed">{s.short}</p>
-              <span class="inline-block mt-6 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                Conocer más →
-              </span>
-            </a>
-          ))
+          SHOWCASE.map((s, i) => {
+            const Mock = MOCKS[s.slug];
+            const flip = i % 2 === 1; // filas impares: mockup a la izquierda
+            return (
+              <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
+                  <p class="text-primary tracking-[0.2em] uppercase text-xs font-bold mb-4">
+                    {String(i + 1).padStart(2, '0')} · {s.eyebrow}
+                  </p>
+                  <h3 class="text-[1.7rem] md:text-[2.1rem] font-display mb-5 leading-tight">{s.title}</h3>
+                  <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>
+                  <a
+                    href={`/servicios/${s.slug}`}
+                    class="inline-flex items-center gap-2 text-primary font-bold text-sm group"
+                  >
+                    Conocer más
+                    <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </a>
+                </div>
+                <div class:list={['reveal reveal-delay-1', flip ? 'lg:order-1' : 'lg:order-2']}>
+                  <Mock />
+                </div>
+              </div>
+            );
+          })
         }
       </div>
     </div>
@@ -145,7 +218,7 @@ const serviceSchema = {
       <div class="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-6">
         <div class="reveal">
           <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Resultados</p>
-          <h2 class="text-[2.4rem] font-display">Qué cambia en tu gestión</h2>
+          <h2 class="text-[2rem] md:text-[2.4rem] font-display">Qué cambia en tu gestión</h2>
         </div>
         <div class="hidden md:block h-px flex-grow bg-white/8 mx-10"></div>
         <div class="reveal">
@@ -189,7 +262,7 @@ const serviceSchema = {
     <div class="max-w-screen-2xl mx-auto">
       <div class="mb-16 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Portafolio</p>
-        <h2 class="text-[2.4rem] font-display">Lo que construimos</h2>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Lo que construimos</h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
         <div
@@ -265,11 +338,43 @@ const serviceSchema = {
     </div>
   </section>
 
+  <!-- STACK TECNOLÓGICO (marquee) -->
+  <section class="py-24 px-8 md:px-12 bg-background border-y border-white/5 overflow-hidden">
+    <div class="max-w-5xl mx-auto text-center mb-14 reveal">
+      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Infraestructura</p>
+      <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight mb-4">
+        Tecnología de clase mundial, al servicio de tu negocio
+      </h2>
+      <p class="text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
+        Construimos sobre las mismas herramientas que usan las grandes tecnológicas. Tú ves
+        decisiones simples; debajo, una base robusta, segura y escalable.
+      </p>
+    </div>
+
+    <div class="marquee-mask reveal reveal-delay-1">
+      <div class="marquee-track gap-10 md:gap-14">
+        {[...STACK, ...STACK].map((t, i) => (
+          <div class="flex items-center gap-2.5 shrink-0 group" aria-hidden={i >= STACK.length ? 'true' : undefined}>
+            <img
+              src={t.src}
+              alt={i < STACK.length ? t.name : ''}
+              loading="lazy"
+              class="h-6 md:h-7 w-auto opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <span class="text-sm md:text-base font-semibold text-on-surface/55 group-hover:text-on-surface transition-colors whitespace-nowrap">
+              {t.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- CTA CONTACTO -->
   <section class="py-28 px-8 md:px-12 bg-surface-container-low">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-primary tracking-widest uppercase text-xs font-bold mb-4 reveal">Contacto</p>
-      <h2 class="text-4xl md:text-5xl font-display mb-10 leading-tight reveal">
+      <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">
         ¿Listo para pasar de observar datos a tomar decisiones?
       </h2>
       <div class="reveal reveal-delay-1 flex flex-col sm:flex-row gap-4 justify-center">

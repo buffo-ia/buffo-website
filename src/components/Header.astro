@@ -12,7 +12,11 @@ const isActive = (href: string) =>
   class="bg-background/90 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5 section-glow"
 >
   <nav class="flex justify-between items-center px-8 md:px-12 py-5 max-w-screen-2xl mx-auto">
-    <a href="/" class="flex items-center" aria-label="Inicio — Buffo IA Consulting">
+    <a
+      href="/"
+      class="flex items-center opacity-100 hover:opacity-70 transition-opacity duration-200"
+      aria-label="Inicio — Buffo IA Consulting"
+    >
       <Image src={logo} alt="Buffo IA Consulting" class="h-9 w-auto object-contain" loading="eager" />
     </a>
 

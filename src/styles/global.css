@@ -112,3 +112,129 @@ textarea:focus {
 .section-glow {
   box-shadow: 0 1px 0 rgba(22, 182, 107, 0.07);
 }
+
+/* ----- Marquee de stack tecnológico ----- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ----- Prose: cuerpo de artículos del blog (Markdown renderizado) ----- */
+.prose-buffo {
+  color: rgba(227, 226, 230, 0.82);
+  font-size: 1.075rem;
+  line-height: 1.85;
+}
+.prose-buffo > * + * {
+  margin-top: 1.4rem;
+}
+.prose-buffo h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 1.7rem;
+  line-height: 1.25;
+  color: #fff;
+  margin-top: 3rem;
+  margin-bottom: 1.2rem;
+  scroll-margin-top: 6rem;
+}
+.prose-buffo h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #fff;
+  margin-top: 2.2rem;
+  margin-bottom: 0.9rem;
+}
+.prose-buffo p {
+  color: rgba(227, 226, 230, 0.82);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+.prose-buffo strong {
+  color: #fff;
+  font-weight: 700;
+}
+.prose-buffo a {
+  color: #16b66b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+.prose-buffo a:hover {
+  opacity: 0.75;
+}
+.prose-buffo ul,
+.prose-buffo ol {
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.prose-buffo ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prose-buffo ul > li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+.prose-buffo ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 6px;
+  height: 6px;
+  background: #16b66b;
+}
+.prose-buffo ol {
+  list-style: decimal;
+}
+.prose-buffo ol > li::marker {
+  color: #16b66b;
+  font-weight: 700;
+}
+.prose-buffo blockquote {
+  border-left: 2px solid #16b66b;
+  padding: 0.4rem 0 0.4rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #fff;
+  font-style: normal;
+}
+.prose-buffo h2 + p,
+.prose-buffo h3 + p {
+  margin-top: 0;
+}

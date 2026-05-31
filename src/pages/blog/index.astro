@@ -1,0 +1,154 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE, BLOG_CATEGORIES } from '../../config/site';
+
+const path = '/blog';
+const metaTitle = 'Blog | Buffo IA Consulting';
+const metaDescription =
+  'Artículos sobre inteligencia artificial aplicada a la gestión de empresas en Chile: dashboards, datos, automatización y agentes IA. Guías y análisis para decidir mejor.';
+
+// En producción ocultamos borradores; en dev se ven todos.
+const posts = (await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featured = posts.find((p) => p.data.isPilar) ?? posts[0];
+const rest = posts.filter((p) => p.id !== featured?.id);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('es-CL', { year: 'numeric', month: 'short', day: 'numeric' });
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${SITE.url}/blog#blog`,
+  name: 'Blog de Buffo IA Consulting',
+  description: metaDescription,
+  url: new URL(path, SITE.url).href,
+  publisher: { '@id': `${SITE.url}/#organization` },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    url: `${SITE.url}/blog/${p.id}`,
+    datePublished: p.data.pubDate.toISOString(),
+  })),
+};
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} path={path} schema={blogSchema}>
+  <!-- ENCABEZADO -->
+  <section class="px-8 md:px-12 pt-16 pb-10 bg-background">
+    <div class="max-w-6xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-6">
+        <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+        Insights
+      </div>
+      <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.05] tracking-[-0.02em] mb-4">
+        Inteligencia aplicada,<br /><span class="text-primary">explicada simple</span>.
+      </h1>
+      <p class="text-lg text-on-surface-variant leading-relaxed max-w-2xl">
+        Guías y análisis sobre cómo la inteligencia artificial mejora la gestión de empresas en
+        Chile. En el idioma del negocio, no de la tecnología.
+      </p>
+    </div>
+  </section>
+
+  {posts.length === 0 && (
+    <section class="px-8 md:px-12 py-24 bg-background">
+      <div class="max-w-3xl mx-auto text-center">
+        <span class="material-symbols-outlined text-primary/40 text-6xl mb-6 block">edit_note</span>
+        <p class="text-on-surface-variant text-lg">Estamos preparando los primeros artículos. Vuelve pronto.</p>
+      </div>
+    </section>
+  )}
+
+  <!-- DESTACADO con imagen grande -->
+  {featured && (
+    <section class="px-8 md:px-12 pb-14 bg-background">
+      <div class="max-w-6xl mx-auto">
+        <a href={`/blog/${featured.id}`} class="group block relative overflow-hidden border border-white/10 min-h-[420px] md:min-h-[520px] flex items-end">
+          <Image
+            src={featured.data.cover}
+            alt={featured.data.coverAlt}
+            widths={[640, 1024, 1600]}
+            sizes="(max-width: 1152px) 100vw, 1152px"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/80 to-transparent"></div>
+          <div class="absolute inset-0 ring-1 ring-inset ring-primary/10"></div>
+          <div class="relative p-8 md:p-12 max-w-3xl">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-on-primary text-[0.65rem] tracking-[0.14em] uppercase font-extrabold">
+                <span class="material-symbols-outlined text-sm">{featured.data.icon}</span>
+                Destacado
+              </span>
+              <span class="text-white/60 text-xs tracking-wide">{BLOG_CATEGORIES[featured.data.category].label}</span>
+            </div>
+            <h2 class="font-display text-[1.9rem] md:text-[3rem] leading-[1.05] text-white mb-4 tracking-[-0.02em]">
+              {featured.data.title}
+            </h2>
+            <p class="text-white/75 text-base md:text-lg leading-relaxed mb-6 max-w-2xl">{featured.data.description}</p>
+            <span class="inline-flex items-center gap-2 text-primary font-bold text-sm">
+              Leer artículo
+              <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </span>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
+
+  <!-- GRILLA "Últimos Insights" con thumbnails -->
+  {rest.length > 0 && (
+    <section class="px-8 md:px-12 pb-20 bg-background">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex items-center gap-4 mb-8">
+          <h2 class="text-xl font-display tracking-tight">Últimos insights</h2>
+          <div class="h-px flex-grow bg-white/8"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {rest.map((post) => (
+            <a href={`/blog/${post.id}`} class="group flex flex-col bg-surface-container-low border border-white/8 overflow-hidden card-hover">
+              <div class="relative aspect-[16/10] overflow-hidden">
+                <Image
+                  src={post.data.cover}
+                  alt={post.data.coverAlt}
+                  widths={[400, 800]}
+                  sizes="(max-width: 1024px) 100vw, 380px"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-background/85 backdrop-blur-sm text-primary text-[0.6rem] tracking-[0.12em] uppercase font-bold">
+                  <span class="material-symbols-outlined text-[0.85rem]">{post.data.icon}</span>
+                  {BLOG_CATEGORIES[post.data.category].label}
+                </span>
+              </div>
+              <div class="p-6 flex flex-col flex-grow">
+                <h3 class="font-display text-lg leading-snug mb-2 group-hover:text-primary transition-colors">{post.data.title}</h3>
+                <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-grow">{post.data.description}</p>
+                <time datetime={post.data.pubDate.toISOString()} class="text-on-surface-variant/55 text-xs tracking-wide uppercase">
+                  {fmtDate(post.data.pubDate)}
+                </time>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
+        ¿Quieres aplicar esto en tu empresa?
+      </h2>
+      <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base inline-block">
+        Agenda una llamada de 30 minutos
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -70,7 +70,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
             <span class="material-symbols-outlined text-sm">{service.icon}</span>
             {service.navTitle}
           </div>
-          <h1 class="text-[2.4rem] md:text-[3.3rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
+          <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
             {service.h1}
           </h1>
           <p class="text-lg text-on-surface-variant leading-relaxed mb-8">{service.lead}</p>
@@ -167,7 +167,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
     service.faq.length > 0 && (
       <section class="px-8 md:px-12 py-20 bg-background">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-[2rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
+          <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
           <div class="space-y-2">
             {service.faq.map((f, i) => (
               <details class:list={['faq-item border border-white/5 bg-surface-container-low group reveal', i === 1 && 'reveal-delay-1', i >= 2 && 'reveal-delay-2']}>

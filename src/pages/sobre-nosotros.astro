@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceSteps from '../components/ServiceSteps.astro';
+import { SITE, FOUNDER } from '../config/site';
+import founderPhoto from '../assets/simon-espinoza.jpg';
+
+const path = '/sobre-nosotros';
+const metaTitle = 'Sobre nosotros | Buffo IA Consulting';
+const metaDescription =
+  'Buffo IA es una consultora chilena de inteligencia artificial nacida en las áreas comerciales. Conoce su origen, su forma de trabajar y a quién está detrás.';
+
+// Lead de respuesta directa (GEO/AEO) — 50-80 palabras.
+const lead =
+  'Buffo IA Consulting es una consultora chilena de inteligencia artificial aplicada a la gestión empresarial. A diferencia de las firmas que nacen en TI, Buffo nació en las áreas comerciales y consultorías: por eso habla el idioma del negocio —ventas, margen, canales, stock— y no el de la tecnología. Diseñamos dashboards, modelos de datos, automatizaciones y agentes que no solo muestran información, sino que orientan la decisión.';
+
+const principios = [
+  {
+    icon: 'storefront',
+    title: 'Nacidos en el negocio, no en TI',
+    body: 'Buffo surge de la operación comercial real. Conocemos cómo decide un gerente porque venimos de ahí: por eso cada solución habla el idioma del negocio y no obliga a traducir tecnicismos.',
+  },
+  {
+    icon: 'lightbulb',
+    title: 'Prescriptivos, no solo descriptivos',
+    body: 'No entregamos pantallas llenas de gráficos. Cada solución incorpora el criterio Buffo: señala qué está fuera de lo esperado y sugiere dónde actuar, con parámetros construidos sobre experiencia comercial real.',
+  },
+  {
+    icon: 'handshake',
+    title: 'Cerca y a la medida',
+    body: 'Trabajamos con pymes y grandes empresas en Chile como una contraparte cercana. Priorizamos por impacto y entregamos valor desde las primeras semanas, no después de meses.',
+  },
+];
+
+// Schema: AboutPage + Person (líder) vinculado a la Organization.
+// Este Person será reutilizado como author de los artículos del blog (Fase 4).
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/#founder`,
+  name: FOUNDER.name,
+  jobTitle: FOUNDER.role,
+  description: FOUNDER.bio,
+  alumniOf: FOUNDER.alumniOf.map((u) => ({ '@type': 'CollegeOrUniversity', name: u })),
+  worksFor: { '@id': `${SITE.url}/#organization` },
+  image: new URL(founderPhoto.src, SITE.url).href,
+  sameAs: [FOUNDER.linkedin],
+};
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: metaTitle,
+  description: metaDescription,
+  url: new URL(path, SITE.url).href,
+  mainEntity: { '@id': `${SITE.url}/#organization` },
+};
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} path={path} schema={[aboutSchema, personSchema]}>
+  <!-- HERO -->
+  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 border-b border-white/5 overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-8">
+        <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+        Sobre nosotros
+      </div>
+      <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em]">
+        Inteligencia que nace del negocio,<br /><span class="text-primary">no de la tecnología</span>.
+      </h1>
+      <p class="reveal reveal-delay-2 text-lg md:text-xl text-on-surface-variant leading-relaxed">
+        {lead}
+      </p>
+    </div>
+  </section>
+
+  <!-- ORIGEN / PROPÓSITO -->
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-b border-white/5">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+      <div class="reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Por qué existimos</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-6 leading-tight">
+          El problema no son los datos. Es saber qué hacer con ellos.
+        </h2>
+        <p class="text-on-surface-variant leading-relaxed mb-4">
+          La mayoría de las empresas no tiene déficit de información: tiene déficit de
+          interpretación. Los reportes existen, las herramientas existen, y aun así se llega al lunes
+          sin saber qué corregir primero.
+        </p>
+        <p class="text-on-surface-variant leading-relaxed mb-4">
+          Buffo IA existe para cerrar esa brecha. No vendemos software ni reemplazamos tu ERP:
+          construimos el copiloto de gestión que detecta, interpreta, sugiere el siguiente paso y lo
+          ejecuta.
+        </p>
+        <p class="text-on-surface-variant leading-relaxed">
+          Damos un paso más con el desarrollo de <strong class="text-on-surface">agentes de IA</strong>:
+          software que trabaja solo, monitorea los datos y ejecuta tareas sin que se las pidan. Es la
+          forma en que potenciamos a las pymes chilenas: capacidades que antes solo estaban al alcance
+          de las grandes empresas, ahora puestas a trabajar en negocios que deciden con menos recursos
+          y necesitan que la tecnología les devuelva tiempo y foco.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-1 gradient-border p-10">
+        <span class="material-symbols-outlined text-primary/40 text-4xl mb-4 block">format_quote</span>
+        <p class="text-xl md:text-2xl font-display leading-relaxed text-on-surface">
+          "Cada solución incorpora las sugerencias estratégicas de Buffo: parámetros construidos tras
+          años de experiencia comercial real y las mejores prácticas de escuelas de negocios."
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS (principios) -->
+  <ServiceSteps eyebrow="Cómo trabajamos" title="Lo que nos hace distintos" steps={principios} />
+
+  <!-- LÍDER VISIBLE -->
+  <section class="px-8 md:px-12 py-20 bg-background">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-12 reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Quién está detrás</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">La experiencia que respalda a Buffo</h2>
+      </div>
+      <div class="reveal reveal-delay-1 bg-surface-container-low border border-white/5 p-9 md:p-12 flex flex-col md:flex-row gap-9 items-start">
+        <div class="flex-shrink-0">
+          <Image
+            src={founderPhoto}
+            alt={`${FOUNDER.name} — ${FOUNDER.role} de ${SITE.shortName}`}
+            width={224}
+            height={224}
+            class="w-28 h-28 md:w-32 md:h-32 object-cover border border-primary/20 grayscale hover:grayscale-0 transition-all duration-500"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <h3 class="font-display text-2xl mb-1">{FOUNDER.name}</h3>
+          <p class="text-primary text-sm font-bold mb-5">{FOUNDER.role}</p>
+          <p class="text-on-surface-variant leading-relaxed mb-6">{FOUNDER.bio}</p>
+          <ul class="space-y-2 mb-7">
+            {
+              FOUNDER.education.map((e) => (
+                <li class="flex items-start gap-3 text-sm text-on-surface/90">
+                  <span class="material-symbols-outlined text-primary text-base flex-shrink-0 mt-0.5">school</span>
+                  <span>{e}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href={FOUNDER.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-primary text-sm font-bold hover:underline"
+          >
+            <span class="material-symbols-outlined text-base">link</span>
+            Perfil de LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
+        ¿Conversamos sobre tu empresa?
+      </h2>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base">
+          Agenda una llamada de 30 minutos
+        </a>
+        <a href="/contacto" class="border border-outline-variant text-on-surface px-10 py-5 font-bold text-base hover:border-primary/30 transition-all">
+          Enviar un mensaje
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

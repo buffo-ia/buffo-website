@@ -3,7 +3,7 @@ export const SITE = {
   name: 'Buffo IA Consulting',
   shortName: 'Buffo IA',
   url: 'https://buffoconsulting.cl',
-  email: 'simon@buffoconsulting.cl',
+  email: 'contacto@buffoconsulting.cl',
   calendly: 'https://calendly.com/simon-buffoconsulting/llamada-de-consulta-buffo-ia',
   linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
   locale: 'es_CL',
@@ -12,6 +12,32 @@ export const SITE = {
     'Consultora chilena especializada en inteligencia artificial para empresas. Dashboards ejecutivos, modelamiento de datos, automatización de procesos y agentes IA. Para pymes y grandes empresas en Chile.',
 };
 
+// Líder visible de la empresa — alimenta la página "Sobre nosotros" y será el
+// autor (Person schema) que firme los artículos del blog. E-E-A-T.
+export const FOUNDER = {
+  name: 'Simón Espinoza Carvajal',
+  role: 'Fundador y Director',
+  education: [
+    'Ingeniero Comercial · Universidad Central',
+    'Certificado en Análisis de Bases de Datos · PUC',
+    'Certificado en Marketing Digital · Google',
+    'Diplomado en IA Aplicada a los Negocios · Universidad del Desarrollo',
+    'MBA · Universidad del Desarrollo',
+  ],
+  // Para schema Person.alumniOf (sin duplicar instituciones)
+  alumniOf: [
+    'Universidad Central',
+    'Pontificia Universidad Católica de Chile',
+    'Universidad del Desarrollo',
+  ],
+  linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
+  bio: 'Ingeniero Comercial con MBA de la Universidad del Desarrollo y formación especializada en inteligencia artificial y análisis de datos. Cuenta con más de diez años de experiencia en retail y consumo masivo, en áreas comerciales de grandes marcas, y dos años en consultoría comercial, IA empresarial y automatización de procesos. Esa combinación —negocio y tecnología— es el origen de la mirada de Buffo: la inteligencia artificial al servicio de decisiones de negocio, no de la tecnología por sí misma.',
+};
+
+// Formulario de contacto vía Web3Forms (sin backend). La access key gratuita se
+// obtiene en https://web3forms.com con el correo de destino. Reemplazar el placeholder.
+export const WEB3FORMS_KEY = 'TU_ACCESS_KEY_AQUI';
+
 // Navegación principal (multipágina).
 export const NAV = [
   { label: 'Servicios', href: '/servicios' },
@@ -19,6 +45,16 @@ export const NAV = [
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
 ];
+
+// Categorías del blog (clusters). Cada una se vincula al servicio relacionado
+// para el enlazado interno pilar/cluster que pide el plan SEO.
+export const BLOG_CATEGORIES: Record<string, { label: string; service: string | null }> = {
+  general: { label: 'Estrategia IA', service: null },
+  'dashboards-ejecutivos': { label: 'Dashboards', service: '/servicios/dashboards-ejecutivos' },
+  'modelamiento-predictivo': { label: 'Datos', service: '/servicios/modelamiento-predictivo' },
+  'automatizacion-procesos': { label: 'Automatización', service: '/servicios/automatizacion-procesos' },
+  'agentes-ia': { label: 'Agentes IA', service: '/servicios/agentes-ia' },
+};
 
 // Los 4 servicios — fuente única para cards de home, página madre y schema.
 export const SERVICES = [
