@@ -34,9 +34,8 @@ export const FOUNDER = {
   bio: 'Ingeniero Comercial con MBA de la Universidad del Desarrollo y formación especializada en inteligencia artificial y análisis de datos. Cuenta con más de diez años de experiencia en retail y consumo masivo, en áreas comerciales de grandes marcas, y dos años en consultoría comercial, IA empresarial y automatización de procesos. Esa combinación —negocio y tecnología— es el origen de la mirada de Buffo: la inteligencia artificial al servicio de decisiones de negocio, no de la tecnología por sí misma.',
 };
 
-// Formulario de contacto vía Web3Forms (sin backend). La access key gratuita se
-// obtiene en https://web3forms.com con el correo de destino. Reemplazar el placeholder.
-export const WEB3FORMS_KEY = 'TU_ACCESS_KEY_AQUI';
+// El formulario de contacto envía a la función serverless /api/contacto.js,
+// que despacha los correos vía Resend (dominio raíz verificado buffoconsulting.cl).
 
 // Navegación principal (multipágina).
 export const NAV = [

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE, WEB3FORMS_KEY } from '../config/site';
+import { SITE } from '../config/site';
 
 const path = '/contacto';
 const metaTitle = 'Contacto | Buffo IA Consulting';
@@ -38,9 +38,6 @@ const contactSchema = {
         <!-- FORMULARIO -->
         <div class="md:col-span-3 reveal">
           <form id="contact-form" class="space-y-5">
-            <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-            <input type="hidden" name="subject" value="Nuevo mensaje desde buffoconsulting.cl" />
-            <input type="hidden" name="from_name" value="Sitio Buffo IA" />
             <!-- Honeypot anti-spam -->
             <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
 
@@ -131,22 +128,17 @@ const contactSchema = {
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const data = new FormData(form);
-
-      if (data.get('access_key') === 'TU_ACCESS_KEY_AQUI') {
-        show('El formulario aún no está configurado. Usa el correo o agenda una llamada por ahora.', false);
-        return;
-      }
+      const data = Object.fromEntries(new FormData(form).entries());
 
       btn.disabled = true;
       const original = btn.textContent;
       btn.textContent = 'Enviando…';
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
+        const res = await fetch('/api/contacto', {
           method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: data,
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
         });
         const json = await res.json();
         if (json.success) {
