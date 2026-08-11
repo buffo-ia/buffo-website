@@ -1,0 +1,49 @@
+### titulares
+- Usted mismo lo dijo: se entera de los problemas de cobranza "cuando ya es un problema", no antes.
+- Entre que algo ocurre y alguien reacciona pasa "ese mes" completo, según su respuesta.
+- Las reglas para actuar "dependen de la persona", no hay un criterio único cuando algo se sale de lo normal.
+- Con 83 de 100 en visibilidad, su brecha no es de información sino de reacción a tiempo.
+- Pidió algo puntual: que le avisen cuando un cliente grande se atrasa, sin tener que revisar la cartola.
+
+### resumen
+Su empresa tiene buena visibilidad de fondo: la foto del mes llega al día siguiente y un sistema la calcula solo, sin depender de una persona. El problema no es que falte información, sino que nadie la está vigilando en el momento en que algo se sale de lo normal, y por eso usted se entera cuando el atraso de un cliente grande ya es un problema instalado, no una alerta a tiempo.
+
+### hallazgo
+titulo: La cobranza se descubre, no se vigila
+vemos: usted respondió que se entera de un cliente que no paga "cuando ya es un problema", y que entre que ocurre y alguien reacciona pasa "ese mes" completo.
+resolvemos: un agente que revise la cartola todos los días y le avise a usted directamente en el momento en que un cliente grande se atrasa, no cuando ya pasó un mes.
+beneficio: usted deja de estar pendiente de la cartola y empieza a recibir el aviso justo cuando puede actuar, no cuando ya perdió margen de maniobra.
+
+titulo: La reacción depende de quién esté ese día
+vemos: usted dijo que no hay reglas escritas de "si pasa X se hace Y", que "depende de la persona" que esté a cargo en ese momento.
+resolvemos: convertir esos criterios que hoy están solo en la cabeza de la gente en reglas claras que un agente aplique siempre igual, sin importar quién esté de turno o de vacaciones.
+beneficio: la respuesta ante un atraso o un quiebre de stock deja de ser una lotería según quién conteste el teléfono ese día.
+
+titulo: Varias revisiones manuales diarias que ya podrían ser automáticas
+vemos: usted respondió que hay "varias" cosas que hoy se revisan a mano todos los días solo para chequear que estén bien.
+resolvemos: identificar cuáles de esas revisiones son mecánicas y pasarlas a un agente que las haga y solo le avise a usted si encuentra algo fuera de lo normal.
+beneficio: su equipo deja de gastar el día chequeando que todo esté en orden y solo interviene cuando realmente hay algo que decidir.
+
+### horas
+Usted declaró menos de 20 horas al mes en trabajo repetitivo, lo que da menos de 240 horas al año. No es la cifra más alta que vemos en este tipo de diagnóstico, y es importante decirlo con claridad: en su caso el costo grande no está en esas horas, sino en lo que se decide tarde por enterarse de los problemas cuando ya ocurrieron. Aun así, esas horas hoy se van en revisar a mano lo que un agente podría vigilar solo, y liberarlas significa que alguien de su equipo puede dedicarse a seguir de cerca a los clientes grandes en vez de a chequear planillas.
+
+### vistazo
+Cada mañana usted tendría, antes de abrir cualquier planilla, un panorama de lo que realmente necesita atención hoy.
+tarjeta: Cartola vigilada :: Estado de pago de sus clientes grandes, con aviso automático apenas hay un atraso
+tarjeta: Semáforo de excepciones :: Lo que se salió de lo normal en el día (stock, pagos, cobranza), no todo el detalle
+tarjeta: Tiempo de reacción :: Cuánto ha pasado desde que ocurrió un problema hasta que alguien actuó
+tarjeta: Reglas aplicadas :: Qué criterio se usó para cada alerta, para que no dependa de quién estaba de turno
+
+### atencion
+Usted eligió como dolor "me entero tarde de los problemas", y eso es real, pero sus respuestas apuntan a algo más específico y más manejable: no es que la información llegue tarde en general —de hecho llega al día siguiente y sin depender de una persona—, es que nadie está mirando esa información en tiempo real para gatillar una acción. La foto del mes está bien armada; lo que falta es alguien, o algo, que revise esa foto todos los días y grite cuando corresponde. Eso cambia bastante el tipo de solución: no hay que rehacer cómo se mide el negocio, hay que poner vigilancia sobre lo que ya se mide.
+
+### limites
+Con doce respuestas no podemos saber cuántos clientes grandes tiene, cuánto dinero representa cada atraso, ni qué tan compleja es su cartola real en términos de sistemas y formatos. Tampoco sabemos si el "depende de la persona" que mencionó es solo para cobranza o se repite en otras áreas del negocio. Eso solo se ve mirando la cartola y los procesos reales, que es justamente lo que conviene revisar en una conversación antes de proponer algo concreto.
+
+### propuesta
+Lo que usted pidió —que le avisen de un atraso sin tener que revisar la cartola— es exactamente el tipo de tarea que un agente puede hacer todos los días sin que nadie se lo recuerde, y encaja con lo que ya reveló: sistemas que calculan solos pero que nadie vigila activamente, y reglas que hoy dependen de la persona de turno. El cambio concreto es que usted deje de perseguir la información y empiece a recibirla solo cuando importa.
+
+### pasos
+paso: Conversación de 30 minutos :: Revisar juntos cómo funciona hoy su cobranza y qué clientes grandes le preocupan realmente
+paso: Mapear las reglas de alerta :: Definir con usted qué se considera "atraso crítico" y quién debe enterarse primero
+paso: Poner el agente a vigilar :: Que la cartola se revise sola todos los días y el aviso le llegue a usted antes de que sea un problema

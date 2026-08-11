@@ -1,0 +1,51 @@
+### titulares
+- Usted mismo dijo que la foto del negocio llega "recién al cierre de mes", cuando ya no se puede hacer nada.
+- El margen del producto que más vende lo tiene "en días": la decisión de precio se toma a ciegas.
+- Si la persona que arma el Excel se va de vacaciones, la información "se deja de hacer hasta que vuelve".
+- Reconoce que ha tomado decisiones con datos malos y que "pasa seguido".
+- Gerencia y vendedores miran números distintos que "a veces no cuadran".
+
+### resumen
+Sus respuestas muestran un patrón claro: la información existe, pero llega tarde, depende de una sola persona y no siempre es confiable. No es un problema de falta de tecnología nueva, es que hoy nadie en Distribuidora Andes puede mirar un número y confiar en él sin preguntarle a alguien más o esperar al día 30.
+
+### hallazgo
+titulo: La empresa opera a ciegas hasta el último día del mes
+vemos: usted respondió que la foto real del mes se tiene "recién al cierre de mes" y que sabe si va a cumplir la meta "el día 30", no antes.
+resolvemos: se construye un tablero que junta automáticamente lo que hoy sale de esas cuatro o cinco planillas, para que el avance contra la meta se vea todos los días, no solo al final.
+beneficio: usted y su equipo dejan de operar el mes completo sin saber si van bien o mal, y pueden corregir a mitad de camino, no cuando ya es tarde.
+
+### hallazgo
+titulo: Un solo Excel sostiene toda la visibilidad del negocio
+vemos: usted contó que la información "sale de un Excel" armado a mano, cruzando cuatro o cinco fuentes, y que si esa persona sale de vacaciones "se deja de hacer hasta que vuelve".
+resolvemos: se ordena esa información en un solo lugar que se actualiza solo, sin depender de que alguien la arme manualmente cada vez.
+beneficio: la empresa deja de depender de una persona para saber cómo va el negocio; la foto está disponible siempre, esté quien esté de vacaciones.
+
+### hallazgo
+titulo: Gerencia y vendedores discuten sobre números distintos
+vemos: usted mismo señaló que los números que ve gerencia y los que ve el vendedor "no salen de la misma fuente" y "a veces no cuadran", y que ha tomado decisiones con datos que después resultaron malos, algo que "pasa seguido".
+resolvemos: se define una sola fuente de verdad para las cifras de venta y meta, para que gerencia y equipo comercial miren exactamente lo mismo.
+beneficio: se acaban las discusiones sobre quién tiene el número correcto, y las decisiones de precio, meta y cliente se toman sobre datos que todos validan.
+
+### horas
+Usted declaró entre 60 y 150 horas al mes en trabajo repetitivo, lo que proyectado al año son entre 720 y 1.800 horas, tiempo que hoy se va en armar Excel a mano cruzando cuatro o cinco fuentes. Ese tiempo recuperado no es lo más caro del problema —lo más caro es enterarse tarde de que un cliente se fue o de que el margen viene mal—, pero es la parte visible: ese equipo podría usarlo en llamar a clientes que están dejando de comprar antes de que "ya se fueron", en vez de armar planillas.
+
+### vistazo
+Si esto estuviera resuelto, cada mañana usted tendría delante de él, sin pedirlo a nadie:
+tarjeta: Venta de ayer :: Cuánto se vendió el día anterior, comparado contra la meta del mes.
+tarjeta: Avance vs meta :: Dónde está parado hoy el mes, no el día 30.
+tarjeta: Vendedores bajo meta :: Quién no está llegando, para actuar antes de que se acumule.
+tarjeta: Clientes en riesgo :: Quién bajó su compra o dejó de comprar, antes de que "se note" solo.
+
+### atencion
+Usted eligió como dolor "no tener la foto del negocio", pero al leer el resto de sus respuestas aparece algo más delicado: no es solo que la foto llegue tarde, es que cuando llega, a veces está mala y ya se tomaron decisiones con ella. Que gerencia y vendedores miren números distintos que "no cuadran" es más grave que la demora en sí, porque significa que incluso cuando alguien pregunta antes del cierre, puede estar recibiendo una respuesta equivocada.
+
+### limites
+Con doce preguntas se puede ver el patrón, no el detalle: no sabemos, por ejemplo, cuáles de esas cuatro o cinco fuentes tienen los datos más críticos, ni qué tan distinto es el criterio con que gerencia y vendedores arman sus números hoy. Eso requiere sentarse a mirar las planillas reales y conversar con quien las arma, algo que un cuestionario no reemplaza.
+
+### propuesta
+Lo que usted pidió —saber cada mañana cuánto se vendió ayer y quién no está llegando a su meta, sin pedirlo— es exactamente el problema de fondo que muestran sus respuestas: información que hoy depende de una persona, llega el día 30 y a veces no coincide entre áreas. Ordenar esa información en un tablero que se actualiza solo ataca directamente eso, sin tocar cómo vende su equipo hoy, solo cómo se entera usted de cómo va.
+
+### pasos
+paso: Conversación de 30 minutos :: Revisamos juntos esas cuatro o cinco fuentes y qué número debería mandar.
+paso: Mapeo de datos y metas :: Se define una sola fuente de verdad para venta, margen y meta por vendedor.
+paso: Tablero en funcionamiento :: Usted ve cada mañana venta de ayer, avance de meta y clientes en riesgo, sin pedirlo.

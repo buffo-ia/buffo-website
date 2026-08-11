@@ -1,0 +1,1332 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site';
+import {
+  INTRO, TRONCO, RAMALES, PREGUNTA_ABIERTA, TRAMOS, TOTAL_PREGUNTAS, COSTO_HORA, valorHora,
+  PROPUESTA, INCLUYE_SIEMPRE, FASES, STACK,
+} from '../data/diagnostico';
+import { readFileSync } from 'node:fs';
+
+const stackConLogo = STACK.map((h) => ({
+  nombre: h.nombre,
+  // Se le saca el fill blanco del archivo original (venía para fondo oscuro)
+  // para que lo defina el CSS del informe.
+  svg: readFileSync(`public/stack/${h.archivo}.svg`, 'utf8').replace(/\s*fill="[^"]*"/g, ''),
+}));
+
+// El banco completo viaja al cliente: el flujo es puro front hasta que el
+// visitante entrega su correo. Así nadie abandona por un formulario al inicio.
+const banco = {
+  tronco: TRONCO,
+  ramales: RAMALES,
+  abierta: PREGUNTA_ABIERTA,
+  tramos: TRAMOS,
+  total: TOTAL_PREGUNTAS,
+  calendly: SITE.calendly,
+  costo: { ...COSTO_HORA, valorHora: valorHora() },
+  propuesta: PROPUESTA,
+  incluye: INCLUYE_SIEMPRE,
+  fases: FASES,
+  stack: stackConLogo,
+};
+
+const title = `Diagnóstico de 3 minutos | ${SITE.shortName}`;
+const description =
+  'Doce preguntas para medir qué tan visible es su operación. Puntaje inmediato en pantalla y un informe completo en PDF.';
+---
+
+<BaseLayout title={title} description={description} path="/diagnostico">
+  <section class="min-h-[calc(100vh-4rem)] hero-bg">
+    <div class="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+      <div id="barra" class="mb-12 hidden">
+        <div class="mb-2 flex items-baseline justify-between text-xs text-on-surface-variant">
+          <span id="barra-etapa">Contexto</span>
+          <span id="barra-conteo">1 / {TOTAL_PREGUNTAS}</span>
+        </div>
+        <div class="h-px w-full bg-outline-variant">
+          <div id="barra-avance" class="h-px bg-primary transition-all duration-300" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- 1. Intro -->
+      <div id="paso-intro">
+        <p class="mb-4 text-sm uppercase tracking-widest text-primary">Diagnóstico</p>
+        <h1 class="font-display text-4xl leading-tight sm:text-5xl">{INTRO.titulo}</h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-on-surface-variant">{INTRO.bajada}</p>
+        <button id="btn-empezar" class="mt-10 bg-primary px-8 py-4 font-medium text-on-primary btn-glow">
+          Empezar
+        </button>
+        <p class="mt-4 text-sm text-outline">
+          Sin costo · 3 min · {TOTAL_PREGUNTAS} preguntas · informe en PDF
+        </p>
+      </div>
+
+      <!-- 2. Selector de ramal: se pregunta el dolor, nunca el producto -->
+      <div id="paso-ramal" class="hidden">
+        <h2 class="font-display text-3xl leading-tight sm:text-4xl">¿Qué le complica más hoy?</h2>
+        <p class="mt-3 text-on-surface-variant">Elija lo que más se acerque. Después profundizamos.</p>
+        <div class="mt-10 grid gap-3">
+          {
+            RAMALES.map((r) => (
+              <button
+                data-ramal={r.id}
+                class="opcion-ramal group flex flex-wrap items-start gap-x-4 gap-y-2 border border-outline-variant p-5 text-left transition-colors hover:border-primary sm:flex-nowrap"
+              >
+                <span class="material-symbols-outlined mt-0.5 text-outline group-hover:text-primary">
+                  {r.icono}
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block font-medium">{r.dolor}</span>
+                  <span class="mt-1 block text-sm text-on-surface-variant">{r.detalle}</span>
+                </span>
+                {/*
+                  El frente de trabajo, como etiqueta secundaria. Deliberadamente
+                  discreta: el que elige tiene que elegir por su dolor, no por el
+                  nombre del producto — si supiera qué necesita no estaría acá.
+                */}
+                <span class="etiqueta-frente ml-9 shrink-0 sm:ml-0 sm:self-center">
+                  {r.servicio}
+                </span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- 3. Preguntas, una por pantalla -->
+      <div id="paso-pregunta" class="hidden">
+        <h2 id="pregunta-texto" class="font-display text-2xl leading-snug sm:text-3xl"></h2>
+        <div id="pregunta-opciones" class="mt-8 grid gap-3"></div>
+        <button id="btn-volver" class="mt-8 text-sm text-on-surface-variant hover:text-primary">
+          &larr; Volver
+        </button>
+      </div>
+
+      <!-- 4. Pregunta abierta -->
+      <div id="paso-abierta" class="hidden">
+        <h2 class="font-display text-2xl leading-snug sm:text-3xl">{PREGUNTA_ABIERTA.texto}</h2>
+        <p class="mt-3 text-sm text-on-surface-variant">{PREGUNTA_ABIERTA.ayuda}</p>
+        <textarea
+          id="campo-abierta" rows="4"
+          class="mt-6 w-full border border-outline-variant bg-surface p-4 text-on-surface outline-none focus:border-primary"
+          placeholder="Escriba lo primero que se le venga a la cabeza."></textarea>
+        <button id="btn-abierta" class="mt-6 bg-primary px-8 py-4 font-medium text-on-primary btn-glow">
+          Ver mi resultado
+        </button>
+      </div>
+
+      <!-- 5. Datos: al final, nunca al principio -->
+      <div id="paso-datos" class="hidden">
+        <h2 class="font-display text-2xl leading-snug sm:text-3xl">Su resultado está listo</h2>
+        <p class="mt-3 text-on-surface-variant">
+          Dígame a nombre de quién lo emito y le llega también una copia al correo.
+        </p>
+        <form id="form-datos" class="mt-8 grid gap-4">
+          <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+          <label class="block">
+            <span class="mb-1 block text-sm text-on-surface-variant">Nombre</span>
+            <input type="text" name="nombre" required maxlength="120" autocomplete="name"
+              class="w-full border border-outline-variant bg-surface p-3 outline-none focus:border-primary" />
+          </label>
+          <label class="block">
+            <span class="mb-1 block text-sm text-on-surface-variant">Empresa</span>
+            <input type="text" name="empresa" maxlength="160" autocomplete="organization"
+              class="w-full border border-outline-variant bg-surface p-3 outline-none focus:border-primary" />
+          </label>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="mb-1 block text-sm text-on-surface-variant">Correo</span>
+              <input type="email" name="email" required maxlength="160" autocomplete="email"
+                class="w-full border border-outline-variant bg-surface p-3 outline-none focus:border-primary" />
+            </label>
+            <label class="block">
+              <span class="mb-1 block text-sm text-on-surface-variant">
+                Teléfono <span class="text-outline">(opcional)</span>
+              </span>
+              <input type="tel" name="telefono" maxlength="40" autocomplete="tel" placeholder="+56 9"
+                class="w-full border border-outline-variant bg-surface p-3 outline-none focus:border-primary" />
+            </label>
+          </div>
+          <button type="submit" class="mt-2 bg-primary px-8 py-4 font-medium text-on-primary btn-glow">
+            Ver mi diagnóstico
+          </button>
+          <p id="error-datos" class="hidden text-sm text-error"></p>
+        </form>
+      </div>
+
+      <!--
+        6. Resultado. Una sola pasada de render; el CSS decide qué se ve dónde:
+        la pantalla muestra el puntaje, las barras, el resumen y el primer
+        hallazgo. El resto solo existe en el PDF, que es el entregable de verdad.
+      -->
+      <div id="paso-resultado" class="hidden">
+        <div id="portada-pdf" class="solo-imprimir"></div>
+        <div id="membrete" class="solo-imprimir"></div>
+        <div id="resultado-encabezado"></div>
+        <div id="resultado-analisis" class="mt-4"></div>
+
+        <div id="teaser-pdf" class="no-imprimir hidden">
+          <section class="mt-12 border border-primary/40 bg-primary/5 p-8">
+            <p class="text-sm uppercase tracking-widest text-primary">El informe completo</p>
+            <p class="mt-4 font-display text-2xl leading-snug">
+              Lo que ve acá es la primera parte.
+            </p>
+            <p class="mt-4 leading-relaxed text-on-surface-variant">
+              El PDF trae los tres hallazgos completos, el cálculo de lo que le cuesta al año el
+              trabajo repetitivo según lo que usted declaró, cómo se vería su información resuelta,
+              lo que más nos llamó la atención de sus respuestas y los próximos pasos concretos.
+            </p>
+            <button id="btn-pdf" class="mt-7 bg-primary px-8 py-4 font-medium text-on-primary btn-glow">
+              Descargar el informe en PDF
+            </button>
+          </section>
+        </div>
+
+        <div id="pie-impreso" class="solo-imprimir"></div>
+
+        <div id="resultado-cierre" class="no-imprimir hidden">
+          <section class="mt-8 border border-outline-variant p-8">
+            <p class="font-display text-2xl">Treinta minutos, sin presentación de ventas</p>
+            <p class="mt-3 text-on-surface-variant">
+              Le mandamos una copia por correo. Si quiere revisarlo con nosotros:
+            </p>
+            <a href={SITE.calendly} target="_blank" rel="noopener"
+               class="mt-6 inline-block border border-outline-variant px-8 py-4 font-medium hover:border-primary">
+              Agendar una conversación
+            </a>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script id="banco-diagnostico" type="application/json" set:html={JSON.stringify(banco)} />
+
+  <script>
+    const banco = JSON.parse(document.getElementById('banco-diagnostico').textContent);
+    const $ = (id) => document.getElementById(id);
+    const pasos = ['intro', 'ramal', 'pregunta', 'abierta', 'datos', 'resultado'];
+
+    const mostrar = (nombre) => {
+      pasos.forEach((p) => $(`paso-${p}`).classList.toggle('hidden', p !== nombre));
+      $('barra').classList.toggle('hidden', nombre === 'intro' || nombre === 'resultado');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const escapar = (s) =>
+      String(s ?? '').replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+      );
+
+    const estado = { ramal: null, cola: [], indice: 0, respuestas: [], abierta: '' };
+
+    /*
+      Modos de prueba, ninguno enlazado en el sitio:
+        ?sinia=1 — recorre el cuestionario completo de verdad, pero al final usa
+                   un análisis de muestra en vez de llamar a Claude. Sirve para
+                   revisar preguntas, flujo y PDF sin gastar un peso en tokens.
+        ?demo=1  — salta directo al resultado. Solo para iterar el diseño del PDF.
+    */
+    const parametros = new URLSearchParams(location.search);
+    const SIN_IA = parametros.get('sinia') === '1';
+
+    $('btn-empezar').addEventListener('click', () => {
+      actualizarBarra('Contexto', 0);
+      mostrar('ramal');
+    });
+
+    document.querySelectorAll('.opcion-ramal').forEach((b) => {
+      b.addEventListener('click', () => {
+        estado.ramal = banco.ramales.find((r) => r.id === b.dataset.ramal);
+        // Tronco primero (es la parte comparable), después el ramal elegido.
+        estado.cola = [
+          ...banco.tronco.map((p) => ({ ...p, bloque: 'tronco' })),
+          ...estado.ramal.preguntas.map((p) => ({ ...p, bloque: 'ramal' })),
+        ];
+        estado.indice = 0;
+        estado.respuestas = [];
+        pintarPregunta();
+      });
+    });
+
+    function actualizarBarra(etapa, respondidas) {
+      $('barra-etapa').textContent = etapa;
+      $('barra-conteo').textContent = `${Math.min(respondidas + 1, banco.total)} / ${banco.total}`;
+      $('barra-avance').style.width = `${(respondidas / banco.total) * 100}%`;
+    }
+
+    function pintarPregunta() {
+      const p = estado.cola[estado.indice];
+      actualizarBarra(p.bloque === 'tronco' ? 'Su operación' : estado.ramal.dolor, estado.indice);
+      $('pregunta-texto').textContent = p.texto;
+
+      const cont = $('pregunta-opciones');
+      cont.innerHTML = '';
+      p.opciones.forEach((o) => {
+        const btn = document.createElement('button');
+        btn.className =
+          'border border-outline-variant p-4 text-left transition-colors hover:border-primary hover:bg-surface';
+        btn.textContent = o.texto;
+        btn.addEventListener('click', () => responder(p, o));
+        cont.appendChild(btn);
+      });
+
+      $('btn-volver').classList.toggle('hidden', estado.indice === 0);
+      mostrar('pregunta');
+    }
+
+    function responder(pregunta, opcion) {
+      const max = Math.max(...pregunta.opciones.map((o) => o.puntos));
+      estado.respuestas[estado.indice] = {
+        bloque: pregunta.bloque,
+        id: pregunta.id,
+        dimension: pregunta.dimension || null,
+        pregunta: pregunta.texto,
+        respuesta: opcion.texto,
+        puntos: opcion.puntos,
+        max,
+        horasMes: opcion.horasMes || null,
+      };
+      estado.indice += 1;
+      if (estado.indice < estado.cola.length) {
+        pintarPregunta();
+      } else {
+        actualizarBarra('Última', estado.cola.length);
+        mostrar('abierta');
+      }
+    }
+
+    $('btn-volver').addEventListener('click', () => {
+      if (estado.indice > 0) {
+        estado.indice -= 1;
+        pintarPregunta();
+      }
+    });
+
+    $('btn-abierta').addEventListener('click', () => {
+      estado.abierta = $('campo-abierta').value.trim();
+      actualizarBarra('Sus datos', banco.total);
+      mostrar('datos');
+    });
+
+    const puntajeDe = (bloque) => {
+      const items = estado.respuestas.filter((r) => r.bloque === bloque);
+      const max = items.reduce((s, r) => s + r.max, 0);
+      return max ? Math.round((items.reduce((s, r) => s + r.puntos, 0) / max) * 100) : 0;
+    };
+
+    // Puntaje por dimensión: son las barras. Salen de las 6 del tronco.
+    const dimensiones = () =>
+      estado.respuestas
+        .filter((r) => r.dimension)
+        .map((r) => ({ etiqueta: r.dimension, valor: Math.round((r.puntos / r.max) * 100) }));
+
+    const tramoDe = (p) => banco.tramos.find((t) => p <= t.hasta) ?? banco.tramos.at(-1);
+
+    const hoyLargo = () =>
+      new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    $('form-datos').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const datos = Object.fromEntries(new FormData(ev.target));
+      const error = $('error-datos');
+      error.classList.add('hidden');
+
+      const barras = dimensiones();
+      const cuerpo = {
+        nombre: datos.nombre,
+        empresa: datos.empresa,
+        email: datos.email,
+        telefono: datos.telefono,
+        botcheck: datos.botcheck,
+        ramal: { id: estado.ramal.id, dolor: estado.ramal.dolor, servicio: estado.ramal.servicio },
+        puntaje: { tronco: puntajeDe('tronco') },
+        dimensiones: Object.fromEntries(barras.map((d) => [d.etiqueta, d.valor])),
+        respuestas: estado.respuestas,
+        abierta: estado.abierta,
+      };
+
+      // El puntaje ya está calculado: se pinta al instante y el análisis llega
+      // transmitido debajo. Así no hay espera muerta mirando un spinner.
+      pintarPortada(cuerpo);
+      pintarEncabezado(cuerpo, barras);
+      mostrar('resultado');
+
+      if (SIN_IA) return transmitirMuestra();
+
+      try {
+        const res = await fetch('/api/diagnostico', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(cuerpo),
+        });
+        if (!res.ok) {
+          const detalle = await res.json().catch(() => ({}));
+          throw new Error(detalle.error || 'No pudimos generar el análisis.');
+        }
+        await transmitir(res);
+      } catch (err) {
+        mostrar('datos');
+        error.textContent = `${err.message} Puede reintentar o escribirnos a contacto@buffoconsulting.cl.`;
+        error.classList.remove('hidden');
+      }
+    });
+
+    // --- Portada, membrete y pie: solo existen en el PDF ---
+
+    function pintarPortada(cuerpo) {
+      const tramo = tramoDe(cuerpo.puntaje.tronco);
+      const cliente = cuerpo.empresa || cuerpo.nombre;
+      estado.datosCliente = cliente;
+
+      $('portada-pdf').innerHTML = `
+        <img src="/logo-firma.png" alt="Buffo IA Consulting" class="portada-logo" />
+        <div class="portada-centro">
+          <p class="eyebrow">Diagnóstico de operación</p>
+          <p class="wordmark">Buffo<span class="verde"> IA</span></p>
+          <p class="wordmark-cliente"><span class="por">×</span> ${escapar(cliente)}</p>
+          <div class="portada-puntaje">
+            <div>
+              <p class="cifra">${cuerpo.puntaje.tronco}<span class="de">/100</span></p>
+              <p class="cifra-rotulo">Visibilidad de su operación</p>
+            </div>
+            <div class="portada-tramo">
+              <p class="tramo-etiqueta">${escapar(tramo.etiqueta)}</p>
+              <p class="tramo-resumen">${escapar(tramo.resumen)}</p>
+            </div>
+          </div>
+        </div>
+        <div class="portada-pie">
+          <span>Preparado para ${escapar(cuerpo.nombre)}</span>
+          <span>${hoyLargo()}</span>
+        </div>`;
+
+      $('membrete').innerHTML = `
+        <span class="membrete-marca">Buffo<span class="verde"> IA</span> · Diagnóstico</span>
+        <span>${escapar(cliente)} · ${hoyLargo()}</span>`;
+
+      $('pie-impreso').innerHTML = `
+        <p><strong>Buffo IA Consulting</strong> · buffoconsulting.cl · contacto@buffoconsulting.cl</p>
+        <p>Este informe se elaboró a partir de doce respuestas. Para agendar treinta minutos sin
+        costo: ${escapar(banco.calendly)}</p>`;
+    }
+
+    function pintarEncabezado(cuerpo, barras) {
+      const tramo = tramoDe(cuerpo.puntaje.tronco);
+      $('resultado-encabezado').innerHTML = `
+        <div class="no-imprimir">
+          <p class="text-sm uppercase tracking-widest text-primary">Diagnóstico</p>
+          <h2 class="mt-3 font-display text-3xl leading-tight sm:text-4xl">${escapar(cuerpo.empresa || cuerpo.nombre)}</h2>
+          <div class="mt-10 flex flex-wrap items-end gap-x-10 gap-y-4 border-y border-outline-variant py-6">
+            <div>
+              <p class="font-display text-5xl text-primary">${cuerpo.puntaje.tronco}</p>
+              <p class="mt-1 text-sm text-on-surface-variant">de 100 en visibilidad</p>
+            </div>
+            <div>
+              <p class="text-lg font-medium">${escapar(tramo.etiqueta)}</p>
+              <p class="mt-1 max-w-md text-sm text-on-surface-variant">${escapar(tramo.resumen)}</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="mt-10 bloque">
+          <h3 class="rotulo">Dónde está parado</h3>
+          <div class="mt-5 grid gap-3">
+            ${barras
+              .map(
+                (d) => `
+              <div class="fila-barra grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 sm:grid-cols-[13rem_1fr_2.5rem]">
+                <span class="text-sm text-on-surface-variant">${escapar(d.etiqueta)}</span>
+                <div class="order-3 h-1.5 w-full bg-surface-container sm:order-none">
+                  <div class="h-1.5 bg-primary transition-all duration-700" style="width:${d.valor}%"></div>
+                </div>
+                <span class="text-right text-sm tabular-nums ${d.valor < 50 ? 'text-error' : 'text-on-surface-variant'}">${d.valor}</span>
+              </div>`
+              )
+              .join('')}
+          </div>
+        </section>`;
+    }
+
+    // --- Transmisión ---
+
+    // Modo sin IA: reproduce un análisis de muestra imitando la escritura en vivo,
+    // para que el flujo se sienta igual sin llamar a la API. Deja un aviso visible
+    // arriba, porque el texto NO corresponde a las respuestas que acaba de dar.
+    async function transmitirMuestra() {
+      const muestra = `/_demo-${estado.ramal?.id || 'visibilidad'}.txt`;
+      const texto = await fetch(muestra).then((r) => r.text());
+      const trozo = Math.ceil(texto.length / 60);
+
+      for (let i = trozo; i < texto.length; i += trozo) {
+        pintarAnalisis(texto.slice(0, i), true);
+        await new Promise((r) => setTimeout(r, 40));
+      }
+      pintarAnalisis(texto, false);
+
+      $('resultado-analisis').insertAdjacentHTML(
+        'afterbegin',
+        `<p class="no-imprimir mt-8 border border-error/50 bg-error/5 p-4 text-sm text-error">
+           Modo sin IA: el análisis de abajo es una muestra del ramal
+           &laquo;${escapar(estado.ramal?.dolor || '')}&raquo; y <strong>no corresponde a las respuestas
+           que acaba de dar</strong>. El puntaje, las barras y el cuadro de costo sí son suyos.
+         </p>`
+      );
+      $('teaser-pdf').classList.remove('hidden');
+      $('resultado-cierre').classList.remove('hidden');
+    }
+
+    async function transmitir(res) {
+      const lector = res.body.getReader();
+      const decodificador = new TextDecoder();
+      let texto = '';
+
+      while (true) {
+        const { done, value } = await lector.read();
+        if (done) break;
+        texto += decodificador.decode(value, { stream: true });
+        if (texto.startsWith('__ERROR__')) throw new Error(texto.replace('__ERROR__', ''));
+        pintarAnalisis(texto, true);
+      }
+
+      pintarAnalisis(texto, false);
+      $('teaser-pdf').classList.remove('hidden');
+      $('resultado-cierre').classList.remove('hidden');
+    }
+
+    const ROTULOS = {
+      titulares: 'Lo que salta a la vista',
+      resumen: 'Resumen',
+      hallazgo: 'Lo que detectamos',
+      horas: 'Lo que cuesta el trabajo repetitivo',
+      vistazo: 'Cómo se vería su información',
+      propuesta: 'Lo que proponemos',
+      atencion: 'Lo que más nos llama la atención',
+      limites: 'Lo que no podemos decirle sin conocerlos mejor',
+      pasos: 'Próximos pasos',
+    };
+
+    function pintarAnalisis(texto, enCurso) {
+      const bloques = texto.split(/^### /m).filter((s) => s.trim());
+      let html = '';
+      let nHallazgo = 0;
+      let hallazgosAbiertos = false;
+
+      const cerrarHallazgos = () => {
+        if (hallazgosAbiertos) {
+          html += '</div></section>';
+          hallazgosAbiertos = false;
+        }
+      };
+
+      bloques.forEach((bloque) => {
+        const salto = bloque.indexOf('\n');
+        const nombre = (salto === -1 ? bloque : bloque.slice(0, salto)).trim();
+        const contenido = salto === -1 ? '' : bloque.slice(salto + 1).trim();
+        if (!contenido) return;
+
+        if (nombre === 'hallazgo') {
+          // Un mismo bloque puede traer varios hallazgos seguidos: se separa por
+          // cada "titulo:" en vez de depender de que el modelo repita el marcador.
+          const cuerpos = contenido
+            .split(/^(?=titulo:)/mi)
+            .map((c) => pintarHallazgo(c))
+            .filter(Boolean);
+          if (!cuerpos.length) return;
+
+          if (!hallazgosAbiertos) {
+            html += `<section class="mt-12 bloque-largo solo-imprimir"><h3 class="rotulo">${ROTULOS.hallazgo}</h3><div class="mt-4">`;
+            hallazgosAbiertos = true;
+          }
+          cuerpos.forEach((c) => {
+            nHallazgo += 1;
+            html += c;
+          });
+          return;
+        }
+
+        cerrarHallazgos();
+
+        // En pantalla solo los titulares. Todo lo demás existe pero solo se
+        // imprime: el PDF es el entregable, la pantalla es el anzuelo.
+        const enPantalla = nombre === 'titulares';
+        const clase = enPantalla ? 'bloque' : 'bloque solo-imprimir';
+
+        if (nombre === 'titulares') {
+          html += `<section class="mt-10 ${clase}">${pintarTitulares(contenido)}</section>`;
+          return;
+        }
+        if (nombre === 'vistazo') {
+          html += `<section class="mt-12 ${clase}">${pintarVistazo(contenido)}</section>`;
+          return;
+        }
+        if (nombre === 'propuesta') {
+          html += `<section class="mt-12 ${clase}">${pintarPropuesta(contenido)}</section>`;
+          return;
+        }
+        if (nombre === 'pasos') {
+          html += `<section class="mt-12 ${clase}">${pintarPasos(contenido)}</section>`;
+          return;
+        }
+
+        const destacado = nombre === 'atencion';
+        // Al párrafo de horas se le cuelga el cuadro de plata, que lo calcula el
+        // código sobre el rango que él declaró — no el modelo.
+        const extra = nombre === 'horas' ? pintarCosto() : '';
+        html += `
+          <section class="mt-12 ${clase}">
+            <h3 class="rotulo">${ROTULOS[nombre] || escapar(nombre)}</h3>
+            <div class="mt-4 ${destacado ? 'destacado border border-primary/40 bg-primary/5 p-5' : ''} leading-relaxed ${destacado ? '' : 'text-on-surface-variant'}">${escapar(contenido).replace(/\n/g, '<br>')}</div>
+            ${extra}
+          </section>`;
+      });
+
+      cerrarHallazgos();
+      if (enCurso) html += '<span class="ml-1 inline-block h-4 w-2 animate-pulse bg-primary align-middle"></span>';
+      $('resultado-analisis').innerHTML = html;
+    }
+
+    function pintarHallazgo(contenido) {
+      const campo = (clave) => {
+        const m = contenido.match(new RegExp(`^${clave}:\\s*(.+)$`, 'mi'));
+        return m ? m[1].trim() : '';
+      };
+      const titulo = campo('titulo');
+      // Mientras el bloque se está escribiendo puede no haber título todavía.
+      if (!titulo) return '';
+
+      const fila = (rotulo, valor) =>
+        valor
+          ? `<p class="mt-1 text-sm text-on-surface-variant"><span class="text-outline">${rotulo}:</span> ${escapar(valor)}</p>`
+          : '';
+
+      return `
+        <div class="hallazgo border-l border-outline-variant pl-5 [&:not(:first-child)]:mt-8">
+          <p class="font-medium">${escapar(titulo)}</p>
+          ${fila('Lo que vemos', campo('vemos'))}
+          ${fila('Cómo se resuelve', campo('resolvemos'))}
+          ${fila('Qué gana', campo('beneficio'))}
+        </div>`;
+    }
+
+    const pesos = (n) => '$' + Math.round(n).toLocaleString('es-CL');
+
+    /*
+      Cuadro de costo. La aritmética la hace el código, no el modelo: horas
+      declaradas x 12 x valor hora del sueldo mínimo. Se usa el mínimo porque es
+      el piso indiscutible — quien consolida planillas casi siempre gana más — y
+      el cuadro lo dice, para que la cifra no se pueda discutir.
+    */
+    function pintarCosto() {
+      const r = estado.respuestas.find((x) => x.horasMes);
+      if (!r) return '';
+
+      const [minMes, maxMes] = r.horasMes;
+      const vh = banco.costo.valorHora;
+      const minAno = minMes * 12;
+      const maxAno = maxMes * 12;
+
+      // Un mes de jornada completa son ~182 horas: sirve para expresar el total
+      // anual en meses de una persona, que es la unidad que de verdad se entiende.
+      const horasMesJornada = banco.costo.horasSemana * 4.333;
+      const mesesMin = minAno / horasMesJornada;
+      const mesesMax = maxAno / horasMesJornada;
+      const cifra = (n) => n.toFixed(1).replace('.', ',').replace(',0', '');
+
+      return `
+        <div class="costo mt-6">
+          <p class="costo-titulo">Lo que cuesta ese tiempo en un año</p>
+          <p class="costo-cifra">${pesos(minAno * vh)} <span class="a">a</span> ${pesos(maxAno * vh)}</p>
+
+          <div class="cifras">
+            <div class="cifra-tarjeta">
+              <p class="cifra-valor">${minMes} a ${maxMes}</p>
+              <p class="cifra-etiqueta">horas al mes en trabajo repetitivo, según su respuesta</p>
+            </div>
+            <div class="cifra-tarjeta">
+              <p class="cifra-valor">${minAno} a ${maxAno}</p>
+              <p class="cifra-etiqueta">horas al año, multiplicando por los doce meses</p>
+            </div>
+            <div class="cifra-tarjeta">
+              <p class="cifra-valor">${cifra(mesesMin)} a ${cifra(mesesMax)}</p>
+              <p class="cifra-etiqueta">meses completos de una persona, dedicados a rehacer lo que ya existe</p>
+            </div>
+          </div>
+
+          <p class="costo-remate">
+            Y esta es la parte barata del problema: es lo único que se puede contar con doce
+            respuestas. Lo caro son las decisiones que se toman con información que llega tarde
+            — el precio que se movió mal, el cliente que se fue sin que nadie lo notara, la compra
+            que se hizo sobre un dato equivocado. Eso no aparece en ninguna planilla de horas.
+          </p>
+          <div class="supuestos">
+            <p class="mini-rotulo">Supuestos del cálculo</p>
+            <div class="supuestos-filas">
+              <span>Sueldo base del trabajo<b>${pesos(banco.costo.sueldoBase)}</b></span>
+              <span>Leyes sociales<b>+${Math.round((banco.costo.leyesSociales - 1) * 100)}%</b></span>
+              <span>Jornada legal<b>${banco.costo.horasSemana} h semanales</b></span>
+              <span>Costo por hora<b>${pesos(banco.costo.valorHora)}</b></span>
+            </div>
+            <p class="supuestos-nota">
+              Conservador: este trabajo lo suele hacer alguien que gana más. Si su caso es otro,
+              el cálculo se rehace con su cifra en la reunión.
+            </p>
+          </div>
+        </div>`;
+    }
+
+    /*
+      La maqueta. Antes eran cajas vacías y no mostraba nada: ahora se dibuja un
+      tablero de verdad, con un tipo de visualización distinto por tarjeta. Los
+      números son de muestra y el sello lo dice — el punto es que vea la forma.
+    */
+    const CHISPA = '4,22 14,17 24,19 34,12 44,14 54,8 64,10 74,4';
+
+    function pintarVistazo(contenido) {
+      const lineas = contenido.split('\n').map((l) => l.trim()).filter(Boolean);
+      const intro = lineas.filter((l) => !l.toLowerCase().startsWith('tarjeta:')).join(' ');
+      const tarjetas = lineas
+        .filter((l) => l.toLowerCase().startsWith('tarjeta:'))
+        .map((l) => l.replace(/^tarjeta:\s*/i, '').split('::').map((x) => x.trim()));
+
+      if (!tarjetas.length) return '';
+
+      // Un tipo de visualización por posición, para que parezca un tablero y no
+      // cuatro cajas iguales.
+      const visual = [
+        // 1. Cifra grande con variación y curva
+        `<div class="t-cifra">
+           <span class="valor">$4.280.500</span>
+           <span class="chip sube">+12%</span>
+         </div>
+         <svg class="chispa" viewBox="0 0 78 26" preserveAspectRatio="none">
+           <polyline points="${CHISPA}" />
+         </svg>`,
+        // 2. Avance con barra de progreso
+        `<div class="t-avance">
+           <span class="valor">63<span class="pct">%</span></span>
+           <span class="sub">día 12 de 30</span>
+         </div>
+         <div class="progreso"><div style="width:63%"></div></div>`,
+        // 3. Ranking de tres filas
+        `<div class="t-lista">
+           ${[82, 54, 31]
+             .map(
+               (v) => `<div class="fila">
+                 <span class="etiq"></span>
+                 <div class="mini"><div style="width:${v}%" class="${v < 60 ? 'bajo' : ''}"></div></div>
+                 <span class="num">${v}%</span>
+               </div>`
+             )
+             .join('')}
+         </div>`,
+        // 4. Alertas
+        `<div class="t-alertas">
+           ${['alta', 'alta', 'media']
+             .map(
+               (n) => `<div class="alerta"><span class="punto ${n}"></span><span class="etiq"></span></div>`
+             )
+             .join('')}
+         </div>`,
+      ];
+
+      return `
+        <h3 class="rotulo">${ROTULOS.vistazo}</h3>
+        ${intro ? `<p class="mt-4 leading-relaxed text-on-surface-variant">${escapar(intro)}</p>` : ''}
+        <div class="maqueta mt-6">
+          <div class="maqueta-barra">
+            <span></span><span></span><span></span>
+            <span class="sello">Datos de ejemplo</span>
+          </div>
+          <div class="maqueta-grilla">
+            ${tarjetas
+              .slice(0, 4)
+              .map(
+                ([nombre, detalle], i) => `
+              <div class="maqueta-tarjeta">
+                <p class="maqueta-nombre">${escapar(nombre)}</p>
+                <div class="maqueta-visual">${visual[i % visual.length]}</div>
+                <p class="maqueta-detalle">${escapar(detalle || '')}</p>
+              </div>`
+              )
+              .join('')}
+          </div>
+        </div>
+        <p class="maqueta-nota">
+          Ejemplo de la estructura, con datos de muestra. Los indicadores son los suyos; los valores
+          salen de sus sistemas.
+        </p>`;
+    }
+
+    /*
+      La propuesta. El párrafo del "por qué" lo escribe el modelo; los entregables,
+      lo que incluye siempre y los plazos salen de la configuración del sitio —
+      son compromiso comercial y no pueden variar por prospecto. Sin precios: se
+      conversan en la reunión.
+    */
+    // Los titulares: lo único que se ve en pantalla. Cada línea es una frase
+    // que cita una respuesta suya.
+    function pintarTitulares(contenido) {
+      const lineas = contenido
+        .split('\n')
+        .map((l) => l.replace(/^[-•*]\s*/, '').trim())
+        .filter(Boolean)
+        .slice(0, 5);
+      if (!lineas.length) return '';
+
+      return `
+        <h3 class="rotulo">${ROTULOS.titulares}</h3>
+        <ul class="titulares mt-5">
+          ${lineas.map((l) => `<li>${escapar(l)}</li>`).join('')}
+        </ul>`;
+    }
+
+    function pintarPropuesta(contenido) {
+      const servicio = estado.ramal?.servicio;
+      const ficha = banco.propuesta[servicio];
+      if (!ficha) return '';
+
+      return `
+        <h3 class="rotulo">${ROTULOS.propuesta}</h3>
+        <p class="propuesta-titular">${escapar(ficha.titular)}</p>
+        <p class="mt-3 leading-relaxed text-on-surface-variant">${escapar(contenido).replace(/\n/g, '<br>')}</p>
+
+        <div class="propuesta-caja">
+          <div class="propuesta-cols">
+            <div>
+              <p class="mini-rotulo">Qué le entregamos</p>
+              <ul class="lista-check">
+                ${ficha.entregables.map((e) => `<li>${escapar(e)}</li>`).join('')}
+              </ul>
+            </div>
+            <div>
+              <p class="mini-rotulo">Incluido siempre</p>
+              <ul class="lista-check">
+                ${banco.incluye.map((e) => `<li>${escapar(e)}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <p class="mini-rotulo mt-6">Cómo se implementa</p>
+          <div class="fases">
+            ${banco.fases
+              .map(
+                (f) => `
+              <div class="fase">
+                <p class="fase-plazo">${escapar(f.plazo)}</p>
+                <p class="fase-que">${escapar(f.que)}</p>
+                <p class="fase-detalle">${escapar(f.detalle)}</p>
+              </div>`
+              )
+              .join('')}
+          </div>
+
+          <div class="stack">
+            <p class="mini-rotulo">Herramientas que usamos</p>
+            <div class="stack-logos">
+              ${banco.stack.map((h) => `<span><span class="marca">${h.svg}</span>${h.nombre}</span>`).join('')}
+            </div>
+            <p class="stack-nota">
+              Infraestructura de nivel mundial, operada por nosotros. Usted no administra
+              servidores ni licencias.
+            </p>
+          </div>
+        </div>`;
+    }
+
+    function pintarPasos(contenido) {
+      const pasos = contenido
+        .split('\n')
+        .map((l) => l.trim())
+        .filter((l) => l.toLowerCase().startsWith('paso:'))
+        .map((l) => l.replace(/^paso:\s*/i, '').split('::').map((x) => x.trim()));
+
+      if (!pasos.length) return '';
+
+      return `
+        <h3 class="rotulo">${ROTULOS.pasos}</h3>
+        <ol class="pasos mt-5">
+          ${pasos
+            .map(
+              ([que, resultado], i) => `
+            <li>
+              <span class="paso-n">${i + 1}</span>
+              <div>
+                <p class="paso-que">${escapar(que)}</p>
+                ${resultado ? `<p class="paso-resultado">${escapar(resultado)}</p>` : ''}
+              </div>
+            </li>`
+            )
+            .join('')}
+        </ol>
+        <a class="boton-agendar" href="${banco.calendly}">Agendar los 30 minutos &rarr;</a>`;
+    }
+
+    // El navegador imprime el <title> en su cabecera. Si el usuario dejó esa
+    // casilla activada, al menos que se lea como documento y no como pestaña.
+    $('btn-pdf').addEventListener('click', () => {
+      const titulo = document.title;
+      document.title = `Diagnóstico — ${estado.datosCliente || 'Buffo IA Consulting'}`;
+      window.print();
+      setTimeout(() => { document.title = titulo; }, 500);
+    });
+
+    // Modo demo (?demo=1): pinta el resultado con una muestra guardada, sin pasar
+    // por el cuestionario ni llamar a la API. Existe para poder revisar el diseño
+    // del PDF sin gastar tokens en cada iteración. No está enlazado en ninguna parte.
+    if (parametros.has('demo')) {
+      const cual = parametros.get('demo');
+      const ramalDemo = banco.ramales.find((r) => r.id === cual) || banco.ramales[0];
+      // Los mismos casos con los que se generaron las muestras, para que la
+      // portada no muestre un contacto ni un puntaje que no calzan con el texto.
+      const CASOS_DEMO = {
+        visibilidad: { empresa: 'Distribuidora Andes', nombre: 'Rodrigo Salas', puntaje: 17, horas: [60, 150] },
+        datos: { empresa: 'Maestranza Pacífico', nombre: 'Carolina Vidal', puntaje: 33, horas: [20, 60] },
+        procesos: { empresa: 'Servicios Altamira', nombre: 'Felipe Cortés', puntaje: 44, horas: [60, 150] },
+        vigilancia: { empresa: 'Comercial Los Robles', nombre: 'Andrés Peña', puntaje: 83, horas: [5, 20] },
+      };
+      const caso = CASOS_DEMO[ramalDemo.id];
+      // El cuadro de costo se calcula desde la respuesta de horas: hay que
+      // sembrarla con las mismas del caso o el texto y el cuadro se contradicen.
+      estado.respuestas = [{ bloque: 'tronco', horasMes: caso.horas }];
+      const ejemplo = {
+        nombre: caso.nombre,
+        empresa: caso.empresa,
+        puntaje: { tronco: caso.puntaje },
+      };
+      const barras = [
+        { etiqueta: 'Rapidez del dato', valor: 0 },
+        { etiqueta: 'Origen del dato', valor: 33 },
+        { etiqueta: 'Fuentes dispersas', valor: 33 },
+        { etiqueta: 'Dependencia de personas', valor: 0 },
+        { etiqueta: 'Confiabilidad', valor: 0 },
+        { etiqueta: 'Trabajo manual', valor: 33 },
+      ];
+      // El cuadro de costo se calcula desde la respuesta de horas, así que hay
+      // que sembrarla o el bloque no aparece.
+      // El mismo rango con el que se generaron las muestras, para que el texto
+      // y el cuadro de costo no se contradigan.
+      estado.respuestas = [{ bloque: 'tronco', horasMes: caso.horas }];
+      estado.ramal = ramalDemo;
+      pintarPortada(ejemplo);
+      pintarEncabezado(ejemplo, barras);
+      mostrar('resultado');
+      fetch(`/_demo-${ramalDemo.id}.txt`)
+        .then((r) => r.text())
+        .then((t) => {
+          pintarAnalisis(t, false);
+          $('teaser-pdf').classList.remove('hidden');
+          $('resultado-cierre').classList.remove('hidden');
+        });
+    }
+  </script>
+
+  <style is:global>
+    /* Los titulares son lo único que se lee en pantalla: tipografía grande y
+       aire, para que se puedan barrer en cinco segundos. */
+    .titulares { list-style: none; padding: 0; margin: 0; }
+    .titulares li {
+      position: relative;
+      padding-left: 1.6rem;
+      margin-bottom: 1rem;
+      font-size: 1.0625rem;
+      line-height: 1.6;
+    }
+    .titulares li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .68em;
+      width: .7rem;
+      height: 1px;
+      background: #16B66B;
+    }
+
+    /* Etiqueta del frente de trabajo en el selector de dolor. Mono y en gris
+       para que el ojo lea primero el dolor; se enciende al pasar por encima. */
+    .etiqueta-frente {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #8E9099;
+      border: 1px solid #44474E;
+      padding: .3rem .6rem;
+      white-space: nowrap;
+      transition: color .2s, border-color .2s;
+    }
+    .opcion-ramal:hover .etiqueta-frente {
+      color: #16B66B;
+      border-color: #16B66B;
+    }
+
+    /* Estos bloques solo existen en el PDF, nunca en pantalla. */
+    .solo-imprimir { display: none; }
+
+    /*
+      EL PDF
+      En outbound este documento es lo primero que ve el prospecto, antes que la
+      home. Por eso no se imprime la pantalla en blanco: se arma un documento con
+      el sistema visual de las presentaciones de Buffo — tema claro, Inter 800 en
+      titulares, IBM Plex Mono en rótulos, verde Buffo de acento.
+    */
+    @media print {
+      /*
+        La fecha y la URL que el navegador imprime arriba y abajo NO salen de acá:
+        las agrega el diálogo de impresión, en la casilla "Encabezados y pies de
+        página". Solo desaparecen con margen 0, pero entonces el padding aplica una
+        sola vez y las páginas interiores quedan pegadas al borde. Se prefiere el
+        margen real y se apaga la casilla; el navegador recuerda la elección.
+      */
+      @page { size: A4; margin: 15mm 14mm 16mm; }
+
+      /* Sin esto el navegador descarta fondos y las barras salen vacías. */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      header, footer, .accent-line, #barra, .no-imprimir {
+        display: none !important;
+      }
+      body, .hero-bg, main, section {
+        background: #fff !important;
+        color: #0d0e10 !important;
+      }
+      .max-w-3xl { max-width: none !important; }
+      #paso-resultado {
+        font-family: 'Inter', sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: #0d0e10;
+      }
+
+      .solo-imprimir { display: block !important; }
+
+      /* ---------- Portada ---------- */
+      #portada-pdf {
+        position: relative;
+        height: 247mm;                /* alto útil de la hoja: la portada va sola */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        break-after: page;
+      }
+      .portada-logo { position: absolute; top: 0; right: 0; width: 42mm; }
+      .portada-centro { margin-top: -10mm; }
+      #portada-pdf .eyebrow {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 8.5pt; text-transform: uppercase; letter-spacing: .2em;
+        color: #0e8a4f; margin-bottom: 10mm;
+      }
+      #portada-pdf .eyebrow::before {
+        content: ''; display: inline-block; width: 7mm; height: 1.5pt;
+        background: #16b66b; vertical-align: middle; margin-right: 3mm;
+      }
+      #portada-pdf .wordmark,
+      #portada-pdf .wordmark-cliente {
+        font-weight: 900; letter-spacing: -.03em; line-height: 1.02;
+        font-size: 40pt; margin: 0;
+      }
+      #portada-pdf .wordmark-cliente { color: #0d0e10; }
+      #portada-pdf .verde { color: #16b66b; }
+      #portada-pdf .por { color: #5b616b; font-weight: 800; }
+
+      .portada-puntaje {
+        margin-top: 16mm; padding-top: 6mm;
+        border-top: 1.5pt solid #0d0e10;
+        display: flex; align-items: flex-start; gap: 14mm;
+      }
+      .portada-puntaje .cifra {
+        font-size: 46pt; font-weight: 900; letter-spacing: -.04em;
+        color: #16b66b; line-height: 1; margin: 0;
+      }
+      .portada-puntaje .de { font-size: 18pt; color: #5b616b; }
+      .cifra-rotulo {
+        font-family: 'IBM Plex Mono', monospace; font-size: 8pt;
+        text-transform: uppercase; letter-spacing: .12em; color: #5b616b; margin-top: 3mm;
+      }
+      .portada-tramo { flex: 1; }
+      .tramo-etiqueta { font-size: 15pt; font-weight: 800; letter-spacing: -.02em; margin: 0; }
+      .tramo-resumen { color: #5b616b; margin-top: 2mm; font-size: 10pt; }
+
+      .portada-pie {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        display: flex; justify-content: space-between;
+        font-family: 'IBM Plex Mono', monospace; font-size: 8pt;
+        color: #5b616b; border-top: 1px solid rgba(13,14,16,.10); padding-top: 3mm;
+      }
+
+      /* ---------- Membrete de las páginas de contenido ---------- */
+      #membrete {
+        display: flex !important; justify-content: space-between; align-items: baseline;
+        border-bottom: 1px solid rgba(13,14,16,.10);
+        padding-bottom: 3mm; margin-bottom: 9mm;
+        font-family: 'IBM Plex Mono', monospace; font-size: 8pt; color: #5b616b;
+      }
+      .membrete-marca { font-family: 'Inter', sans-serif; font-weight: 800; color: #0d0e10; }
+      #membrete .verde { color: #16b66b; }
+
+      .titulares li {
+        font-size: 10pt !important;
+        padding-left: 6mm !important;
+        margin-bottom: 2.5mm !important;
+        line-height: 1.5 !important;
+      }
+      .titulares li::before { top: .7em !important; width: 3.5mm !important; }
+
+      /* ---------- Rótulos y bloques ---------- */
+      #paso-resultado .rotulo {
+        font-family: 'IBM Plex Mono', monospace !important;
+        font-size: 8pt !important; text-transform: uppercase; letter-spacing: .18em;
+        color: #0e8a4f !important; font-weight: 500;
+      }
+      #paso-resultado .rotulo::before {
+        content: ''; display: inline-block; width: 5mm; height: 1.2pt;
+        background: #16b66b; vertical-align: middle; margin-right: 2.5mm;
+      }
+      #paso-resultado .bloque { break-inside: avoid; margin-top: 9mm !important; }
+      #paso-resultado .bloque-largo { margin-top: 9mm !important; }
+      #paso-resultado .hallazgo {
+        break-inside: avoid;
+        border-left: 2pt solid #16b66b !important;
+        padding-left: 5mm !important;
+        margin-top: 6mm !important;
+      }
+      #paso-resultado .destacado {
+        background: #f2faf6 !important;
+        border: 1px solid #16b66b !important;
+        border-radius: 14px; padding: 6mm !important;
+      }
+
+      /* Paleta oscura del sitio -> papel */
+      .text-on-surface-variant { color: #3f444d !important; }
+      .text-outline { color: #6b7178 !important; }
+      .text-error { color: #c0392b !important; }
+      .bg-surface-container { background: #e9ecef !important; }
+      .bg-primary { background: #16b66b !important; }
+      .fila-barra { break-inside: avoid; }
+
+      /* ---------- Maqueta "cómo se vería su información" ---------- */
+      .maqueta {
+        border: 1px solid rgba(13,14,16,.16); border-radius: 16px;
+        overflow: hidden; break-inside: avoid;
+      }
+      .maqueta-barra {
+        background: #f4f5f3; border-bottom: 1px solid rgba(13,14,16,.10);
+        padding: 2.5mm 4mm; display: flex; gap: 2mm;
+      }
+      .maqueta-barra span {
+        width: 2.4mm; height: 2.4mm; border-radius: 50%;
+        background: rgba(13,14,16,.16); display: inline-block;
+      }
+      .maqueta-barra span:first-child { background: #16b66b; }
+      .maqueta-grilla {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      }
+      .maqueta-tarjeta {
+        padding: 5mm; border-right: 1px solid rgba(13,14,16,.10);
+        border-bottom: 1px solid rgba(13,14,16,.10);
+      }
+      .maqueta-tarjeta:nth-child(2n) { border-right: none; }
+      .maqueta-tarjeta:nth-last-child(-n+2) { border-bottom: none; }
+      .maqueta-barra .sello {
+        margin-left: auto; width: auto; height: auto; border-radius: 4px;
+        background: rgba(13,14,16,.06); color: #6b7178;
+        font-family: 'IBM Plex Mono', monospace; font-size: 6.5pt;
+        letter-spacing: .1em; text-transform: uppercase; padding: .8mm 2mm;
+      }
+      .maqueta-nombre { font-weight: 700; font-size: 10pt; margin: 0; }
+      .maqueta-visual { margin: 3mm 0 3.5mm; }
+      .maqueta-detalle { font-size: 8.5pt; color: #5b616b; margin: 0; line-height: 1.45; }
+
+      /* 1. Cifra grande con variación y curva */
+      .t-cifra { display: flex; align-items: baseline; gap: 2.5mm; }
+      .t-cifra .valor { font-size: 17pt; font-weight: 800; letter-spacing: -.03em; }
+      .chip {
+        font-size: 7.5pt; font-weight: 700; padding: .5mm 1.8mm; border-radius: 4px;
+      }
+      .chip.sube { background: #e7f7ef; color: #0e8a4f; }
+      .chispa {
+        width: 100%; height: 9mm; margin-top: 2mm;
+        fill: none; stroke: #16b66b; stroke-width: 2; stroke-linejoin: round;
+      }
+
+      /* 2. Avance con barra de progreso */
+      .t-avance { display: flex; align-items: baseline; gap: 2.5mm; }
+      .t-avance .valor { font-size: 17pt; font-weight: 800; letter-spacing: -.03em; }
+      .t-avance .pct { font-size: 10pt; color: #5b616b; }
+      .t-avance .sub { font-size: 8pt; color: #6b7178; }
+      .progreso {
+        height: 2.2mm; background: #e9ecef; border-radius: 999px;
+        margin-top: 2.5mm; overflow: hidden;
+      }
+      .progreso div { height: 100%; background: #16b66b; }
+
+      /* 3. Ranking */
+      .t-lista .fila { display: flex; align-items: center; gap: 2mm; margin-bottom: 1.8mm; }
+      .t-lista .etiq {
+        flex: 0 0 12mm; height: 1.8mm; border-radius: 999px; background: rgba(13,14,16,.13);
+      }
+      .t-lista .mini { flex: 1; height: 2.2mm; background: #e9ecef; border-radius: 999px; overflow: hidden; }
+      .t-lista .mini div { height: 100%; background: #16b66b; }
+      .t-lista .mini div.bajo { background: #e0a13a; }
+      .t-lista .num {
+        flex: 0 0 auto; font-size: 7.5pt; color: #5b616b;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      /* 4. Alertas */
+      .t-alertas .alerta { display: flex; align-items: center; gap: 2mm; margin-bottom: 2.2mm; }
+      .t-alertas .punto { width: 2.2mm; height: 2.2mm; border-radius: 50%; flex: 0 0 auto; }
+      .t-alertas .punto.alta { background: #d0503c; }
+      .t-alertas .punto.media { background: #e0a13a; }
+      .t-alertas .etiq {
+        flex: 1; height: 1.8mm; border-radius: 999px; background: rgba(13,14,16,.13);
+      }
+
+      /* ---------- Cuadro de costo ---------- */
+      .costo {
+        border: 1px solid #16b66b; border-radius: 16px; padding: 6mm;
+        background: #f7fbf9; break-inside: avoid;
+      }
+      .costo-titulo {
+        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        text-transform: uppercase; letter-spacing: .14em; color: #5b616b; margin: 0;
+      }
+      .costo-cifra {
+        font-size: 24pt; font-weight: 900; letter-spacing: -.035em;
+        color: #0e8a4f; margin: 2.5mm 0 0; line-height: 1.1;
+      }
+      .costo-cifra .a { font-size: 13pt; font-weight: 600; color: #5b616b; }
+
+
+
+
+      /* Fila de indicadores: la forma correcta para "un puñado de números
+         titulares". Sin gráfico, porque no hay nada contra qué comparar. */
+      .cifras {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 5mm; margin-top: 5.5mm;
+      }
+      .cifra-tarjeta { border-top: 2pt solid #16b66b; padding-top: 3mm; }
+      .cifra-valor {
+        font-size: 17pt; font-weight: 800; letter-spacing: -.03em;
+        color: #0d0e10; margin: 0; line-height: 1.1;
+      }
+      .cifra-etiqueta {
+        font-size: 8pt; color: #5b616b; margin: 2mm 0 0; line-height: 1.45;
+      }
+
+
+      .supuestos {
+        margin: 5mm 0 0; padding-top: 4mm;
+        border-top: 1px solid rgba(13,14,16,.10);
+      }
+      .supuestos-filas {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm;
+      }
+      .supuestos-filas span {
+        display: flex; flex-direction: column; gap: .8mm;
+        font-size: 7.5pt; color: #6b7178; line-height: 1.3;
+      }
+      .supuestos-filas b { font-size: 9.5pt; color: #0d0e10; }
+      .supuestos-nota { margin: 3.5mm 0 0; font-size: 7.5pt; color: #6b7178; line-height: 1.45; }
+
+      .costo-remate {
+        margin: 5mm 0 0; padding-top: 4mm;
+        border-top: 1px solid rgba(22,182,107,.35);
+        font-size: 9.5pt; line-height: 1.55; color: #0d0e10;
+      }
+      .maqueta-nota {
+        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        color: #6b7178; margin-top: 2.5mm;
+      }
+
+      /* ---------- Lo que proponemos ---------- */
+      .propuesta-titular {
+        font-size: 15pt; font-weight: 800; letter-spacing: -.025em;
+        margin: 3.5mm 0 0; line-height: 1.25;
+      }
+      .propuesta-caja {
+        margin-top: 6mm; border: 1px solid rgba(13,14,16,.16);
+        border-radius: 16px; padding: 6mm; break-inside: avoid;
+      }
+      .propuesta-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+      .mini-rotulo {
+        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        text-transform: uppercase; letter-spacing: .14em; color: #5b616b;
+        margin: 0 0 3mm;
+      }
+      .lista-check { list-style: none; padding: 0; margin: 0; }
+      .lista-check li {
+        position: relative; padding-left: 5.5mm; margin-bottom: 2.2mm;
+        font-size: 9pt; line-height: 1.45;
+      }
+      .lista-check li::before {
+        content: ''; position: absolute; left: 0; top: 1.4mm;
+        width: 2.6mm; height: 1.4mm;
+        border-left: 1.4pt solid #16b66b; border-bottom: 1.4pt solid #16b66b;
+        transform: rotate(-45deg);
+      }
+
+      .fases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+      .fase {
+        border-top: 2pt solid #16b66b; padding-top: 3mm;
+      }
+      .fase-plazo {
+        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        color: #0e8a4f; margin: 0 0 1.5mm; letter-spacing: .06em;
+      }
+      .fase-que { font-weight: 700; font-size: 9.5pt; margin: 0; line-height: 1.3; }
+      .fase-detalle { font-size: 8.5pt; color: #5b616b; margin: 1.5mm 0 0; line-height: 1.4; }
+
+      .stack {
+        margin: 6mm 0 0; padding-top: 4mm;
+        border-top: 1px solid rgba(13,14,16,.10);
+      }
+      .stack-logos {
+        display: flex; align-items: flex-start; gap: 11mm;
+        margin: 2mm 0 4mm;
+      }
+      .stack-logos > span {
+        display: flex; flex-direction: column; align-items: center; gap: 1.8mm;
+        font-size: 7.5pt; color: #3f444d; letter-spacing: -.01em;
+      }
+      .stack-logos .marca {
+        display: flex; align-items: center; justify-content: center; height: 7mm;
+      }
+      .stack-logos svg { height: 6.2mm; width: auto; fill: #0d0e10; }
+      .stack-nota { font-size: 8.5pt; color: #5b616b; margin: 0; }
+
+      /* ---------- Próximos pasos ---------- */
+      .pasos { list-style: none; padding: 0; margin: 0; break-inside: avoid; }
+      .pasos li { display: flex; gap: 4mm; margin-bottom: 4mm; align-items: flex-start; }
+      .paso-n {
+        flex: 0 0 auto; width: 6.5mm; height: 6.5mm; border-radius: 50%;
+        background: #16b66b; color: #fff; font-weight: 800; font-size: 9pt;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .paso-que { font-weight: 700; margin: 0; }
+      .paso-resultado { color: #5b616b; margin: 1mm 0 0; font-size: 9.5pt; }
+      .boton-agendar {
+        display: inline-block; margin-top: 4mm;
+        background: #16b66b !important; color: #fff !important;
+        padding: 3.5mm 8mm; border-radius: 10px;
+        font-weight: 700; text-decoration: none; font-size: 10pt;
+      }
+
+      /* ---------- Pie ---------- */
+      #pie-impreso {
+        margin-top: 12mm; padding-top: 3mm;
+        border-top: 1px solid rgba(13,14,16,.10);
+        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        line-height: 1.5; color: #6b7178; break-inside: avoid;
+      }
+      #pie-impreso p { margin: 1mm 0; }
+
+      /* El cursor del streaming no va al papel. */
+      .animate-pulse { display: none !important; }
+    }
+  </style>
+</BaseLayout>

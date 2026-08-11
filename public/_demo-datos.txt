@@ -1,0 +1,49 @@
+### titulares
+- Usted mismo dijo que "pasa seguido" tomar decisiones con un dato que después resultó malo.
+- Armar la foto del mes exige abrir más de cinco sistemas y planillas, y todo pasa por un Excel armado a mano.
+- Cuando dos reportes no cuadran, en Maestranza Pacífico se demoran días en saber cuál es el correcto.
+- El mismo cliente o producto aparece escrito distinto según el sistema: usted lo reconoce como "un problema conocido".
+- Existe un lugar con la versión correcta de productos y precios, pero "no todos lo usan".
+
+### resumen
+Sus respuestas dibujan una empresa que sí tiene la disciplina de mirar el mes al día siguiente, pero que arma esa foto sobre una base inestable: un Excel manual, más de cinco fuentes distintas y datos que no siempre significan lo mismo de un sistema a otro. El problema de fondo no es que falte tecnología, es que la información que ya tienen no es confiable ni llega ordenada, y eso es exactamente lo que usted pidió resolver cuando dijo que quiere que "el número sea el número".
+
+### hallazgo
+titulo: Se decide con información que, por su propia admisión, falla seguido
+vemos: usted respondió que "pasa seguido" tomar una decisión con un dato que después resultó estar malo, y que cuando dos reportes no cuadran toma días descubrir cuál es el correcto
+resolvemos: se ordena el origen de cada dato -productos, clientes, precios- para que exista una sola versión verificada, en vez de que cada reporte calcule las cosas a su manera
+beneficio: cuando le pasen un número, no va a tener que preguntar tres veces cuál está bueno, que fue exactamente lo que usted pidió
+
+titulo: La foto del mes depende de una persona armando un Excel a mano
+vemos: usted dijo que la información sale de "alguien arma un Excel", que hay que abrir más de cinco sistemas para reunirla, y que si esa persona sale de vacaciones "se atrasa"
+resolvemos: se automatiza el armado de esa información para que no dependa de una persona ni de copiar y pegar entre planillas
+beneficio: la foto del mes deja de ser un trabajo artesanal frágil y pasa a estar disponible sin que nadie tenga que sentarse a armarla
+
+titulo: El mismo cliente o producto significa cosas distintas según el sistema que se mire
+vemos: usted confirmó que un mismo producto o cliente "aparece escrito distinto según el sistema" y que aunque existe un lugar con la versión correcta, "no todos lo usan"
+resolvemos: se limpia y ordena esa base para que haya una sola forma de nombrar cada cosa, y se arregla también la historia de los últimos tres años que usted mismo dijo que "hay que arreglar" antes de poder analizarla
+beneficio: cualquier cruce entre sistemas deja de generar diferencias que después hay que perseguir a mano
+
+### horas
+Usted declaró entre 20 y 60 horas al mes en trabajo repetitivo, lo que en un año son entre 240 y 720 horas, según lo que usted mismo indicó. Eso no es lo más caro de este cuadro -lo más caro es lo que ya reconoció: decisiones tomadas con datos que después resultan malos, y días perdidos discutiendo cuál reporte tiene razón-, pero esas horas hoy se van en armar Excel y cuadrar cifras en vez de revisar por qué no cuadran o de analizar qué está pasando en la maestranza.
+
+### vistazo
+Si esto se resuelve, cada mañana usted tendría delante un tablero, no un Excel armado a mano la noche anterior.
+tarjeta: Cierre del mes :: Estado real del mes en curso, sin esperar a que alguien lo arme a mano
+tarjeta: Consistencia de datos :: Alertas cuando un mismo cliente o producto aparece registrado distinto entre sistemas
+tarjeta: Reportes cruzados :: Comparación automática entre reportes para detectar diferencias antes de que usted las descubra
+tarjeta: Historia de tres años :: Serie ordenada y limpia, lista para analizar sin trabajo previo de arreglo
+
+### atencion
+Usted eligió como dolor "mis datos son un desorden", pero lo que más llama la atención es que ya le costó plata: dijo que tomar decisiones con datos malos "pasa seguido". Eso no es un problema de orden estético de planillas, es un problema de confianza operativa. El riesgo silencioso es que existe un lugar con la información correcta y aun así "no todos lo usan": el desorden no es solo técnico, es también de hábito, y eso hay que resolverlo junto con el dato.
+
+### limites
+Con doce respuestas no se puede saber cuáles decisiones específicas se tomaron mal ni cuánto costaron en plata, ni tampoco cuáles de sus más de cinco sistemas son los que más fricción generan. Tampoco sabemos si el problema de "no todos lo usan" es de capacitación, de resistencia o de que la herramienta actual es incómoda. Eso requiere mirar sus sistemas y conversar con las personas que arman esos reportes hoy, no un cuestionario.
+
+### propuesta
+Lo que usted pidió -que cuando pida un número, sea el número- es justo lo que se ataca ordenando el origen de sus datos, no comprando un dashboard más bonito encima del mismo desorden. En Maestranza Pacífico el problema no es que falte información, es que hoy vive repartida y contradicha entre más de cinco sistemas y un Excel manual; ordenar esa base es el paso que hace posible confiar después en cualquier reporte o tablero que se construya sobre ella.
+
+### pasos
+paso: Conversación de treinta minutos :: Revisar juntos dónde están hoy sus fuentes de datos y cuáles son las que más contradicciones generan
+paso: Mapeo de sus sistemas y planillas :: Identificar exactamente dónde vive cada dato y por qué no coincide entre sí
+paso: Construcción de la fuente única de verdad :: Productos, clientes y precios ordenados en un solo lugar confiable, con la historia de tres años ya arreglada

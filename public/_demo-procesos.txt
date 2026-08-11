@@ -1,0 +1,49 @@
+### titulares
+- Usted mismo lo dijo: tres personas metidas media mañana todos los lunes armando el mismo informe.
+- La foto real del mes tarda una semana y sale de un Excel armado a mano, con dos o tres fuentes distintas.
+- Reconoció que alguna vez tomaron una decisión con un dato que después resultó estar malo.
+- El error de tipeo o copiado obliga a rehacer trabajo todas las semanas, no de vez en cuando.
+- Entre 60 y 150 horas al mes se van en tareas repetitivas, según lo que usted declaró.
+
+### resumen
+Sus respuestas dibujan un mismo problema visto desde distintos ángulos: la información de Servicios Altamira no llega a tiempo ni con la confianza necesaria, porque depende de que una persona consolide planillas a mano, semana tras semana. No es un tema de falta de tecnología nueva, es que el dato bueno existe pero tarda una semana en juntarse y se rompe apenas alguien se enferma o toma vacaciones.
+
+### hallazgo
+titulo: El informe de los lunes es un punto único de fragilidad
+vemos: usted contó que son tres personas metidas media mañana consolidando planillas, todas las semanas, y que cuando la persona que arma la información sale de vacaciones, todo se atrasa
+resolvemos: se automatiza la consolidación de esas planillas para que el informe se arme solo, sin depender de que alguien esté disponible ese lunes en particular
+beneficio: el informe llega a la misma hora todas las semanas, la tenga quien la tenga, y las tres personas dejan de perder la mañana en copiar y pegar
+
+titulo: Decisiones tomadas con datos que fallan
+vemos: usted reconoció que alguna vez tomaron una decisión con un dato que después resultó estar malo, y que el error de tipeo o de copiado obliga a rehacer trabajo todas las semanas
+resolvemos: se ordena el proceso de consolidación para que el dato pase por un solo punto de armado en vez de por tres o más personas tocándolo a mano
+beneficio: cuando alguien mira el número para decidir, sabe que ese número no viene de un copy-paste que se pudo equivocar
+
+titulo: La foto del mes llega tarde para actuar sobre ella
+vemos: usted dijo que se demoran una semana en tener la foto real del mes, armada por una persona a partir de dos o tres planillas
+resolvemos: automatizar la consolidación no solo ahorra horas, también acorta ese plazo de una semana a algo cercano al tiempo real
+beneficio: usted decide sobre lo que está pasando este mes, no sobre lo que pasó hace siete días
+
+### horas
+Usted declaró entre 60 y 150 horas al mes en trabajo repetitivo, lo que anualizado son entre 720 y 1.800 horas al año. Eso es tiempo de tres personas, según contó, metidas cada semana en consolidar planillas en vez de hacer lo que usted mismo identificó que harían con ese tiempo: atender mejor a los clientes. Esas horas son la parte que se puede contar; lo que de verdad cuesta más caro es lo que no se ve en ninguna planilla: las decisiones que se toman tarde o con un dato que resultó estar malo, como usted mismo reconoció que pasó alguna vez.
+
+### vistazo
+Si esto estuviera resuelto, cada lunes usted tendría delante un panel armado solo, sin que nadie tuviera que tocar una planilla el fin de semana.
+tarjeta: Consolidado semanal :: El mismo informe de los lunes, armado automáticamente, sin las tres personas metidas media mañana
+tarjeta: Estado del mes en curso :: La foto que hoy tarda una semana, disponible al día, para decidir sobre lo que está pasando ahora
+tarjeta: Alertas de error :: Aviso automático cuando un dato no calza, antes de que llegue a una decisión
+tarjeta: Tiempo liberado por área :: Cuánto de esas horas repetitivas se está devolviendo al equipo para atender clientes
+
+### atencion
+Usted eligió como dolor las horas perdidas en tareas repetitivas, y es real y medible. Pero lo que más llama la atención es otra respuesta suya, casi de paso: que alguna vez tomaron una decisión con un dato que después resultó estar malo. Eso pasa exactamente porque tres o más personas tocan el mismo dato antes de que quede listo y porque hay que rehacerlo todas las semanas por errores de tipeo. El informe de los lunes no es solo un problema de horas, es la fuente más probable de esos datos que fallan.
+
+### limites
+Con doce preguntas no podemos afirmar cuánto le costó en plata esa vez que decidieron con un dato malo, ni identificar el error puntual que hoy obliga a rehacer el trabajo cada semana. Tampoco sabemos exactamente qué planillas y qué sistemas son los que se cruzan, ni dónde entra el error de tipeo con más frecuencia. Eso solo se ve mirando el proceso real, planilla por planilla, con la o las personas que hoy arman el informe del lunes.
+
+### propuesta
+Servicios Altamira no necesita un sistema nuevo, necesita que dejen de existir tres personas armando el mismo informe a mano todos los lunes. Automatizar esa consolidación ataca directamente lo que usted pidió resolver si pudiera elegir una sola cosa, y de paso reduce el riesgo de los datos que fallan y acorta el tiempo en que la foto del mes llega a sus manos. Es el cambio más concreto que se puede hacer sobre lo que usted mismo describió.
+
+### pasos
+paso: Conversación de treinta minutos :: Revisamos juntos cómo se arma hoy el informe del lunes y dónde se pierde el tiempo exacto
+paso: Mapeo del proceso de consolidación :: Se identifica planilla por planilla qué se puede automatizar y qué necesita orden antes
+paso: Puesta en marcha del informe automático :: El consolidado se arma solo cada semana y las tres personas quedan liberadas para atender clientes
