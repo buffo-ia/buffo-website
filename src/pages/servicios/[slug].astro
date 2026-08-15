@@ -107,7 +107,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-on-surface/5 border border-on-surface/5">
             {service.examples.map((ex, i) => (
-              <div class:list={['bg-background p-7 card-hover reveal', i % 3 === 1 && 'reveal-delay-1', i % 3 === 2 && 'reveal-delay-2']}>
+              <div class:list={['bg-surface-container-low p-7 card-hover reveal', i % 3 === 1 && 'reveal-delay-1', i % 3 === 2 && 'reveal-delay-2']}>
                 <span class="material-symbols-outlined text-primary text-3xl mb-4 block">{ex.icon}</span>
                 <h3 class="font-display text-lg mb-2">{ex.title}</h3>
                 <p class="text-on-surface-variant text-sm leading-relaxed">{ex.desc}</p>
@@ -132,7 +132,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-on-surface/5 border border-on-surface/5">
         {
           service.deliverables.map((d, i) => (
-            <div class:list={['bg-background p-7 flex items-start gap-4 card-hover reveal', i % 3 === 1 && 'reveal-delay-1', i % 3 === 2 && 'reveal-delay-2']}>
+            <div class:list={['bg-surface-container-low p-7 flex items-start gap-4 card-hover reveal', i % 3 === 1 && 'reveal-delay-1', i % 3 === 2 && 'reveal-delay-2']}>
               <span class="material-symbols-outlined text-primary text-2xl flex-shrink-0">check_circle</span>
               <span class="text-sm text-on-surface/90 leading-snug">{d}</span>
             </div>

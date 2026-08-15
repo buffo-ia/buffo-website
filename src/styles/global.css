@@ -252,6 +252,14 @@ textarea:focus {
   display: none;
 }
 
+/* ----- Acento sobre foto oscura -----
+   El destacado del blog SIEMPRE va sobre una foto con velo negro, dé lo mismo
+   el tema. Ahí no sirve el verde del tema claro (que está oscurecido para
+   contrastar contra blanco): sobre negro desaparece. Va el verde de marca. */
+.sobre-foto {
+  color: #16b66b;
+}
+
 /* ----- Logos del stack -----
    Los SVG de Simple Icons traen fill="#ffffff" quemado adentro y, servidos
    como <img>, el CSS no puede alcanzarlos: sobre fondo claro desaparecían.

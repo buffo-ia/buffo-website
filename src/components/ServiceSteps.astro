@@ -24,7 +24,7 @@ const { eyebrow = 'Metodología', title, steps } = Astro.props;
         steps.map((s, i) => (
           <div class="bg-background p-9 reveal" class:list={[i === 1 && 'reveal-delay-1', i === 2 && 'reveal-delay-2', i === 3 && 'reveal-delay-3']}>
             <div class="flex items-center gap-4 mb-5">
-              <span class="font-display text-primary/30 text-4xl leading-none">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display text-primary/45 text-4xl leading-none">{String(i + 1).padStart(2, '0')}</span>
               <span class="material-symbols-outlined text-primary text-3xl">{s.icon}</span>
             </div>
             <h3 class="font-display text-xl mb-3">{s.title}</h3>
