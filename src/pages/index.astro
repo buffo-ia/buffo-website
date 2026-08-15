@@ -87,7 +87,7 @@ const serviceSchema = {
 <BaseLayout schema={serviceSchema}>
   <!-- HERO -->
   <section class="hero-bg relative px-8 md:px-12 pt-20 pb-24 md:pt-24 md:pb-28 overflow-hidden">
-    <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <div class="relative z-10 max-w-5xl mx-auto text-center">
       <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
            H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
            que pide el plan de Perplexity y no estaba en ninguna parte visible. -->
@@ -96,14 +96,21 @@ const serviceSchema = {
       >
         Consultora de IA · Santiago de Chile
       </p>
-      <!-- El H1 ahora dice lo mismo que el <title> de la página. Antes el
-           título prometía "aplicada a la gestión" y el H1 se quedaba en
-           "Inteligencia Artificial" a secas: más amplio que el negocio real y
-           sin coincidir con lo que ya está indexado. -->
+      <!-- Antes el H1 decía "Inteligencia Artificial" a secas: más amplio que
+           el negocio real, y ni siquiera coincidía con el <title>, que ya
+           prometía "aplicada a la gestión".
+           Va "gestión EMPRESARIAL", no "gestión" a secas: en Chile "una
+           gestión" es un trámite, así que la frase corta se puede leer como
+           que ayudamos con papeleo.
+           ⚠️ Queda una diferencia con el <title> y la meta description, que
+           siguen diciendo "aplicada a la gestión". Es deliberado por ahora:
+           ese texto está indexado y el título ya se pasa de largo (79 car.).
+           Ver el pendiente de acortarlo. -->
+      <!-- prettier-ignore -->
       <h1
-        class="reveal reveal-delay-1 text-[2.15rem] md:text-[3.9rem] font-display leading-[1.06] md:leading-[1.03] tracking-[-0.025em]"
+        class="reveal reveal-delay-1 text-[2.15rem] md:text-[3.5rem] font-display leading-[1.06] md:leading-[1.03] tracking-[-0.025em]"
       >
-        Consultoría en<br /><span class="text-primary md:whitespace-nowrap">Inteligencia Artificial</span><br />aplicada a la gestión
+        Consultoría en<br /><span class="text-primary md:whitespace-nowrap">Inteligencia Artificial</span><br />aplicada a la gestión empresarial
       </h1>
       <p class="reveal reveal-delay-1 text-lg md:text-xl font-display text-on-surface mt-4 mb-5" style="font-weight:600; letter-spacing:-0.01em;">
         Cuando el dato llega, la decisión ya se tomó.
