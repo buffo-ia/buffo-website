@@ -50,28 +50,34 @@
   --c-primary: 11 115 64;
   --c-on-primary: 255 255 255;
 
-  --c-background: 246 249 247; /* blanco teñido: la página */
+  --c-background: 238 243 240; /* la página: blanco teñido, un punto más hondo
+                                  que las tarjetas para que se despeguen */
   --c-surface: 255 255 255;
   --c-on-surface: 16 24 21; /* casi negro, con verde adentro */
-  --c-surface-variant: 233 240 236;
+  --c-surface-variant: 231 238 234;
   --c-on-surface-variant: 79 91 86; /* verde-gris, no gris */
   --c-outline: 124 138 133;
-  --c-outline-variant: 211 221 216;
+  --c-outline-variant: 206 218 212;
 
-  /* La escala sube hacia el BLANCO: lo más elevado es lo más claro. */
+  /* TODAS las tarjetas son blancas. En oscuro estos niveles daban variedad;
+     en claro daban SIGNIFICADOS distintos y dos tarjetas hermanas parecían
+     cosas distintas. La jerarquía la hace la sombra, no el tono. */
   --c-container-lowest: 255 255 255;
   --c-container-low: 255 255 255;
-  --c-container: 250 252 251;
-  --c-container-high: 240 245 242;
-  --c-container-highest: 231 238 234;
+  --c-container: 255 255 255;
+  --c-container-high: 255 255 255;
+  --c-container-highest: 246 250 248; /* único nivel hundido, para lo raro */
 
   --c-error: 176 38 30;
   --c-hairline: 16 24 21;
-  --hairline-a: 0.09;
+  --hairline-a: 0.08;
 
-  /* En claro las tarjetas se despegan con sombra, no con tono. */
-  --elev: 0 1px 2px rgb(16 24 21 / 0.04), 0 8px 24px -12px rgb(16 24 21 / 0.12);
-  --elev-hover: 0 2px 4px rgb(16 24 21 / 0.05), 0 14px 32px -14px rgb(16 24 21 / 0.16);
+  /* La profundidad en claro se proyecta, no se pinta. Tres capas: el filo,
+     el apoyo cercano y la sombra ambiental larga. */
+  --elev: 0 1px 2px rgb(16 24 21 / 0.05), 0 4px 10px -3px rgb(16 24 21 / 0.07),
+    0 14px 32px -12px rgb(16 24 21 / 0.1);
+  --elev-hover: 0 1px 2px rgb(16 24 21 / 0.06), 0 6px 14px -3px rgb(16 24 21 / 0.1),
+    0 22px 44px -14px rgb(16 24 21 / 0.16);
 }
 
 /* 🚨 IMPRESIÓN — el informe del diagnóstico va SIEMPRE en claro.
@@ -210,6 +216,7 @@ body {
   background: rgb(var(--c-container-low));
   border: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
   border-left: 2px solid rgb(var(--c-primary));
+  box-shadow: var(--elev);
 }
 
 /* ----- Input focus ----- */
