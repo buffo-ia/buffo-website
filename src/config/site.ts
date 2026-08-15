@@ -7,9 +7,10 @@ export const SITE = {
   calendly: 'https://calendly.com/simon-buffoconsulting/llamada-de-consulta-buffo-ia',
   linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
   locale: 'es_CL',
-  defaultTitle: 'Buffo IA Consulting | Inteligencia Aplicada a la Gestión Empresarial',
+  defaultTitle:
+    'Consultoría en Inteligencia Artificial aplicada a la gestión · Chile | Buffo IA',
   defaultDescription:
-    'Consultora chilena especializada en inteligencia artificial para empresas. Dashboards ejecutivos, modelamiento de datos, automatización de procesos y agentes IA. Para pymes y grandes empresas en Chile.',
+    'Consultora chilena de inteligencia artificial aplicada a la gestión. Dashboards ejecutivos, modelamiento de datos, automatización y agentes IA para que la decisión se tome a tiempo.',
 };
 
 // Líder visible de la empresa — alimenta la página "Sobre nosotros" y será el
@@ -40,10 +41,21 @@ export const FOUNDER = {
 // Navegación principal (multipágina).
 export const NAV = [
   { label: 'Servicios', href: '/servicios' },
+  { label: 'Diagnóstico', href: '/diagnostico' },
   { label: 'Sobre nosotros', href: '/sobre-nosotros' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
 ];
+
+// El dolor con el que el cliente entra a cada servicio. Fuente única para la home
+// y para /servicios: el dolor manda, el nombre del producto va de eyebrow.
+// Mismo texto que el selector de src/data/diagnostico.ts — no divergir.
+export const SERVICE_PAINS: Record<string, string> = {
+  'dashboards-ejecutivos': 'No tengo la foto de cómo va el negocio',
+  'modelamiento-predictivo': 'Mis datos son un desorden',
+  'automatizacion-procesos': 'Mi equipo pierde horas en cosas repetitivas',
+  'agentes-ia': 'Me entero tarde de los problemas',
+};
 
 // Categorías del blog (clusters). Cada una se vincula al servicio relacionado
 // para el enlazado interno pilar/cluster que pide el plan SEO.
@@ -62,27 +74,27 @@ export const SERVICES = [
     icon: 'dashboard_customize',
     title: 'Dashboards ejecutivos',
     short:
-      'Su negocio en tiempo real, sin reportes manuales. Visualizaciones diseñadas para la toma de decisiones inmediata.',
+      'Tu negocio en tiempo real, sin reportería manual. Visualizaciones diseñadas para decidir en el momento, no a fin de mes.',
   },
   {
     slug: 'modelamiento-predictivo',
     icon: 'schema',
     title: 'Modelamiento de datos',
     short:
-      'Conectamos sus fuentes y les damos sentido. Estructuramos el caos para que la información fluya hacia la rentabilidad.',
+      'Conectamos tus fuentes y les damos sentido. Estructuramos el caos para que la información fluya hacia la rentabilidad.',
   },
   {
     slug: 'automatizacion-procesos',
     icon: 'precision_manufacturing',
     title: 'Automatización de procesos',
     short:
-      'Elimine tareas que no generan valor. Flujos inteligentes que liberan el talento de su equipo para lo que importa.',
+      'Elimina las tareas que no generan valor. Flujos que liberan el talento de tu equipo para lo que sí importa.',
   },
   {
     slug: 'agentes-ia',
     icon: 'smart_toy',
     title: 'Agentes IA',
     short:
-      'Software que trabaja solo: monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pidan.',
+      'Software que trabaja solo: monitorea tus datos, detecta lo importante y ejecuta tareas sin que se las pidas.',
   },
 ];
