@@ -34,9 +34,50 @@ const banco = {
 const title = `Diagnóstico de 3 minutos | ${SITE.shortName}`;
 const description =
   'Doce preguntas para medir qué tan visible es su operación. Puntaje inmediato en pantalla y un informe completo en PDF.';
+
+// Esta página no tenía schema propio: solo heredaba Organization y WebSite.
+// Es la que más se comparte con prospectos, así que conviene que un motor de
+// respuesta entienda qué es — una evaluación gratuita, no una página cualquiera.
+const diagnosticoSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${SITE.url}/diagnostico#servicio`,
+  name: 'Diagnóstico de visibilidad operacional',
+  serviceType: 'Evaluación gratuita de madurez de datos y gestión',
+  description:
+    'Cuestionario de doce preguntas que mide qué tan visible es la operación de una empresa: dónde llega tarde la información, qué procesos dependen de trabajo manual y qué conviene resolver primero. Entrega un puntaje en pantalla y un informe en PDF.',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'CLP',
+    availability: 'https://schema.org/InStock',
+    description: 'Sin costo y sin presentación de ventas.',
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE.url },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Diagnóstico',
+      item: new URL('/diagnostico', SITE.url).href,
+    },
+  ],
+};
 ---
 
-<BaseLayout title={title} description={description} path="/diagnostico">
+<BaseLayout
+  title={title}
+  description={description}
+  path="/diagnostico"
+  schema={[diagnosticoSchema, breadcrumbSchema]}
+>
   <!-- `flex items-center` centra el bloque en la pantalla. Antes el contenido
        quedaba pegado arriba dentro de una sección de alto completo, así que
        sobraba un tercio en blanco abajo y se leía como que faltaba algo. -->

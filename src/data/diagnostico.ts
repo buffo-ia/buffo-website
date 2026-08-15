@@ -42,8 +42,10 @@ export type Ramal = {
 
 export const INTRO = {
   titulo: 'Qué tan ciega está su operación',
+  // El "en Chile" no es relleno: era la única página del sitio sin contexto
+  // geográfico, y es la que más se comparte con prospectos.
   bajada:
-    'Doce preguntas, tres minutos. Al final recibe un diagnóstico con lo que detectamos, qué se puede resolver y qué no podemos decirle sin conocerlos mejor.',
+    'Doce preguntas, tres minutos. Es un diagnóstico gratuito de visibilidad operacional para empresas en Chile: al final recibe lo que detectamos, qué se puede resolver y qué no podemos decirle sin conocerlos mejor.',
   promesa: 'Sin costo, sin presentación de ventas.',
 };
 

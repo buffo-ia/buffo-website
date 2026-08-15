@@ -12,10 +12,14 @@ export const SITE = {
   whatsapp: '56983731652',
   whatsappMensaje: 'Hola, vengo del sitio de Buffo y quiero hacer una consulta.',
   locale: 'es_CL',
-  defaultTitle:
-    'Consultoría en Inteligencia Artificial aplicada a la gestión · Chile | Buffo IA',
+  // 79 caracteres se cortaban en Google, que muestra cerca de 60. En menos de
+  // 60 no caben las tres cosas —palabra clave, calificador y país—, así que se
+  // eligen dos: la keyword transaccional y el contexto geográfico, que es lo
+  // que se busca. El calificador "aplicada a la gestión empresarial" lo llevan
+  // el H1 y la meta description, que los motores de respuesta también leen.
+  defaultTitle: 'Consultoría en Inteligencia Artificial · Chile | Buffo IA',
   defaultDescription:
-    'Consultora chilena de inteligencia artificial aplicada a la gestión. Dashboards ejecutivos, modelamiento de datos, automatización y agentes IA para que la decisión se tome a tiempo.',
+    'Consultora chilena de IA aplicada a la gestión empresarial: dashboards ejecutivos, modelamiento de datos, automatización y agentes IA para decidir a tiempo.',
 };
 
 // Líder visible de la empresa — alimenta la página "Sobre nosotros" y será el

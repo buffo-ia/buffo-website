@@ -64,6 +64,43 @@ const STACK = [
   { src: '/stack/railway.svg', name: 'Railway' },
 ];
 
+// Preguntas frecuentes de un decisor que llega frío. El plan de Perplexity las
+// pide explícitamente (5-8) y alimentan el FAQPage schema, que es de lo que más
+// aparece citado en respuestas generadas.
+// ⚠️ Sin precios: la tarifa depende del alcance y no se publica.
+const FAQ_HOME = [
+  {
+    q: '¿Cuánto cuesta una consultoría de inteligencia artificial en Chile?',
+    a: 'No hay una tarifa única: el alcance cambia mucho entre ordenar unas planillas y dejar agentes operando. El diagnóstico de tres minutos es gratuito y entrega por escrito por dónde partir, sin compromiso.',
+  },
+  {
+    q: '¿Cuánto demora ver el primer resultado?',
+    a: 'Los proyectos se ordenan por etapas para que el primer entregable útil llegue pronto y no en varios meses: se parte por la fuente de datos más importante y por el proceso que más horas libera.',
+  },
+  {
+    q: '¿Tengo que cambiar mi ERP o mis sistemas actuales?',
+    a: 'No. Todo se construye encima de lo que la empresa ya usa: el ERP, el sistema de ventas, las planillas de control de gestión. Conectar es más barato y menos riesgoso que reemplazar.',
+  },
+  {
+    q: '¿Sirve para una pyme o es solo para empresas grandes?',
+    a: 'Para las dos. En una empresa grande la información suele estar repartida en demasiados sistemas; en una pyme, vive en la cabeza de dos personas. El enfoque es el mismo y cambia el tamaño del proyecto.',
+  },
+  {
+    q: '¿Por dónde empiezo si todavía no sé qué necesito?',
+    a: 'Por el diagnóstico: doce preguntas sobre cómo se mueve hoy tu información y un informe con lo que detectamos y qué conviene resolver primero.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_HOME.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 // Schema de servicios para la home
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -84,7 +121,7 @@ const serviceSchema = {
 };
 ---
 
-<BaseLayout schema={serviceSchema}>
+<BaseLayout schema={[serviceSchema, faqSchema]}>
   <!-- HERO -->
   <section class="hero-bg relative px-8 md:px-12 pt-20 pb-24 md:pt-24 md:pb-28 overflow-hidden">
     <div class="relative z-10 max-w-5xl mx-auto text-center">
@@ -146,8 +183,8 @@ const serviceSchema = {
       <div class="space-y-5 reveal">
         <div class="text-error uppercase tracking-widest text-xs font-semibold">El Conflicto</div>
         <h2 class="text-xl md:text-2xl font-display leading-snug">
-          Tienes datos, reportes y herramientas. Y aun así llegas al lunes sin saber qué corregir
-          primero.
+          ¿Tienes datos, reportes y herramientas, y aun así llegas al lunes sin saber qué
+          corregir primero?
         </h2>
         <p class="text-on-surface-variant leading-relaxed text-sm md:text-base">
           No es déficit de información: es déficit de <strong class="text-on-surface font-semibold"
@@ -280,7 +317,7 @@ const serviceSchema = {
     <div class="max-w-screen-2xl mx-auto">
       <div class="mb-16 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Portafolio</p>
-        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Lo que construimos</h2>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">¿Qué construimos exactamente?</h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
         <div
@@ -368,7 +405,32 @@ const serviceSchema = {
   </section>
 
   <!-- CTA CONTACTO -->
-  <section class="py-28 px-8 md:px-12 bg-surface-container-low">
+    <!-- PREGUNTAS FRECUENTES
+       Pedido explícito del plan de Perplexity (5-8 preguntas de decisores) y
+       alimenta el FAQPage schema, que es de lo que más se cita en respuestas
+       generadas. El texto va arriba, en FAQ_HOME. -->
+  <section class="px-8 md:px-12 py-20 bg-background border-t border-on-surface/5">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
+      <div class="grid gap-px bg-on-surface/5 border border-on-surface/5">
+        {
+          FAQ_HOME.map((f, i) => (
+            <details class:list={['faq-item bg-surface-container-low group reveal', i > 0 && 'reveal-delay-1']}>
+              <summary class="flex cursor-pointer items-center justify-between gap-6 p-6 md:p-7">
+                <h3 class="font-display text-base md:text-lg leading-snug">{f.q}</h3>
+                <span class="material-symbols-outlined text-on-surface-variant transition-transform group-open:rotate-45">
+                  add
+                </span>
+              </summary>
+              <p class="px-6 pb-6 md:px-7 md:pb-7 text-on-surface-variant leading-relaxed">{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+<section class="py-28 px-8 md:px-12 bg-surface-container-low">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4 reveal">Contacto</p>
       <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">
