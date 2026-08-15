@@ -135,12 +135,32 @@ const faqSchema = {
     </div>
   </section>
 
+  <!-- PREGUNTAS DE FONDO
+       El texto vive en `data/services.ts`, igual que en las otras páginas de
+       servicio: esta página es a medida en la maqueta, no en el contenido.
+       Los encabezados van en pregunta a propósito — es lo que piden los
+       motores de respuesta (GEO/AEO) y además es como lo pregunta un cliente. -->
+  <section class="px-8 md:px-12 py-20 bg-background border-t border-on-surface/5">
+    <div class="max-w-3xl mx-auto space-y-14">
+      {
+        service.sections.map((s, i) => (
+          <div class:list={['reveal', i > 0 && 'reveal-delay-1']}>
+            <h2 class="text-[1.6rem] md:text-[2rem] font-display leading-tight mb-5">{s.heading}</h2>
+            {s.body.map((p) => (
+              <p class="text-on-surface-variant leading-relaxed mb-4">{p}</p>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
   <!-- ENTREGABLES en grilla visual -->
   <section class="px-8 md:px-12 py-20 bg-surface-container-lowest border-y border-on-surface/5">
     <div class="max-w-5xl mx-auto">
       <div class="mb-12 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Qué entregamos</p>
-        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Incluido en el servicio</h2>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">¿Qué incluye el servicio?</h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-on-surface/5 border border-on-surface/5">
         {
@@ -160,7 +180,7 @@ const faqSchema = {
     <div class="max-w-5xl mx-auto">
       <div class="mb-12 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Para quién</p>
-        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Pensado para quienes deciden</h2>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">¿Para quién es este servicio?</h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {
