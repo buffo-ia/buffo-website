@@ -88,15 +88,22 @@ const serviceSchema = {
   <!-- HERO -->
   <section class="hero-bg relative px-8 md:px-12 pt-20 pb-24 md:pt-24 md:pb-28 overflow-hidden">
     <div class="relative z-10 max-w-4xl mx-auto text-center">
+      <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
+           H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
+           que pide el plan de Perplexity y no estaba en ninguna parte visible. -->
       <p
         class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-7"
       >
-        Inteligencia artificial aplicada a la gestión
+        Consultora de IA · Santiago de Chile
       </p>
+      <!-- El H1 ahora dice lo mismo que el <title> de la página. Antes el
+           título prometía "aplicada a la gestión" y el H1 se quedaba en
+           "Inteligencia Artificial" a secas: más amplio que el negocio real y
+           sin coincidir con lo que ya está indexado. -->
       <h1
-        class="reveal reveal-delay-1 text-[2.3rem] md:text-[3.4rem] font-display leading-[1.05] tracking-[-0.02em]"
+        class="reveal reveal-delay-1 text-[2.15rem] md:text-[3.9rem] font-display leading-[1.06] md:leading-[1.03] tracking-[-0.025em]"
       >
-        Consultoría en<br /><span class="text-primary">Inteligencia Artificial</span>
+        Consultoría en<br /><span class="text-primary md:whitespace-nowrap">Inteligencia Artificial</span><br />aplicada a la gestión
       </h1>
       <p class="reveal reveal-delay-1 text-lg md:text-xl font-display text-on-surface mt-4 mb-5" style="font-weight:600; letter-spacing:-0.01em;">
         Cuando el dato llega, la decisión ya se tomó.
@@ -105,7 +112,7 @@ const serviceSchema = {
         class="reveal reveal-delay-2 text-base md:text-lg text-on-surface-variant max-w-2xl mx-auto mb-8 leading-relaxed"
       >
         Consultora especializada en modelamiento de datos, dashboards ejecutivos, automatización de
-        procesos y agentes de inteligencia artificial aplicada a la gestión.
+        procesos y agentes de inteligencia artificial.
       </p>
       <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 justify-center">
         <a
