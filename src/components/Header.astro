@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
+import logoLight from '../assets/logo_light.png';
 import { NAV } from '../config/site';
 
 const current = Astro.url.pathname;
@@ -9,7 +10,7 @@ const isActive = (href: string) =>
 ---
 
 <header
-  class="bg-background/90 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5 section-glow"
+  class="bg-background/90 backdrop-blur-xl sticky top-0 z-50 border-b border-on-surface/5 section-glow"
 >
   <nav class="flex justify-between items-center px-8 md:px-12 py-5 max-w-screen-2xl mx-auto">
     <a
@@ -17,7 +18,8 @@ const isActive = (href: string) =>
       class="flex items-center opacity-100 hover:opacity-70 transition-opacity duration-200"
       aria-label="Inicio — Buffo IA Consulting"
     >
-      <Image src={logo} alt="Buffo IA Consulting" class="h-9 w-auto object-contain" loading="eager" />
+      <Image src={logo} alt="Buffo IA Consulting" class="logo-dark h-9 w-auto object-contain" loading="eager" />
+      <Image src={logoLight} alt="Buffo IA Consulting" class="logo-light h-9 w-auto object-contain" loading="eager" />
     </a>
 
     <div class="hidden md:flex items-center gap-10">
@@ -27,7 +29,7 @@ const isActive = (href: string) =>
             href={item.href}
             class:list={[
               'nav-link text-sm font-semibold transition-colors tracking-wide',
-              isActive(item.href) ? 'text-primary' : 'text-white/55 hover:text-white',
+              isActive(item.href) ? 'text-primary' : 'text-on-surface/60 hover:text-on-surface',
             ]}
           >
             {item.label}
@@ -36,12 +38,24 @@ const isActive = (href: string) =>
       }
     </div>
 
-    <a
-      href="/contacto"
-      class="btn-glow bg-primary text-on-primary px-7 py-3 text-sm font-extrabold tracking-tight hidden sm:inline-block"
-    >
-      Solicitar conversación
-    </a>
+    <div class="flex items-center gap-3">
+      <button
+        id="theme-toggle"
+        type="button"
+        class="p-2 text-on-surface/60 hover:text-on-surface transition-colors"
+        aria-label="Cambiar entre tema claro y oscuro"
+        title="Cambiar tema"
+      >
+        <span class="material-symbols-outlined text-xl align-middle theme-icon-dark">light_mode</span>
+        <span class="material-symbols-outlined text-xl align-middle theme-icon-light">dark_mode</span>
+      </button>
+      <a
+        href="/contacto"
+        class="btn-glow bg-primary text-on-primary px-7 py-3 text-sm font-semibold tracking-tight hidden sm:inline-block"
+      >
+        Solicitar conversación
+      </a>
+    </div>
 
     <!-- Botón menú móvil -->
     <button
@@ -55,12 +69,12 @@ const isActive = (href: string) =>
   </nav>
 
   <!-- Menú móvil desplegable -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-white/5 bg-background px-8 py-6 space-y-4">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-on-surface/5 bg-background px-8 py-6 space-y-4">
     {
       NAV.map((item) => (
         <a
           href={item.href}
-          class="block text-base font-semibold text-white/70 hover:text-primary transition-colors"
+          class="block text-base font-semibold text-on-surface/70 hover:text-primary transition-colors"
         >
           {item.label}
         </a>
@@ -68,7 +82,7 @@ const isActive = (href: string) =>
     }
     <a
       href="/contacto"
-      class="block btn-glow bg-primary text-on-primary px-6 py-3 text-sm font-extrabold text-center mt-4"
+      class="block btn-glow bg-primary text-on-primary px-6 py-3 text-sm font-semibold text-center mt-4"
     >
       Solicitar conversación
     </a>
@@ -83,5 +97,18 @@ const isActive = (href: string) =>
     menu?.classList.toggle('hidden');
     toggle.setAttribute('aria-expanded', String(!isOpen));
     toggle.querySelector('.material-symbols-outlined')!.textContent = isOpen ? 'menu' : 'close';
+  });
+
+  // Cambio de tema. La preferencia se recuerda; si nunca se eligió, manda el
+  // sistema operativo (lo resuelve el script inline del <head>).
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    root.classList.toggle('dark', next === 'dark');
+    root.style.colorScheme = next;
+    try {
+      localStorage.setItem('buffo-theme', next);
+    } catch (e) {}
   });
 </script>

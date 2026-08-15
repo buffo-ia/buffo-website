@@ -41,10 +41,7 @@ const blogSchema = {
   <!-- ENCABEZADO -->
   <section class="px-8 md:px-12 pt-16 pb-10 bg-background">
     <div class="max-w-6xl mx-auto">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-6">
-        <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
-        Insights
-      </div>
+      <p class="text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-6">Insights</p>
       <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.05] tracking-[-0.02em] mb-4">
         Inteligencia aplicada,<br /><span class="text-primary">explicada simple</span>.
       </h1>
@@ -68,7 +65,7 @@ const blogSchema = {
   {featured && (
     <section class="px-8 md:px-12 pb-14 bg-background">
       <div class="max-w-6xl mx-auto">
-        <a href={`/blog/${featured.id}`} class="group block relative overflow-hidden border border-white/10 min-h-[420px] md:min-h-[520px] flex items-end">
+        <a href={`/blog/${featured.id}`} class="group block relative overflow-hidden border border-on-surface/10 min-h-[420px] md:min-h-[520px] flex items-end">
           <Image
             src={featured.data.cover}
             alt={featured.data.coverAlt}
@@ -81,7 +78,7 @@ const blogSchema = {
           <div class="absolute inset-0 ring-1 ring-inset ring-primary/10"></div>
           <div class="relative p-8 md:p-12 max-w-3xl">
             <div class="flex items-center gap-3 mb-5">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-on-primary text-[0.65rem] tracking-[0.14em] uppercase font-extrabold">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-on-primary text-[0.65rem] tracking-[0.14em] uppercase font-semibold">
                 <span class="material-symbols-outlined text-sm">{featured.data.icon}</span>
                 Destacado
               </span>
@@ -91,7 +88,7 @@ const blogSchema = {
               {featured.data.title}
             </h2>
             <p class="text-white/75 text-base md:text-lg leading-relaxed mb-6 max-w-2xl">{featured.data.description}</p>
-            <span class="inline-flex items-center gap-2 text-primary font-bold text-sm">
+            <span class="inline-flex items-center gap-2 text-primary font-semibold text-sm">
               Leer artículo
               <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </span>
@@ -107,11 +104,11 @@ const blogSchema = {
       <div class="max-w-6xl mx-auto">
         <div class="flex items-center gap-4 mb-8">
           <h2 class="text-xl font-display tracking-tight">Últimos insights</h2>
-          <div class="h-px flex-grow bg-white/8"></div>
+          <div class="h-px flex-grow bg-on-surface/8"></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {rest.map((post) => (
-            <a href={`/blog/${post.id}`} class="group flex flex-col bg-surface-container-low border border-white/8 overflow-hidden card-hover">
+            <a href={`/blog/${post.id}`} class="group flex flex-col bg-surface-container-low border border-on-surface/8 overflow-hidden card-hover">
               <div class="relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={post.data.cover}
@@ -121,7 +118,7 @@ const blogSchema = {
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
-                <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-background/85 backdrop-blur-sm text-primary text-[0.6rem] tracking-[0.12em] uppercase font-bold">
+                <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-background/85 backdrop-blur-sm text-primary text-[0.6rem] tracking-[0.12em] uppercase font-semibold">
                   <span class="material-symbols-outlined text-[0.85rem]">{post.data.icon}</span>
                   {BLOG_CATEGORIES[post.data.category].label}
                 </span>
@@ -141,12 +138,12 @@ const blogSchema = {
   )}
 
   <!-- CTA -->
-  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-on-surface/5">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
         ¿Quieres aplicar esto en tu empresa?
       </h2>
-      <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base inline-block">
+      <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-semibold text-base inline-block">
         Agenda una llamada de 30 minutos
       </a>
     </div>

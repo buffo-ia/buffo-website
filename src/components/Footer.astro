@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
+import logoLight from '../assets/logo_light.png';
 import { SITE } from '../config/site';
 import { SERVICES_CONTENT } from '../data/services';
 const year = new Date().getFullYear();
@@ -12,12 +13,13 @@ const recursos = [
 ];
 ---
 
-<footer class="bg-background border-t border-white/5">
+<footer class="bg-background border-t border-on-surface/5">
   <div class="max-w-screen-2xl mx-auto px-8 md:px-12 py-16">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-14">
       <!-- Marca -->
       <div class="col-span-2 md:col-span-1">
-        <Image src={logo} alt="Buffo IA Consulting" class="h-8 w-auto object-contain opacity-80 mb-5" loading="lazy" />
+        <Image src={logo} alt="Buffo IA Consulting" class="logo-dark h-8 w-auto object-contain opacity-80 mb-5" loading="lazy" />
+        <Image src={logoLight} alt="Buffo IA Consulting" class="logo-light h-8 w-auto object-contain opacity-80 mb-5" loading="lazy" />
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
           Inteligencia artificial aplicada a la gestión empresarial. Para pymes y grandes empresas en
           Chile.
@@ -26,14 +28,14 @@ const recursos = [
 
       <!-- Servicios -->
       <div>
-        <p class="text-xs tracking-widest uppercase text-white/40 font-bold mb-5">Servicios</p>
+        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Servicios</p>
         <ul class="space-y-3">
           {
             SERVICES_CONTENT.map((s) => (
               <li>
                 <a
                   href={`/servicios/${s.slug}`}
-                  class="text-sm text-white/55 hover:text-primary transition-colors"
+                  class="text-sm text-on-surface/55 hover:text-primary transition-colors"
                 >
                   {s.navTitle}
                 </a>
@@ -45,12 +47,12 @@ const recursos = [
 
       <!-- Recursos -->
       <div>
-        <p class="text-xs tracking-widest uppercase text-white/40 font-bold mb-5">Recursos</p>
+        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Recursos</p>
         <ul class="space-y-3">
           {
             recursos.map((r) => (
               <li>
-                <a href={r.href} class="text-sm text-white/55 hover:text-primary transition-colors">
+                <a href={r.href} class="text-sm text-on-surface/55 hover:text-primary transition-colors">
                   {r.label}
                 </a>
               </li>
@@ -61,12 +63,12 @@ const recursos = [
 
       <!-- Contacto -->
       <div>
-        <p class="text-xs tracking-widest uppercase text-white/40 font-bold mb-5">Contacto</p>
+        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Contacto</p>
         <ul class="space-y-3">
           <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="text-sm text-white/55 hover:text-primary transition-colors break-all"
+              class="text-sm text-on-surface/55 hover:text-primary transition-colors break-all"
             >
               {SITE.email}
             </a>
@@ -76,7 +78,7 @@ const recursos = [
               href={SITE.calendly}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-white/55 hover:text-primary transition-colors"
+              class="text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               Agenda una llamada
             </a>
@@ -86,7 +88,7 @@ const recursos = [
               href={SITE.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-white/55 hover:text-primary transition-colors"
+              class="text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               LinkedIn
             </a>
@@ -95,8 +97,8 @@ const recursos = [
       </div>
     </div>
 
-    <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-xs tracking-widest uppercase text-white/25 text-center md:text-left">
+    <div class="border-t border-on-surface/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs tracking-widest uppercase text-on-surface/45 text-center md:text-left">
         © {year} {SITE.name}. Todos los derechos reservados.
       </p>
     </div>

@@ -11,7 +11,7 @@ const eventos = [
 ];
 ---
 
-<div class="dash bg-surface-container-lowest border border-white/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+<div class="dash bg-surface-container-lowest border border-on-surface/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
@@ -24,12 +24,12 @@ const eventos = [
 
   <!-- estado del agente -->
   <div class="grid grid-cols-3 gap-2.5 mb-4">
-    <div class="bg-surface-container-low border border-white/5 p-3 text-center">
+    <div class="bg-surface-container-low border border-on-surface/5 p-3 text-center">
       <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Vigilando</p>
       <p class="text-base font-display text-on-surface">142</p>
       <p class="text-[0.55rem] text-on-surface-variant/70">cuentas</p>
     </div>
-    <div class="bg-surface-container-low border border-white/5 p-3 text-center">
+    <div class="bg-surface-container-low border border-on-surface/5 p-3 text-center">
       <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Frecuencia</p>
       <p class="text-base font-display text-on-surface">24/7</p>
       <p class="text-[0.55rem] text-on-surface-variant/70">sin pausa</p>
@@ -42,7 +42,7 @@ const eventos = [
   </div>
 
   <!-- consola de eventos -->
-  <div class="bg-surface-container-low border border-white/5 p-3.5">
+  <div class="bg-surface-container-low border border-on-surface/5 p-3.5">
     <p class="text-[0.7rem] font-semibold text-on-surface/80 mb-3 flex items-center gap-1.5">
       <span class="material-symbols-outlined text-sm text-primary">terminal</span>Actividad en vivo
     </p>
@@ -54,7 +54,7 @@ const eventos = [
             e.type === 'alert' && 'bg-error/5 border-error',
             e.type === 'action' && 'bg-primary/5 border-primary',
             e.type === 'done' && 'bg-primary/5 border-primary/50',
-            (e.type === 'idle') && 'bg-white/[0.02] border-white/10',
+            (e.type === 'idle') && 'bg-on-surface/[0.02] border-on-surface/10',
           ]}
           style={`--d:${e.d}`}
         >

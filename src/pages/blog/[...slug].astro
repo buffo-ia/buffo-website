@@ -79,7 +79,7 @@ const breadcrumbSchema = {
         <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: data.title, href: path }]} />
       </div>
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 text-xs">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 text-primary tracking-[0.13em] uppercase font-bold">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 text-primary tracking-[0.13em] uppercase font-semibold">
           <span class="material-symbols-outlined text-sm">{data.icon}</span>
           {cat.label}
         </span>
@@ -94,7 +94,7 @@ const breadcrumbSchema = {
   <!-- IMAGEN DE PORTADA -->
   <div class="bg-background">
     <div class="max-w-4xl mx-auto px-8 md:px-12 pt-6 md:pt-10">
-      <div class="relative overflow-hidden border border-white/[0.06] aspect-[16/9]">
+      <div class="relative overflow-hidden border border-on-surface/[0.06] aspect-[16/9]">
         <Image
           src={data.cover}
           alt={data.coverAlt}
@@ -111,7 +111,7 @@ const breadcrumbSchema = {
   <article class="px-8 md:px-12 py-16 bg-background">
     <div class="max-w-3xl mx-auto">
       <!-- Lead de respuesta directa (GEO/AEO) -->
-      <p class="text-xl md:text-2xl text-on-surface leading-relaxed font-display mb-12 pb-12 border-b border-white/5" style="font-weight:600; letter-spacing:-0.01em;">
+      <p class="text-xl md:text-2xl text-on-surface leading-relaxed font-display mb-12 pb-12 border-b border-on-surface/5" style="font-weight:600; letter-spacing:-0.01em;">
         {data.lead}
       </p>
 
@@ -125,7 +125,7 @@ const breadcrumbSchema = {
         <p class="text-on-surface-variant mb-6 leading-relaxed">
           La primera conversación es sin costo y sirve para ver si esto le hace sentido a tu negocio.
         </p>
-        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-8 py-4 font-extrabold text-sm inline-block">
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-8 py-4 font-semibold text-sm inline-block">
           Agenda una llamada de 30 minutos
         </a>
       </div>
@@ -139,14 +139,14 @@ const breadcrumbSchema = {
 
   <!-- RELACIONADOS -->
   {related.length > 0 && (
-    <section class="px-8 md:px-12 py-16 bg-surface-container-lowest border-t border-white/5">
+    <section class="px-8 md:px-12 py-16 bg-surface-container-lowest border-t border-on-surface/5">
       <div class="max-w-3xl mx-auto">
         <h2 class="text-2xl font-display mb-8">Sigue leyendo</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {related.map((p) => (
-            <a href={`/blog/${p.id}`} class="bg-surface-container-low border border-white/5 p-7 card-hover group block">
+            <a href={`/blog/${p.id}`} class="bg-surface-container-low border border-on-surface/5 p-7 card-hover group block">
               <span class="material-symbols-outlined text-primary text-2xl mb-4 block">{p.data.icon}</span>
-              <span class="text-[0.65rem] tracking-[0.13em] uppercase font-bold text-on-surface-variant block mb-2">
+              <span class="text-[0.65rem] tracking-[0.13em] uppercase font-semibold text-on-surface-variant block mb-2">
                 {BLOG_CATEGORIES[p.data.category].label}
               </span>
               <h3 class="font-display text-lg leading-snug group-hover:text-primary transition-colors">{p.data.title}</h3>

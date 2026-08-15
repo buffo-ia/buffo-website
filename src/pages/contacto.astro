@@ -18,13 +18,10 @@ const contactSchema = {
 ---
 
 <BaseLayout title={metaTitle} description={metaDescription} path={path} schema={contactSchema}>
-  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 min-h-[90vh] border-b border-white/5">
+  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 min-h-[90vh] border-b border-on-surface/5">
     <div class="max-w-5xl mx-auto">
       <div class="mb-14 max-w-2xl">
-        <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-8">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
-          Contacto
-        </div>
+        <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-8">Contacto</p>
         <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
           Conversemos sobre tu empresa
         </h1>
@@ -46,7 +43,7 @@ const contactSchema = {
               <label for="name" class="block text-sm font-semibold text-on-surface mb-2">Nombre</label>
               <input
                 type="text" id="name" name="name" required
-                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
+                class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
                 placeholder="Tu nombre"
               />
             </div>
@@ -54,7 +51,7 @@ const contactSchema = {
               <label for="email" class="block text-sm font-semibold text-on-surface mb-2">Email</label>
               <input
                 type="email" id="email" name="email" required
-                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
+                class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
                 placeholder="tucorreo@empresa.cl"
               />
             </div>
@@ -62,7 +59,7 @@ const contactSchema = {
               <label for="company" class="block text-sm font-semibold text-on-surface mb-2">Empresa</label>
               <input
                 type="text" id="company" name="company"
-                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
+                class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
                 placeholder="Nombre de tu empresa"
               />
             </div>
@@ -70,13 +67,13 @@ const contactSchema = {
               <label for="message" class="block text-sm font-semibold text-on-surface mb-2">Mensaje</label>
               <textarea
                 id="message" name="message" rows="4" required
-                class="w-full bg-surface-container-low border border-white/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors resize-y"
+                class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors resize-y"
                 placeholder="¿Qué te gustaría resolver?"></textarea>
             </div>
 
             <button
               type="submit" id="submit-btn"
-              class="btn-glow bg-primary text-on-primary px-9 py-4 font-extrabold text-base w-full sm:w-auto"
+              class="btn-glow bg-primary text-on-primary px-9 py-4 font-semibold text-base w-full sm:w-auto"
             >
               Enviar mensaje
             </button>
@@ -89,7 +86,7 @@ const contactSchema = {
         <div class="md:col-span-2 reveal reveal-delay-1 space-y-4">
           <a
             href="/diagnostico"
-            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">fact_check</span>
             <h3 class="font-display text-lg mb-1">Diagnóstico en 3 minutos</h3>
@@ -97,7 +94,7 @@ const contactSchema = {
           </a>
           <a
             href={SITE.calendly} target="_blank" rel="noopener noreferrer"
-            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">event_available</span>
             <h3 class="font-display text-lg mb-1">Agenda directo</h3>
@@ -105,7 +102,7 @@ const contactSchema = {
           </a>
           <a
             href={`mailto:${SITE.email}`}
-            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">mail</span>
             <h3 class="font-display text-lg mb-1">Escríbenos</h3>
@@ -113,7 +110,7 @@ const contactSchema = {
           </a>
           <a
             href={SITE.linkedin} target="_blank" rel="noopener noreferrer"
-            class="block bg-surface-container-low border border-white/5 p-7 card-hover group"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">link</span>
             <h3 class="font-display text-lg mb-1">LinkedIn</h3>

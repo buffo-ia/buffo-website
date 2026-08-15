@@ -13,13 +13,13 @@ export interface Props {
 const { eyebrow = 'Metodología', title, steps } = Astro.props;
 ---
 
-<section class="px-8 md:px-12 py-20 bg-surface-container-lowest border-y border-white/5">
+<section class="px-8 md:px-12 py-20 bg-surface-container-lowest border-y border-on-surface/5">
   <div class="max-w-5xl mx-auto">
     <div class="mb-14 reveal">
-      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">{eyebrow}</p>
+      <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">{eyebrow}</p>
       <h2 class="text-[2rem] md:text-[2.4rem] font-display">{title}</h2>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-on-surface/5 border border-on-surface/5">
       {
         steps.map((s, i) => (
           <div class="bg-background p-9 reveal" class:list={[i === 1 && 'reveal-delay-1', i === 2 && 'reveal-delay-2', i === 3 && 'reveal-delay-3']}>

@@ -21,12 +21,12 @@ const itemListSchema = {
 ---
 
 <BaseLayout title={title} description={description} path="/servicios" schema={itemListSchema}>
-  <section class="hero-bg px-8 md:px-12 pt-12 pb-20 border-b border-white/5">
+  <section class="hero-bg px-8 md:px-12 pt-12 pb-20 border-b border-on-surface/5">
     <div class="max-w-5xl mx-auto">
       <div class="mb-10">
         <Breadcrumbs items={[{ label: 'Servicios', href: '/servicios' }]} />
       </div>
-      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-4">Servicios</p>
+      <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4">Servicios</p>
       <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em] max-w-4xl">
         Inteligencia artificial aplicada a la gestión de tu empresa
       </h1>
@@ -39,7 +39,7 @@ const itemListSchema = {
   </section>
 
   <section class="px-8 md:px-12 py-20 bg-background">
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-on-surface/5 border border-on-surface/5">
       {
         SERVICES_CONTENT.map((s) => (
           <a
@@ -49,19 +49,19 @@ const itemListSchema = {
             <span class="material-symbols-outlined text-primary text-4xl mb-6 block group-hover:scale-110 transition-transform duration-300">
               {s.icon}
             </span>
-            <p class="text-on-surface-variant/70 text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-2">
+            <p class="text-on-surface-variant/70 text-[0.7rem] tracking-[0.17em] uppercase font-semibold mb-2">
               {SERVICE_PAINS[s.slug]}
             </p>
             <h2 class="text-2xl font-display mb-3">{s.navTitle}</h2>
             <p class="text-on-surface-variant leading-relaxed mb-6">{s.lead}</p>
-            <span class="text-primary text-sm font-bold">Conocer más →</span>
+            <span class="text-primary text-sm font-semibold">Conocer más →</span>
           </a>
         ))
       }
     </div>
   </section>
 
-  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-on-surface/5">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
         ¿No sabes cuál necesitas?
@@ -74,7 +74,7 @@ const itemListSchema = {
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href="/diagnostico"
-          class="btn-glow bg-primary text-on-primary px-12 py-5 font-extrabold text-base inline-block"
+          class="btn-glow bg-primary text-on-primary px-12 py-5 font-semibold text-base inline-block"
         >
           Empezar el diagnóstico · 3 minutos
         </a>
@@ -82,7 +82,7 @@ const itemListSchema = {
           href={SITE.calendly}
           target="_blank"
           rel="noopener noreferrer"
-          class="border border-outline-variant text-on-surface px-12 py-5 font-bold text-base inline-block hover:border-primary/30 transition-all"
+          class="border border-outline-variant text-on-surface px-12 py-5 font-semibold text-base inline-block hover:border-primary/30 transition-all"
         >
           O conversemos 30 minutos
         </a>

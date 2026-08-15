@@ -58,12 +58,9 @@ const aboutSchema = {
 
 <BaseLayout title={metaTitle} description={metaDescription} path={path} schema={[aboutSchema, personSchema]}>
   <!-- HERO -->
-  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 border-b border-white/5 overflow-hidden">
+  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 border-b border-on-surface/5 overflow-hidden">
     <div class="max-w-4xl mx-auto">
-      <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-8">
-        <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
-        Sobre nosotros
-      </div>
+      <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-8">Sobre nosotros</p>
       <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em]">
         Inteligencia que nace del negocio,<br /><span class="text-primary">no de la tecnología</span>.
       </h1>
@@ -74,10 +71,10 @@ const aboutSchema = {
   </section>
 
   <!-- ORIGEN / PROPÓSITO -->
-  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-b border-white/5">
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-b border-on-surface/5">
     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
       <div class="reveal">
-        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Por qué existimos</p>
+        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Por qué existimos</p>
         <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-6 leading-tight">
           Buffo nació del otro lado del escritorio.
         </h2>
@@ -118,10 +115,10 @@ const aboutSchema = {
   <section class="px-8 md:px-12 py-20 bg-background">
     <div class="max-w-4xl mx-auto">
       <div class="mb-12 reveal">
-        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Quién está detrás</p>
+        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Quién está detrás</p>
         <h2 class="text-[2rem] md:text-[2.4rem] font-display">La experiencia que respalda a Buffo</h2>
       </div>
-      <div class="reveal reveal-delay-1 bg-surface-container-low border border-white/5 p-9 md:p-12 flex flex-col md:flex-row gap-9 items-start">
+      <div class="reveal reveal-delay-1 bg-surface-container-low border border-on-surface/5 p-9 md:p-12 flex flex-col md:flex-row gap-9 items-start">
         <div class="flex-shrink-0">
           <Image
             src={founderPhoto}
@@ -134,7 +131,7 @@ const aboutSchema = {
         </div>
         <div>
           <h3 class="font-display text-2xl mb-1">{FOUNDER.name}</h3>
-          <p class="text-primary text-sm font-bold mb-5">{FOUNDER.role}</p>
+          <p class="text-primary text-sm font-semibold mb-5">{FOUNDER.role}</p>
           <p class="text-on-surface-variant leading-relaxed mb-6">{FOUNDER.bio}</p>
           <ul class="space-y-2 mb-7">
             {
@@ -150,7 +147,7 @@ const aboutSchema = {
             href={FOUNDER.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-primary text-sm font-bold hover:underline"
+            class="inline-flex items-center gap-2 text-primary text-sm font-semibold hover:underline"
           >
             <span class="material-symbols-outlined text-base">link</span>
             Perfil de LinkedIn
@@ -161,16 +158,16 @@ const aboutSchema = {
   </section>
 
   <!-- CTA -->
-  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-white/5">
+  <section class="px-8 md:px-12 py-20 bg-surface-container-low border-t border-on-surface/5">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="text-3xl md:text-4xl font-display mb-8 leading-tight">
         ¿Conversamos sobre tu empresa?
       </h2>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base">
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-semibold text-base">
           Agenda una llamada de 30 minutos
         </a>
-        <a href="/contacto" class="border border-outline-variant text-on-surface px-10 py-5 font-bold text-base hover:border-primary/30 transition-all">
+        <a href="/contacto" class="border border-outline-variant text-on-surface px-10 py-5 font-semibold text-base hover:border-primary/30 transition-all">
           Enviar un mensaje
         </a>
       </div>

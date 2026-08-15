@@ -86,19 +86,13 @@ const serviceSchema = {
 
 <BaseLayout schema={serviceSchema}>
   <!-- HERO -->
-  <section class="hero-bg relative px-8 md:px-12 pt-12 pb-14 md:pt-14 md:pb-16 overflow-hidden">
-    <div
-      class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[360px] bg-primary/6 blur-[140px] rounded-full pointer-events-none"
-    >
-    </div>
-
+  <section class="hero-bg relative px-8 md:px-12 pt-20 pb-24 md:pt-24 md:pb-28 overflow-hidden">
     <div class="relative z-10 max-w-4xl mx-auto text-center">
-      <div
-        class="reveal inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-bold mb-6"
+      <p
+        class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-7"
       >
-        <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
         Inteligencia artificial aplicada a la gestión
-      </div>
+      </p>
       <h1
         class="reveal reveal-delay-1 text-[2.3rem] md:text-[3.4rem] font-display leading-[1.05] tracking-[-0.02em]"
       >
@@ -116,7 +110,7 @@ const serviceSchema = {
       <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href="/diagnostico"
-          class="btn-glow bg-primary text-on-primary px-10 py-5 font-extrabold text-base text-center"
+          class="btn-glow bg-primary text-on-primary px-10 py-5 font-semibold text-base text-center"
         >
           Diagnóstico gratis · 12 preguntas · 3 minutos
         </a>
@@ -124,7 +118,7 @@ const serviceSchema = {
           href={SITE.calendly}
           target="_blank"
           rel="noopener noreferrer"
-          class="border border-outline-variant bg-surface-container-highest/20 backdrop-blur-sm text-on-surface px-10 py-5 font-bold text-base text-center hover:bg-surface-container-highest/40 hover:border-primary/25 transition-all"
+          class="border border-outline-variant bg-surface-container-highest/20 backdrop-blur-sm text-on-surface px-10 py-5 font-semibold text-base text-center hover:bg-surface-container-highest/40 hover:border-primary/25 transition-all"
         >
           Agendar 30 minutos
         </a>
@@ -133,10 +127,10 @@ const serviceSchema = {
   </section>
 
   <!-- PROBLEMA + SOLUCIÓN -->
-  <section class="py-20 px-8 md:px-12 bg-surface-container-low border-y border-white/5" id="approach">
+  <section class="py-20 px-8 md:px-12 bg-surface-container-low border-y border-on-surface/5" id="approach">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
       <div class="space-y-5 reveal">
-        <div class="text-error uppercase tracking-widest text-xs font-bold">El Conflicto</div>
+        <div class="text-error uppercase tracking-widest text-xs font-semibold">El Conflicto</div>
         <h2 class="text-xl md:text-2xl font-display leading-snug">
           Tienes datos, reportes y herramientas. Y aun así llegas al lunes sin saber qué corregir
           primero.
@@ -147,11 +141,8 @@ const serviceSchema = {
           >. Cuando el reporte llega el día 10, lo que informa del día 3 ya es historia.
         </p>
       </div>
-      <div class="reveal reveal-delay-2 relative p-8 gradient-border">
-        <div class="absolute -top-5 -left-5 bg-primary p-3.5">
-          <span class="material-symbols-outlined text-on-primary text-2xl">lightbulb</span>
-        </div>
-        <div class="text-primary uppercase tracking-widest text-xs font-bold mb-4">La Respuesta</div>
+      <div class="reveal reveal-delay-2 relative p-8 md:p-10 gradient-border">
+        <div class="text-primary uppercase tracking-widest text-xs font-semibold mb-4">La Respuesta</div>
         <p class="text-lg md:text-xl font-display leading-snug text-on-surface mb-4">
           Tu sistema te dice lo que pasó. Nosotros te decimos qué hacer.
         </p>
@@ -162,7 +153,7 @@ const serviceSchema = {
         </p>
         <div class="flex flex-wrap gap-2">
           {['Visualiza', 'Proyecta', 'Automatiza', 'Actúa'].map((t) => (
-            <span class="text-[0.7rem] tracking-wide uppercase font-bold text-primary border border-primary/25 bg-primary/5 px-3 py-1.5">{t}</span>
+            <span class="text-[0.7rem] tracking-wide uppercase font-semibold text-primary border border-primary/25 bg-primary/5 px-3 py-1.5">{t}</span>
           ))}
         </div>
       </div>
@@ -174,14 +165,14 @@ const serviceSchema = {
     <div class="max-w-6xl mx-auto">
       <div class="mb-20 reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
-          <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Capacidades</p>
+          <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Capacidades</p>
           <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight max-w-2xl">
             Cuatro formas de enterarte a tiempo.
           </h2>
         </div>
         <a
           href="/servicios"
-          class="text-primary text-sm font-bold hover:underline whitespace-nowrap"
+          class="text-primary text-sm font-semibold hover:underline whitespace-nowrap"
         >
           Ver todos los servicios →
         </a>
@@ -195,14 +186,14 @@ const serviceSchema = {
             return (
               <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
-                  <p class="text-primary tracking-[0.2em] uppercase text-xs font-bold mb-4">
+                  <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold mb-4">
                     {String(i + 1).padStart(2, '0')} · {s.eyebrow}
                   </p>
                   <h3 class="text-[1.7rem] md:text-[2.1rem] font-display mb-5 leading-tight">{s.title}</h3>
                   <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>
                   <a
                     href={`/servicios/${s.slug}`}
-                    class="inline-flex items-center gap-2 text-primary font-bold text-sm group"
+                    class="inline-flex items-center gap-2 text-primary font-semibold text-sm group"
                   >
                     Conocer más
                     <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
@@ -220,14 +211,14 @@ const serviceSchema = {
   </section>
 
   <!-- RESULTADOS (cualitativo, sin cifras inventadas) -->
-  <section class="py-28 px-8 md:px-12 bg-surface-container-lowest border-y border-white/5">
+  <section class="py-28 px-8 md:px-12 bg-surface-container-lowest border-y border-on-surface/5">
     <div class="max-w-screen-2xl mx-auto">
       <div class="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-6">
         <div class="reveal">
-          <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">En operación</p>
+          <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">En operación</p>
           <h2 class="text-[2rem] md:text-[2.4rem] font-display">El tablero que sí se abre</h2>
         </div>
-        <div class="hidden md:block h-px flex-grow bg-white/8 mx-10"></div>
+        <div class="hidden md:block h-px flex-grow bg-on-surface/8 mx-10"></div>
         <div class="reveal max-w-md">
           <p class="text-on-surface-variant text-sm leading-relaxed">
             La mitad de los proyectos de datos muere en la capacitación: se entrega, se celebra, y a
@@ -236,7 +227,7 @@ const serviceSchema = {
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-10 bg-surface-container-low border border-white/5 card-hover reveal">
+        <div class="p-10 bg-surface-container-low border border-on-surface/5 card-hover reveal">
           <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
             >event_repeat</span
           >
@@ -246,7 +237,7 @@ const serviceSchema = {
             sola campaña interna de adopción.
           </p>
         </div>
-        <div class="p-10 bg-surface-container-low border border-white/5 card-hover reveal reveal-delay-1">
+        <div class="p-10 bg-surface-container-low border border-on-surface/5 card-hover reveal reveal-delay-1">
           <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
             >construction</span
           >
@@ -256,7 +247,7 @@ const serviceSchema = {
             decidida con ellos.
           </p>
         </div>
-        <div class="p-10 bg-surface-container-low border border-white/5 card-hover reveal reveal-delay-2">
+        <div class="p-10 bg-surface-container-low border border-on-surface/5 card-hover reveal reveal-delay-2">
           <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
             >verified_user</span
           >
@@ -274,12 +265,12 @@ const serviceSchema = {
   <section class="py-28 px-8 md:px-12 bg-surface-container-lowest" id="portfolio">
     <div class="max-w-screen-2xl mx-auto">
       <div class="mb-16 reveal">
-        <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Portafolio</p>
+        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Portafolio</p>
         <h2 class="text-[2rem] md:text-[2.4rem] font-display">Lo que construimos</h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
         <div
-          class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden border border-white/5 card-hover reveal"
+          class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden border border-on-surface/5 card-hover reveal"
         >
           <div class="relative z-10">
             <h3 class="text-primary font-display text-2xl mb-7">Área Comercial y Ventas</h3>
@@ -304,7 +295,7 @@ const serviceSchema = {
           </div>
         </div>
         <div
-          class="md:col-span-4 bg-surface-container-high p-12 border border-white/5 card-hover reveal reveal-delay-1"
+          class="md:col-span-4 bg-surface-container-high p-12 border border-on-surface/5 card-hover reveal reveal-delay-1"
         >
           <h3 class="text-primary font-display text-xl mb-7">Área Financiera</h3>
           <ul class="space-y-3 text-on-surface/80">
@@ -330,9 +321,9 @@ const serviceSchema = {
   </section>
 
   <!-- STACK TECNOLÓGICO (marquee) -->
-  <section class="py-24 px-8 md:px-12 bg-background border-y border-white/5 overflow-hidden">
+  <section class="py-24 px-8 md:px-12 bg-background border-y border-on-surface/5 overflow-hidden">
     <div class="max-w-5xl mx-auto text-center mb-14 reveal">
-      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-3">Infraestructura</p>
+      <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Infraestructura</p>
       <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight mb-4">
         Tecnología de clase mundial, al servicio de tu negocio
       </h2>
@@ -364,14 +355,14 @@ const serviceSchema = {
   <!-- CTA CONTACTO -->
   <section class="py-28 px-8 md:px-12 bg-surface-container-low">
     <div class="max-w-4xl mx-auto text-center">
-      <p class="text-primary tracking-widest uppercase text-xs font-bold mb-4 reveal">Contacto</p>
+      <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4 reveal">Contacto</p>
       <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">
         La próxima decisión importante ya está esperando un dato que todavía no llega.
       </h2>
       <div class="reveal reveal-delay-1 flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href="/diagnostico"
-          class="inline-block btn-glow bg-primary text-on-primary px-12 py-5 text-base font-extrabold tracking-tight"
+          class="inline-block btn-glow bg-primary text-on-primary px-12 py-5 text-base font-semibold tracking-tight"
         >
           Empezar el diagnóstico · 3 minutos
         </a>
@@ -379,7 +370,7 @@ const serviceSchema = {
           href={SITE.calendly}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block border border-outline-variant text-on-surface px-12 py-5 text-base font-bold hover:border-primary/30 transition-all"
+          class="inline-block border border-outline-variant text-on-surface px-12 py-5 text-base font-semibold hover:border-primary/30 transition-all"
         >
           Agendar 30 minutos
         </a>

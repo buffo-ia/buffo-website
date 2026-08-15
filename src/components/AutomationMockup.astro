@@ -16,13 +16,13 @@ const pipeline = [
 ];
 ---
 
-<div class="dash bg-surface-container-lowest border border-white/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+<div class="dash bg-surface-container-lowest border border-on-surface/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
       <span class="text-xs font-semibold text-on-surface/85 tracking-wide">Flujo Automatizado · Reportería</span>
     </div>
-    <span class="text-[0.6rem] text-on-surface-variant/70 border border-white/10 px-2 py-1">24/7</span>
+    <span class="text-[0.6rem] text-on-surface-variant/70 border border-on-surface/10 px-2 py-1">24/7</span>
   </div>
 
   <!-- ANTES: manual -->
@@ -31,7 +31,7 @@ const pipeline = [
       <p class="text-[0.65rem] font-semibold text-error/90 flex items-center gap-1.5">
         <span class="material-symbols-outlined text-sm">schedule</span>Antes · proceso manual
       </p>
-      <span class="text-[0.6rem] text-error/70 font-bold">~6 h / semana</span>
+      <span class="text-[0.6rem] text-error/70 font-semibold">~6 h / semana</span>
     </div>
     <div class="flex items-center gap-1">
       {pasosManual.map((p, i) => (
@@ -57,7 +57,7 @@ const pipeline = [
       <p class="text-[0.65rem] font-semibold text-primary flex items-center gap-1.5">
         <span class="material-symbols-outlined text-sm">bolt</span>Después · flujo automático
       </p>
-      <span class="text-[0.6rem] text-primary font-bold">0 intervención</span>
+      <span class="text-[0.6rem] text-primary font-semibold">0 intervención</span>
     </div>
     <div class="relative flex items-center gap-1">
       {pipeline.map((p, i) => (
@@ -72,7 +72,7 @@ const pipeline = [
       ))}
     </div>
     <!-- barra de progreso del flujo -->
-    <div class="h-1 bg-white/5 mt-3 overflow-hidden">
+    <div class="h-1 bg-on-surface/5 mt-3 overflow-hidden">
       <div class="flow-bar h-full bg-gradient-to-r from-primary/60 to-primary"></div>
     </div>
   </div>

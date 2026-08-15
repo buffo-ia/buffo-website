@@ -54,10 +54,25 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---
 
 <!doctype html>
-<html lang="es-CL" class="dark">
+<html lang="es-CL" data-theme="light" style="color-scheme: light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tema: se aplica ANTES del primer pintado. Si esto se moviera al final
+         del body, el visitante vería un parpadeo antes del tema correcto.
+         El claro es el predeterminado (decisión de Simón, 2026-08-15): solo se
+         cambia si el visitante ya eligió el oscuro con el botón del header. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('buffo-theme') === 'dark' ? 'dark' : 'light';
+          document.documentElement.dataset.theme = t;
+          document.documentElement.classList.toggle('dark', t === 'dark');
+          document.documentElement.style.colorScheme = t;
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 

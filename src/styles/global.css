@@ -2,15 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   SISTEMA DE COLOR — dos temas, una sola definición
+   Canales RGB sueltos para que Tailwind aplique opacidad
+   (bg-primary/10 sigue funcionando). Tema por defecto: oscuro.
+   El claro se activa con data-theme="light" en <html>.
+   ============================================================ */
+:root {
+  --c-primary: 22 182 107;
+  --c-on-primary: 0 0 0;
+  --c-background: 13 14 16;
+  --c-surface: 18 19 22;
+  --c-on-surface: 227 226 230;
+  --c-surface-variant: 34 36 40;
+  --c-on-surface-variant: 196 198 207;
+  --c-outline: 142 144 153;
+  --c-outline-variant: 68 71 78;
+  --c-container-lowest: 8 9 11;
+  --c-container-low: 26 27 31;
+  --c-container: 30 31 35;
+  --c-container-high: 40 42 47;
+  --c-container-highest: 51 53 58;
+  --c-error: 255 180 171;
+  --c-hairline: 255 255 255; /* se usa siempre con opacidad baja */
+  --hairline-a: 0.07;
+  /* En oscuro la profundidad la da el tono de la superficie, no la sombra. */
+  --elev: none;
+  --elev-hover: none;
+}
+
+/* ============================================================
+   TEMA CLARO — paleta propia, NO la inversión del oscuro.
+   Tres decisiones que lo separan de un tema invertido:
+
+   1. La página NO es blanco puro, es un blanco apenas teñido de
+      verde. El blanco puro se reserva para las tarjetas: en claro
+      la elevación va hacia el blanco, al revés que en oscuro.
+   2. Los neutros no son grises: llevan un punto de verde Buffo.
+      Un gris neutro delata la plantilla; el neutro teñido se lee
+      como decisión de marca.
+   3. La profundidad viene de una sombra suave, no de un cambio de
+      tono. En oscuro se sube el tono; en claro se proyecta sombra.
+   ============================================================ */
+:root[data-theme='light'] {
+  /* El verde de marca (#16B66B) da 2,2:1 sobre blanco — ilegible.
+     En claro se usa una versión profunda del mismo verde. */
+  --c-primary: 11 115 64;
+  --c-on-primary: 255 255 255;
+
+  --c-background: 246 249 247; /* blanco teñido: la página */
+  --c-surface: 255 255 255;
+  --c-on-surface: 16 24 21; /* casi negro, con verde adentro */
+  --c-surface-variant: 233 240 236;
+  --c-on-surface-variant: 79 91 86; /* verde-gris, no gris */
+  --c-outline: 124 138 133;
+  --c-outline-variant: 211 221 216;
+
+  /* La escala sube hacia el BLANCO: lo más elevado es lo más claro. */
+  --c-container-lowest: 255 255 255;
+  --c-container-low: 255 255 255;
+  --c-container: 250 252 251;
+  --c-container-high: 240 245 242;
+  --c-container-highest: 231 238 234;
+
+  --c-error: 176 38 30;
+  --c-hairline: 16 24 21;
+  --hairline-a: 0.09;
+
+  /* En claro las tarjetas se despegan con sombra, no con tono. */
+  --elev: 0 1px 2px rgb(16 24 21 / 0.04), 0 8px 24px -12px rgb(16 24 21 / 0.12);
+  --elev-hover: 0 2px 4px rgb(16 24 21 / 0.05), 0 14px 32px -14px rgb(16 24 21 / 0.16);
+}
+
+/* 🚨 IMPRESIÓN — el informe del diagnóstico va SIEMPRE en claro.
+   Es lo primero que ve un prospecto en frío: si el tema oscuro se filtrara,
+   recibiría un PDF negro. Se fuerza la paleta clara al imprimir, dé lo mismo
+   qué tema tenga el visitante en pantalla. */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    --c-primary: 11 115 64;
+    --c-on-primary: 255 255 255;
+    --c-background: 255 255 255;
+    --c-surface: 255 255 255;
+    --c-on-surface: 13 14 16;
+    --c-surface-variant: 237 239 242;
+    --c-on-surface-variant: 82 86 94;
+    --c-outline: 138 143 152;
+    --c-outline-variant: 214 218 224;
+    --c-container-lowest: 255 255 255;
+    --c-container-low: 246 247 249;
+    --c-container: 241 243 245;
+    --c-container-high: 233 236 239;
+    --c-container-highest: 225 229 234;
+    --c-error: 179 38 30;
+    --c-hairline: 13 14 16;
+    --hairline-a: 0.12;
+  }
+}
+
 /* ----- Tipografía base ----- */
 body {
   font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
+  background-color: rgb(var(--c-background));
+  color: rgb(var(--c-on-surface));
 }
+/* Peso 600, no 800. El titular pesa por tamaño y espacio, no por grosor:
+   el peso 800 generalizado es lo que hace que una página se lea "de plantilla". */
 .font-display {
   font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.022em;
 }
 .font-inter {
   font-family: 'Inter', sans-serif;
@@ -19,47 +122,55 @@ body {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* ----- Hero: dot grid + dual green glow ----- */
+/* ----- Hero: fondo plano -----
+   Antes: trama de puntos + dos resplandores verdes. Ese combo es la
+   plantilla por defecto de cualquier generador de landings. Se apaga
+   todo para que el titular sea lo único que se mire. */
 .hero-bg {
-  background-color: #0d0e10;
-  background-image:
-    radial-gradient(ellipse 70% 55% at 5% 100%, rgba(22, 182, 107, 0.13) 0%, transparent 70%),
-    radial-gradient(ellipse 35% 35% at 85% 15%, rgba(22, 182, 107, 0.06) 0%, transparent 60%),
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
-  background-size: 100% 100%, 100% 100%, 26px 26px;
+  background-color: rgb(var(--c-background));
 }
 
-/* ----- Botón primario con glow ----- */
+/* ----- Botón primario -----
+   Antes tenía box-shadow de 28px que subía a 48px en hover. El resplandor
+   se va: el botón se distingue por color y tamaño, no por brillar. */
 .btn-glow {
-  box-shadow: 0 0 28px rgba(22, 182, 107, 0.22), 0 4px 20px rgba(22, 182, 107, 0.12);
-  transition: box-shadow 0.3s ease, transform 0.15s ease;
+  transition: opacity 0.2s ease, transform 0.12s ease;
 }
 .btn-glow:hover {
-  box-shadow: 0 0 48px rgba(22, 182, 107, 0.38), 0 8px 30px rgba(22, 182, 107, 0.22);
-  transform: translateY(-1px);
+  opacity: 0.88;
 }
 .btn-glow:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
-/* ----- Scroll reveal ----- */
+/* ----- Scroll reveal -----
+   Se conserva pero se vuelve casi imperceptible: 24px → 8px y 0.6s → 0.4s.
+   Que TODO entre con el mismo salto es otro tic de plantilla. */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 .reveal-delay-1 {
-  transition-delay: 0.1s;
+  transition-delay: 0.05s;
 }
 .reveal-delay-2 {
-  transition-delay: 0.2s;
+  transition-delay: 0.1s;
 }
 .reveal-delay-3 {
-  transition-delay: 0.35s;
+  transition-delay: 0.15s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ----- Nav underline animation ----- */
@@ -73,44 +184,65 @@ body {
   left: 0;
   width: 0;
   height: 1px;
-  background: #16b66b;
-  transition: width 0.3s ease;
+  background: currentColor;
+  transition: width 0.25s ease;
 }
 .nav-link:hover::after {
   width: 100%;
 }
 
-/* ----- Card hover lift ----- */
+/* ----- Card hover -----
+   El verde deja de ser también el color del hover. Se levanta el borde,
+   no se pinta: el verde queda reservado para señalar, no para decorar. */
 .card-hover {
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  box-shadow: var(--elev);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .card-hover:hover {
-  transform: translateY(-3px);
-  border-color: rgba(22, 182, 107, 0.25) !important;
+  border-color: rgb(var(--c-hairline) / calc(var(--hairline-a) * 2.5)) !important;
+  box-shadow: var(--elev-hover);
 }
 
-/* ----- Gradient border card ----- */
+/* ----- Bloque de cita -----
+   Antes: fondo con degradado verde + borde verde. Ahora una sola señal
+   —la barra izquierda— sobre una superficie neutra. */
 .gradient-border {
-  background: linear-gradient(135deg, rgba(22, 182, 107, 0.07), rgba(22, 182, 107, 0.01));
-  border: 1px solid rgba(22, 182, 107, 0.18);
+  background: rgb(var(--c-container-low));
+  border: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
+  border-left: 2px solid rgb(var(--c-primary));
 }
 
 /* ----- Input focus ----- */
 input:focus,
 textarea:focus {
-  box-shadow: 0 1px 0 0 #16b66b;
   outline: none;
-  border-color: #16b66b !important;
+  border-color: rgb(var(--c-primary)) !important;
 }
 
-/* ----- Top accent line ----- */
+/* ----- Línea de acento ----- */
 .accent-line {
-  background: linear-gradient(90deg, transparent 0%, #16b66b 50%, transparent 100%);
+  background: rgb(var(--c-hairline) / var(--hairline-a));
 }
 
-/* ----- Section separator glow ----- */
+/* ----- Separador de sección ----- */
 .section-glow {
-  box-shadow: 0 1px 0 rgba(22, 182, 107, 0.07);
+  box-shadow: 0 1px 0 rgb(var(--c-hairline) / var(--hairline-a));
+}
+
+/* ----- Línea de 1px reutilizable (reemplaza los usos de white/5) ----- */
+.hairline {
+  border-color: rgb(var(--c-hairline) / var(--hairline-a));
+}
+
+/* ----- Piezas que dependen del tema -----
+   El logo tiene dos archivos (letras blancas / letras negras) y se muestra el
+   que corresponda. Va en global y no dentro del Header porque el footer usa
+   exactamente lo mismo: si vive en un componente, el otro queda invisible. */
+:root[data-theme='dark'] .logo-light,
+:root[data-theme='light'] .logo-dark,
+:root[data-theme='dark'] .theme-icon-light,
+:root[data-theme='light'] .theme-icon-dark {
+  display: none;
 }
 
 /* ----- Marquee de stack tecnológico ----- */
@@ -148,7 +280,7 @@ textarea:focus {
 
 /* ----- Prose: cuerpo de artículos del blog (Markdown renderizado) ----- */
 .prose-buffo {
-  color: rgba(227, 226, 230, 0.82);
+  color: rgb(var(--c-on-surface) / 0.82);
   font-size: 1.075rem;
   line-height: 1.85;
 }
@@ -157,11 +289,11 @@ textarea:focus {
 }
 .prose-buffo h2 {
   font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-weight: 650;
   letter-spacing: -0.02em;
   font-size: 1.7rem;
   line-height: 1.25;
-  color: #fff;
+  color: rgb(var(--c-on-surface));
   margin-top: 3rem;
   margin-bottom: 1.2rem;
   scroll-margin-top: 6rem;
@@ -170,23 +302,23 @@ textarea:focus {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 1.25rem;
-  color: #fff;
+  color: rgb(var(--c-on-surface));
   margin-top: 2.2rem;
   margin-bottom: 0.9rem;
 }
 .prose-buffo p {
-  color: rgba(227, 226, 230, 0.82);
+  color: rgb(var(--c-on-surface) / 0.82);
   text-align: justify;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
 }
 .prose-buffo strong {
-  color: #fff;
-  font-weight: 700;
+  color: rgb(var(--c-on-surface));
+  font-weight: 650;
 }
 .prose-buffo a {
-  color: #16b66b;
+  color: rgb(var(--c-primary));
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: opacity 0.2s ease;
@@ -216,22 +348,22 @@ textarea:focus {
   top: 0.7em;
   width: 6px;
   height: 6px;
-  background: #16b66b;
+  background: rgb(var(--c-primary));
 }
 .prose-buffo ol {
   list-style: decimal;
 }
 .prose-buffo ol > li::marker {
-  color: #16b66b;
-  font-weight: 700;
+  color: rgb(var(--c-primary));
+  font-weight: 650;
 }
 .prose-buffo blockquote {
-  border-left: 2px solid #16b66b;
+  border-left: 2px solid rgb(var(--c-primary));
   padding: 0.4rem 0 0.4rem 1.5rem;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
-  color: #fff;
+  color: rgb(var(--c-on-surface));
   font-style: normal;
 }
 .prose-buffo h2 + p,
