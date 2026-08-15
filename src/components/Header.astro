@@ -49,11 +49,14 @@ const isActive = (href: string) =>
         <span class="material-symbols-outlined text-xl align-middle theme-icon-dark">light_mode</span>
         <span class="material-symbols-outlined text-xl align-middle theme-icon-light">dark_mode</span>
       </button>
+      <!-- El header es fijo, así que este botón acompaña todo el scroll: es el
+           CTA persistente del sitio. Va el diagnóstico, no "conversación" —
+           a un visitante frío se le pide lo barato, no una reunión. -->
       <a
-        href="/contacto"
+        href="/diagnostico"
         class="btn-glow bg-primary text-on-primary px-7 py-3 text-sm font-semibold tracking-tight hidden sm:inline-block"
       >
-        Solicitar conversación
+        Diagnóstico · 3 min
       </a>
     </div>
 
@@ -81,10 +84,10 @@ const isActive = (href: string) =>
       ))
     }
     <a
-      href="/contacto"
+      href="/diagnostico"
       class="block btn-glow bg-primary text-on-primary px-6 py-3 text-sm font-semibold text-center mt-4"
     >
-      Solicitar conversación
+      Diagnóstico gratis · 3 min
     </a>
   </div>
 </header>

@@ -1,0 +1,72 @@
+---
+// CTA persistente SOLO en celular. En escritorio no se muestra porque el botón
+// del header ya cumple ese rol (el header es fijo y acompaña todo el scroll).
+//
+// Por qué barra y no burbuja flotante: la burbuja redonda es el gesto de
+// "chatea ahora con una persona", y el diagnóstico son 12 preguntas y 3
+// minutos — otro compromiso. Además esa esquina queda reservada para el botón
+// de WhatsApp que está pendiente en el plan.
+//
+// No aparece en /diagnostico (ya estás ahí) ni en /contacto (el formulario es
+// la acción de esa página; competirle sería empujar al visitante hacia afuera).
+const path = Astro.url.pathname;
+const ocultarEn = ['/diagnostico', '/contacto'];
+const mostrar = !ocultarEn.some((p) => path.startsWith(p));
+---
+
+{
+  mostrar && (
+    <div
+      id="barra-diagnostico"
+      class="sm:hidden fixed bottom-0 inset-x-0 z-40 translate-y-full transition-transform duration-300"
+      aria-hidden="true"
+    >
+      <a
+        href="/diagnostico"
+        class="flex items-center justify-center gap-2 bg-primary text-on-primary px-5 py-4 text-sm font-semibold"
+      >
+        Diagnóstico gratis · 3 min
+        <span class="material-symbols-outlined text-base">arrow_forward</span>
+      </a>
+    </div>
+  )
+}
+
+<script>
+  const barra = document.getElementById('barra-diagnostico');
+  if (barra) {
+    // Entra recién cuando el hero salió de pantalla —arriba el CTA ya está a la
+    // vista— y se retira al llegar al cierre, para no tener dos CTA compitiendo.
+    const hero = document.querySelector('.hero-bg, main section');
+    const cierre = document.querySelector('main section:last-of-type');
+
+    let pasoHero = false;
+    let enCierre = false;
+
+    const pintar = () => {
+      const visible = pasoHero && !enCierre;
+      barra.classList.toggle('translate-y-full', !visible);
+      barra.setAttribute('aria-hidden', String(!visible));
+    };
+
+    if (hero) {
+      new IntersectionObserver(
+        ([e]) => {
+          pasoHero = !e.isIntersecting;
+          pintar();
+        },
+        { threshold: 0 }
+      ).observe(hero);
+    }
+
+    if (cierre && cierre !== hero) {
+      new IntersectionObserver(
+        ([e]) => {
+          enCierre = e.isIntersecting;
+          pintar();
+        },
+        { threshold: 0.2 }
+      ).observe(cierre);
+    }
+  }
+</script>
