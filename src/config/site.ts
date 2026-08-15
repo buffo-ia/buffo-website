@@ -6,6 +6,11 @@ export const SITE = {
   email: 'contacto@buffoconsulting.cl',
   calendly: 'https://calendly.com/simon-buffoconsulting/llamada-de-consulta-buffo-ia',
   linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
+  // ⚠️ Hoy es la línea personal de Simón. Ya es pública (está en el Google
+  // Business Profile y en los datos fiscales), así que publicarla acá no la
+  // expone más. Cuando llegue la eSIM de negocio, se cambia SOLO acá.
+  whatsapp: '56983731652',
+  whatsappMensaje: 'Hola, vengo del sitio de Buffo y quiero hacer una consulta.',
   locale: 'es_CL',
   defaultTitle:
     'Consultoría en Inteligencia Artificial aplicada a la gestión · Chile | Buffo IA',

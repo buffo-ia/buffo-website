@@ -111,6 +111,15 @@ const contactSchema = {
             <p class="text-on-surface-variant text-sm leading-relaxed break-all">{SITE.email}</p>
           </a>
           <a
+            href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMensaje)}`}
+            target="_blank" rel="noopener noreferrer"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
+          >
+            <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">chat</span>
+            <h3 class="font-display text-lg mb-1">WhatsApp</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Escríbenos directo, en horario hábil.</p>
+          </a>
+          <a
             href={SITE.linkedin} target="_blank" rel="noopener noreferrer"
             class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
