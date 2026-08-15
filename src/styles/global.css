@@ -241,6 +241,48 @@ textarea:focus {
   border-color: rgb(var(--c-hairline) / var(--hairline-a));
 }
 
+/* ============================================================
+   BARRA DE NAVEGACIÓN FLOTANTE
+   Dos estados. Arriba del todo el header es aire: no tiene fondo ni línea, y
+   el logo se apoya directo sobre el hero — eso es lo que hace que "combine con
+   el fondo". Apenas se baja, el header entero gana vidrio esmerilado, porque
+   el header es sticky y sin fondo el contenido le pasaría por debajo.
+
+   La píldora del menú es la excepción deliberada a "nada de rounded-full": una
+   píldora que ordena la navegación es una decisión; diez píldoras repetidas por
+   toda la página son el tic de plantilla. Es la única del sitio.
+   ============================================================ */
+.site-header {
+  background-color: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.site-header.is-scrolled {
+  background-color: rgb(var(--c-background) / 0.82);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 1px 0 rgb(var(--c-hairline) / var(--hairline-a));
+}
+
+.nav-pill {
+  padding: 0.6rem 1.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
+  /* La elevación sigue la regla del tema claro: en oscuro sube el tono de la
+     superficie (--elev es none), en claro se proyecta sombra. */
+  background-color: rgb(var(--c-surface) / 0.55);
+  box-shadow: var(--elev);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+/* Con el header ya esmerilado, el vidrio de la píldora se apilaría sobre otro
+   vidrio y se ve barroso. Al bajar se queda solo con su fondo y su borde. */
+.site-header.is-scrolled .nav-pill {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background-color: rgb(var(--c-surface) / 0.4);
+}
+
 /* ----- Piezas que dependen del tema -----
    El logo tiene dos archivos (letras blancas / letras negras) y se muestra el
    que corresponda. Va en global y no dentro del Header porque el footer usa

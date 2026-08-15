@@ -9,10 +9,12 @@ const isActive = (href: string) =>
   href === '/' ? current === '/' : current.startsWith(href);
 ---
 
-<header
-  class="bg-background/90 backdrop-blur-xl sticky top-0 z-50 border-b border-on-surface/5 section-glow"
->
-  <nav class="flex justify-between items-center px-8 md:px-12 py-5 max-w-screen-2xl mx-auto">
+<!-- Al tope el header no tiene fondo: el logo queda apoyado directamente sobre
+     el hero. El único elemento con cuerpo es la píldora del menú, que trae su
+     propio vidrio. Al bajar aparece el vidrio del header completo (.is-scrolled)
+     — sin él, el contenido pasaría por debajo y el menú se volvería ilegible. -->
+<header id="site-header" class="site-header sticky top-0 z-50">
+  <nav class="relative flex justify-between items-center px-8 md:px-12 py-5 max-w-screen-2xl mx-auto">
     <a
       href="/"
       class="flex items-center opacity-100 hover:opacity-70 transition-opacity duration-200"
@@ -22,7 +24,11 @@ const isActive = (href: string) =>
       <Image src={logoLight} alt="Buffo IA Consulting" class="logo-light h-9 w-auto object-contain" loading="eager" />
     </a>
 
-    <div class="hidden md:flex items-center gap-10">
+    <!-- Centrada respecto de la página, no del espacio que sobra: si se dejara
+         en el flujo, el ancho del logo y el del botón la correrían de a poco. -->
+    <div
+      class="nav-pill hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    >
       {
         NAV.map((item) => (
           <a
@@ -95,11 +101,23 @@ const isActive = (href: string) =>
 <script>
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
+  const header = document.getElementById('site-header');
+
+  // El vidrio del header solo existe cuando hay algo debajo que tapar, o cuando
+  // el menú móvil está abierto (si no, la fila de arriba queda flotando suelta).
+  const syncHeader = () => {
+    const menuAbierto = menu ? !menu.classList.contains('hidden') : false;
+    header?.classList.toggle('is-scrolled', window.scrollY > 8 || menuAbierto);
+  };
+  syncHeader();
+  window.addEventListener('scroll', syncHeader, { passive: true });
+
   toggle?.addEventListener('click', () => {
     const isOpen = !menu?.classList.contains('hidden');
     menu?.classList.toggle('hidden');
     toggle.setAttribute('aria-expanded', String(!isOpen));
     toggle.querySelector('.material-symbols-outlined')!.textContent = isOpen ? 'menu' : 'close';
+    syncHeader();
   });
 
   // Cambio de tema. La preferencia se recuerda; si nunca se eligió, manda el
