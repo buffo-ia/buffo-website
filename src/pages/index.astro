@@ -337,12 +337,13 @@ const serviceSchema = {
       <div class="marquee-track gap-10 md:gap-14">
         {[...STACK, ...STACK].map((t, i) => (
           <div class="flex items-center gap-2.5 shrink-0 group" aria-hidden={i >= STACK.length ? 'true' : undefined}>
-            <img
-              src={t.src}
-              alt={i < STACK.length ? t.name : ''}
-              loading="lazy"
-              class="h-6 md:h-7 w-auto opacity-50 group-hover:opacity-100 transition-opacity duration-300"
-            />
+            {/* El SVG va de MÁSCARA, no de imagen: los archivos de Simple Icons
+                traen fill="#ffffff" quemado adentro y como <img> desaparecen
+                sobre fondo claro. De máscara, el color lo pone el tema. */}
+            <span
+              class="stack-logo h-6 w-6 md:h-7 md:w-7 shrink-0"
+              style={`--logo:url('${t.src}')`}
+              aria-hidden="true"></span>
             <span class="text-sm md:text-base font-semibold text-on-surface/55 group-hover:text-on-surface transition-colors whitespace-nowrap">
               {t.name}
             </span>
