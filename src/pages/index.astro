@@ -5,6 +5,7 @@ import DashboardMockup from '../components/DashboardMockup.astro';
 import ForecastMockup from '../components/ForecastMockup.astro';
 import AutomationMockup from '../components/AutomationMockup.astro';
 import AgentMockup from '../components/AgentMockup.astro';
+import VentanaNavegador from '../components/VentanaNavegador.astro';
 
 // Mapeo slug → mockup animado, para el escaparate de servicios.
 const MOCKS: Record<string, any> = {
@@ -20,24 +21,28 @@ const MOCKS: Record<string, any> = {
 const SHOWCASE = [
   {
     slug: 'dashboards-ejecutivos',
+    url: 'app.buffoconsulting.cl/dashboard',
     eyebrow: 'Dashboards ejecutivos',
     title: SERVICE_PAINS['dashboards-ejecutivos'],
     desc: 'Sus ventas, su margen y su avance contra presupuesto en una pantalla que se actualiza sola. Con la lectura puesta: qué está fuera de lo esperado y dónde mirar primero.',
   },
   {
     slug: 'modelamiento-predictivo',
+    url: 'app.buffoconsulting.cl/proyeccion',
     eyebrow: 'Modelamiento de datos',
     title: SERVICE_PAINS['modelamiento-predictivo'],
     desc: 'Cada área guarda lo suyo a su manera y las cifras no cuadran entre sistemas. Conectamos las fuentes una vez, con definiciones únicas. Recién ahí se puede proyectar, presupuestar y anticipar un quiebre.',
   },
   {
     slug: 'automatizacion-procesos',
+    url: 'app.buffoconsulting.cl/flujos',
     eyebrow: 'Automatización de procesos',
     title: SERVICE_PAINS['automatizacion-procesos'],
     desc: 'Copiar y pegar entre planillas, rearmar el mismo informe cada lunes. Trabajo necesario, pero que no aprovecha el criterio de su equipo. Lo dejamos corriendo solo, empezando por el proceso que más horas libera.',
   },
   {
     slug: 'agentes-ia',
+    url: 'app.buffoconsulting.cl/agentes',
     eyebrow: 'Agentes IA',
     title: SERVICE_PAINS['agentes-ia'],
     desc: 'Un agente vigila el negocio de forma continua: revisa el pipeline cada mañana, detecta la cobranza en riesgo, avisa del quiebre de stock antes de que ocurra. No lo inunda: le avisa cuando hay que actuar.',
@@ -259,7 +264,9 @@ const serviceSchema = {
               </a>
             </div>
             <div class:list={['reveal reveal-delay-1', flip ? 'lg:order-1' : 'lg:order-2']}>
-              <Mock />
+              <VentanaNavegador url={s.url} pestana={s.eyebrow}>
+                <Mock />
+              </VentanaNavegador>
             </div>
           </div>
         </section>

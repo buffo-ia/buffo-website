@@ -30,7 +30,7 @@ const fuentes = [
 ];
 ---
 
-<div class="dash bg-surface-container-lowest border border-on-surface/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+<div class="dash bg-surface-container-lowest p-5 md:p-6 select-none">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
@@ -115,7 +115,7 @@ const fuentes = [
   @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes fade { to { opacity: 1; } }
   @keyframes popIn { to { opacity: 1; transform: scale(1); } }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,182,107,0.5); } 70% { box-shadow: 0 0 0 6px rgba(22,182,107,0); } 100% { box-shadow: 0 0 0 0 rgba(22,182,107,0); } }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0.5); } 70% { box-shadow: 0 0 0 6px rgb(var(--c-primary) / 0); } 100% { box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0); } }
   @media (prefers-reduced-motion: reduce) {
     .src,.flow-arrow,.model-box,.ventas-line,.proj-line,.area-fill,.band,.last-label,.live-dot { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none; }
   }

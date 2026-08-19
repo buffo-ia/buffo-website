@@ -16,7 +16,7 @@ const pipeline = [
 ];
 ---
 
-<div class="dash bg-surface-container-lowest border border-on-surface/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+<div class="dash bg-surface-container-lowest p-5 md:p-6 select-none">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
@@ -94,7 +94,7 @@ const pipeline = [
   @keyframes fade { to { opacity: 1; } }
   @keyframes popIn { to { opacity: 1; transform: scale(1); } }
   @keyframes grow { to { width: 100%; } }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,182,107,0.5); } 70% { box-shadow: 0 0 0 6px rgba(22,182,107,0); } 100% { box-shadow: 0 0 0 0 rgba(22,182,107,0); } }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0.5); } 70% { box-shadow: 0 0 0 6px rgb(var(--c-primary) / 0); } 100% { box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0); } }
   @media (prefers-reduced-motion: reduce) {
     .manual-step,.transform-arrow,.auto-step,.pipe-arrow,.check-badge,.flow-bar,.live-dot { animation: none; opacity: 1; transform: none; width: 100%; }
   }

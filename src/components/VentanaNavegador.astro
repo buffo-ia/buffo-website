@@ -1,0 +1,134 @@
+---
+/**
+ * Ventana de navegador para envolver los mockups.
+ *
+ * El porqué: sueltos, los mockups se leen como una lámina de PowerPoint. Dentro
+ * de una ventana con su barra y su dirección, el ojo los lee como PRODUCTO
+ * FUNCIONANDO. Es lo que hace que los ejemplos de Slack se vean reales: no es la
+ * animación, es el marco.
+ *
+ * Config arriba, motor abajo (CLAUDE.md). Lo único que cambia por uso es la
+ * dirección que muestra la barra.
+ *
+ * ⚠️ Excepción deliberada al borderRadius 0 del sistema, la segunda del sitio
+ * después de la píldora del menú: una ventana con esquinas en punta no se lee
+ * como ventana. Es una vez, con motivo — no diez veces por decoración.
+ */
+interface Props {
+  /** Lo que muestra la barra de dirección. Sin https:// — lo pone el componente. */
+  url: string;
+  /** Etiqueta de la pestaña. Por defecto, la primera parte de la ruta. */
+  pestana?: string;
+  class?: string;
+}
+
+const { url, pestana, class: clase = '' } = Astro.props;
+const rotulo = pestana ?? (url.split('/')[1] ?? 'buffo').replace(/-/g, ' ');
+---
+
+<div class:list={['ventana', clase]}>
+  <!-- Barra del navegador -->
+  <div class="ventana-barra flex items-center gap-3 px-4 py-2.5">
+    <div class="flex items-center gap-1.5 shrink-0">
+      <span class="punto"></span>
+      <span class="punto"></span>
+      <span class="punto"></span>
+    </div>
+
+    <!-- Pestaña: da la escala de "esto es un navegador", no solo una barra -->
+    <div class="pestana hidden sm:flex items-center gap-1.5 shrink-0">
+      <span class="material-symbols-outlined text-[0.8rem] text-primary">bolt</span>
+      <!-- Sin `capitalize`: mayúscula en cada palabra es regla del inglés. -->
+      <span class="text-[0.62rem] font-semibold first-letter:uppercase">{rotulo}</span>
+    </div>
+
+    <div class="barra-url flex-1 flex items-center gap-1.5 px-2.5 py-1 min-w-0">
+      <span class="material-symbols-outlined text-[0.72rem] text-on-surface-variant/70">lock</span>
+      <span class="text-[0.62rem] text-on-surface-variant/80 truncate font-medium">{url}</span>
+    </div>
+  </div>
+
+  <!-- Contenido: acá va el mockup, ya sin marco propio -->
+  <div class="ventana-cuerpo">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .ventana {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgb(var(--c-hairline) / calc(var(--hairline-a) * 2));
+    background-color: rgb(var(--c-surface));
+    /* Sombra en capas: filo, apoyo cercano y ambiental larga. En los bloques
+       oscuros la sombra negra no se ve, así que ahí la profundidad la da un
+       halo del acento — la misma lógica de "en oscuro se sube el tono". */
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.06),
+      0 12px 24px -8px rgb(0 0 0 / 0.12),
+      0 32px 64px -24px rgb(0 0 0 / 0.22);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+  }
+  .ventana:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.07),
+      0 18px 32px -8px rgb(0 0 0 / 0.16),
+      0 44px 80px -28px rgb(0 0 0 / 0.28);
+  }
+
+  /* Dentro de un bloque ancla la sombra negra desaparece: se cambia por un
+     halo del acento y un filo claro arriba, que es como se lee el volumen
+     sobre fondo oscuro. */
+  :global(.bloque-ancla) .ventana {
+    border-color: rgb(var(--c-hairline) / 0.16);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 24px 60px -20px rgb(var(--c-primary) / 0.22),
+      0 40px 90px -30px rgb(0 0 0 / 0.5);
+  }
+  :global(.bloque-ancla) .ventana:hover {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 30px 70px -20px rgb(var(--c-primary) / 0.3),
+      0 50px 110px -30px rgb(0 0 0 / 0.55);
+  }
+
+  .ventana-barra {
+    background-color: rgb(var(--c-surface-variant));
+    border-bottom: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
+  }
+
+  .punto {
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    background-color: rgb(var(--c-on-surface) / 0.18);
+  }
+
+  .pestana {
+    background-color: rgb(var(--c-surface));
+    border: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
+    border-radius: 5px;
+    padding: 0.18rem 0.5rem;
+    color: rgb(var(--c-on-surface) / 0.75);
+  }
+
+  .barra-url {
+    background-color: rgb(var(--c-surface) / 0.75);
+    border: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
+    border-radius: 5px;
+  }
+
+  .ventana-cuerpo {
+    background-color: rgb(var(--c-container-lowest));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ventana,
+    .ventana:hover {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

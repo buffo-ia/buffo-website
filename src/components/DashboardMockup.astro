@@ -31,7 +31,7 @@ const ranking = [
 ];
 ---
 
-<div class="dash bg-surface-container-lowest border border-on-surface/10 p-5 md:p-6 select-none shadow-2xl shadow-primary/5">
+<div class="dash bg-surface-container-lowest p-5 md:p-6 select-none">
   <!-- header app -->
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
@@ -216,12 +216,12 @@ const ranking = [
   /* punto "en vivo" latiendo */
   .live-dot {
     animation: pulse 1.8s ease-in-out infinite;
-    box-shadow: 0 0 0 0 rgba(22, 182, 107, 0.5);
+    box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0.5);
   }
   @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(22, 182, 107, 0.5); }
-    70% { box-shadow: 0 0 0 6px rgba(22, 182, 107, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(22, 182, 107, 0); }
+    0% { box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0.5); }
+    70% { box-shadow: 0 0 0 6px rgb(var(--c-primary) / 0); }
+    100% { box-shadow: 0 0 0 0 rgb(var(--c-primary) / 0); }
   }
 
   /* respeto a quienes prefieren menos movimiento */
