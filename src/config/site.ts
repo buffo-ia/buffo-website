@@ -19,7 +19,7 @@ export const SITE = {
   // el H1 y la meta description, que los motores de respuesta también leen.
   defaultTitle: 'Consultoría en Inteligencia Artificial · Chile | Buffo IA',
   defaultDescription:
-    'Consultora chilena de IA aplicada a la gestión empresarial: dashboards ejecutivos, modelamiento de datos, automatización y agentes IA para decidir a tiempo.',
+    'Consultora chilena de IA aplicada a la gestión comercial y operacional: dashboards ejecutivos, modelamiento de datos, automatización y agentes IA.',
 };
 
 // Líder visible de la empresa — alimenta la página "Sobre nosotros" y será el

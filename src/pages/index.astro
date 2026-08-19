@@ -70,6 +70,10 @@ const STACK = [
 // ⚠️ Sin precios: la tarifa depende del alcance y no se publica.
 const FAQ_HOME = [
   {
+    q: '¿Qué tipo de consultoría de inteligencia artificial es Buffo?',
+    a: 'De inteligencia artificial aplicada a la gestión comercial y operacional: ventas, margen, presupuesto, stock, cobranza y reportería. No es un laboratorio de investigación ni un equipo que entrena modelos experimentales: la técnica es el medio y la decisión de negocio es el objetivo.',
+  },
+  {
     q: '¿Cuánto cuesta una consultoría de inteligencia artificial en Chile?',
     a: 'No hay una tarifa única: el alcance cambia mucho entre ordenar unas planillas y dejar agentes operando. El diagnóstico de tres minutos es gratuito y entrega por escrito por dónde partir, sin compromiso.',
   },
@@ -80,10 +84,6 @@ const FAQ_HOME = [
   {
     q: '¿Tengo que cambiar mi ERP o mis sistemas actuales?',
     a: 'No. Todo se construye encima de lo que la empresa ya usa: el ERP, el sistema de ventas, las planillas de control de gestión. Conectar es más barato y menos riesgoso que reemplazar.',
-  },
-  {
-    q: '¿Sirve para una pyme o es solo para empresas grandes?',
-    a: 'Para las dos. En una empresa grande la información suele estar repartida en demasiados sistemas; en una pyme, vive en la cabeza de dos personas. El enfoque es el mismo y cambia el tamaño del proyecto.',
   },
   {
     q: '¿Por dónde empiezo si todavía no sé qué necesito?',
@@ -108,7 +108,7 @@ const serviceSchema = {
   '@id': `${SITE.url}/#service`,
   name: SITE.name,
   provider: { '@id': `${SITE.url}/#organization` },
-  serviceType: 'Consultoría en Inteligencia Artificial y Análisis de Datos',
+  serviceType: 'Consultoría en Inteligencia Artificial aplicada a la gestión comercial y operacional',
   areaServed: { '@type': 'Country', name: 'Chile' },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
@@ -131,7 +131,7 @@ const serviceSchema = {
       <p
         class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-7"
       >
-        Consultora de IA · Santiago de Chile
+        Consultora de IA para gestión comercial · Santiago de Chile
       </p>
       <!-- Antes el H1 decía "Inteligencia Artificial" a secas: más amplio que
            el negocio real, y ni siquiera coincidía con el <title>, que ya
