@@ -170,7 +170,15 @@ body {
    NO es el glow de plantilla que se sacó (box-shadow de 28px en el botón).
    Es una sola fuente enorme y difusa detrás del contenido: se percibe como
    profundidad, no como brillo. Una por pantalla, nunca dos. */
-.resplandor { position: relative; isolation: isolate; }
+.resplandor {
+  position: relative;
+  isolation: isolate;
+  /* ⚠️ La capa de luz se sale un 10% por cada lado a propósito (si no, se ve
+     el borde del degradado). Sin recorte eso son 144px de scroll horizontal en
+     un viewport de 1440. El recorte va acá y no en la página, para que la clase
+     sea autocontenida y no dependa de que alguien recuerde ponerlo. */
+  overflow: hidden;
+}
 .resplandor::before {
   content: '';
   position: absolute;
