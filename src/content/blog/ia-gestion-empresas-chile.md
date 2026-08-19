@@ -62,10 +62,10 @@ El paso más reciente. Un agente es software que trabaja por su cuenta: monitore
 
 El error más común es querer hacerlo todo de una vez. La forma sensata es la contraria: empezar por el problema que más duele y más tiempo libera.
 
-1. **Identifica la decisión que tomas a ciegas.** ¿Qué te gustaría saber cada lunes y hoy no sabes hasta que es tarde?
+1. **Identifique la decisión que toma a ciegas.** ¿Qué le gustaría saber cada lunes y hoy no sabe hasta que es tarde?
 2. **Parte por una sola fuente de valor.** Un primer dashboard o una automatización concreta entrega resultados en semanas, no en meses.
-3. **Construye sobre lo que ya tienes.** No hace falta cambiar los sistemas actuales; lo habitual es conectarlos, no reemplazarlos.
-4. **Suma capas a medida que ves valor.** Una vez que el equipo confía en los datos, proyectar y automatizar se vuelve natural.
+3. **Construya sobre lo que ya tiene.** No hace falta cambiar los sistemas actuales; lo habitual es conectarlos, no reemplazarlos.
+4. **Sume capas a medida que ve valor.** Una vez que el equipo confía en los datos, proyectar y automatizar se vuelve natural.
 
 Este enfoque por etapas evita el gran proyecto que nunca termina y permite aprender en el camino.
 
@@ -79,4 +79,4 @@ Esa lectura no nace de una plantilla genérica. Nace de entender cómo funciona 
 
 La inteligencia artificial aplicada a la gestión dejó de ser un lujo corporativo para convertirse en una ventaja al alcance de las empresas chilenas. No se trata de tecnología por la tecnología, sino de recuperar tiempo, decidir con datos confiables y adelantarse a los problemas.
 
-Si quieres profundizar en piezas específicas, dos buenas lecturas siguientes son [qué es un copiloto de gestión prescriptivo](/blog/copiloto-gestion-prescriptivo) y la comparación entre [una consultora de IA y un software ERP](/blog/consultora-ia-vs-erp). Y si prefieres conversarlo aplicado a tu empresa, esa conversación es el mejor punto de partida.
+Si quiere profundizar en piezas específicas, dos buenas lecturas siguientes son [qué es un copiloto de gestión prescriptivo](/blog/copiloto-gestion-prescriptivo) y la comparación entre [una consultora de IA y un software ERP](/blog/consultora-ia-vs-erp). Y si prefiere conversarlo aplicado a su empresa, esa conversación es el mejor punto de partida.

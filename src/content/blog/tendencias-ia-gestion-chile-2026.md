@@ -23,7 +23,7 @@ Esto es lo que distingue a un [copiloto de gestión prescriptivo](/blog/copiloto
 
 ## Agentes autónomos: del asistente al colaborador
 
-La segunda tendencia es el salto de los asistentes —que responden cuando se les pregunta— a los [agentes de IA](/servicios/agentes-ia), que trabajan solos. Un agente monitorea el negocio de forma continua: revisa el pipeline cada mañana, detecta una cobranza en riesgo o alerta un quiebre de stock antes de que ocurra.
+La segunda tendencia es el salto de los asistentes —que responden cuando se les pregunta— a los [agentes de IA](/servicios/agentes-ia), que trabajan solos. Un agente monitorea el negocio de forma continua: revise el pipeline cada mañana, detecta una cobranza en riesgo o alerta un quiebre de stock antes de que ocurra.
 
 Para una empresa chilena, esto cambia la ecuación del tiempo: el seguimiento que antes dependía de que alguien se acordara, ahora ocurre sin intervención. No reemplaza al equipo; se hace cargo de la vigilancia constante para que las personas se concentren en decidir.
 
@@ -57,4 +57,4 @@ Las tendencias no sirven de nada si no se traducen en una decisión. Para una em
 
 2026 confirma que la inteligencia artificial dejó de ser un experimento para volverse parte de la gestión diaria. La oportunidad para las empresas chilenas no está en adoptar todas las tendencias a la vez, sino en dar el primer paso bien dado.
 
-Si quieres el panorama completo, parte por la guía de [IA para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile). Y si quieres saber qué tendencia aplica primero a tu negocio, conversarlo es la forma más rápida de aterrizarlo.
+Si quiere el panorama completo, parte por la guía de [IA para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile). Y si quiere saber qué tendencia aplica primero a su negocio, conversarlo es la forma más rápida de aterrizarlo.

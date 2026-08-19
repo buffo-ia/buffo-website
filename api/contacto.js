@@ -1,7 +1,7 @@
 // Función serverless (Vercel) para el formulario de contacto.
 // Envía 2 correos vía Resend reutilizando el dominio raíz verificado buffoconsulting.cl:
 //   1. Notificación interna a Buffo con los datos del lead.
-//   2. Confirmación al visitante ("gracias, te responderemos").
+//   2. Confirmación al visitante ("gracias, le responderemos").
 // No usa la librería resend: la API HTTP + fetch nativo de Node alcanzan.
 
 const CONFIG = {
@@ -108,18 +108,18 @@ export default async function handler(req, res) {
     from: `${CONFIG.fromName} <${CONFIG.fromEmail}>`,
     to: [email],
     reply_to: CONFIG.contactEmail,
-    subject: 'Recibimos tu mensaje — Buffo Consulting',
+    subject: 'Recibimos su mensaje — Buffo Consulting',
     html: `
       <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#0D0E10;max-width:560px;margin:0 auto;">
-        <h2 style="margin:0 0 16px;font-size:18px;">¡Gracias por escribirnos, ${safe.name}!</h2>
+        <h2 style="margin:0 0 16px;font-size:18px;">Gracias por escribirnos, ${safe.name}.</h2>
         <p style="line-height:1.6;margin:0 0 14px;">
-          Recibimos tu mensaje y te responderemos a la brevedad. En Buffo Consulting
-          aplicamos inteligencia artificial a la gestión de tu empresa.
+          Recibimos su mensaje y le responderemos a la brevedad. En Buffo Consulting
+          aplicamos inteligencia artificial a la gestión de su empresa.
         </p>
         <p style="line-height:1.6;margin:0 0 14px;">Para referencia, esto fue lo que nos enviaste:</p>
         <div style="background:#f5f5f5;padding:14px;border-radius:6px;line-height:1.6;">${safe.message}</div>
         <p style="line-height:1.6;margin:18px 0 4px;">
-          Si quieres adelantar la conversación, puedes
+          Si quiere adelantar la conversación, puede
           <a href="${CONFIG.siteUrl}/contacto" style="color:#16B66B;">agendar una llamada</a>.
         </p>
         <p style="line-height:1.6;margin:14px 0 0;color:#666;font-size:13px;">— Equipo Buffo Consulting</p>

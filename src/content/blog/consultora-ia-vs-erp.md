@@ -1,6 +1,6 @@
 ---
-title: 'Consultora de IA vs software ERP: ¿cuál necesita tu pyme?'
-description: 'ERP y consultora de IA no compiten: resuelven problemas distintos. Te explicamos en qué se diferencian, cuándo necesitas cada uno y por qué muchas veces se complementan.'
+title: 'Consultora de IA vs software ERP: ¿cuál necesita su pyme?'
+description: 'ERP y consultora de IA no compiten: resuelven problemas distintos. Le explicamos en qué se diferencian, cuándo necesita cada uno y por qué muchas veces se complementan.'
 lead: 'Un software ERP ordena y registra la operación de la empresa; una consultora de IA toma esos datos y los convierte en decisiones. No son lo mismo ni compiten: el ERP es el sistema que guarda la información, y la inteligencia artificial es la capa que la interpreta para decidir mejor. Muchas pymes chilenas necesitan ambos, pero en momentos distintos.'
 cover: ../../assets/blog/erp-ia.jpg
 coverAlt: 'Sala de servidores y datos que representa un sistema ERP empresarial'
@@ -16,13 +16,13 @@ keywords:
 
 Cuando una empresa decide "ponerse al día con la tecnología", suele aparecer la misma confusión: ¿necesito un ERP nuevo o necesito inteligencia artificial? La pregunta parece de una sola respuesta, pero parte de un malentendido. ERP y consultora de IA no resuelven el mismo problema, y elegir uno pensando que reemplaza al otro lleva a gastar mal.
 
-En este artículo aclaramos la diferencia, sin tecnicismos, para que sepas qué necesitas según el momento de tu negocio.
+En este artículo aclaramos la diferencia, sin tecnicismos, para que sepa qué necesita según el momento de su negocio.
 
 ## ¿Qué hace un ERP y qué no?
 
 Un ERP (Enterprise Resource Planning) es el sistema que registra y ordena la operación: ventas, inventario, compras, finanzas, facturación. Es la columna vertebral administrativa de la empresa. Su gran valor es tener todo en un mismo lugar y bajo las mismas reglas.
 
-Pero un ERP está diseñado para **registrar**, no para **interpretar**. Te dice cuánto vendiste y qué tienes en bodega; no te dice qué producto vas a quebrar la próxima semana, ni qué cliente está a punto de dejar de comprarte, ni dónde está la fuga de margen. Esa lectura no es su trabajo.
+Pero un ERP está diseñado para **registrar**, no para **interpretar**. Le dice cuánto vendió y qué tiene en bodega; no le dice qué producto va a quebrar la próxima semana, ni qué cliente está a punto de dejar de comprarle, ni dónde está la fuga de margen. Esa lectura no es su trabajo.
 
 ## ¿Qué hace una consultora de IA?
 
@@ -48,12 +48,12 @@ Una empresa puede tener un ERP excelente y aun así llegar al lunes sin saber qu
 
 ## ¿Cuál necesito primero?
 
-Depende de dónde está tu dolor hoy:
+Depende de dónde está su dolor hoy:
 
-1. **Si tu operación es un caos de planillas sueltas** y no tienes un sistema central que registre ventas, stock y finanzas de forma confiable, probablemente primero necesites ordenar esa base. Un ERP (o al menos una estructura de datos seria) viene primero.
-2. **Si ya tienes los datos pero no los usas para decidir** —existen, pero están dormidos en reportes que nadie alcanza a interpretar— entonces tu problema no es de registro, es de inteligencia. Ahí la consultora de IA entrega valor inmediato.
+1. **Si su operación es un caos de planillas sueltas** y no tiene un sistema central que registre ventas, stock y finanzas de forma confiable, probablemente primero necesite ordenar esa base. Un ERP (o al menos una estructura de datos seria) viene primero.
+2. **Si ya tiene los datos pero no los usa para decidir** —existen, pero están dormidos en reportes que nadie alcanza a interpretar— entonces su problema no es de registro, es de inteligencia. Ahí la consultora de IA entrega valor inmediato.
 
-Un punto importante para pymes: no necesitas esperar a tener el ERP "perfecto" para empezar con IA. Lo habitual es trabajar con las fuentes que ya existen, por desordenadas que estén. De hecho, parte del trabajo de modelamiento es justamente limpiar y estructurar datos imperfectos.
+Un punto importante para pymes: no necesita esperar a tener el ERP "perfecto" para empezar con IA. Lo habitual es trabajar con las fuentes que ya existen, por desordenadas que estén. De hecho, parte del trabajo de modelamiento es justamente limpiar y estructurar datos imperfectos.
 
 ## ¿Y el costo?
 
@@ -63,6 +63,6 @@ Para muchas pymes chilenas, esto hace que la IA sea un punto de entrada más liv
 
 ## En resumen
 
-No es ERP **o** IA: es entender que uno **registra** y la otra **decide**. El ERP ordena la casa; la inteligencia artificial la hace rentable convirtiendo esos datos en acción. La pregunta correcta no es cuál elegir, sino cuál necesitas primero según tu dolor actual.
+No es ERP **o** IA: es entender que uno **registra** y la otra **decide**. El ERP ordena la casa; la inteligencia artificial la hace rentable convirtiendo esos datos en acción. La pregunta correcta no es cuál elegir, sino cuál necesita primero según su dolor actual.
 
-Si quieres ubicar esta decisión dentro del panorama completo, la guía de [IA para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile) es el mejor siguiente paso. Y si tienes dudas sobre tu caso puntual, conversarlo es la forma más rápida de despejarlas.
+Si quiere ubicar esta decisión dentro del panorama completo, la guía de [IA para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile) es el mejor siguiente paso. Y si tiene dudas sobre su caso puntual, conversarlo es la forma más rápida de despejarlas.

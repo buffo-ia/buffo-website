@@ -5,7 +5,7 @@ import { SITE } from '../config/site';
 const path = '/contacto';
 const metaTitle = 'Contacto | Buffo IA Consulting';
 const metaDescription =
-  'Conversemos sobre cómo aplicar inteligencia artificial a la gestión de tu empresa en Chile. Agenda una llamada de 30 minutos o escríbenos.';
+  'Conversemos sobre cómo aplicar inteligencia artificial a la gestión de su empresa en Chile. Agende una llamada de 30 minutos o escríbanos.';
 
 const contactSchema = {
   '@context': 'https://schema.org',
@@ -25,11 +25,11 @@ const contactSchema = {
       <div class="mb-14 max-w-2xl">
         <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-8">Contacto</p>
         <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
-          Conversemos sobre tu empresa
+          Conversemos sobre su empresa
         </h1>
         <p class="reveal reveal-delay-2 text-lg text-on-surface-variant leading-relaxed">
-          Cuéntanos de qué te estás enterando demasiado tarde. La primera conversación es sin costo
-          y sirve para entender si Buffo IA es lo que tu negocio necesita — si no lo es, te lo
+          Cuéntenos de qué se está enterando demasiado tarde. La primera conversación es sin costo
+          y sirve para entender si Buffo IA es lo que su negocio necesita — si no lo es, se lo
           decimos.
         </p>
       </div>
@@ -46,7 +46,7 @@ const contactSchema = {
               <input
                 type="text" id="name" name="name" required
                 class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
-                placeholder="Tu nombre"
+                placeholder="Su nombre"
               />
             </div>
             <div>
@@ -54,7 +54,7 @@ const contactSchema = {
               <input
                 type="email" id="email" name="email" required
                 class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
-                placeholder="tucorreo@empresa.cl"
+                placeholder="sucorreo@empresa.cl"
               />
             </div>
             <div>
@@ -62,7 +62,7 @@ const contactSchema = {
               <input
                 type="text" id="company" name="company"
                 class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors"
-                placeholder="Nombre de tu empresa"
+                placeholder="Nombre de su empresa"
               />
             </div>
             <div>
@@ -70,7 +70,7 @@ const contactSchema = {
               <textarea
                 id="message" name="message" rows="4" required
                 class="w-full bg-surface-container-low border border-on-surface/10 px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:outline-none transition-colors resize-y"
-                placeholder="¿Qué te gustaría resolver?"></textarea>
+                placeholder="¿Qué le gustaría resolver?"></textarea>
             </div>
 
             <button
@@ -92,7 +92,7 @@ const contactSchema = {
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">fact_check</span>
             <h3 class="font-display text-lg mb-1">Diagnóstico en 3 minutos</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Doce preguntas y recibes el informe por correo. Sin llamada, sin compromiso.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Doce preguntas y recibe el informe por correo. Sin llamada, sin compromiso.</p>
           </a>
           <a
             href={SITE.calendly} target="_blank" rel="noopener noreferrer"
@@ -100,14 +100,14 @@ const contactSchema = {
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">event_available</span>
             <h3 class="font-display text-lg mb-1">Agenda en línea</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Reserva una llamada de 30 minutos con Google Meet incluido.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Reserve una llamada de 30 minutos con Google Meet incluido.</p>
           </a>
           <a
             href={`mailto:${SITE.email}`}
             class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">mail</span>
-            <h3 class="font-display text-lg mb-1">Escríbenos</h3>
+            <h3 class="font-display text-lg mb-1">Escríbanos</h3>
             <p class="text-on-surface-variant text-sm leading-relaxed break-all">{SITE.email}</p>
           </a>
           <a
@@ -117,7 +117,7 @@ const contactSchema = {
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">chat</span>
             <h3 class="font-display text-lg mb-1">WhatsApp</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Escríbenos directo, en horario hábil.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Escríbanos directamente, en horario hábil.</p>
           </a>
           <a
             href={SITE.linkedin} target="_blank" rel="noopener noreferrer"
@@ -125,7 +125,7 @@ const contactSchema = {
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">link</span>
             <h3 class="font-display text-lg mb-1">LinkedIn</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Conéctate con nosotros.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Conéctese con nosotros.</p>
           </a>
         </div>
       </div>
@@ -160,12 +160,12 @@ const contactSchema = {
         const json = await res.json();
         if (json.success) {
           form.reset();
-          show('¡Gracias! Recibimos tu mensaje y te responderemos pronto.', true);
+          show('Gracias. Recibimos su mensaje y le responderemos pronto.', true);
         } else {
-          show('No pudimos enviar el mensaje. Intenta de nuevo o escríbenos por correo.', false);
+          show('No pudimos enviar el mensaje. Intenta de nuevo o escríbanos por correo.', false);
         }
       } catch {
-        show('No pudimos enviar el mensaje. Intenta de nuevo o escríbenos por correo.', false);
+        show('No pudimos enviar el mensaje. Intenta de nuevo o escríbanos por correo.', false);
       } finally {
         btn.disabled = false;
         btn.textContent = original;

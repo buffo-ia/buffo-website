@@ -83,27 +83,27 @@ export const SERVICES = [
     icon: 'dashboard_customize',
     title: 'Dashboards ejecutivos',
     short:
-      'Tu negocio en tiempo real, sin reportería manual. Visualizaciones diseñadas para decidir en el momento, no a fin de mes.',
+      'Su negocio en tiempo real, sin reportería manual. Visualizaciones diseñadas para decidir en el momento, no a fin de mes.',
   },
   {
     slug: 'modelamiento-predictivo',
     icon: 'schema',
     title: 'Modelamiento de datos',
     short:
-      'Conectamos tus fuentes y les damos sentido. Estructuramos el caos para que la información fluya hacia la rentabilidad.',
+      'Conectamos sus fuentes y les damos sentido. Estructuramos el caos para que la información fluya hacia la rentabilidad.',
   },
   {
     slug: 'automatizacion-procesos',
     icon: 'precision_manufacturing',
     title: 'Automatización de procesos',
     short:
-      'Elimina las tareas que no generan valor. Flujos que liberan el talento de tu equipo para lo que sí importa.',
+      'Elimina las tareas que no generan valor. Flujos que liberan el talento de su equipo para lo que sí importa.',
   },
   {
     slug: 'agentes-ia',
     icon: 'smart_toy',
     title: 'Agentes IA',
     short:
-      'Software que trabaja solo: monitorea tus datos, detecta lo importante y ejecuta tareas sin que se las pidas.',
+      'Software que trabaja solo: monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pida.',
   },
 ];

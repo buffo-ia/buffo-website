@@ -35,14 +35,14 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Dashboards ejecutivos para empresas en Chile',
     metaTitle: 'Dashboards Ejecutivos en Chile | Buffo IA Consulting',
     metaDescription:
-      'Diseñamos dashboards ejecutivos para empresas en Chile: tus ventas, finanzas y operación en tiempo real, sin reportería manual. Visualizaciones para decidir, no solo para mirar.',
-    lead: 'Un dashboard ejecutivo es un tablero que reúne los indicadores clave de tu empresa en una sola vista y en tiempo real. En Buffo IA los diseñamos para gerentes en Chile que necesitan decidir rápido: en vez de esperar el reporte del mes, ves el estado del negocio cuando lo necesitas y sabes dónde actuar primero.',
+      'Diseñamos dashboards ejecutivos para empresas en Chile: sus ventas, finanzas y operación en tiempo real, sin reportería manual. Visualizaciones para decidir, no solo para mirar.',
+    lead: 'Un dashboard ejecutivo es un tablero que reúne los indicadores clave de su empresa en una sola vista y en tiempo real. En Buffo IA los diseñamos para gerentes en Chile que necesitan decidir rápido: en vez de esperar el reporte del mes, ve el estado del negocio cuando lo necesita y sabe dónde actuar primero.',
     sections: [
       {
         heading: '¿Por qué el reporte siempre llega tarde?',
         body: [
           'La mayoría de las empresas no tiene un problema de datos: tiene un problema de tiempo. La información existe, pero está repartida en planillas, sistemas y reportes que alguien tiene que consolidar a mano cada semana. Cuando el reporte por fin llega, ya pasó la oportunidad de corregir.',
-          'Un dashboard ejecutivo elimina ese trabajo manual. Conectamos tus fuentes una sola vez y la información se actualiza sola, lista para leer en segundos.',
+          'Un dashboard ejecutivo elimina ese trabajo manual. Conectamos sus fuentes una sola vez y la información se actualiza sola, lista para leer en segundos.',
         ],
       },
       // Ojo: acá NO va un "cómo trabajamos". Esta página tiene su propio
@@ -51,7 +51,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Qué datos necesita y de dónde salen?',
         body: [
-          'Los que ya tienes. Lo habitual es partir con lo que existe: el sistema de ventas, el ERP, las planillas de control de gestión, la base del punto de venta. No hace falta un proyecto de datos previo ni cambiar de software para empezar a ver resultados.',
+          'Los que ya tiene. Lo habitual es partir con lo que existe: el sistema de ventas, el ERP, las planillas de control de gestión, la base del punto de venta. No hace falta un proyecto de datos previo ni cambiar de software para empezar a ver resultados.',
           'Cuando las fuentes no coinciden entre sí —y casi nunca coinciden— esa diferencia se resuelve como parte del trabajo: se acuerdan definiciones únicas para cada indicador, de modo que "venta" signifique lo mismo en comercial que en finanzas. Ese acuerdo es la mitad del valor del proyecto, aunque no se vea en la pantalla.',
         ],
       },
@@ -65,8 +65,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Qué lo hace distinto de comprar una herramienta de BI?',
         body: [
-          'Buffo IA nació en las áreas comerciales, no en TI. Eso significa que el dashboard habla el idioma del negocio: vendedores, canales, presupuesto, quiebres de stock, margen. No tienes que traducir tecnicismos para entenderlo.',
-          'Una licencia de una herramienta de visualización te entrega un lienzo en blanco y el problema sigue siendo tuyo: qué medir, cómo definirlo y qué hacer cuando el número se sale de rango. Acá lo que se entrega es el criterio, y la herramienta es solo el medio.',
+          'Buffo IA nació en las áreas comerciales, no en TI. Eso significa que el dashboard habla el idioma del negocio: vendedores, canales, presupuesto, quiebres de stock, margen. No tiene que traducir tecnicismos para entenderlo.',
+          'Una licencia de una herramienta de visualización le entrega un lienzo en blanco y el problema sigue siendo suyo: qué medir, cómo definirlo y qué hacer cuando el número se sale de rango. Acá lo que se entrega es el criterio, y la herramienta es solo el medio.',
         ],
       },
     ],
@@ -86,7 +86,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     faq: [
       {
         q: '¿Qué necesito para empezar?',
-        a: 'Acceso a tus fuentes de datos actuales (Excel, ERP, sistema de ventas o base de datos). Nosotros nos encargamos de conectarlas y estructurarlas; tu equipo no tiene que cargar nada manualmente.',
+        a: 'Acceso a sus fuentes de datos actuales (Excel, ERP, sistema de ventas o base de datos). Nosotros nos encargamos de conectarlas y estructurarlas; su equipo no tiene que cargar nada manualmente.',
       },
       {
         q: '¿En cuánto tiempo veo el primer dashboard?',
@@ -117,8 +117,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Modelamiento y análisis de datos para empresas en Chile',
     metaTitle: 'Modelamiento de Datos y Forecasting en Chile | Buffo IA',
     metaDescription:
-      'Conectamos y estructuramos las fuentes de datos de tu empresa en Chile para generar inteligencia accionable: forecasting de ventas, presupuestos y alertas. Del caos de planillas a decisiones.',
-    lead: 'El modelamiento de datos consiste en conectar las distintas fuentes de tu empresa y darles una estructura coherente para poder analizarlas y proyectarlas. En Buffo IA transformamos el caos de planillas dispersas en un modelo único que permite forecasting de ventas, preparación de presupuestos y alertas tempranas, pensado para la realidad de las empresas en Chile.',
+      'Conectamos y estructuramos las fuentes de datos de su empresa en Chile para generar inteligencia accionable: forecasting de ventas, presupuestos y alertas. Del caos de planillas a decisiones.',
+    lead: 'El modelamiento de datos consiste en conectar las distintas fuentes de su empresa y darles una estructura coherente para poder analizarlas y proyectarlas. En Buffo IA transformamos el caos de planillas dispersas en un modelo único que permite forecasting de ventas, preparación de presupuestos y alertas tempranas, pensado para la realidad de las empresas en Chile.',
     sections: [
       {
         heading: '¿Por qué las cifras no cuadran entre sistemas?',
@@ -131,7 +131,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Cómo se construye un modelo de datos?',
         body: [
-          'Integramos tus fuentes — ventas, inventario, finanzas, marketing — y las estructuramos para que la información fluya hacia la rentabilidad. Sobre esa base construimos proyecciones de demanda, presupuestos y modelos de quiebre de stock.',
+          'Integramos sus fuentes — ventas, inventario, finanzas, marketing — y las estructuramos para que la información fluya hacia la rentabilidad. Sobre esa base construimos proyecciones de demanda, presupuestos y modelos de quiebre de stock.',
           'No es estadística por la estadística: cada modelo se construye con criterio comercial, de modo que las proyecciones tengan sentido para quien toma las decisiones.',
         ],
       },
@@ -185,7 +185,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       },
       {
         q: '¿Esto reemplaza a mi ERP?',
-        a: 'No. El ERP es donde ocurre la operación; el modelo es la capa que lee esa operación y la deja comparable con el resto de las fuentes. Se construye sobre lo que ya tienes, sin pedirte cambiar de sistema.',
+        a: 'No. El ERP es donde ocurre la operación; el modelo es la capa que lee esa operación y la deja comparable con el resto de las fuentes. Se construye sobre lo que ya tiene, sin pedirle cambiar de sistema.',
       },
       {
         q: '¿Quién decide qué significa cada indicador?',
@@ -200,8 +200,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Automatización de procesos con IA para empresas en Chile',
     metaTitle: 'Automatización de Procesos con IA en Chile | Buffo IA',
     metaDescription:
-      'Automatizamos tareas repetitivas en empresas de Chile: reportería, consolidación de datos y flujos manuales. Libera el tiempo de tu equipo para lo que genera valor.',
-    lead: 'La automatización de procesos consiste en delegar a un sistema las tareas repetitivas que hoy consumen el tiempo de tu equipo: consolidar planillas, armar reportes, mover datos entre sistemas. En Buffo IA diseñamos estos flujos para empresas en Chile, de modo que el trabajo manual desaparezca y las personas se enfoquen en lo que sí genera valor.',
+      'Automatizamos tareas repetitivas en empresas de Chile: reportería, consolidación de datos y flujos manuales. Libera el tiempo de su equipo para lo que genera valor.',
+    lead: 'La automatización de procesos consiste en delegar a un sistema las tareas repetitivas que hoy consumen el tiempo de su equipo: consolidar planillas, armar reportes, mover datos entre sistemas. En Buffo IA diseñamos estos flujos para empresas en Chile, de modo que el trabajo manual desaparezca y las personas se enfoquen en lo que sí genera valor.',
     sections: [
       {
         heading: '¿Cuánto tiempo se va en tareas que no requieren talento?',
@@ -256,7 +256,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     faq: [
       {
         q: '¿Tengo que cambiar mis sistemas actuales?',
-        a: 'No necesariamente. Lo habitual es automatizar sobre las herramientas que ya usas, conectándolas entre sí en lugar de reemplazarlas.',
+        a: 'No necesariamente. Lo habitual es automatizar sobre las herramientas que ya usa, conectándolas entre sí en lugar de reemplazarlas.',
       },
       {
         q: '¿Qué diferencia hay con los Agentes IA?',
@@ -283,20 +283,20 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Agentes de inteligencia artificial para empresas en Chile',
     metaTitle: 'Agentes IA para Empresas en Chile | Buffo IA Consulting',
     metaDescription:
-      'Desarrollamos agentes de IA para empresas en Chile: software que trabaja solo, monitorea tus datos, detecta lo importante y ejecuta tareas sin que se las pidan. IA proactiva, no reactiva.',
-    lead: 'Un agente de IA es un software que trabaja por su cuenta: monitorea tus datos de forma continua, detecta lo que importa y ejecuta tareas sin que nadie se lo pida. A diferencia de un asistente que solo responde cuando le preguntas, un agente actúa de manera proactiva. En Buffo IA los desarrollamos para empresas en Chile sobre infraestructura propia y segura.',
+      'Desarrollamos agentes de IA para empresas en Chile: software que trabaja solo, monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pidan. IA proactiva, no reactiva.',
+    lead: 'Un agente de IA es un software que trabaja por su cuenta: monitorea sus datos de forma continua, detecta lo que importa y ejecuta tareas sin que nadie se lo pida. A diferencia de un asistente que solo responde cuando usted le pregunta, un agente actúa de manera proactiva. En Buffo IA los desarrollamos para empresas en Chile sobre infraestructura propia y segura.',
     sections: [
       {
         heading: '¿Qué diferencia hay entre un asistente y un agente?',
         body: [
-          'Un asistente espera tu pregunta para responder. Un agente, en cambio, vigila el negocio todo el tiempo y se adelanta: revisa el pipeline comercial cada mañana, detecta una cobranza en riesgo, alerta de un quiebre de stock antes de que ocurra o prepara un resumen sin que nadie lo pida.',
+          'Un asistente espera su pregunta para responder. Un agente, en cambio, vigila el negocio todo el tiempo y se adelanta: revisa el pipeline comercial cada mañana, detecta una cobranza en riesgo, alerta de un quiebre de stock antes de que ocurra o prepara un resumen sin que nadie lo pida.',
           'Ese cambio —de reactivo a proactivo— es lo que convierte la IA en un miembro más del equipo que nunca se distrae.',
         ],
       },
       {
         heading: '¿Cómo se construye un agente?',
         body: [
-          'Diseñamos cada agente alrededor de una tarea concreta y de alto valor: monitoreo, alertas, resúmenes o ejecución de acciones. El agente corre solo —por horario o ante un evento— y avisa por el canal que tu equipo ya usa.',
+          'Diseñamos cada agente alrededor de una tarea concreta y de alto valor: monitoreo, alertas, resúmenes o ejecución de acciones. El agente corre solo —por horario o ante un evento— y avisa por el canal que su equipo ya usa.',
           'Lo construimos sobre la infraestructura de Buffo, con los datos de cada empresa aislados y bajo control. No es una demo: es software en operación.',
           'Un agente que hace una cosa bien vale más que uno que promete hacerlo todo. Por eso el alcance se define estrecho al principio y se amplía cuando el equipo ya confía en lo que el agente hace sin supervisión.',
         ],
@@ -312,7 +312,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
         heading: '¿Cómo se evita que el agente inunde de notificaciones?',
         body: [
           'Un agente que avisa de todo termina ignorado, y en ese momento deja de servir aunque técnicamente funcione. Por eso el diseño define primero qué merece interrumpir a alguien y qué puede esperar al resumen del día.',
-          'Nuestros agentes nacen de la experiencia comercial: saben qué es relevante en un negocio y qué es ruido. No te inundan de notificaciones; te avisan cuando de verdad hay que actuar.',
+          'Nuestros agentes nacen de la experiencia comercial: saben qué es relevante en un negocio y qué es ruido. No lo inundan de notificaciones; le avisan cuando de verdad hay que actuar.',
         ],
       },
       {
@@ -328,8 +328,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       'Alertas proactivas (cobranza, stock, pipeline, metas)',
       'Resúmenes y reportes generados automáticamente',
       'Ejecución autónoma de tareas por horario o por evento',
-      'Notificaciones en el canal que tu equipo ya usa',
-      'Agentes a medida según el proceso de tu negocio',
+      'Notificaciones en el canal que su equipo ya usa',
+      'Agentes a medida según el proceso de su negocio',
     ],
     forWhom: [
       'Empresas que quieren adelantarse a los problemas, no reaccionar',
@@ -355,7 +355,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       },
       {
         q: '¿Por qué canal avisa?',
-        a: 'Por el que tu equipo ya usa: correo, WhatsApp o la herramienta de chat interna. La idea es no agregar una aplicación más que alguien tenga que acordarse de abrir.',
+        a: 'Por el que su equipo ya usa: correo, WhatsApp o la herramienta de chat interna. La idea es no agregar una aplicación más que alguien tenga que acordarse de abrir.',
       },
     ],
     examples: [
@@ -387,7 +387,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         icon: 'notification_important',
         title: 'Agente de alertas',
-        desc: 'Vigila tus KPI y avisa solo cuando un indicador se sale de lo esperado.',
+        desc: 'Vigila sus KPI y avisa solo cuando un indicador se sale de lo esperado.',
       },
     ],
   },

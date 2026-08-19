@@ -1,6 +1,6 @@
 ---
-title: '¿Qué es un copiloto de gestión prescriptivo y por qué tu empresa lo necesita?'
-description: 'Un copiloto de gestión no solo muestra datos: interpreta, sugiere el siguiente paso y lo ejecuta. Te explicamos qué es, en qué se diferencia de un dashboard común y cuándo conviene.'
+title: '¿Qué es un copiloto de gestión prescriptivo y por qué su empresa lo necesita?'
+description: 'Un copiloto de gestión no solo muestra datos: interpreta, sugiere el siguiente paso y lo ejecuta. Le explicamos qué es, en qué se diferencia de un dashboard común y cuándo conviene.'
 lead: 'Un copiloto de gestión prescriptivo es una solución de inteligencia artificial que no se limita a mostrar datos: los interpreta, señala qué está fuera de lo esperado y sugiere el siguiente paso. A diferencia de un reporte que describe el pasado, un copiloto orienta la decisión presente, en el idioma del negocio y no en el de la tecnología.'
 cover: ../../assets/blog/copiloto.jpg
 coverAlt: 'Pantalla con dashboard de analítica y métricas de negocio en tiempo real'
@@ -22,9 +22,9 @@ Ahí entra el concepto de copiloto de gestión prescriptivo. En este artículo e
 
 Para entenderlo, conviene distinguir tres niveles de analítica, de menor a mayor valor:
 
-- **Descriptiva:** te dice qué pasó. Es el reporte clásico de ventas del mes.
-- **Predictiva:** te dice qué probablemente pasará. Es el forecast de demanda.
-- **Prescriptiva:** te dice qué conviene hacer al respecto. Es la recomendación de acción.
+- **Descriptiva:** le dice qué pasó. Es el reporte clásico de ventas del mes.
+- **Predictiva:** le dice qué probablemente pasará. Es el forecast de demanda.
+- **Prescriptiva:** le dice qué conviene hacer al respecto. Es la recomendación de acción.
 
 La mayoría de las herramientas se queda en el primer nivel y, con suerte, llega al segundo. Un copiloto prescriptivo cierra el ciclo: no solo proyecta un quiebre de stock, sino que sugiere cuánto reponer; no solo muestra que un vendedor bajó, sino que señala dónde está la caída y qué revisar.
 
@@ -32,9 +32,9 @@ La mayoría de las herramientas se queda en el primer nivel y, con suerte, llega
 
 Un [dashboard ejecutivo](/servicios/dashboards-ejecutivos) tradicional es una vitrina: reúne los números y los presenta ordenados. Es útil, pero deja todo el trabajo de interpretación en manos de quien mira. Si el gerente no tiene tiempo —y rara vez lo tiene— el tablero termina siendo un cuadro ordenado que nadie usa para decidir.
 
-Un copiloto prescriptivo trabaja al revés: parte de la decisión, no del gráfico. En lugar de mostrarte cincuenta indicadores, te dice "de estos cincuenta, mira estos tres, porque se salieron de lo esperado". Y junto a cada alerta, una sugerencia concreta.
+Un copiloto prescriptivo trabaja al revés: parte de la decisión, no del gráfico. En lugar de mostrarle cincuenta indicadores, le dice "de estos cincuenta, mire estos tres, porque se salieron de lo esperado". Y junto a cada alerta, una sugerencia concreta.
 
-La diferencia, en una frase: **un dashboard te muestra el tablero; un copiloto te dice dónde mirar y qué hacer.**
+La diferencia, en una frase: **un dashboard le muestra el tablero; un copiloto le dice dónde mirar y qué hacer.**
 
 ## ¿De dónde sale el criterio para "sugerir"?
 
@@ -60,10 +60,10 @@ Hay señales claras de que una empresa está lista para un copiloto:
 2. El equipo dedica horas a consolidar reportes que nadie alcanza a leer a fondo.
 3. Hay datos de sobra, pero poca confianza en ellos o poca acción a partir de ellos.
 
-Si dos de estas tres te suenan familiares, el problema no es de información: es de interpretación. Y eso es justo lo que un copiloto resuelve.
+Si dos de estas tres le suenan familiares, el problema no es de información: es de interpretación. Y eso es justo lo que un copiloto resuelve.
 
 ## En resumen
 
 Un copiloto de gestión prescriptivo es el paso natural después del dashboard: convierte los datos en decisiones, no solo en visualizaciones. Detecta, interpreta, sugiere y —cuando corresponde— ejecuta.
 
-Si quieres ubicar este concepto dentro del panorama completo, revisa la guía de [inteligencia artificial para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile). Y si te interesa ver cómo se aplicaría a tu negocio, una conversación de media hora es la mejor forma de aterrizarlo.
+Si quiere ubicar este concepto dentro del panorama completo, revise la guía de [inteligencia artificial para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile). Y si le interesa ver cómo se aplicaría a su negocio, una conversación de media hora es la mejor forma de aterrizarlo.

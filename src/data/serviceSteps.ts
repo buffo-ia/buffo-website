@@ -7,11 +7,11 @@ export interface Step {
 
 export const STEPS: Record<string, { title: string; steps: Step[] }> = {
   'modelamiento-predictivo': {
-    title: 'Cómo construimos tu modelo de datos',
+    title: 'Cómo construimos su modelo de datos',
     steps: [
       {
         icon: 'cable',
-        title: 'Conectamos tus fuentes',
+        title: 'Conectamos sus fuentes',
         body: 'Integramos planillas, ERP, ventas e inventario en un solo lugar. Dejamos de tener cifras que no cuadran entre sistemas.',
       },
       {
@@ -27,7 +27,7 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
     ],
   },
   'automatizacion-procesos': {
-    title: 'Cómo automatizamos tus procesos',
+    title: 'Cómo automatizamos sus procesos',
     steps: [
       {
         icon: 'search',
@@ -37,7 +37,7 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
       {
         icon: 'precision_manufacturing',
         title: 'Diseñamos el flujo',
-        body: 'Construimos un proceso que se ejecuta solo, por horario o por evento, sobre las herramientas que ya usas. Sin reemplazar tus sistemas.',
+        body: 'Construimos un proceso que se ejecuta solo, por horario o por evento, sobre las herramientas que ya usa. Sin reemplazar sus sistemas.',
       },
       {
         icon: 'verified',
@@ -47,7 +47,7 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
     ],
   },
   'agentes-ia': {
-    title: 'Cómo desplegamos tu agente IA',
+    title: 'Cómo desplegamos su agente IA',
     steps: [
       {
         icon: 'target',
@@ -57,12 +57,12 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
       {
         icon: 'radar',
         title: 'Lo ponemos a vigilar',
-        body: 'El agente corre solo, de forma continua, sobre infraestructura controlada por Buffo con los datos de tu empresa aislados y seguros.',
+        body: 'El agente corre solo, de forma continua, sobre infraestructura controlada por Buffo con los datos de su empresa aislados y seguros.',
       },
       {
         icon: 'notifications_active',
-        title: 'Actúa y te avisa',
-        body: 'Cuando detecta algo relevante, ejecuta la acción y notifica por el canal que tu equipo ya usa. Sin inundarte: avisa cuando de verdad hay que actuar.',
+        title: 'Actúa y le avisa',
+        body: 'Cuando detecta algo relevante, ejecuta la acción y notifica por el canal que su equipo ya usa. Sin inundarlo: avisa cuando de verdad hay que actuar.',
       },
     ],
   },
