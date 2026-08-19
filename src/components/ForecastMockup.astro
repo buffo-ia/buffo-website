@@ -61,7 +61,10 @@ const fuentes = [
   <!-- forecast -->
   <div class="bg-surface-container-low border border-on-surface/5 p-3.5">
     <div class="flex items-center justify-between mb-2">
-      <p class="text-[0.7rem] font-semibold text-on-surface/80">Proyección de demanda</p>
+      <p class="text-[0.7rem] font-semibold text-on-surface/80 inline-flex items-center gap-2">
+        Proyección de demanda
+        <span class="txt-ok font-semibold text-[0.58rem] px-1.5 py-0.5 rounded" style="background: rgb(var(--d-ok) / 0.12)">▲ 29% proyectado</span>
+      </p>
       <div class="flex items-center gap-3 text-[0.55rem] text-on-surface-variant">
         <span class="flex items-center gap-1"><span class="w-2.5 h-0.5 bg-primary inline-block"></span>Real</span>
         <span class="flex items-center gap-1"><span class="w-2.5 h-0 border-t border-dashed border-primary inline-block"></span>Proyección</span>
@@ -75,7 +78,7 @@ const fuentes = [
         </linearGradient>
       </defs>
       {[0, 50, 100].map((g) => (
-        <line x1={fpad.l} x2={FW - fpad.r} y1={fy(g)} y2={fy(g)} stroke="rgba(255,255,255,0.05)" />
+        <line x1={fpad.l} x2={FW - fpad.r} y1={fy(g)} y2={fy(g)} stroke="rgb(var(--c-on-surface) / 0.05)" />
       ))}
       <!-- banda de confianza -->
       <path d={bandPath} fill="rgb(var(--c-primary))" fill-opacity="0.12" class="band" />
@@ -86,13 +89,34 @@ const fuentes = [
       <!-- línea proyección punteada -->
       <polyline points={projLine} fill="none" stroke="rgb(var(--c-primary))" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round" class="proj-line" />
       <!-- separador hoy -->
-      <line x1={fx(projIdxStart)} x2={fx(projIdxStart)} y1={fpad.t} y2={fpad.t+fiH} stroke="rgba(255,255,255,0.2)" stroke-dasharray="2 2" />
-      <text x={fx(projIdxStart)} y={fpad.t - 3} text-anchor="middle" font-size="6.5" fill="rgba(255,255,255,0.45)">hoy</text>
-      <!-- etiqueta proyección final -->
+      <line x1={fx(projIdxStart)} x2={fx(projIdxStart)} y1={fpad.t} y2={fpad.t+fiH} stroke="rgb(var(--c-on-surface) / 0.2)" stroke-dasharray="2 2" />
+      <text x={fx(projIdxStart)} y={fpad.t - 3} text-anchor="middle" font-size="6.5" fill="rgb(var(--c-on-surface) / 0.45)">hoy</text>
+      {/* Etiqueta de dato en cada mes real, y el punto pintado según crezca o
+          caiga contra el mes anterior: el color codifica la variación. */}
+      {hist.map((v, i) => {
+        const cae = i > 0 && v < hist[i - 1];
+        return (
+          <g class="pt" style={`--d:${0.9 + i * 0.1}s`}>
+            <circle cx={fx(i)} cy={fy(v)} r="3" fill={cae ? 'rgb(var(--d-critico))' : 'rgb(var(--d-ok))'}
+              stroke="rgb(var(--c-container-low))" stroke-width="1.2" />
+            <text x={fx(i)} y={fy(v) - 8} text-anchor="middle" font-size="6.5" font-weight="700"
+              fill={cae ? 'rgb(var(--d-critico))' : 'rgb(var(--d-ok))'}>{v}</text>
+          </g>
+        );
+      })}
+
+      {/* Banda de confianza rotulada: una proyección sin rango es una promesa */}
+      <text x={fx(n - 1) - 4} y={fy(92)} text-anchor="end" font-size="6" fill="rgb(var(--c-on-surface) / 0.45)">rango ±8%</text>
+
+      {/* Aviso de quiebre proyectado: es el valor real del modelo */}
       <g class="last-label">
-        <rect x={fx(n-1) - 30} y={fy(85) - 18} width="34" height="14" rx="2" fill="rgb(var(--c-primary))" />
-        <text x={fx(n-1) - 13} y={fy(85) - 8} text-anchor="middle" font-size="7.5" font-weight="700" fill="#000">+29%</text>
+        <line x1={fx(n - 2)} x2={fx(n - 2)} y1={fy(77)} y2={fpad.t + fiH} stroke="rgb(var(--d-alerta))" stroke-width="1" stroke-dasharray="2 2" />
+        <circle cx={fx(n - 2)} cy={fy(77)} r="3.5" fill="rgb(var(--d-alerta))" />
+        <rect x={fx(n - 2) - 58} y={fy(77) + 8} width="56" height="14" rx="4" fill="rgb(var(--d-alerta))" />
+        <text x={fx(n - 2) - 30} y={fy(77) + 18.5} text-anchor="middle" font-size="7" font-weight="700" fill="#2a1c00">quiebre en 11 d</text>
       </g>
+
+
     </svg>
   </div>
 

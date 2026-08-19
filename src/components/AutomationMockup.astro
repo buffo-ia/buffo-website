@@ -2,6 +2,8 @@
 // Automatización de procesos — visual: flujo "antes (manual)" vs "después (automático)"
 // + un pipeline animado de tareas ejecutándose. 100% SVG/CSS animado.
 
+// El 'antes' se pinta en crítico y el 'después' en ok: el color cuenta la
+// historia sin que haya que leer los rótulos.
 const pasosManual = [
   { icon: 'download', label: 'Descargar reportes' },
   { icon: 'content_paste', label: 'Copiar y pegar' },
@@ -26,21 +28,21 @@ const pipeline = [
   </div>
 
   <!-- ANTES: manual -->
-  <div class="bg-surface-container-low border border-error/20 p-3.5 mb-3">
+  <div class="bg-surface-container-low border border-[rgb(var(--d-critico))]/20 p-3.5 mb-3">
     <div class="flex items-center justify-between mb-3">
-      <p class="text-[0.65rem] font-semibold text-error/90 flex items-center gap-1.5">
+      <p class="text-[0.65rem] font-semibold txt-critico/90 flex items-center gap-1.5">
         <span class="material-symbols-outlined text-sm">schedule</span>Antes · proceso manual
       </p>
-      <span class="text-[0.6rem] text-error/70 font-semibold">~6 h / semana</span>
+      <span class="text-[0.6rem] txt-critico/70 font-semibold">~6 h / semana</span>
     </div>
     <div class="flex items-center gap-1">
       {pasosManual.map((p, i) => (
         <>
-          <div class="manual-step flex-1 bg-error/5 border border-error/15 p-2 flex flex-col items-center gap-1" style={`--d:${i * 0.15}s`}>
-            <span class="material-symbols-outlined text-error/60 text-base">{p.icon}</span>
+          <div class="manual-step flex-1 bg-error/5 border border-[rgb(var(--d-critico))]/15 p-2 flex flex-col items-center gap-1" style={`--d:${i * 0.15}s`}>
+            <span class="material-symbols-outlined txt-critico/60 text-base">{p.icon}</span>
             <span class="text-[0.5rem] text-on-surface-variant text-center leading-tight">{p.label}</span>
           </div>
-          {i < pasosManual.length - 1 && <span class="material-symbols-outlined text-error/30 text-sm">chevron_right</span>}
+          {i < pasosManual.length - 1 && <span class="material-symbols-outlined txt-critico/30 text-sm">chevron_right</span>}
         </>
       ))}
     </div>
@@ -57,7 +59,7 @@ const pipeline = [
       <p class="text-[0.65rem] font-semibold text-primary flex items-center gap-1.5">
         <span class="material-symbols-outlined text-sm">bolt</span>Después · flujo automático
       </p>
-      <span class="text-[0.6rem] text-primary font-semibold">0 intervención</span>
+      <span class="text-[0.6rem] txt-ok font-semibold">0 intervención</span>
     </div>
     <div class="relative flex items-center gap-1">
       {pipeline.map((p, i) => (

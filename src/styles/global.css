@@ -271,6 +271,40 @@ textarea {
 }
 
 
+
+/* ============================================================
+   COLORES DE DATO — el semáforo
+   Regla ya escrita en el sistema de tema de la plataforma: los colores
+   del DATO (verde/ámbar/rojo del semáforo) no son de la marca y por eso
+   no siguen la paleta. Lo que sí cambia es la LUMINOSIDAD, porque el
+   mismo rojo que se lee sobre papel se apaga sobre azul noche.
+   ============================================================ */
+:root {
+  --d-ok: 52 211 153;
+  --d-alerta: 251 191 36;
+  --d-critico: 248 113 113;
+  --d-neutro: 148 163 184;
+}
+:root[data-theme='light'] {
+  --d-ok: 21 128 61;
+  --d-alerta: 180 108 4;
+  --d-critico: 190 40 40;
+  --d-neutro: 100 116 139;
+}
+/* Dentro de un bloque oscuro manda el bloque, no el tema de la página. */
+.bloque-ancla {
+  --d-ok: 52 211 153;
+  --d-alerta: 251 191 36;
+  --d-critico: 248 113 113;
+  --d-neutro: 148 163 184;
+}
+.txt-ok { color: rgb(var(--d-ok)); }
+.txt-alerta { color: rgb(var(--d-alerta)); }
+.txt-critico { color: rgb(var(--d-critico)); }
+.bg-ok { background-color: rgb(var(--d-ok)); }
+.bg-alerta { background-color: rgb(var(--d-alerta)); }
+.bg-critico { background-color: rgb(var(--d-critico)); }
+
 /* ----- Forma suelta -----
    Una sola forma grande, recortada por el borde de la sección y girada para que
    no se lea como un círculo puesto ahí. Es volumen, no adorno: algo que mirar
