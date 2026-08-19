@@ -27,7 +27,22 @@ export default {
         // Reemplaza los 99 usos de `white/X`: una línea de 1px que se ve en ambos temas.
         hairline: 'rgb(var(--c-hairline) / <alpha-value>)',
       },
-      borderRadius: { DEFAULT: '0px', lg: '0px', xl: '0px', full: '9999px' },
+      /* Escala de radios. Antes era 0 en todo, decisión deliberada contra el
+         look de plantilla. Simón pidió soltar la mano: la regla nueva es que la
+         curva SIGNIFIQUE algo — mientras más grande la pieza, más curva, y lo
+         que se toca es píldora. Redondear todo por igual es el tic que se
+         estaba evitando. */
+      borderRadius: {
+        none: '0px',
+        sm: '6px',
+        DEFAULT: '10px',
+        md: '12px',
+        lg: '16px',
+        xl: '20px',
+        '2xl': '28px',
+        '3xl': '36px',
+        full: '9999px',
+      },
       fontFamily: {
         display: ['Inter', 'sans-serif'],
         headline: ['Inter', 'sans-serif'],

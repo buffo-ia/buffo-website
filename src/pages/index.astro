@@ -278,7 +278,7 @@ const serviceSchema = {
     SHOWCASE.map((s, i) => {
       const Mock = MOCKS[s.slug];
       const flip = i % 2 === 1; // filas impares: mockup a la izquierda
-      const escena = ['bg-surface', 'bg-background', 'bloque-ancla resplandor filo-acento', 'bg-surface'][i];
+      const escena = ['bg-surface', 'bg-background', 'bloque-ancla losa resplandor filo-acento', 'bg-surface'][i];
       return (
         <section class:list={['px-8 md:px-12 py-14 md:py-16', escena]}>
           <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -444,7 +444,7 @@ const serviceSchema = {
     </div>
   </section>
 
-<section class="bloque-ancla filo-acento py-20 px-8 md:px-12">
+<section class="bloque-ancla losa filo-acento py-20 px-8 md:px-12 my-4">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4 reveal">Contacto</p>
       <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">

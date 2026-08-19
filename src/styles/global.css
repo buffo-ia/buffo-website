@@ -241,6 +241,59 @@ body[data-hero='ancla'] .site-header:not(.is-scrolled) {
 body[data-hero='ancla'] .site-header:not(.is-scrolled) .logo-light { display: none; }
 body[data-hero='ancla'] .site-header:not(.is-scrolled) .logo-dark { display: inline-block; }
 
+
+/* ============================================================
+   RADIOS — la curva como jerarquía
+   Cada tamaño tiene un oficio: lo que se TOCA es píldora, lo que
+   CONTIENE es tarjeta, lo que es una ESCENA entera es losa. Así la
+   redondez se lee como sistema y no como decoración pareja.
+   ============================================================ */
+
+/* Lo que se toca: píldora completa. Es lo que le saca la corbata al sitio. */
+.btn-glow,
+a.border-outline-variant,
+button[type='submit'] {
+  border-radius: 9999px;
+}
+
+/* Lo que contiene: tarjeta */
+.card-hover,
+.gradient-border {
+  border-radius: 20px;
+}
+
+/* Campos del formulario */
+input[type='text'],
+input[type='email'],
+textarea {
+  border-radius: 12px;
+}
+
+/* Preguntas frecuentes: la grilla es una tabla de filas pegadas, así que solo
+   se redondea el conjunto — redondear cada fila rompe la continuidad. */
+.faq-item:first-child { border-radius: 16px 16px 0 0; }
+.faq-item:last-child { border-radius: 0 0 16px 16px; }
+
+/* ----- Losa flotante -----
+   Un bloque ancla que en vez de ir de borde a borde se despega de los lados y
+   queda como una losa redondeada. Es el gesto que hace que Slack no se vea
+   rígido. Se usa en el MEDIO de la página, nunca en el hero: un hero despegado
+   deja una franja rara bajo el header. */
+/* El filo de acento vive en la esquina superior izquierda. En un bloque de
+   borde a borde eso funciona; en una losa redondeada la esquina se curva y el
+   filo queda cortado, así que en las losas entra hacia adentro. */
+.losa.filo-acento::before { left: 2.75rem; }
+.losa.filo-acento::after { left: 12.25rem; }
+
+.losa {
+  border-radius: 36px;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+@media (max-width: 640px) {
+  .losa { border-radius: 24px; margin-left: 0.75rem; margin-right: 0.75rem; }
+}
+
 /* ----- Hero: fondo plano -----
    Antes: trama de puntos + dos resplandores verdes. Ese combo es la
    plantilla por defecto de cualquier generador de landings. Se apaga
