@@ -70,27 +70,27 @@ const fuentes = [
     <svg viewBox={`0 0 ${FW} ${FH}`} class="w-full h-auto" role="img" aria-label="Curva de proyección de demanda con banda de confianza">
       <defs>
         <linearGradient id="histFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#16B66B" stop-opacity="0.3" />
-          <stop offset="100%" stop-color="#16B66B" stop-opacity="0" />
+          <stop offset="0%" stop-color="rgb(var(--c-primary))" stop-opacity="0.3" />
+          <stop offset="100%" stop-color="rgb(var(--c-primary))" stop-opacity="0" />
         </linearGradient>
       </defs>
       {[0, 50, 100].map((g) => (
         <line x1={fpad.l} x2={FW - fpad.r} y1={fy(g)} y2={fy(g)} stroke="rgba(255,255,255,0.05)" />
       ))}
       <!-- banda de confianza -->
-      <path d={bandPath} fill="#16B66B" fill-opacity="0.12" class="band" />
+      <path d={bandPath} fill="rgb(var(--c-primary))" fill-opacity="0.12" class="band" />
       <!-- relleno histórico -->
       <path d={`M ${fx(0)},${fy(hist[0])} ${hist.map((v,i)=>`L ${fx(i)},${fy(v)}`).join(' ')} L ${fx(hist.length-1)},${fpad.t+fiH} L ${fx(0)},${fpad.t+fiH} Z`} fill="url(#histFill)" class="area-fill" />
       <!-- línea histórica -->
-      <polyline points={histLine} fill="none" stroke="#16B66B" stroke-width="2.5" stroke-linecap="round" class="ventas-line" />
+      <polyline points={histLine} fill="none" stroke="rgb(var(--c-primary))" stroke-width="2.5" stroke-linecap="round" class="ventas-line" />
       <!-- línea proyección punteada -->
-      <polyline points={projLine} fill="none" stroke="#16B66B" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round" class="proj-line" />
+      <polyline points={projLine} fill="none" stroke="rgb(var(--c-primary))" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round" class="proj-line" />
       <!-- separador hoy -->
       <line x1={fx(projIdxStart)} x2={fx(projIdxStart)} y1={fpad.t} y2={fpad.t+fiH} stroke="rgba(255,255,255,0.2)" stroke-dasharray="2 2" />
       <text x={fx(projIdxStart)} y={fpad.t - 3} text-anchor="middle" font-size="6.5" fill="rgba(255,255,255,0.45)">hoy</text>
       <!-- etiqueta proyección final -->
       <g class="last-label">
-        <rect x={fx(n-1) - 30} y={fy(85) - 18} width="34" height="14" rx="2" fill="#16B66B" />
+        <rect x={fx(n-1) - 30} y={fy(85) - 18} width="34" height="14" rx="2" fill="rgb(var(--c-primary))" />
         <text x={fx(n-1) - 13} y={fy(85) - 8} text-anchor="middle" font-size="7.5" font-weight="700" fill="#000">+29%</text>
       </g>
     </svg>

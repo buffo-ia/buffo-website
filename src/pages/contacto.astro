@@ -140,7 +140,7 @@ const contactSchema = {
     const show = (msg: string, ok: boolean) => {
       status.textContent = msg;
       status.classList.remove('hidden');
-      status.style.color = ok ? 'var(--md-sys-color-primary, #16B66B)' : '#ef4444';
+      status.style.color = ok ? 'var(--md-sys-color-primary, rgb(var(--c-primary)))' : '#ef4444';
     };
 
     form?.addEventListener('submit', async (e) => {

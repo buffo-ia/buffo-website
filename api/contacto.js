@@ -120,7 +120,7 @@ export default async function handler(req, res) {
         <div style="background:#f5f5f5;padding:14px;border-radius:6px;line-height:1.6;">${safe.message}</div>
         <p style="line-height:1.6;margin:18px 0 4px;">
           Si quiere adelantar la conversación, puede
-          <a href="${CONFIG.siteUrl}/contacto" style="color:#16B66B;">agendar una llamada</a>.
+          <a href="${CONFIG.siteUrl}/contacto" style="color:#9e5c0c;">agendar una llamada</a>.
         </p>
         <p style="line-height:1.6;margin:14px 0 0;color:#666;font-size:13px;">— Equipo Buffo Consulting</p>
       </div>`,
