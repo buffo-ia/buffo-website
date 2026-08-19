@@ -128,7 +128,7 @@ const serviceSchema = {
 
 <BaseLayout schema={[serviceSchema, faqSchema]} heroAncla>
   <!-- HERO -->
-  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-24 pb-28 md:pt-28 md:pb-32">
+  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-24 pb-20 md:pt-28 md:pb-24">
     <div class="relative z-10 max-w-5xl mx-auto text-center">
       <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
            H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
@@ -183,7 +183,7 @@ const serviceSchema = {
   </section>
 
   <!-- STACK TECNOLÓGICO (marquee) -->
-  <section class="bg-surface py-12 px-8 md:px-12 overflow-hidden">
+  <section class="bg-surface py-10 px-8 md:px-12 overflow-hidden">
     <div class="max-w-5xl mx-auto text-center mb-10 reveal">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Infraestructura</p>
       <h2 class="text-[2.3rem] md:text-[2.9rem] font-display leading-tight mb-4">
@@ -216,8 +216,8 @@ const serviceSchema = {
   </section>
 
   <!-- PROBLEMA + SOLUCIÓN -->
-  <section class="py-16 px-8 md:px-12 bg-background" id="approach">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
+  <section class="py-12 px-8 md:px-12 bg-background" id="approach">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-start">
       <div class="space-y-5 reveal">
         <div class="text-error uppercase tracking-widest text-xs font-semibold">El Conflicto</div>
         <h2 class="text-xl md:text-2xl font-display leading-snug">
@@ -250,7 +250,7 @@ const serviceSchema = {
   </section>
 
   <!-- SERVICIOS — escaparate visual con mockups -->
-  <section class="pt-16 pb-4 px-8 md:px-12 bg-background" id="services">
+  <section class="pt-10 pb-2 px-8 md:px-12 bg-background" id="services">
     <div class="max-w-6xl mx-auto">
       <div class="mb-2 reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
@@ -283,7 +283,7 @@ const serviceSchema = {
       // que es el golpe de contraste.
       const escena = ['bg-surface losa', 'bg-surface losa', 'bloque-ancla losa resplandor', 'bg-surface losa'][i];
       return (
-        <section class:list={['px-8 md:px-12 py-14 md:py-16 my-3', escena]}>
+        <section class:list={['px-8 md:px-12 py-10 md:py-12 my-2', escena]}>
           <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
               <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold mb-4">
@@ -315,7 +315,7 @@ const serviceSchema = {
        desglose por área del deck de BarloSport (lámina 7) tiene cuatro y es
        mucho más concreto: es lo que de verdad contesta "¿qué me van a
        construir?". Sin cifras, sin nombres de clientes y sin precios. -->
-  <section class="py-16 px-8 md:px-12 bg-surface losa my-3" id="portfolio">
+  <section class="py-12 px-8 md:px-12 bg-surface losa my-2" id="portfolio">
     <div class="max-w-6xl mx-auto">
       <div class="mb-10 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Portafolio</p>
@@ -404,7 +404,7 @@ const serviceSchema = {
        Pedido explícito del plan de Perplexity (5-8 preguntas de decisores) y
        alimenta el FAQPage schema, que es de lo que más se cita en respuestas
        generadas. El texto va arriba, en FAQ_HOME. -->
-  <section class="px-8 md:px-12 py-20 bg-background">
+  <section class="px-8 md:px-12 py-14 bg-background">
     <div class="max-w-3xl mx-auto">
       <h2 class="text-[2.3rem] md:text-[2.9rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
       <div class="grid gap-px bg-on-surface/5 border border-on-surface/5">
@@ -425,7 +425,7 @@ const serviceSchema = {
     </div>
   </section>
 
-<section class="bloque-ancla losa py-20 px-8 md:px-12 my-4">
+<section class="bloque-ancla losa py-16 px-8 md:px-12 my-2">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4 reveal">Contacto</p>
       <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">
