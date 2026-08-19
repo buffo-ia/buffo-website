@@ -30,9 +30,9 @@ const rotulo = pestana ?? (url.split('/')[1] ?? 'buffo').replace(/-/g, ' ');
   <!-- Barra del navegador -->
   <div class="ventana-barra flex items-center gap-3 px-4 py-2.5">
     <div class="flex items-center gap-1.5 shrink-0">
-      <span class="punto"></span>
-      <span class="punto"></span>
-      <span class="punto"></span>
+      <span class="punto punto-rojo"></span>
+      <span class="punto punto-amarillo"></span>
+      <span class="punto punto-verde"></span>
     </div>
 
     <!-- Pestaña: da la escala de "esto es un navegador", no solo una barra -->
@@ -99,12 +99,17 @@ const rotulo = pestana ?? (url.split('/')[1] ?? 'buffo').replace(/-/g, ' ');
     border-bottom: 1px solid rgb(var(--c-hairline) / var(--hairline-a));
   }
 
+  /* Los tres puntos son del sistema operativo, no de Buffo: van con los colores
+     de macOS fijos en los dos temas. Es la familia de "vive en su propio fondo",
+     igual que el verde de WhatsApp. */
   .punto {
     width: 9px;
     height: 9px;
     border-radius: 9999px;
-    background-color: rgb(var(--c-on-surface) / 0.18);
   }
+  .punto-rojo { background-color: #ff5f57; }
+  .punto-amarillo { background-color: #febc2e; }
+  .punto-verde { background-color: #28c840; }
 
   .pestana {
     background-color: rgb(var(--c-surface));
