@@ -28,11 +28,15 @@ const { tamano = 'header', class: clase = '' } = Astro.props;
 ---
 
 <span class:list={['logotipo', `logotipo-${tamano}`, clase]} aria-label="Buffo IA Consulting">
-  <span class="lt-linea" aria-hidden="true">BUFFO <span class="lt-equis">×</span> <span class="lt-ia">IA</span></span>
+  <span class="lt-linea" aria-hidden="true">Buffo <span class="lt-equis">×</span> <span class="lt-ia">IA</span></span>
   <span class="lt-desc" aria-hidden="true">CONSULTING</span>
 </span>
 
 <style>
+  /* Logotipo tipográfico. Se probó justificar el descriptor al ancho exacto del
+     nombre (separando las letras para que el navegador pudiera repartir el
+     espacio) y Simón prefirió la versión simple: el descriptor con su propio
+     tracking, alineado a la izquierda. Queda anotado para no reintentarlo. */
   .logotipo {
     display: inline-block;
     line-height: 1;
@@ -40,19 +44,31 @@ const { tamano = 'header', class: clase = '' } = Astro.props;
     color: rgb(var(--c-on-surface));
     user-select: none;
   }
+
   .lt-linea {
     display: block;
     font-family: Inter, sans-serif;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    /* En caja mixta las ascendentes ya separan las letras, así que el tracking
+       apretado del titular funciona y le da unidad al bloque. En versal habría
+       que abrirlo: sin ascendentes, el negativo empasta. */
+    letter-spacing: -0.02em;
   }
-  /* La × en gris: es un signo de relación, no una letra del nombre. Si va en
-     el mismo tono que el resto compite con las palabras. */
-  .lt-equis { color: rgb(var(--c-on-surface) / 0.42); padding: 0 0.06em; }
+
+  /* La × en gris: es un signo de relación, no una letra del nombre. Va algo
+     más chica y subida, porque viene diseñada para fórmulas y se apoya en el
+     eje matemático, más arriba que la base del texto. */
+  .lt-equis {
+    display: inline-block;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: rgb(var(--c-on-surface) / 0.4);
+    transform: translateY(-0.04em);
+    margin: 0 0.14em;
+  }
+
   .lt-ia { color: rgb(var(--c-primary)); }
 
-  /* El descriptor va en mono: separa el nombre de la categoría de un vistazo,
-     y es el mismo registro de los rótulos del sitio. */
   .lt-desc {
     display: block;
     font-family: 'IBM Plex Mono', monospace;
@@ -63,13 +79,19 @@ const { tamano = 'header', class: clase = '' } = Astro.props;
   }
 
   .logotipo-header .lt-linea { font-size: 1.45rem; }
-  .logotipo-header .lt-desc { font-size: 0.5rem; margin-top: 0.36rem; }
+  .logotipo-header .lt-desc { font-size: 0.5rem; margin-top: 0.4rem; }
 
   .logotipo-pie .lt-linea { font-size: 1.15rem; }
-  .logotipo-pie .lt-desc { font-size: 0.44rem; margin-top: 0.3rem; }
+  .logotipo-pie .lt-desc { font-size: 0.44rem; margin-top: 0.34rem; }
 
+  /* Bajo cierto tamaño el descriptor deja de leerse y estorba: se cae. */
   @media (max-width: 420px) {
-    .logotipo-header .lt-linea { font-size: 1.2rem; }
-    .logotipo-header .lt-desc { font-size: 0.44rem; letter-spacing: 0.2em; }
+    .logotipo-header .lt-linea { font-size: 1.18rem; }
+    .logotipo-header .lt-desc { display: none; }
   }
+
+  /* Versión de una sola tinta: factura, sello, un PDF en blanco y negro. */
+  .logotipo-mono .lt-ia,
+  .logotipo-mono .lt-equis { color: inherit; }
+  .logotipo-mono .lt-equis { opacity: 0.45; }
 </style>
