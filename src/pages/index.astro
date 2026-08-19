@@ -121,9 +121,9 @@ const serviceSchema = {
 };
 ---
 
-<BaseLayout schema={[serviceSchema, faqSchema]}>
+<BaseLayout schema={[serviceSchema, faqSchema]} heroAncla>
   <!-- HERO -->
-  <section class="hero-bg relative px-8 md:px-12 pt-20 pb-24 md:pt-24 md:pb-28 overflow-hidden">
+  <section class="bloque-ancla resplandor relative px-8 md:px-12 pt-24 pb-28 md:pt-28 md:pb-32">
     <div class="relative z-10 max-w-5xl mx-auto text-center">
       <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
            H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
@@ -178,7 +178,7 @@ const serviceSchema = {
   </section>
 
   <!-- PROBLEMA + SOLUCIÓN -->
-  <section class="py-20 px-8 md:px-12 bg-surface-container-low border-y border-on-surface/5" id="approach">
+  <section class="py-24 px-8 md:px-12 bg-background" id="approach">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
       <div class="space-y-5 reveal">
         <div class="text-error uppercase tracking-widest text-xs font-semibold">El Conflicto</div>
@@ -212,7 +212,7 @@ const serviceSchema = {
   </section>
 
   <!-- SERVICIOS — escaparate visual con mockups -->
-  <section class="py-28 px-8 md:px-12 bg-background" id="services">
+  <section class="pt-28 pb-16 px-8 md:px-12 bg-surface" id="services">
     <div class="max-w-6xl mx-auto">
       <div class="mb-20 reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
@@ -229,40 +229,46 @@ const serviceSchema = {
         </a>
       </div>
 
-      <div class="space-y-24 md:space-y-32">
-        {
-          SHOWCASE.map((s, i) => {
-            const Mock = MOCKS[s.slug];
-            const flip = i % 2 === 1; // filas impares: mockup a la izquierda
-            return (
-              <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
-                  <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold mb-4">
-                    {String(i + 1).padStart(2, '0')} · {s.eyebrow}
-                  </p>
-                  <h3 class="text-[1.7rem] md:text-[2.1rem] font-display mb-5 leading-tight">{s.title}</h3>
-                  <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>
-                  <a
-                    href={`/servicios/${s.slug}`}
-                    class="inline-flex items-center gap-2 text-primary font-semibold text-sm group"
-                  >
-                    Conocer más
-                    <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                  </a>
-                </div>
-                <div class:list={['reveal reveal-delay-1', flip ? 'lg:order-1' : 'lg:order-2']}>
-                  <Mock />
-                </div>
-              </div>
-            );
-          })
-        }
-      </div>
     </div>
   </section>
 
+  <!-- Cada servicio se lleva su PROPIA banda de borde a borde, con su propio
+       fondo. Antes los cuatro flotaban sobre la misma superficie y el ojo los
+       leía como una lista; ahora son cuatro escenas y el fondo marca el ritmo.
+       El tercero cae en bloque oscuro: es el respiro de contraste al medio. -->
+  {
+    SHOWCASE.map((s, i) => {
+      const Mock = MOCKS[s.slug];
+      const flip = i % 2 === 1; // filas impares: mockup a la izquierda
+      const escena = ['bg-surface', 'bg-background', 'bloque-ancla resplandor filo-acento', 'bg-surface'][i];
+      return (
+        <section class:list={['px-8 md:px-12 py-20 md:py-24', escena]}>
+          <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
+              <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold mb-4">
+                {String(i + 1).padStart(2, '0')} · {s.eyebrow}
+              </p>
+              <h3 class="text-[1.7rem] md:text-[2.1rem] font-display mb-5 leading-tight">{s.title}</h3>
+              <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>
+              <a
+                href={`/servicios/${s.slug}`}
+                class="inline-flex items-center gap-2 text-primary font-semibold text-sm group"
+              >
+                Conocer más
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+            <div class:list={['reveal reveal-delay-1', flip ? 'lg:order-1' : 'lg:order-2']}>
+              <Mock />
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
   <!-- RESULTADOS (cualitativo, sin cifras inventadas) -->
-  <section class="py-28 px-8 md:px-12 bg-surface-container-lowest border-y border-on-surface/5">
+  <section class="py-28 px-8 md:px-12 bg-background">
     <div class="max-w-screen-2xl mx-auto">
       <div class="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-6">
         <div class="reveal">
@@ -313,7 +319,7 @@ const serviceSchema = {
   </section>
 
   <!-- LO QUE CONSTRUIMOS -->
-  <section class="py-28 px-8 md:px-12 bg-surface-container-lowest" id="portfolio">
+  <section class="py-28 px-8 md:px-12 bg-surface" id="portfolio">
     <div class="max-w-screen-2xl mx-auto">
       <div class="mb-16 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Portafolio</p>
@@ -372,7 +378,7 @@ const serviceSchema = {
   </section>
 
   <!-- STACK TECNOLÓGICO (marquee) -->
-  <section class="py-24 px-8 md:px-12 bg-background border-y border-on-surface/5 overflow-hidden">
+  <section class="bloque-ancla resplandor filo-acento py-28 px-8 md:px-12 overflow-hidden">
     <div class="max-w-5xl mx-auto text-center mb-14 reveal">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Infraestructura</p>
       <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight mb-4">
@@ -409,7 +415,7 @@ const serviceSchema = {
        Pedido explícito del plan de Perplexity (5-8 preguntas de decisores) y
        alimenta el FAQPage schema, que es de lo que más se cita en respuestas
        generadas. El texto va arriba, en FAQ_HOME. -->
-  <section class="px-8 md:px-12 py-20 bg-background border-t border-on-surface/5">
+  <section class="px-8 md:px-12 py-24 bg-surface">
     <div class="max-w-3xl mx-auto">
       <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
       <div class="grid gap-px bg-on-surface/5 border border-on-surface/5">
@@ -430,7 +436,7 @@ const serviceSchema = {
     </div>
   </section>
 
-<section class="py-28 px-8 md:px-12 bg-surface-container-low">
+<section class="bloque-ancla filo-acento py-28 px-8 md:px-12">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4 reveal">Contacto</p>
       <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">

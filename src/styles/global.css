@@ -129,6 +129,110 @@ body {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
+
+/* ============================================================
+   BLOQUE ANCLA — el color como SUPERFICIE, no como letra
+   Slack no pone su berenjena en el texto: la pone de fondo, de borde a
+   borde, y encima escribe en blanco. Así el color se ve saturado al 100%
+   sin pelear con la legibilidad. Nuestro turquesa vivo da 1,7:1 sobre
+   fondo claro (ilegible) pero 8,8:1 sobre el azul noche.
+
+   Esta clase redefine los tokens LOCALMENTE, así que cualquier sección
+   puede volverse bloque oscuro y todo lo de adentro —escrito con las
+   mismas clases de siempre— se repinta solo. No hay que tocar un solo
+   elemento por dentro: es la misma arquitectura de tokens del sitio.
+   ============================================================ */
+.bloque-ancla {
+  --c-primary: 25 211 197;
+  --c-on-primary: 7 32 51;
+  --c-background: 7 32 51;
+  --c-surface: 13 48 74;
+  --c-on-surface: 233 242 246;
+  --c-surface-variant: 20 58 86;
+  --c-on-surface-variant: 160 184 198;
+  --c-outline: 110 140 158;
+  --c-outline-variant: 28 66 94;
+  --c-container-lowest: 5 25 40;
+  --c-container-low: 11 41 63;
+  --c-container: 13 48 74;
+  --c-container-high: 18 58 88;
+  --c-container-highest: 24 68 100;
+  --c-error: 255 176 32;
+  --c-hairline: 255 255 255;
+  --hairline-a: 0.09;
+  --elev: none;
+  --elev-hover: none;
+  background-color: rgb(var(--c-background));
+  color: rgb(var(--c-on-surface));
+}
+
+/* ----- Luz -----
+   NO es el glow de plantilla que se sacó (box-shadow de 28px en el botón).
+   Es una sola fuente enorme y difusa detrás del contenido: se percibe como
+   profundidad, no como brillo. Una por pantalla, nunca dos. */
+.resplandor { position: relative; isolation: isolate; }
+.resplandor::before {
+  content: '';
+  position: absolute;
+  inset: -30% -10% auto -10%;
+  height: 130%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 50% 18%, rgb(var(--c-primary) / 0.16), transparent 70%),
+    radial-gradient(40% 40% at 85% 75%, rgb(var(--c-error) / 0.08), transparent 70%);
+}
+
+/* ----- Forma -----
+   Filo de acento arriba del bloque: dos tramos de distinto largo, no una
+   línea pareja. Es la firma que se repite de bloque en bloque. */
+.filo-acento { position: relative; }
+.filo-acento::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 8.5rem; height: 3px;
+  background: rgb(var(--c-primary));
+}
+.filo-acento::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 9.5rem;
+  width: 2.5rem; height: 3px;
+  background: rgb(var(--c-error));
+}
+
+/* ----- Header sobre un hero de bloque -----
+   El hero es oscuro en LOS DOS temas, así que arriba del todo el header no
+   puede usar los colores del tema: quedaría texto oscuro sobre azul noche en
+   tema claro. Mientras no se hace scroll, el header adopta el ámbito del
+   bloque; al bajar aparece su propio vidrio y vuelve al tema. */
+/* ⚠️ position: sticky RESERVA su espacio en el flujo, así que el hero arrancaba
+   DEBAJO del header y quedaba una banda clara sobre el bloque. Para que el
+   contenido le pase por detrás hay que sacarlo del flujo. Solo en páginas con
+   hero de bloque: en el resto el sticky es lo correcto. */
+body[data-hero='ancla'] .site-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+
+body[data-hero='ancla'] .site-header:not(.is-scrolled) {
+  --c-on-surface: 233 242 246;
+  --c-surface: 13 48 74;
+  --c-primary: 25 211 197;
+  --c-on-primary: 7 32 51;
+  --c-hairline: 255 255 255;
+  --hairline-a: 0.14;
+  --elev: none;
+}
+/* El logo tiene dos archivos y el que se muestra depende del tema. Sobre el
+   bloque manda el bloque, no el tema. */
+/* Ojo con los nombres: .logo-dark es el logo PARA fondo oscuro (letras
+   blancas), no el logo oscuro. Sobre el bloque manda el bloque, no el tema. */
+body[data-hero='ancla'] .site-header:not(.is-scrolled) .logo-light { display: none; }
+body[data-hero='ancla'] .site-header:not(.is-scrolled) .logo-dark { display: inline-block; }
+
 /* ----- Hero: fondo plano -----
    Antes: trama de puntos + dos resplandores verdes. Ese combo es la
    plantilla por defecto de cualquier generador de landings. Se apaga

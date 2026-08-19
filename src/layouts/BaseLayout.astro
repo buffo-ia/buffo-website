@@ -14,6 +14,10 @@ export interface Props {
   path?: string;
   /** JSON-LD adicional específico de la página (objeto o arreglo de objetos) */
   schema?: object | object[];
+  /** true cuando el hero es un bloque oscuro de borde a borde. El header
+      necesita saberlo: arriba del todo no puede usar los colores del tema,
+      o en claro quedaría texto oscuro sobre azul noche. */
+  heroAncla?: boolean;
 }
 
 const {
@@ -21,6 +25,7 @@ const {
   description = SITE.defaultDescription,
   path = '/',
   schema,
+  heroAncla = false,
 } = Astro.props;
 
 const canonical = new URL(path, SITE.url).href;
@@ -118,7 +123,7 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}
   </head>
-  <body class="bg-background text-on-surface selection:bg-primary/30">
+  <body class="bg-background text-on-surface selection:bg-primary/30" data-hero={heroAncla ? 'ancla' : undefined}>
     <div class="h-px w-full accent-line"></div>
     <Header />
     <main>
