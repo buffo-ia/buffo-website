@@ -213,6 +213,45 @@ const serviceSchema = {
         ))}
       </div>
     </div>
+
+    <!-- EL FLUJO DE LOS DATOS — del deck de BarloSport, lámina 10.
+         Contesta en dibujo la pregunta que hoy solo se contesta en texto:
+         "¿dónde quedan mis datos y quién los carga?". La respuesta corta es que
+         el equipo del cliente no carga nada. -->
+    <div class="max-w-5xl mx-auto mt-12 reveal reveal-delay-1">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-on-surface/10 border border-on-surface/10">
+        {
+          [
+            ['database', 'Origen', 'Su ERP y sus planillas'],
+            ['sync_alt', 'Buffo', 'Extracción y normalización'],
+            ['inventory_2', 'Almacén', 'Base aislada por cliente'],
+            ['monitoring', 'Plataforma', 'Tableros y agentes'],
+            ['groups', 'Su equipo', 'Decide con datos al día'],
+          ].map(([icono, titulo, detalle], i) => (
+            <div class="bg-surface p-5 text-center">
+              <span class="material-symbols-outlined text-primary text-2xl mb-2 block">{icono}</span>
+              <p class="text-xs font-semibold text-on-surface mb-1">{titulo}</p>
+              <p class="text-[0.7rem] text-on-surface-variant leading-snug">{detalle}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2 mt-6">
+        {
+          [
+            'Su equipo no carga nada',
+            'Cada cliente ve solo sus datos',
+            'Respaldos diarios y accesos por rol',
+          ].map((x) => (
+            <p class="flex items-center gap-2 text-xs text-on-surface-variant">
+              <span class="material-symbols-outlined text-primary text-sm">check</span>
+              {x}
+            </p>
+          ))
+        }
+      </div>
+    </div>
+
   </section>
 
   <!-- PROBLEMA + SOLUCIÓN -->
@@ -232,7 +271,10 @@ const serviceSchema = {
       </div>
       <div class="reveal reveal-delay-2 relative p-8 md:p-10 gradient-border">
         <div class="text-primary uppercase tracking-widest text-xs font-semibold mb-4">La Respuesta</div>
-        <p class="text-lg md:text-xl font-display leading-snug text-on-surface mb-4">
+        <p class="text-lg md:text-xl font-display leading-snug text-on-surface mb-3">
+          Su Business Controller y su Business Intelligence, funcionando solos.
+        </p>
+        <p class="text-base md:text-lg font-display leading-snug text-on-surface-variant mb-4">
           Su sistema le dice lo que pasó. Nosotros le decimos qué hacer.
         </p>
         <p class="text-base md:text-lg mb-6 leading-relaxed text-on-surface-variant">
@@ -307,116 +349,178 @@ const serviceSchema = {
     })
   }
 
-  <!-- RESULTADOS (cualitativo, sin cifras inventadas) -->
-  <section class="py-16 px-8 md:px-12 bg-background">
-    <div class="max-w-screen-2xl mx-auto">
-      <div class="flex flex-col md:flex-row justify-between items-baseline mb-10 gap-6">
-        <div class="reveal">
-          <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">En operación</p>
-          <h2 class="text-[2rem] md:text-[2.4rem] font-display">El tablero que sí se abre</h2>
-        </div>
-        <div class="hidden md:block h-px flex-grow bg-on-surface/8 mx-10"></div>
-        <div class="reveal max-w-md">
-          <p class="text-on-surface-variant text-sm leading-relaxed">
-            Muchos proyectos de datos mueren en la capacitación: se entregan, se celebran, y a los
-            dos meses nadie entra.
-          </p>
-        </div>
+  <!-- EL COSTO ESCONDIDO — del deck de BarloSport, lámina 5.
+       Es la lámina de identificación: el visitante reconoce su propia semana en
+       la columna de la izquierda. Se generalizaron las filas que eran del rubro
+       de ese cliente (licitación, catálogo de temporada) para que sirvan a
+       cualquier empresa. -->
+  <section class="bloque-ancla resplandor filo-acento py-16 px-8 md:px-12">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-10 reveal max-w-3xl">
+        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">El costo escondido</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight">
+          ¿En qué se le va la semana a su equipo comercial?
+        </h2>
+        <p class="text-on-surface-variant text-base leading-relaxed mt-4">
+          No está vendiendo: está armando archivos.
+        </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-10 bg-surface-container-low border border-on-surface/5 card-hover reveal">
-          <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
-            >event_repeat</span
-          >
-          <h4 class="text-lg font-display mb-3">Se usa todas las semanas</h4>
-          <p class="text-on-surface-variant text-sm leading-relaxed">
-            Nuestro módulo más usado lleva uso semanal ininterrumpido desde el lanzamiento, sin una
-            sola campaña interna de adopción.
-          </p>
-        </div>
-        <div class="p-10 bg-surface-container-low border border-on-surface/5 card-hover reveal reveal-delay-1">
-          <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
-            >construction</span
-          >
-          <h4 class="text-lg font-display mb-3">Se sigue construyendo</h4>
-          <p class="text-on-surface-variant text-sm leading-relaxed">
-            No entregamos un proyecto y nos despedimos. Cada mes entra una función nueva, decidida
-            con el cliente.
-          </p>
-        </div>
-        <div class="p-10 bg-surface-container-low border border-on-surface/5 card-hover reveal reveal-delay-2">
-          <span class="material-symbols-outlined text-primary text-4xl opacity-60 mb-5 block"
-            >verified_user</span
-          >
-          <h4 class="text-lg font-display mb-3">Corre en producción, no en demo</h4>
-          <p class="text-on-surface-variant text-sm leading-relaxed">
-            Infraestructura propia y datos aislados: el mismo sistema opera para clientes distintos
-            sin que uno vea al otro.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- LO QUE CONSTRUIMOS -->
-  <section class="py-20 px-8 md:px-12 bg-surface" id="portfolio">
-    <div class="max-w-screen-2xl mx-auto">
-      <div class="mb-10 reveal">
-        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Portafolio</p>
-        <h2 class="text-[2rem] md:text-[2.4rem] font-display">¿Qué construimos exactamente?</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-        <div
-          class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden border border-on-surface/5 card-hover reveal"
-        >
-          <div class="relative z-10">
-            <h3 class="text-primary font-display text-2xl mb-7">Área Comercial y Ventas</h3>
-            <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-on-surface/80">
-              <li class="flex items-center gap-3 text-sm">
-                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Dashboard vs presupuesto
-              </li>
-              <li class="flex items-center gap-3 text-sm">
-                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Forecasting de ventas
-              </li>
-              <li class="flex items-center gap-3 text-sm">
-                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Alertas de quiebre de stock
-              </li>
-              <li class="flex items-center gap-3 text-sm">
-                <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Campañas en Google y Meta
-                Ads
-              </li>
-            </ul>
-          </div>
-          <div class="absolute right-0 bottom-0 opacity-[0.025] scale-150 rotate-6 pointer-events-none">
-            <span class="material-symbols-outlined text-[18rem] text-primary">trending_up</span>
-          </div>
-        </div>
-        <div
-          class="md:col-span-4 bg-surface-container-high p-12 border border-on-surface/5 card-hover reveal reveal-delay-1"
-        >
-          <h3 class="text-primary font-display text-xl mb-7">Área Financiera</h3>
-          <ul class="space-y-3 text-on-surface/80">
-            <li class="flex items-center gap-3 text-sm">
-              <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Análisis de Estado de
-              Resultados
-            </li>
-            <li class="flex items-center gap-3 text-sm">
-              <span class="w-1.5 h-1.5 bg-primary flex-shrink-0"></span>Elaboración de flujo de caja
-            </li>
+      <div class="grid md:grid-cols-2 gap-px bg-on-surface/12 border border-on-surface/12">
+        <div class="bg-surface p-8 md:p-9 reveal">
+          <p class="text-[0.7rem] uppercase tracking-widest font-semibold text-error mb-1">La semana real</p>
+          <p class="text-on-surface-variant text-sm mb-6">Lo que hace hoy, a mano, cada semana</p>
+          <ul class="space-y-3.5">
+            {
+              [
+                'Consolidar la base de venta desde varias fuentes',
+                'Armar y enviar cotizaciones cliente por cliente',
+                'Cuadrar cifras que llegan en formatos distintos',
+                'Revisar planillas para contestar «¿tenemos stock de esto?»',
+                'Armar el cumplimiento de meta por vendedor',
+                'Preparar el resumen para la reunión de gerencia',
+              ].map((x) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-on-surface/85">
+                  <span class="material-symbols-outlined text-error text-base shrink-0 mt-0.5">schedule</span>
+                  <span>{x}</span>
+                </li>
+              ))
+            }
           </ul>
         </div>
-        <div class="md:col-span-12 gradient-border p-12 reveal reveal-delay-2">
-          <span class="material-symbols-outlined text-primary/40 text-4xl mb-4 block">format_quote</span>
-          <p class="text-xl md:text-2xl font-display leading-relaxed text-on-surface">
-            No entregamos un número sin interpretación. Cada solución llega con la sugerencia puesta: qué
-            mirar primero, y qué haría alguien que ya tuvo que responder por ese número frente a un
-            directorio.
-          </p>
+
+        <div class="bg-surface p-8 md:p-9 reveal reveal-delay-1">
+          <p class="text-[0.7rem] uppercase tracking-widest font-semibold text-primary mb-1">La semana que viene</p>
+          <p class="text-on-surface-variant text-sm mb-6">Lo mismo, resuelto por la plataforma</p>
+          <ul class="space-y-3.5">
+            {
+              [
+                'Base consolidada y actualizada sola, cada mañana',
+                'Cotizador con precios, márgenes y el PDF de marca listo',
+                'Normalización automática, con las diferencias a la vista',
+                'El stock en pantalla, y el cliente lo consulta solo',
+                'Tablero de metas por vendedor, en vivo',
+                'El resumen llega solo, antes de la reunión',
+              ].map((x) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-on-surface/85">
+                  <span class="material-symbols-outlined text-primary text-base shrink-0 mt-0.5">check_circle</span>
+                  <span>{x}</span>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
+
+      <p class="text-on-surface-variant text-sm md:text-base leading-relaxed mt-6 max-w-3xl reveal">
+        No se trata de ahorrar horas por ahorrarlas: es que esas horas vuelvan a la calle y al
+        cliente, que es donde generan margen.
+      </p>
     </div>
   </section>
 
+  <!-- LO QUE HEMOS HECHO
+       Reemplaza a "El tablero que sí se abre" (tres tarjetas cualitativas) y a
+       "¿Qué construimos exactamente?" (lista genérica de capacidades). Las dos
+       decían en abstracto lo que esta dice con hechos, y además se pisaban con
+       la sección de servicios. Sale del deck de BarloSport, lámina 3.
+
+       ⚠️ Sin nombres de clientes y sin precios, por decisión de Simón. Los dos
+       proyectos de Power BI del deck (ORX y Tost) NO van: se hicieron desde
+       Endeavor Consulting, otra empresa de Simón, y en el sitio no hay forma de
+       aclararlo como se aclara hablando en una reunión. -->
+  <section class="py-16 px-8 md:px-12 bg-background" id="portfolio">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-10 reveal">
+        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Lo que hemos hecho</p>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display leading-tight">
+          ¿Qué hemos construido, y para quién?
+        </h2>
+        <p class="text-on-surface-variant text-base leading-relaxed mt-4">
+          Empresas que hoy deciden con lo que construimos.
+        </p>
+      </div>
+
+      <!-- Las cifras: agregadas y verificables, sin nombrar a nadie -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-on-surface/10 border border-on-surface/10 mb-10 reveal">
+        {
+          [
+            ['+10', 'empresas asesoradas'],
+            ['6', 'rubros distintos, del retail a la distribución farmacéutica'],
+            ['1', 'contraparte técnica: habla con quien construye'],
+          ].map(([n, d]) => (
+            <div class="bg-surface p-7">
+              <p class="text-[2.6rem] md:text-[3rem] font-display leading-none text-primary">{n}</p>
+              <p class="text-on-surface-variant text-sm leading-relaxed mt-2">{d}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {
+          [
+            {
+              rubro: 'Alimentos · 4 plantas',
+              que: 'Dos dashboards y dos CRM en producción, alimentados solos desde su ERP. 21 segmentos comerciales modelados.',
+              estado: 'En producción',
+            },
+            {
+              rubro: 'Distribución B2B e institucional',
+              que: 'Cotizador con PDF automático, cobranza con semáforo de mora y adquisiciones con trazabilidad de costo.',
+              estado: 'En producción',
+            },
+            {
+              rubro: 'Retail especializado · 11 salas',
+              que: 'Cierre financiero mensual generado, no tipeado: estado de resultados por sala, mix de marca propia y rotación de surtido.',
+              estado: 'En producción',
+            },
+            {
+              rubro: 'Distribución farmacéutica',
+              que: 'Forecast de demanda, proyección de cierre de mes y reportería automática a gerencia.',
+              estado: 'Entregado',
+            },
+            {
+              rubro: 'Industria deportiva',
+              que: '25 meses de compras públicas barridos para dimensionar el mercado institucional por producto y por precio.',
+              estado: 'Entregado',
+            },
+            {
+              rubro: 'Marca deportiva global',
+              que: 'Capacitación comercial a la fuerza de venta de tiendas, con evaluación por competencia e informe de brechas.',
+              estado: 'Entregado',
+            },
+          ].map((c, i) => (
+            <div class:list={['bg-surface border border-on-surface/8 p-7 card-hover reveal', i > 2 && 'reveal-delay-1']}>
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <h3 class="font-display text-base leading-snug">{c.rubro}</h3>
+                <span
+                  class:list={[
+                    'text-[0.58rem] uppercase tracking-widest font-semibold px-2 py-1 whitespace-nowrap shrink-0 border',
+                    c.estado === 'En producción'
+                      ? 'text-primary border-primary/30 bg-primary/5'
+                      : 'text-on-surface-variant border-on-surface/15',
+                  ]}
+                >
+                  {c.estado}
+                </span>
+              </div>
+              <p class="text-on-surface-variant text-sm leading-relaxed">{c.que}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="gradient-border p-10 md:p-12 mt-4 reveal reveal-delay-2">
+        <span class="material-symbols-outlined text-primary/40 text-4xl mb-4 block">format_quote</span>
+        <p class="text-xl md:text-2xl font-display leading-relaxed text-on-surface">
+          No entregamos un número sin interpretación. Cada solución llega con la sugerencia puesta:
+          qué mirar primero, y qué haría alguien que ya tuvo que responder por ese número frente a
+          un directorio.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- CTA CONTACTO -->
     <!-- PREGUNTAS FRECUENTES
