@@ -191,24 +191,6 @@ body {
     radial-gradient(40% 40% at 85% 75%, rgb(var(--c-error) / 0.08), transparent 70%);
 }
 
-/* ----- Forma -----
-   Filo de acento arriba del bloque: dos tramos de distinto largo, no una
-   línea pareja. Es la firma que se repite de bloque en bloque. */
-.filo-acento { position: relative; }
-.filo-acento::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 8.5rem; height: 3px;
-  background: rgb(var(--c-primary));
-}
-.filo-acento::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 9.5rem;
-  width: 2.5rem; height: 3px;
-  background: rgb(var(--c-error));
-}
 
 /* ----- Header sobre un hero de bloque -----
    El hero es oscuro en LOS DOS temas, así que arriba del todo el header no
@@ -279,12 +261,6 @@ textarea {
    queda como una losa redondeada. Es el gesto que hace que Slack no se vea
    rígido. Se usa en el MEDIO de la página, nunca en el hero: un hero despegado
    deja una franja rara bajo el header. */
-/* El filo de acento vive en la esquina superior izquierda. En un bloque de
-   borde a borde eso funciona; en una losa redondeada la esquina se curva y el
-   filo queda cortado, así que en las losas entra hacia adentro. */
-.losa.filo-acento::before { left: 2.75rem; }
-.losa.filo-acento::after { left: 12.25rem; }
-
 .losa {
   border-radius: 36px;
   margin-left: 1.25rem;
@@ -292,6 +268,31 @@ textarea {
 }
 @media (max-width: 640px) {
   .losa { border-radius: 24px; margin-left: 0.75rem; margin-right: 0.75rem; }
+}
+
+
+/* ----- Forma suelta -----
+   Una sola forma grande, recortada por el borde de la sección y girada para que
+   no se lea como un círculo puesto ahí. Es volumen, no adorno: algo que mirar
+   detrás del titular sin competir con él. Va SIEMPRE dentro de algo con overflow
+   oculto — .resplandor ya lo trae. */
+.forma-suelta { position: relative; }
+.forma-suelta::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -14%;
+  top: -28%;
+  width: 46rem;
+  height: 46rem;
+  border-radius: 46% 54% 58% 42% / 52% 44% 56% 48%;
+  background: radial-gradient(closest-side, rgb(var(--c-primary) / 0.14), transparent 78%);
+  border: 1px solid rgb(var(--c-primary) / 0.1);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .forma-suelta::after { width: 26rem; height: 26rem; right: -30%; top: -14%; }
 }
 
 /* ----- Hero: fondo plano -----

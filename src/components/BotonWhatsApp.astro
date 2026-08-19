@@ -31,9 +31,33 @@ const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.what
   .boton-whatsapp {
     background-color: #25d366;
   }
+  /* Pulso: dos anillos que salen del botón y se apagan, desfasados. Late cada
+     3,2s y no en loop apretado — un botón que late sin parar deja de ser señal y
+     pasa a ser ruido. Al pasar el mouse se detiene: ya lo miraste. */
+  .boton-whatsapp::before,
+  .boton-whatsapp::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background-color: #25d366;
+    z-index: -1;
+    animation: latido 3.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  }
+  .boton-whatsapp::after { animation-delay: 0.6s; }
+  .boton-whatsapp:hover::before,
+  .boton-whatsapp:hover::after { animation-play-state: paused; }
+  @keyframes latido {
+    0% { transform: scale(1); opacity: 0.55; }
+    55% { transform: scale(1.9); opacity: 0; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .boton-whatsapp {
       transition: none;
     }
+    .boton-whatsapp::before,
+    .boton-whatsapp::after { animation: none; display: none; }
   }
 </style>
