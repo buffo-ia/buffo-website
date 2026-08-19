@@ -31,7 +31,7 @@ Para una empresa chilena, esto cambia la ecuación del tiempo: el seguimiento qu
 
 Históricamente, montar inteligencia de negocio seria requería presupuestos de corporación. La tendencia de 2026 es la democratización: las mismas capacidades se implementan hoy sobre las herramientas que la empresa ya usa, a un costo que tiene sentido para un negocio mediano.
 
-Esto nivela la cancha. Una pyme se mueve rápido —lo que decide hoy lo implementa mañana— y eso, combinado con herramientas accesibles, le permite competir con jugadores mucho más grandes en velocidad de reacción.
+Esto empareja las condiciones. Una pyme se mueve rápido —lo que decide hoy lo implementa mañana— y eso, combinado con herramientas accesibles, le permite competir con empresas mucho más grandes en velocidad de reacción.
 
 ## Menos tecnicismo, más lenguaje de negocio
 

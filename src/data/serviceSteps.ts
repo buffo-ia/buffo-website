@@ -17,7 +17,7 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
       {
         icon: 'dataset',
         title: 'Estructuramos y limpiamos',
-        body: 'Damos una definición consistente a cada dato para crear una sola fuente de verdad sobre la que sí se puede confiar y proyectar.',
+        body: 'Damos una definición consistente a cada dato para crear una sola fuente de verdad en la que sí se puede confiar y sobre la que se puede proyectar.',
       },
       {
         icon: 'insights',

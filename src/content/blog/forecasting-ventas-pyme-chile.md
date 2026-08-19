@@ -13,13 +13,13 @@ keywords:
   - prediccion de ventas inteligencia artificial
 ---
 
-Toda empresa proyecta sus ventas, aunque no lo llame así. Cuando un dueño decide cuánto comprar para el próximo mes, está haciendo un forecast —muchas veces de memoria y a pulso. El forecasting con datos no reemplaza ese olfato comercial: lo hace más preciso y menos riesgoso. En este artículo explicamos qué es, para qué sirve y cómo empezar en una pyme.
+Toda empresa proyecta sus ventas, aunque no lo llame así. Cuando un dueño decide cuánto comprar para el próximo mes, está haciendo un forecast —muchas veces de memoria y a criterio. El forecasting con datos no reemplaza ese olfato comercial: lo hace más preciso y menos riesgoso. En este artículo explicamos qué es, para qué sirve y cómo empezar en una pyme.
 
 ## ¿Qué es el forecasting de ventas?
 
 Es proyectar cuánto venderás en un período futuro usando tu historial de ventas y los patrones que se repiten: estacionalidad, tendencia, días de mayor movimiento. En vez de adivinar, se usan los datos que la empresa ya generó para estimar lo que viene.
 
-Importante: forecasting no es predecir el futuro con certeza. Es reducir la incertidumbre. La diferencia entre comprar a ciegas y comprar con una estimación fundada es enorme para el bolsillo de una pyme.
+Importante: forecasting no es predecir el futuro con certeza. Es reducir la incertidumbre. La diferencia entre comprar a ciegas y comprar con una estimación fundada es enorme para las finanzas de una pyme.
 
 ## ¿Para qué sirve en concreto?
 
@@ -28,7 +28,7 @@ Un buen forecast impacta varias decisiones del día a día:
 - **Compras y reposición:** saber cuánto pedir y cuándo, para no quedarte sin stock ni inmovilizar capital en mercadería que no rota.
 - **Presupuestos:** construir metas realistas, basadas en patrones reales y no en deseos.
 - **Flujo de caja:** anticipar meses fuertes y débiles para planificar el efectivo.
-- **Dotación:** prepararse para los peaks de demanda con el equipo adecuado.
+- **Dotación:** prepararse para las puntas de demanda con el equipo adecuado.
 
 ## ¿Necesito muchos datos o un equipo de estadísticos?
 
@@ -55,6 +55,6 @@ El camino sensato es acotado:
 
 ## En resumen
 
-El forecasting de ventas convierte el olfato comercial en decisiones respaldadas por datos. Para una pyme chilena es una de las formas más rentables de empezar con inteligencia artificial, porque ataca directo el costo de comprar mal. Y se puede partir con lo que ya tienes.
+El forecasting de ventas convierte el olfato comercial en decisiones respaldadas por datos. Para una pyme chilena es una de las formas más rentables de empezar con inteligencia artificial, porque incide directamente en el costo de comprar mal. Y se puede partir con lo que ya tienes.
 
 Para ubicarlo dentro del panorama completo, revisa la guía de [IA para la gestión de empresas en Chile](/blog/ia-gestion-empresas-chile). Y si quieres ver qué tan proyectables son tus ventas, conversarlo es el mejor punto de partida.

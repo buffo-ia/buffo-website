@@ -41,7 +41,7 @@ export type Ramal = {
 };
 
 export const INTRO = {
-  titulo: 'Qué tan ciega está su operación',
+  titulo: 'Cuánto ve hoy de su operación',
   // El "en Chile" no es relleno: era la única página del sitio sin contexto
   // geográfico, y es la que más se comparte con prospectos.
   bajada:
@@ -221,7 +221,7 @@ export const FASES = [
   {
     plazo: 'Mes 3 en adelante',
     que: 'Optimización continua',
-    detalle: 'Recogemos lo que aparece en el uso y evaluamos qué otro proceso conviene atacar.',
+    detalle: 'Recogemos lo que aparece en el uso y evaluamos qué otro proceso conviene abordar.',
   },
 ];
 
@@ -301,7 +301,7 @@ export const RAMALES: Ramal[] = [
   {
     id: 'datos',
     dolor: 'Mis datos son un desorden',
-    detalle: 'Están en mil partes, no cuadran entre sí, o no me fío de ellos',
+    detalle: 'Están repartidos en varios sistemas, no cuadran entre sí, o no confío en ellos',
     servicio: 'Modelamiento de datos',
     icono: 'schema',
     preguntas: [
@@ -356,7 +356,7 @@ export const RAMALES: Ramal[] = [
   },
   {
     id: 'procesos',
-    dolor: 'Mi equipo pierde horas en cosas repetitivas',
+    dolor: 'Mi equipo pierde horas en tareas repetitivas',
     detalle: 'Trabajo manual que se repite todos los meses y no agrega valor',
     servicio: 'Automatización de procesos',
     icono: 'precision_manufacturing',
@@ -396,7 +396,7 @@ export const RAMALES: Ramal[] = [
       },
       {
         id: 'pro_errores',
-        texto: '¿Con qué frecuencia hay que rehacer algo por un error de tipeo o de copiado?',
+        texto: '¿Con qué frecuencia hay que rehacer algo por un error de digitación o de copiado?',
         opciones: [
           { valor: 'casi_nunca', texto: 'Casi nunca', puntos: 3 },
           { valor: 'mensual', texto: 'Alguna vez al mes', puntos: 2 },
@@ -419,13 +419,13 @@ export const RAMALES: Ramal[] = [
   {
     id: 'vigilancia',
     dolor: 'Me entero tarde de los problemas',
-    detalle: 'Las cosas se detectan cuando ya son un problema, no antes',
+    detalle: 'Todo se detecta cuando ya es un problema, no antes',
     servicio: 'Agentes IA',
     icono: 'notifications_active',
     preguntas: [
       {
         id: 'vig_revision',
-        texto: '¿Hay algo que hoy se revisa a mano todos los días solo para chequear que esté bien?',
+        texto: '¿Hay algo que hoy se revisa a mano todos los días solo para verificar que esté bien?',
         opciones: [
           { valor: 'no', texto: 'No, el sistema avisa solo', puntos: 3 },
           { valor: 'una', texto: 'Una cosa', puntos: 1 },
@@ -464,7 +464,7 @@ export const RAMALES: Ramal[] = [
       },
       {
         id: 'vig_deseo',
-        texto: '¿Qué le gustaría que alguien vigilara por usted mientras duerme?',
+        texto: '¿Qué le gustaría que alguien vigilara por usted, de forma permanente?',
         opciones: [
           { valor: 'cobranza', texto: 'La cobranza y los pagos', puntos: 1 },
           { valor: 'ventas', texto: 'Las ventas y las metas', puntos: 1 },
@@ -485,7 +485,7 @@ export const PREGUNTA_ABIERTA = {
 
 /** Tramos de madurez sobre el puntaje del tronco (0-100). */
 export const TRAMOS = [
-  { hasta: 35, etiqueta: 'A ciegas', resumen: 'Las decisiones se toman con información que llega tarde o no llega.' },
+  { hasta: 35, etiqueta: 'Visibilidad limitada', resumen: 'Las decisiones se toman con información que llega tarde o no llega.' },
   { hasta: 60, etiqueta: 'Con esfuerzo', resumen: 'La información existe, pero cuesta caro sacarla y depende de personas.' },
   { hasta: 80, etiqueta: 'Ordenado', resumen: 'Hay control sobre lo importante; quedan focos manuales que se pueden cerrar.' },
   { hasta: 100, etiqueta: 'Bajo control', resumen: 'La operación es visible y confiable. El siguiente paso es anticipar, no mirar.' },

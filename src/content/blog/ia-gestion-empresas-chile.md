@@ -36,7 +36,7 @@ Lo importante: ninguna de estas capacidades reemplaza el criterio de quien dirig
 
 Hasta hace poco, montar este tipo de inteligencia requería equipos grandes y presupuestos de corporación. Hoy, las mismas capacidades se pueden implementar sobre las herramientas que la empresa ya usa, a un costo que tiene sentido para un negocio mediano.
 
-Eso nivela la cancha. Una pyme chilena puede tener hoy un tablero de control y alertas automáticas que antes solo veían las grandes marcas. La ventaja, además, es que una empresa más pequeña se mueve rápido: lo que decide hoy lo puede implementar mañana.
+Eso empareja las condiciones. Una pyme chilena puede tener hoy un tablero de control y alertas automáticas que antes solo veían las grandes marcas. La ventaja, además, es que una empresa más pequeña se mueve rápido: lo que decide hoy lo puede implementar mañana.
 
 ## ¿Cómo se ve en el día a día? Las cuatro piezas
 

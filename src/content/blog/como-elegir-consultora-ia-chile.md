@@ -19,7 +19,7 @@ Aquí van siete que separan a los socios serios del resto.
 
 ## 1. ¿Entienden mi negocio o solo la tecnología?
 
-La señal más importante. Una buena consultora habla de tu margen, tus canales, tus quiebres de stock —no solo de modelos y algoritmos. Si en la primera conversación todo gira en torno a la tecnología y nada en torno a tus decisiones de negocio, es una bandera amarilla. La IA es el medio; tu negocio es el fin.
+La señal más importante. Una buena consultora habla de tu margen, tus canales, tus quiebres de stock —no solo de modelos y algoritmos. Si en la primera conversación todo gira en torno a la tecnología y nada en torno a tus decisiones de negocio, es una señal de alerta. La IA es el medio; tu negocio es el fin.
 
 ## 2. ¿Puedo empezar acotado o exigen un gran proyecto?
 
@@ -27,13 +27,13 @@ Desconfía de quien propone un proyecto enorme de entrada. Las implementaciones 
 
 ## 3. ¿Trabajan sobre lo que ya tengo?
 
-No deberías tener que cambiar todos tus sistemas para empezar. Lo habitual es conectar y aprovechar las fuentes que ya existen —Excel, ERP, sistema de ventas— en lugar de reemplazarlas. Si la propuesta exige botar todo y partir de cero, pregunta por qué.
+No deberías tener que cambiar todos tus sistemas para empezar. Lo habitual es conectar y aprovechar las fuentes que ya existen —Excel, ERP, sistema de ventas— en lugar de reemplazarlas. Si la propuesta exige reemplazarlo todo y partir de cero, pregunta por qué.
 
 ## 4. ¿Quién es el dueño de mis datos?
 
 Pregunta fundamental y muchas veces olvidada. Tus datos son tuyos. Asegúrate de entender dónde quedan alojados, quién tiene acceso y bajo qué condiciones. Una consultora seria tiene una respuesta clara sobre privacidad y control, y la pone por escrito.
 
-## 5. ¿Me van a dejar amarrado?
+## 5. ¿Qué tan fácil es dejar de trabajar con ustedes?
 
 Algunas soluciones se construyen para que dependas eternamente del proveedor. Pregunta qué pasa si en el futuro quieres operar por tu cuenta o cambiar de socio. La transparencia en esta respuesta dice mucho sobre la relación que tendrás.
 
@@ -45,9 +45,9 @@ Si la solución "sugiere acciones", pregunta de dónde sale ese criterio. Una su
 
 Una pyme chilena no opera como una corporación europea. Pregunta si el socio entiende el contexto local: estacionalidades, formas de venta, restricciones de presupuesto, cómo se mueve realmente el mercado en Chile. La experiencia local se nota en las recomendaciones.
 
-## Una bandera roja final
+## Una señal de alerta final
 
-Más allá de las siete preguntas, hay una señal de alarma transversal: **la promesa de cifras milagrosas**. Si alguien te garantiza "+30% de ventas" sin conocer tu negocio, desconfía. Los resultados serios se construyen sobre tus datos reales, no sobre números genéricos de folleto.
+Más allá de las siete preguntas, hay una advertencia transversal: **la promesa de cifras milagrosas**. Si alguien te garantiza "+30% de ventas" sin conocer tu negocio, desconfía. Los resultados serios se construyen sobre tus datos reales, no sobre números genéricos de folleto.
 
 ## En resumen
 

@@ -62,7 +62,7 @@ export const NAV = [
 export const SERVICE_PAINS: Record<string, string> = {
   'dashboards-ejecutivos': 'No tengo la foto de cómo va el negocio',
   'modelamiento-predictivo': 'Mis datos son un desorden',
-  'automatizacion-procesos': 'Mi equipo pierde horas en cosas repetitivas',
+  'automatizacion-procesos': 'Mi equipo pierde horas en tareas repetitivas',
   'agentes-ia': 'Me entero tarde de los problemas',
 };
 

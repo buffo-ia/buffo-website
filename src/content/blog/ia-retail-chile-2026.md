@@ -14,7 +14,7 @@ keywords:
   - reposicion inteligente retail
 ---
 
-El retail es, quizás, el rubro donde la inteligencia artificial entrega valor más rápido. La razón es simple: hay muchos datos —ventas, inventario, rotación— y muchas decisiones que se repiten todos los días. Justo el terreno donde la IA brilla. Esta guía explica por dónde empezar en una empresa de retail en Chile, sin tecnicismos.
+El retail es, quizás, el rubro donde la inteligencia artificial entrega valor más rápido. La razón es simple: hay muchos datos —ventas, inventario, rotación— y muchas decisiones que se repiten todos los días. Justo el terreno donde la IA entrega más valor. Esta guía explica por dónde empezar en una empresa de retail en Chile, sin tecnicismos.
 
 ## ¿Cuáles son los dolores típicos del retail chileno?
 

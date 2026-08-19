@@ -30,7 +30,7 @@ La mayoría de las herramientas se queda en el primer nivel y, con suerte, llega
 
 ## ¿En qué se diferencia de un dashboard común?
 
-Un [dashboard ejecutivo](/servicios/dashboards-ejecutivos) tradicional es una vitrina: reúne los números y los presenta ordenados. Es útil, pero deja todo el trabajo de interpretación en manos de quien mira. Si el gerente no tiene tiempo —y rara vez lo tiene— el tablero termina siendo una foto bonita que nadie usa para decidir.
+Un [dashboard ejecutivo](/servicios/dashboards-ejecutivos) tradicional es una vitrina: reúne los números y los presenta ordenados. Es útil, pero deja todo el trabajo de interpretación en manos de quien mira. Si el gerente no tiene tiempo —y rara vez lo tiene— el tablero termina siendo un cuadro ordenado que nadie usa para decidir.
 
 Un copiloto prescriptivo trabaja al revés: parte de la decisión, no del gráfico. En lugar de mostrarte cincuenta indicadores, te dice "de estos cincuenta, mira estos tres, porque se salieron de lo esperado". Y junto a cada alerta, una sugerencia concreta.
 

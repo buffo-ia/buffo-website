@@ -22,7 +22,7 @@ const cumpl = 112; // % del objetivo (sobre-cumple)
 const R = 46, C = 2 * Math.PI * R;
 const donutPct = Math.min(cumpl, 100) / 100; // el anillo se llena hasta 100% visualmente
 
-// ----- Ranking horizontal: top categorías (con dato + formato condicional) -----
+// ----- Ranking horizontal: categorías con mayor venta (con dato + formato condicional) -----
 const ranking = [
   { n: 'Cuidado capilar', v: 94, money: '$412M' },
   { n: 'Dermocosmética', v: 78, money: '$321M' },
@@ -36,7 +36,7 @@ const ranking = [
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
-      <span class="text-xs font-semibold text-on-surface/85 tracking-wide">Visión de Rendimiento Real</span>
+      <span class="text-xs font-semibold text-on-surface/85 tracking-wide">Estado del negocio</span>
     </div>
     <span class="text-[0.6rem] text-on-surface-variant/70 border border-on-surface/10 px-2 py-1">Q2 · en vivo</span>
   </div>
@@ -132,7 +132,7 @@ const ranking = [
 
   <!-- ranking horizontal con etiquetas de datos -->
   <div class="bg-surface-container-low border border-on-surface/5 p-3.5">
-    <p class="text-[0.7rem] font-semibold text-on-surface/80 mb-3">Top categorías por venta</p>
+    <p class="text-[0.7rem] font-semibold text-on-surface/80 mb-3">Categorías con mayor venta</p>
     <div class="space-y-2.5">
       {ranking.map((r, i) => (
         <div class="flex items-center gap-2.5">

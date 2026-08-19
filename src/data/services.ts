@@ -268,7 +268,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       },
       {
         q: '¿Esto significa que voy a despedir gente?',
-        a: 'No es el objetivo ni lo que ocurre en la práctica. Lo que se automatiza son las horas que hoy nadie quiere hacer y que no aportan criterio. En equipos chicos —el caso más común en Chile— esas horas se reinvierten en trabajo comercial o de análisis que estaba postergado.',
+        a: 'No es el objetivo ni lo que ocurre en la práctica. Lo que se automatiza son las horas que hoy nadie quiere hacer y que no aportan criterio. En equipos pequeños —el caso más común en Chile— esas horas se reinvierten en trabajo comercial o de análisis que estaba postergado.',
       },
       {
         q: '¿Cómo sé cuánto tiempo estoy ganando realmente?',
