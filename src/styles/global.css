@@ -9,22 +9,22 @@
    El claro se activa con data-theme="light" en <html>.
    ============================================================ */
 :root {
-  --c-primary: 232 163 61;
-  --c-on-primary: 26 23 20;
-  --c-background: 26 23 20;
-  --c-surface: 36 32 27;
-  --c-on-surface: 240 236 228;
-  --c-surface-variant: 48 42 36;
-  --c-on-surface-variant: 175 166 152;
-  --c-outline: 130 120 106;
-  --c-outline-variant: 66 59 51;
-  --c-container-lowest: 20 18 15;
-  --c-container-low: 32 28 24;
-  --c-container: 36 32 27;
-  --c-container-high: 44 39 33;
-  --c-container-highest: 52 46 39;
-  --c-error: 216 130 104;
-  --c-hairline: 255 250 240; /* se usa siempre con opacidad baja */
+  --c-primary: 25 211 197;
+  --c-on-primary: 7 32 51;
+  --c-background: 7 32 51;
+  --c-surface: 13 48 74;
+  --c-on-surface: 233 242 246;
+  --c-surface-variant: 20 58 86;
+  --c-on-surface-variant: 160 184 198;
+  --c-outline: 110 140 158;
+  --c-outline-variant: 28 66 94;
+  --c-container-lowest: 5 25 40;
+  --c-container-low: 11 41 63;
+  --c-container: 13 48 74;
+  --c-container-high: 18 58 88;
+  --c-container-highest: 24 68 100;
+  --c-error: 255 176 32;
+  --c-hairline: 255 255 255; /* se usa siempre con opacidad baja */
   --hairline-a: 0.07;
   /* En oscuro la profundidad la da el tono de la superficie, no la sombra. */
   --elev: none;
@@ -45,40 +45,40 @@
       tono. En oscuro se sube el tono; en claro se proyecta sombra.
    ============================================================ */
 :root[data-theme='light'] {
-  /* Ocre profundo: 4,6:1 sobre el crema de la página. El ocre claro que se usa
-     en oscuro (#E8A33D) daría 1,9:1 acá — es el mismo error que tenía el verde
-     de marca sobre blanco (2,2:1). Cada temperatura lleva su propia versión. */
-  --c-primary: 158 92 12;
+  /* Turquesa profundo: 5,2:1 sobre el tinte de la página. El turquesa vivo
+     que se usa en oscuro (#19D3C5) daría 1,7:1 acá. Cada temperatura lleva su
+     propia versión del acento; es el mismo error que tenía el verde de marca. */
+  --c-primary: 9 114 106;
   --c-on-primary: 255 255 255;
 
-  --c-background: 244 240 232; /* la página: blanco teñido, un punto más hondo
+  --c-background: 230 246 246; /* la página: blanco teñido, un punto más hondo
                                   que las tarjetas para que se despeguen */
-  --c-surface: 253 251 247;
-  --c-on-surface: 28 24 20; /* casi negro, con verde adentro */
-  --c-surface-variant: 236 230 219;
-  --c-on-surface-variant: 92 84 74; /* verde-gris, no gris */
-  --c-outline: 138 128 114;
-  --c-outline-variant: 222 214 200;
+  --c-surface: 255 255 255;
+  --c-on-surface: 6 32 46; /* casi negro, con verde adentro */
+  --c-surface-variant: 219 238 238;
+  --c-on-surface-variant: 82 102 112; /* verde-gris, no gris */
+  --c-outline: 120 145 155;
+  --c-outline-variant: 200 224 224;
 
   /* TODAS las tarjetas son blancas. En oscuro estos niveles daban variedad;
      en claro daban SIGNIFICADOS distintos y dos tarjetas hermanas parecían
      cosas distintas. La jerarquía la hace la sombra, no el tono. */
-  --c-container-lowest: 253 251 247;
-  --c-container-low: 253 251 247;
-  --c-container: 253 251 247;
-  --c-container-high: 253 251 247;
-  --c-container-highest: 238 233 223; /* único nivel hundido, para lo raro */
+  --c-container-lowest: 255 255 255;
+  --c-container-low: 255 255 255;
+  --c-container: 255 255 255;
+  --c-container-high: 255 255 255;
+  --c-container-highest: 237 248 248; /* único nivel hundido, para lo raro */
 
-  --c-error: 122 42 42;
-  --c-hairline: 28 24 20;
+  --c-error: 138 90 0;
+  --c-hairline: 6 32 46;
   --hairline-a: 0.08;
 
   /* La profundidad en claro se proyecta, no se pinta. Tres capas: el filo,
      el apoyo cercano y la sombra ambiental larga. */
-  --elev: 0 1px 2px rgb(28 24 20 / 0.05), 0 4px 10px -3px rgb(28 24 20 / 0.07),
-    0 14px 32px -12px rgb(28 24 20 / 0.1);
-  --elev-hover: 0 1px 2px rgb(28 24 20 / 0.06), 0 6px 14px -3px rgb(28 24 20 / 0.1),
-    0 22px 44px -14px rgb(28 24 20 / 0.16);
+  --elev: 0 1px 2px rgb(6 32 46 / 0.05), 0 4px 10px -3px rgb(6 32 46 / 0.07),
+    0 14px 32px -12px rgb(6 32 46 / 0.1);
+  --elev-hover: 0 1px 2px rgb(6 32 46 / 0.06), 0 6px 14px -3px rgb(6 32 46 / 0.1),
+    0 22px 44px -14px rgb(6 32 46 / 0.16);
 }
 
 /* 🚨 IMPRESIÓN — el informe del diagnóstico va SIEMPRE en claro.
@@ -88,22 +88,22 @@
 @media print {
   :root,
   :root[data-theme='dark'] {
-    --c-primary: 158 92 12;
+    --c-primary: 9 114 106;
     --c-on-primary: 255 255 255;
-    --c-background: 244 240 232;
-    --c-surface: 253 251 247;
-    --c-on-surface: 28 24 20;
-    --c-surface-variant: 236 230 219;
-    --c-on-surface-variant: 92 84 74;
-    --c-outline: 138 128 114;
-    --c-outline-variant: 222 214 200;
-    --c-container-lowest: 253 251 247;
-    --c-container-low: 253 251 247;
-    --c-container: 253 251 247;
-    --c-container-high: 253 251 247;
-    --c-container-highest: 238 233 223;
-    --c-error: 122 42 42;
-    --c-hairline: 28 24 20;
+    --c-background: 230 246 246;
+    --c-surface: 255 255 255;
+    --c-on-surface: 6 32 46;
+    --c-surface-variant: 219 238 238;
+    --c-on-surface-variant: 82 102 112;
+    --c-outline: 120 145 155;
+    --c-outline-variant: 200 224 224;
+    --c-container-lowest: 255 255 255;
+    --c-container-low: 255 255 255;
+    --c-container: 255 255 255;
+    --c-container-high: 255 255 255;
+    --c-container-highest: 237 248 248;
+    --c-error: 138 90 0;
+    --c-hairline: 6 32 46;
     --hairline-a: 0.12;
   }
 }
@@ -300,7 +300,7 @@ textarea:focus {
    el tema. Ahí no sirve el verde del tema claro (que está oscurecido para
    contrastar contra blanco): sobre negro desaparece. Va el verde de marca. */
 .sobre-foto {
-  color: #e8a33d;
+  color: #19d3c5;
 }
 
 /* ----- Logos del stack -----

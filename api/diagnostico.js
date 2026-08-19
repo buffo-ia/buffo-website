@@ -228,7 +228,7 @@ function correoAlProspecto(d, texto) {
         limites: 'Lo que no podemos decirle sin conocerlos mejor',
         pasos: 'Próximos pasos',
       };
-      return `<h3 style="margin:28px 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9e5c0c;">${rotulos[nombre] || nombre}</h3>
+      return `<h3 style="margin:28px 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#09726a;">${rotulos[nombre] || nombre}</h3>
               <div style="line-height:1.65;color:#333;">${contenido}</div>`;
     })
     .join('');
@@ -239,13 +239,13 @@ function correoAlProspecto(d, texto) {
     reply_to: CONFIG.contacto,
     subject: `Su diagnóstico — ${d.empresa || d.nombre}`,
     html: `<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:620px;margin:0 auto;color:#0D0E10;">
-      <p style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9e5c0c;margin:0;">Diagnóstico</p>
+      <p style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#09726a;margin:0;">Diagnóstico</p>
       <h2 style="margin:8px 0 4px;font-size:24px;">${escaparHtml(d.empresa || d.nombre)}</h2>
       <p style="margin:0;color:#666;">Visibilidad de su operación: <strong>${d.puntaje.tronco} de 100</strong></p>
       ${cuerpo}
       <div style="margin:36px 0 0;padding:24px;border:1px solid #ddd;">
         <p style="margin:0 0 14px;line-height:1.6;">Si quiere revisarlo con nosotros, son treinta minutos y no hay presentación de ventas.</p>
-        <a href="${CONFIG.calendly}" style="display:inline-block;background:#9e5c0c;color:#000;padding:12px 24px;text-decoration:none;font-weight:600;">Agendar una conversación</a>
+        <a href="${CONFIG.calendly}" style="display:inline-block;background:#09726a;color:#000;padding:12px 24px;text-decoration:none;font-weight:600;">Agendar una conversación</a>
       </div>
       <p style="margin:24px 0 0;font-size:13px;color:#888;">— Equipo Buffo Consulting · ${CONFIG.sitio}</p>
     </div>`,
