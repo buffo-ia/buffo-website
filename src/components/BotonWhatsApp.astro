@@ -17,6 +17,7 @@ const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.what
   aria-label="Escribir por WhatsApp"
   title="Escríbanos por WhatsApp"
   class="boton-whatsapp fixed right-5 bottom-[5.25rem] sm:bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95"
+  data-oculto
 >
   <svg viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7" aria-hidden="true">
     <path
@@ -25,11 +26,45 @@ const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.what
   </svg>
 </a>
 
+<script>
+  // En celular la burbuja se apoyaba ENCIMA del CTA secundario del hero: la
+  // pantalla es angosta y el botón flotante cae justo sobre "Agendar 30
+  // minutos". Se resuelve como la barra del diagnóstico — aparece recién
+  // cuando el hero salió de pantalla, que es cuando el CTA de arriba ya no
+  // está a la vista. En escritorio no estorba nunca, así que ahí entra de una.
+  const boton = document.querySelector('.boton-whatsapp');
+  if (boton) {
+    const hero = document.querySelector('.hero-bg, .bloque-ancla, main section');
+    const angosta = () => window.matchMedia('(max-width: 639px)').matches;
+
+    const pintar = (pasoHero) => {
+      boton.toggleAttribute('data-oculto', angosta() && !pasoHero);
+    };
+
+    if (hero && 'IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(
+        ([e]) => pintar(!e.isIntersecting),
+        { threshold: 0, rootMargin: '-60px 0px 0px 0px' }
+      );
+      obs.observe(hero);
+    } else {
+      pintar(true);
+    }
+    window.addEventListener('resize', () => { if (!angosta()) boton.removeAttribute('data-oculto'); });
+  }
+</script>
+
 <style>
   /* Verde oficial de WhatsApp: es un canal de terceros, no parte de la paleta
      Buffo. Por eso no usa los tokens del tema y se ve igual en claro y oscuro. */
   .boton-whatsapp {
     background-color: #25d366;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .boton-whatsapp[data-oculto] {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
   }
   /* Pulso: dos anillos que salen del botón y se apagan, desfasados. Late cada
      3,2s y no en loop apretado — un botón que late sin parar deja de ser señal y
