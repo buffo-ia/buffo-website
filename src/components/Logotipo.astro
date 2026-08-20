@@ -41,17 +41,22 @@ const { tamano = 'header', class: clase = '' } = Astro.props;
     line-height: 0;
     color: rgb(var(--c-on-surface));
   }
+  
   .logotipo :global(svg) {
     height: 100%;
     width: auto;
     display: block;
   }
-  .logotipo-header { height: 2.5rem; }
-  .logotipo-pie { height: 2.1rem; }
+
+  /* Al simplificar el componente se borraron estas dos por accidente y el
+     logotipo desapareció: con line-height 0 y sin altura, el <span> no mide
+     nada y el SVG con height:100% se queda en cero. */
+  .logotipo-header { height: 2.6rem; }
+  .logotipo-pie { height: 2.2rem; }
 
   /* En celular el logotipo compite con el botón del diagnóstico por un ancho
      que no alcanza para los dos. Se achica en vez de dejar que se monten. */
-  @media (max-width: 420px) {
-    .logotipo-header { height: 2rem; }
+  @media (max-width: 480px) {
+    .logotipo-header { height: 2.1rem; }
   }
 </style>
