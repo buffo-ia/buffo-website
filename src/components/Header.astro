@@ -24,10 +24,14 @@ const isActive = (href: string) =>
       <Image src={logoLight} alt="Buffo IA Consulting" class="logo-light h-9 w-auto object-contain" loading="eager" />
     </a>
 
-    <!-- Centrada respecto de la página, no del espacio que sobra: si se dejara
-         en el flujo, el ancho del logo y el del botón la correrían de a poco. -->
+    <!-- Centrada respecto de la PÁGINA, no del espacio que sobra: si se dejara
+         en el flujo, el ancho del logo y el del botón la correrían de a poco.
+         ⚠️ El costo de centrarla en absoluto es que no empuja a nadie: entre
+         768 y 1024px se montaba encima del logo y lo tapaba. Por eso el menú
+         completo aparece recién en lg; abajo de eso va el menú de hamburguesa,
+         que antes se cortaba en md. -->
     <div
-      class="nav-pill hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+      class="nav-pill hidden lg:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
     >
       {
         NAV.map((item) => (
@@ -69,7 +73,7 @@ const isActive = (href: string) =>
     <!-- Botón menú móvil -->
     <button
       id="menu-toggle"
-      class="md:hidden text-on-surface"
+      class="lg:hidden text-on-surface"
       aria-label="Abrir menú"
       aria-expanded="false"
     >
@@ -78,7 +82,7 @@ const isActive = (href: string) =>
   </nav>
 
   <!-- Menú móvil desplegable -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-on-surface/5 bg-background px-8 py-6 space-y-4">
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-on-surface/5 bg-background px-8 py-6 space-y-4">
     {
       NAV.map((item) => (
         <a

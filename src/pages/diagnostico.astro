@@ -128,7 +128,7 @@ const breadcrumbSchema = {
             RAMALES.map((r) => (
               <button
                 data-ramal={r.id}
-                class="opcion-ramal group flex flex-wrap items-start gap-x-4 gap-y-2 border border-outline-variant p-5 text-left transition-colors hover:border-primary sm:flex-nowrap"
+                class="opcion-ramal group flex flex-wrap items-start gap-x-4 gap-y-2 p-5 text-left sm:flex-nowrap"
               >
                 <span class="material-symbols-outlined mt-0.5 text-outline group-hover:text-primary">
                   {r.icono}
@@ -323,8 +323,9 @@ const breadcrumbSchema = {
       cont.innerHTML = '';
       p.opciones.forEach((o) => {
         const btn = document.createElement('button');
-        btn.className =
-          'border border-outline-variant p-4 text-left transition-colors hover:border-primary hover:bg-surface';
+        // Misma clase que el selector de dolor: sin fondo propio las tarjetas
+        // desaparecían contra el tinte de la página.
+        btn.className = 'opcion-ramal p-4 text-left';
         btn.textContent = o.texto;
         btn.addEventListener('click', () => responder(p, o));
         cont.appendChild(btn);
@@ -1001,6 +1002,30 @@ const breadcrumbSchema = {
       background: rgb(var(--c-primary));
     }
 
+    /* Tarjeta de opción. Antes era solo un borde sin fondo, así que sobre el
+       tinte de la página se perdía. Ahora tiene cuerpo blanco y sombra: se lee
+       como algo que se puede tomar, no como una línea dibujada. */
+    .opcion-ramal {
+      background-color: rgb(var(--c-surface));
+      border: 1px solid rgb(var(--c-hairline) / 0.1);
+      border-radius: 14px;
+      box-shadow: var(--elev);
+      transition: transform .18s ease, box-shadow .25s ease, border-color .2s ease;
+    }
+    .opcion-ramal:hover {
+      border-color: rgb(var(--c-primary) / 0.55);
+      box-shadow: var(--elev-hover);
+      transform: translateY(-2px);
+    }
+    /* Foco visible para quien navega con teclado: el hover solo no basta. */
+    .opcion-ramal:focus-visible {
+      outline: 2px solid rgb(var(--c-primary));
+      outline-offset: 3px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .opcion-ramal, .opcion-ramal:hover { transform: none; transition: none; }
+    }
+
     /* Etiqueta del frente de trabajo en el selector de dolor. Mono y en gris
        para que el ojo lea primero el dolor; se enciende al pasar por encima. */
     .etiqueta-frente {
@@ -1008,8 +1033,10 @@ const breadcrumbSchema = {
       font-size: .68rem;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: #8E9099;
-      border: 1px solid #44474E;
+      /* Estos dos eran #8E9099 y #44474E, de la paleta oscura vieja: sobre el
+         tema claro el borde quedaba casi negro. Ahora siguen el tema. */
+      color: rgb(var(--c-on-surface) / 0.5);
+      border: 1px solid rgb(var(--c-hairline) / 0.14);
       padding: .3rem .6rem;
       white-space: nowrap;
       transition: color .2s, border-color .2s;
