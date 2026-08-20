@@ -71,9 +71,10 @@ const breadcrumbSchema = {
   description={data.description}
   path={path}
   schema={[articleSchema, breadcrumbSchema]}
+  heroAncla
 >
   <!-- HERO del artículo -->
-  <section class="hero-bg px-8 md:px-12 pt-12 pb-12">
+  <section class="bloque-ancla resplandor px-8 md:px-12 pt-28 pb-14">
     <div class="max-w-3xl mx-auto">
       <div class="mb-8">
         <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: data.title, href: path }]} />

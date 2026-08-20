@@ -17,10 +17,10 @@ const contactSchema = {
 };
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription} path={path} schema={contactSchema}>
+<BaseLayout title={metaTitle} description={metaDescription} path={path} schema={contactSchema} heroAncla>
   <!-- Sin min-h: el contenido es corto y el alto forzado dejaba media pantalla
        vacía bajo el formulario. En fondo oscuro se disimulaba; en claro no. -->
-  <section class="hero-bg px-8 md:px-12 pt-20 pb-24 border-b border-on-surface/5">
+  <section class="bloque-ancla resplandor px-8 md:px-12 pt-28 pb-16">
     <div class="max-w-5xl mx-auto">
       <div class="mb-14 max-w-2xl">
         <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-8">Contacto</p>
@@ -33,7 +33,13 @@ const contactSchema = {
           decimos.
         </p>
       </div>
+    </div>
+  </section>
 
+  <!-- El formulario sale del bloque: campos oscuros sobre azul noche se leen
+       como deshabilitados, y este es el punto donde alguien escribe. -->
+  <section class="px-8 md:px-12 py-16 bg-background">
+    <div class="max-w-5xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
         <!-- FORMULARIO -->
         <div class="md:col-span-3 reveal">
