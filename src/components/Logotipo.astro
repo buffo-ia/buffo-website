@@ -1,0 +1,57 @@
+---
+/**
+ * Logotipo Buffo — el colibrí.
+ *
+ * El SVG va INCRUSTADO en el HTML, no como <img>, y esa es la decisión clave:
+ * así el trazo de la palabra "buffo" usa `currentColor` y toma el color del
+ * contexto. Un solo archivo sirve para el tema claro, el oscuro y los bloques
+ * ancla, sin duplicar assets ni reglas de CSS que los intercambien. Es lo que
+ * antes se resolvía con logo.png + logo_light.png y una regla por tema, que ya
+ * se había roto una vez sobre el hero oscuro.
+ *
+ * El ave NO usa currentColor a propósito: va en azul noche fijo (#072033)
+ * dentro del disco turquesa. Ahí el contraste es 8,84:1 y no depende del fondo
+ * de la página, así que el pájaro se lee igual en los dos temas. El disco
+ * turquesa es lo que separa la marca del fondo: 8,84:1 sobre el azul noche.
+ *
+ * ⚠️ El disco de fondo se agregó por código detrás del arte original, porque en
+ * el archivo de Simón el ave es ESPACIO NEGATIVO (un recorte), no un trazo con
+ * relleno propio. Sin ese disco el ave se ve del color de lo que haya detrás.
+ */
+import svg from '../assets/logo-buffo.svg?raw';
+
+interface Props {
+  /** 'header' para la barra, 'pie' más chico. */
+  tamano?: 'header' | 'pie';
+  class?: string;
+}
+const { tamano = 'header', class: clase = '' } = Astro.props;
+---
+
+<span
+  class:list={['logotipo', `logotipo-${tamano}`, clase]}
+  role="img"
+  aria-label="Buffo IA Consulting"
+  set:html={svg}
+/>
+
+<style>
+  .logotipo {
+    display: inline-block;
+    line-height: 0;
+    color: rgb(var(--c-on-surface));
+  }
+  .logotipo :global(svg) {
+    height: 100%;
+    width: auto;
+    display: block;
+  }
+  .logotipo-header { height: 2.5rem; }
+  .logotipo-pie { height: 2.1rem; }
+
+  /* En celular el logotipo compite con el botón del diagnóstico por un ancho
+     que no alcanza para los dos. Se achica en vez de dejar que se monten. */
+  @media (max-width: 420px) {
+    .logotipo-header { height: 2rem; }
+  }
+</style>

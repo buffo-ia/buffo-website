@@ -80,6 +80,9 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         } catch (e) {}
       })();
     </script>
+    <!-- El SVG primero: los navegadores modernos lo prefieren y se ve nítido
+         en cualquier densidad. El PNG queda de respaldo para los que no. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
