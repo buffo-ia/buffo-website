@@ -218,9 +218,10 @@ body[data-hero='ancla'] .site-header:not(.is-scrolled) {
 }
 /* El logo tiene dos archivos y el que se muestra depende del tema. Sobre el
    bloque manda el bloque, no el tema. */
-/* El logotipo ya no son dos archivos que se intercambian: es texto, así que
-   toma el color del ámbito y sobre el bloque se aclara solo. Se borraron las
-   reglas de intercambio que existían para las dos imágenes. */
+/* Ojo con los nombres: .logo-dark es el logo PARA fondo oscuro (letras
+   blancas), no el logo oscuro. Sobre el bloque manda el bloque, no el tema. */
+body[data-hero='ancla'] .site-header:not(.is-scrolled) .logo-light { display: none; }
+body[data-hero='ancla'] .site-header:not(.is-scrolled) .logo-dark { display: inline-block; }
 
 
 /* ============================================================
@@ -487,6 +488,8 @@ textarea:focus {
    El logo tiene dos archivos (letras blancas / letras negras) y se muestra el
    que corresponda. Va en global y no dentro del Header porque el footer usa
    exactamente lo mismo: si vive en un componente, el otro queda invisible. */
+:root[data-theme='dark'] .logo-light,
+:root[data-theme='light'] .logo-dark,
 :root[data-theme='dark'] .theme-icon-light,
 :root[data-theme='light'] .theme-icon-dark {
   display: none;

@@ -1,5 +1,7 @@
 ---
-import Logotipo from './Logotipo.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import logoLight from '../assets/logo_light.png';
 import { SITE } from '../config/site';
 import { SERVICES_CONTENT } from '../data/services';
 const year = new Date().getFullYear();
@@ -16,7 +18,8 @@ const recursos = [
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-14">
       <!-- Marca -->
       <div class="col-span-2 md:col-span-1">
-        <Logotipo tamano="pie" class="mb-5 opacity-90" />
+        <Image src={logo} alt="Buffo IA Consulting" class="logo-dark h-8 w-auto object-contain opacity-80 mb-5" loading="lazy" />
+        <Image src={logoLight} alt="Buffo IA Consulting" class="logo-light h-8 w-auto object-contain opacity-80 mb-5" loading="lazy" />
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
           Inteligencia artificial aplicada a la gestión comercial y operacional. Para pymes y
           grandes empresas en Chile.

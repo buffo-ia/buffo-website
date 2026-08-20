@@ -1,5 +1,7 @@
 ---
-import Logotipo from './Logotipo.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import logoLight from '../assets/logo_light.png';
 import { NAV } from '../config/site';
 
 const current = Astro.url.pathname;
@@ -18,7 +20,8 @@ const isActive = (href: string) =>
       class="flex items-center opacity-100 hover:opacity-70 transition-opacity duration-200"
       aria-label="Inicio — Buffo IA Consulting"
     >
-      <Logotipo />
+      <Image src={logo} alt="Buffo IA Consulting" class="logo-dark h-9 w-auto object-contain" loading="eager" />
+      <Image src={logoLight} alt="Buffo IA Consulting" class="logo-light h-9 w-auto object-contain" loading="eager" />
     </a>
 
     <!-- Centrada respecto de la página, no del espacio que sobra: si se dejara
