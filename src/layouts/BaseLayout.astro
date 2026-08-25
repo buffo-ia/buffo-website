@@ -57,7 +57,17 @@ const baseSchema = {
       logo: `${SITE.url}/logo.png`,
       description: SITE.defaultDescription,
       email: SITE.email,
-      address: { '@type': 'PostalAddress', addressCountry: 'CL', addressLocality: 'Santiago' },
+      telephone: `+${SITE.whatsapp}`,
+      // Antes acá solo iba el país y la ciudad. Con la calle y la comuna, Google
+      // puede ubicar la empresa: es la señal de SEO local que faltaba.
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: SITE.direccion.calle,
+        addressLocality: SITE.direccion.comuna,
+        addressRegion: SITE.direccion.region,
+        addressCountry: SITE.direccion.pais,
+      },
+      areaServed: { '@type': 'Country', name: 'Chile' },
       sameAs: [SITE.linkedin],
     },
     {
@@ -96,7 +106,10 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     </script>
     <!-- El SVG primero: los navegadores modernos lo prefieren y se ve nítido
          en cualquier densidad. El PNG queda de respaldo para los que no. -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- El favicon vectorial se retiró con el logo nuevo: el diseñador entregó
+         PNG y .ai, no SVG, y calcar el colibrí a mano habría sido dibujar una
+         marca distinta. El PNG a 192 px cubre todos los navegadores vigentes;
+         si más adelante llega el SVG oficial, vuelve acá arriba. -->
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 

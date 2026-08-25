@@ -133,6 +133,16 @@ const contactSchema = {
             <h3 class="font-display text-lg mb-1">LinkedIn</h3>
             <p class="text-on-surface-variant text-sm leading-relaxed">Conéctese con nosotros.</p>
           </a>
+          <!-- Es la única tarjeta que no es un enlace: no lleva a ninguna parte,
+               informa. Va en <div> y no en <a> para no fingir una acción que no
+               existe. -->
+          <div class="block bg-surface-container-low border border-on-surface/5 p-7">
+            <span class="material-symbols-outlined text-primary text-3xl mb-4 block">location_on</span>
+            <h3 class="font-display text-lg mb-1">Oficina</h3>
+            <address class="text-on-surface-variant text-sm leading-relaxed not-italic">
+              {SITE.direccion.calle}<br />{SITE.direccion.comuna}, Santiago
+            </address>
+          </div>
         </div>
       </div>
     </div>

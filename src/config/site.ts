@@ -11,6 +11,18 @@ export const SITE = {
   // expone más. Cuando llegue la eSIM de negocio, se cambia SOLO acá.
   whatsapp: '56983731652',
   whatsappMensaje: 'Hola, vengo del sitio de Buffo y quiero hacer una consulta.',
+  // Dirección comercial, la misma que va en el pie de firma del manual de marca.
+  // Publicarla no es decoración: el PostalAddress completo del schema.org es
+  // señal de SEO local, que es justo lo que se busca para "consultora IA
+  // Santiago". Sin calle ni comuna, Google solo ve "Chile".
+  direccion: {
+    calle: 'Badajoz 100, Of. 1014',
+    comuna: 'Las Condes',
+    region: 'Región Metropolitana',
+    pais: 'CL',
+    // Una línea, para cuando el espacio no da para tres.
+    completa: 'Badajoz 100, Of. 1014, Las Condes, Santiago',
+  },
   locale: 'es_CL',
   // 79 caracteres se cortaban en Google, que muestra cerca de 60. En menos de
   // 60 no caben las tres cosas —palabra clave, calificador y país—, así que se

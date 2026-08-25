@@ -16,7 +16,7 @@ const recursos = [
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-14">
       <!-- Marca -->
       <div class="col-span-2 md:col-span-1">
-        <Logotipo tamano="pie" class="mb-5" />
+        <Logotipo tamano="pie" variante="auto" class="mb-5" />
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
           Inteligencia artificial aplicada a la gestión comercial y operacional. Para pymes y
           grandes empresas en Chile.
@@ -89,6 +89,14 @@ const recursos = [
             >
               LinkedIn
             </a>
+          </li>
+          <!-- La dirección no es un enlace: no hay a dónde llevar al visitante
+               que no sea un mapa de un tercero. Va como <address>, que es lo
+               que los buscadores leen como el domicilio del sitio. -->
+          <li>
+            <address class="text-sm text-on-surface/55 not-italic leading-relaxed">
+              {SITE.direccion.calle}<br />{SITE.direccion.comuna}, Santiago
+            </address>
           </li>
         </ul>
       </div>

@@ -1,62 +1,123 @@
 ---
 /**
- * Logotipo Buffo — el colibrí.
+ * Logotipo Buffo — el archivo original del diseñador.
  *
- * El SVG va INCRUSTADO en el HTML, no como <img>, y esa es la decisión clave:
- * así el trazo de la palabra "buffo" usa `currentColor` y toma el color del
- * contexto. Un solo archivo sirve para el tema claro, el oscuro y los bloques
- * ancla, sin duplicar assets ni reglas de CSS que los intercambien. Es lo que
- * antes se resolvía con logo.png + logo_light.png y una regla por tema, que ya
- * se había roto una vez sobre el hero oscuro.
+ * Desde el 25-ago-2026 el logo es el de milogotipo.cl: el colibrí suelto (ya no
+ * dentro de un disco) con el ave en turquesa y relleno propio. Se usan los PNG
+ * que él entregó, recortados al arte por `scripts/importar-logo.mjs` y sin
+ * ningún otro cambio. Antes esto era un SVG con la palabra en `currentColor`,
+ * recurso que servía cuando el ave era espacio negativo; el logo nuevo trae su
+ * color adentro, así que ya no hay nada que teñir desde el CSS.
  *
- * El ave NO usa currentColor a propósito: va en azul noche fijo (#072033)
- * dentro del disco turquesa. Ahí el contraste es 8,84:1 y no depende del fondo
- * de la página, así que el pájaro se lee igual en los dos temas. El disco
- * turquesa es lo que separa la marca del fondo: 8,84:1 sobre el azul noche.
+ * Dos variantes, y la razón de que sean dos es dónde cae el logotipo:
  *
- * ⚠️ El disco de fondo se agregó por código detrás del arte original, porque en
- * el archivo de Simón el ave es ESPACIO NEGATIVO (un recorte), no un trazo con
- * relleno propio. Sin ese disco el ave se ve del color de lo que haya detrás.
+ *   'negro'  — colibrí turquesa + palabra en negro. Es el uso principal, y va
+ *              en el header, que ahora es una barra BLANCA en los dos temas
+ *              justamente para que este archivo tenga contraste real.
+ *   'auto'   — para el pie de página, que sí sigue el tema: en oscuro usa la
+ *              versión monocroma blanca (uso autorizado por el manual) y en
+ *              claro la de palabra negra.
+ *
+ * En 'auto' van los dos <img> al HTML y el CSS esconde el que sobra. Es a
+ * propósito: el tema se resuelve antes de pintar, así que un intercambio por
+ * JavaScript mostraría el logo equivocado durante el primer cuadro.
  */
-import svg from '../assets/logo-buffo.svg?raw';
+import { Image } from 'astro:assets';
+import logoNegro from '../assets/logo-buffo-negro.png';
+import logoBlanco from '../assets/logo-buffo-blanco.png';
 
 interface Props {
   /** 'header' para la barra, 'pie' más chico. */
   tamano?: 'header' | 'pie';
+  /** 'negro' fijo (barra blanca) o 'auto' si el fondo sigue al tema. */
+  variante?: 'negro' | 'auto';
   class?: string;
 }
-const { tamano = 'header', class: clase = '' } = Astro.props;
+const { tamano = 'header', variante = 'negro', class: clase = '' } = Astro.props;
+
+const ALT = 'Buffo IA Consulting';
+// El logo entra a 1452 px de ancho y se muestra a ~150. Se declaran los anchos
+// para que Astro emita el srcset y el celular no descargue el archivo grande.
+const ANCHOS = [180, 300, 440];
 ---
 
-<span
-  class:list={['logotipo', `logotipo-${tamano}`, clase]}
-  role="img"
-  aria-label="Buffo IA Consulting"
-  set:html={svg}
-/>
+<span class:list={['logotipo', `logotipo-${tamano}`, `logotipo-${variante}`, clase]}>
+  <Image
+    src={logoNegro}
+    alt={ALT}
+    widths={ANCHOS}
+    sizes="220px"
+    class="logotipo-negro"
+    loading={tamano === 'header' ? 'eager' : 'lazy'}
+  />
+  {
+    variante === 'auto' && (
+      <Image
+        src={logoBlanco}
+        alt={ALT}
+        widths={ANCHOS}
+        sizes="220px"
+        class="logotipo-blanco"
+        loading="lazy"
+      />
+    )
+  }
+</span>
 
 <style>
   .logotipo {
     display: inline-block;
     line-height: 0;
-    color: rgb(var(--c-on-surface));
   }
-  
-  .logotipo :global(svg) {
+
+  .logotipo :global(img) {
     height: 100%;
     width: auto;
     display: block;
   }
 
-  /* Al simplificar el componente se borraron estas dos por accidente y el
-     logotipo desapareció: con line-height 0 y sin altura, el <span> no mide
-     nada y el SVG con height:100% se queda en cero. */
-  .logotipo-header { height: 2.6rem; }
-  .logotipo-pie { height: 2.2rem; }
+  /* Con line-height 0 y sin altura el <span> no mide nada y la imagen con
+     height:100% se queda en cero. Ya pasó una vez: el logotipo desapareció. */
+  /* El logo nuevo mide dos tercios de alto que el anterior a igual ancho: el
+     de antes era un disco casi cuadrado, éste es una tira horizontal con la
+     bajada "IA CONSULTING" en cuerpo muy chico. Ajustado a ojo hasta que la
+     bajada se lee sin forzar la vista. */
+  .logotipo-header {
+    height: 2.7rem;
+  }
+  .logotipo-pie {
+    height: 2.4rem;
+  }
 
   /* En celular el logotipo compite con el botón del diagnóstico por un ancho
      que no alcanza para los dos. Se achica en vez de dejar que se monten. */
   @media (max-width: 480px) {
-    .logotipo-header { height: 2.1rem; }
+    .logotipo-header {
+      height: 1.9rem;
+    }
+  }
+
+  /* El intercambio por tema. Solo aplica a 'auto': en 'negro' el segundo
+     archivo ni siquiera se emite. El script inline del <head> siempre deja
+     data-theme puesto, así que no hace falta cubrir el caso "sin atributo". */
+  .logotipo-auto .logotipo-blanco {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .logotipo-auto .logotipo-negro {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .logotipo-auto .logotipo-blanco {
+    display: block;
+  }
+
+  /* El informe del diagnóstico se imprime siempre en claro (ver global.css),
+     así que el pie impreso lleva la palabra en negro, no la blanca. */
+  @media print {
+    .logotipo-auto .logotipo-negro {
+      display: block;
+    }
+    .logotipo-auto .logotipo-blanco {
+      display: none;
+    }
   }
 </style>
