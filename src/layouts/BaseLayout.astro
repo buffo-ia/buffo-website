@@ -29,7 +29,21 @@ const {
 } = Astro.props;
 
 const canonical = new URL(path, SITE.url).href;
-const ogImage = new URL('/og-image.png', SITE.url).href;
+// El sufijo ?v= no lo lee el servidor: es para WhatsApp y LinkedIn, que
+// guardan la vista previa por URL y la sirven cacheada por semanas. Cambiar el
+// número es lo que los obliga a bajar la imagen de nuevo. SUBIRLO CADA VEZ que
+// se regenere og-image.png, o el cambio no se ve en los teléfonos.
+const OG_VERSION = 2;
+const ogImage = new URL(`/og-image.png?v=${OG_VERSION}`, SITE.url).href;
+
+// Las dimensiones de la tarjeta se DECLARAN, no se dejan a que el scraper las
+// averigüe. WhatsApp descarta la vista previa grande y cae a la miniatura
+// cuadrada si no encuentra og:image:width/height antes de su timeout, que es
+// muy corto: la imagen estaba bien (1200×630, 1.91:1) pero se compartía chica.
+// Si se regenera con otro tamaño, se cambian estos dos números junto con
+// scripts/generar-og.mjs.
+const OG_IMAGE = { ancho: 1200, alto: 630, tipo: 'image/png' };
+const ogImageAlt = `${SITE.name} — ${SITE.defaultDescription}`;
 
 // Schema base presente en todas las páginas: Organization + WebSite
 const baseSchema = {
@@ -99,6 +113,11 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content={OG_IMAGE.tipo} />
+    <meta property="og:image:width" content={String(OG_IMAGE.ancho)} />
+    <meta property="og:image:height" content={String(OG_IMAGE.alto)} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={SITE.locale} />
     <meta property="og:site_name" content={SITE.name} />
 
@@ -107,6 +126,7 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
