@@ -6,6 +6,11 @@ export const SITE = {
   email: 'contacto@buffoconsulting.cl',
   calendly: 'https://calendly.com/simon-buffoconsulting/llamada-de-consulta-buffo-ia',
   linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
+  // La cuenta existe y está a nombre de Buffo IA Consulting, pero al 26-ago-2026
+  // no tiene publicaciones. Si el perfil sigue vacío cuando el sitio empiece a
+  // recibir tráfico pagado, conviene sacar el enlace antes que mostrarlo: un
+  // visitante que llega a un perfil sin nada lee "esto está abandonado".
+  instagram: 'https://www.instagram.com/buffo.ia/',
   // ⚠️ Hoy es la línea personal de Simón. Ya es pública (está en el Google
   // Business Profile y en los datos fiscales), así que publicarla acá no la
   // expone más. Cuando llegue la eSIM de negocio, se cambia SOLO acá.

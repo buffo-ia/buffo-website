@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import IconoRed from '../components/IconoRed.astro';
 import { SITE } from '../config/site';
 
 const path = '/contacto';
@@ -129,9 +130,17 @@ const contactSchema = {
             href={SITE.linkedin} target="_blank" rel="noopener noreferrer"
             class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
           >
-            <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">link</span>
+            <IconoRed red="linkedin" class="text-primary w-7 h-7 mb-4 block group-hover:scale-110 transition-transform" />
             <h3 class="font-display text-lg mb-1">LinkedIn</h3>
             <p class="text-on-surface-variant text-sm leading-relaxed">Conéctese con nosotros.</p>
+          </a>
+          <a
+            href={SITE.instagram} target="_blank" rel="noopener noreferrer"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
+          >
+            <IconoRed red="instagram" class="text-primary w-7 h-7 mb-4 block group-hover:scale-110 transition-transform" />
+            <h3 class="font-display text-lg mb-1">Instagram</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Lo que vamos publicando.</p>
           </a>
           <!-- Lleva al mapa, como las otras cinco llevan a algo. Era la única
                tarjeta muerta de la grilla: se veía idéntica a sus vecinas y al

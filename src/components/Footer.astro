@@ -1,5 +1,6 @@
 ---
 import Logotipo from './Logotipo.astro';
+import IconoRed from './IconoRed.astro';
 import { SITE } from '../config/site';
 import { SERVICES_CONTENT } from '../data/services';
 const year = new Date().getFullYear();
@@ -81,7 +82,7 @@ const recursos = [
           <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               <span class="material-symbols-outlined pie-icono" aria-hidden="true">mail</span>
               <span class="break-words">{SITE.email}</span>
@@ -92,7 +93,7 @@ const recursos = [
               href={SITE.calendly}
               target="_blank"
               rel="noopener noreferrer"
-              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               <span class="material-symbols-outlined pie-icono" aria-hidden="true">event_available</span>
               <span>Agende una llamada</span>
@@ -103,7 +104,7 @@ const recursos = [
               href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMensaje)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               <span class="material-symbols-outlined pie-icono" aria-hidden="true">chat</span>
               <span>WhatsApp</span>
@@ -114,10 +115,21 @@ const recursos = [
               href={SITE.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              <span class="material-symbols-outlined pie-icono" aria-hidden="true">link</span>
+              <IconoRed red="linkedin" class="marca-red" />
               <span>LinkedIn</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
+            >
+              <IconoRed red="instagram" class="marca-red" />
+              <span>Instagram</span>
             </a>
           </li>
           <!-- La dirección ahora sí lleva a alguna parte: al mapa. Es lo que el
@@ -129,7 +141,7 @@ const recursos = [
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.direccion.completa)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               <span class="material-symbols-outlined pie-icono" aria-hidden="true">location_on</span>
               <address class="not-italic leading-relaxed">
@@ -168,6 +180,21 @@ const recursos = [
     /* Material Symbols tiene más altura de caja que la línea de texto de al
        lado; sin esto el ícono se sienta un pelo más abajo que la primera letra. */
     margin-top: 1px;
+  }
+
+  /* Los logos de red son SVG dentro de otro componente, así que el ámbito de
+     este archivo no les llega: la regla va en :global. Miden un poco menos que
+     los Material Symbols porque una marca sólida pesa más a igual caja. */
+  .pie-enlace :global(.marca-red) {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: rgb(var(--c-on-surface) / 0.38);
+    transition: color 0.2s ease;
+  }
+  .pie-enlace:hover :global(.marca-red) {
+    color: rgb(var(--c-primary) / 0.8);
   }
 
   /* El ícono sigue al enlace en el hover: si solo cambiara el texto, el par se

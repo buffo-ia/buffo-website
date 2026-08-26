@@ -33,7 +33,7 @@ const canonical = new URL(path, SITE.url).href;
 // guardan la vista previa por URL y la sirven cacheada por semanas. Cambiar el
 // número es lo que los obliga a bajar la imagen de nuevo. SUBIRLO CADA VEZ que
 // se regenere og-image.png, o el cambio no se ve en los teléfonos.
-const OG_VERSION = 2;
+const OG_VERSION = 3;
 const ogImage = new URL(`/og-image.png?v=${OG_VERSION}`, SITE.url).href;
 
 // Las dimensiones de la tarjeta se DECLARAN, no se dejan a que el scraper las
@@ -68,7 +68,9 @@ const baseSchema = {
         addressCountry: SITE.direccion.pais,
       },
       areaServed: { '@type': 'Country', name: 'Chile' },
-      sameAs: [SITE.linkedin],
+      // sameAs es cómo Google amarra el sitio con los perfiles de la empresa:
+      // sin esto son tres cuentas sueltas que nadie relaciona entre sí.
+      sameAs: [SITE.linkedin, SITE.instagram],
     },
     {
       '@type': 'WebSite',
