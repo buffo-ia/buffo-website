@@ -193,11 +193,7 @@ body {
 
 
 /* ----- Header sobre un hero de bloque -----
-   El hero es oscuro en LOS DOS temas, así que arriba del todo el header no
-   puede usar los colores del tema: quedaría texto oscuro sobre azul noche en
-   tema claro. Mientras no se hace scroll, el header adopta el ámbito del
-   bloque; al bajar aparece su propio vidrio y vuelve al tema. */
-/* ⚠️ position: sticky RESERVA su espacio en el flujo, así que el hero arrancaba
+   ⚠️ position: sticky RESERVA su espacio en el flujo, así que el hero arrancaba
    DEBAJO del header y quedaba una banda clara sobre el bloque. Para que el
    contenido le pase por detrás hay que sacarlo del flujo. Solo en páginas con
    hero de bloque: en el resto el sticky es lo correcto. */
@@ -207,20 +203,10 @@ body[data-hero='ancla'] .site-header {
   right: 0;
 }
 
-body[data-hero='ancla'] .site-header:not(.is-scrolled) {
-  --c-on-surface: 233 242 246;
-  --c-surface: 13 48 74;
-  --c-primary: 25 211 197;
-  --c-on-primary: 7 32 51;
-  --c-hairline: 255 255 255;
-  --hairline-a: 0.14;
-  --elev: none;
-}
-/* El logo tiene dos archivos y el que se muestra depende del tema. Sobre el
-   bloque manda el bloque, no el tema. */
-/* El logotipo ya no son dos archivos que se intercambian por tema: es un SVG
-   incrustado cuyo texto usa currentColor, así que toma el color del ámbito
-   donde cae — incluido el bloque ancla del hero. */
+/* Acá vivía un bloque que, mientras no se hacía scroll, le metía al header los
+   colores del hero para que el logotipo blanco se leyera sobre el azul noche.
+   Con la barra blanca (ver más abajo) ese caso desapareció: el header ya no
+   toma prestado el ámbito de nada, es siempre claro. */
 
 
 /* ============================================================
@@ -452,15 +438,41 @@ textarea:focus {
    píldora que ordena la navegación es una decisión; diez píldoras repetidas por
    toda la página son el tic de plantilla. Es la única del sitio.
    ============================================================ */
+/* La barra es BLANCA, en los dos temas y con scroll o sin él.
+   No es una preferencia estética: el logotipo oficial lleva el colibrí en
+   turquesa y la palabra en negro, y ese archivo necesita fondo claro para
+   tener contraste real. Antes la barra era transparente y adoptaba el color
+   de lo que hubiera detrás — servía cuando el logo era monocromo y se teñía
+   solo, pero el logo nuevo trae su color adentro y no se puede repintar.
+
+   Redefinir los tokens acá adentro es lo que hace que el resto se acomode
+   solo: el menú, el ícono de tema y el botón del diagnóstico leen --c-* del
+   ámbito en el que caen, así que quedan en versión clara sin tocarlos. Es el
+   mismo recurso que usaba el bloque ancla, al revés. */
 .site-header {
-  background-color: transparent;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  --c-background: 255 255 255;
+  --c-surface: 255 255 255;
+  --c-on-surface: 6 32 46;
+  --c-on-surface-variant: 82 102 112;
+  --c-primary: 9 114 106;
+  --c-on-primary: 255 255 255;
+  --c-outline-variant: 200 224 224;
+  --c-hairline: 6 32 46;
+  --hairline-a: 0.1;
+  --elev: 0 1px 2px rgb(6 32 46 / 0.06);
+
+  background-color: rgb(255 255 255);
+  color: rgb(var(--c-on-surface));
+  transition: box-shadow 0.3s ease;
+  /* La barra flota sobre el hero oscuro: sin un borde propio, el corte entre
+     el blanco y el azul noche se ve como un error de render. */
+  box-shadow: 0 1px 0 rgb(var(--c-hairline) / 0.08);
 }
+/* Al bajar, la sombra crece un punto. Es la única señal de scroll que queda
+   —el vidrio esmerilado ya no aplica sobre un fondo opaco— y alcanza para que
+   la barra se despegue del contenido que le pasa por debajo. */
 .site-header.is-scrolled {
-  background-color: rgb(var(--c-background) / 0.82);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  backdrop-filter: blur(20px) saturate(140%);
-  box-shadow: 0 1px 0 rgb(var(--c-hairline) / var(--hairline-a));
+  box-shadow: 0 1px 0 rgb(var(--c-hairline) / 0.1), 0 6px 20px -8px rgb(6 32 46 / 0.18);
 }
 
 .nav-pill {
@@ -475,12 +487,16 @@ textarea:focus {
   backdrop-filter: blur(16px) saturate(160%);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-/* Con el header ya esmerilado, el vidrio de la píldora se apilaría sobre otro
-   vidrio y se ve barroso. Al bajar se queda solo con su fondo y su borde. */
-.site-header.is-scrolled .nav-pill {
+/* Sobre la barra blanca el vidrio no tiene nada que esmerilar —detrás hay un
+   plano opaco— y una píldora blanca sobre blanco desaparece. Se cambia por un
+   relleno con tinte, que es el mismo gesto del tema claro: el nivel hundido de
+   la escala de superficies. */
+.site-header .nav-pill {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  background-color: rgb(var(--c-surface) / 0.4);
+  background-color: rgb(237 248 248);
+  border-color: rgb(var(--c-hairline) / 0.08);
+  box-shadow: none;
 }
 
 /* ----- Piezas que dependen del tema -----

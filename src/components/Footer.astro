@@ -1,5 +1,6 @@
 ---
 import Logotipo from './Logotipo.astro';
+import IconoRed from './IconoRed.astro';
 import { SITE } from '../config/site';
 import { SERVICES_CONTENT } from '../data/services';
 const year = new Date().getFullYear();
@@ -16,7 +17,11 @@ const recursos = [
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-14">
       <!-- Marca -->
       <div class="col-span-2 md:col-span-1">
-        <Logotipo tamano="pie" class="mb-5" />
+        <!-- Sin placa blanca detrás: acá va la variante de palabra blanca, que
+             se apoya directo sobre el fondo del pie y conserva el colibrí
+             turquesa. La placa resolvía el contraste pero se leía como un
+             sticker pegado encima del pie. -->
+        <Logotipo tamano="pie" fondo="auto" class="mb-5" />
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
           Inteligencia artificial aplicada a la gestión comercial y operacional. Para pymes y
           grandes empresas en Chile.
@@ -58,16 +63,29 @@ const recursos = [
         </ul>
       </div>
 
-      <!-- Contacto -->
-      <div>
+      <!-- Contacto.
+           En celular ocupa las dos columnas, igual que el bloque de marca. Con
+           media columna el correo no cabía y se partía a mitad de palabra
+           ("contacto@buffoconsultin / g.cl"): 27 caracteres más el ícono no
+           entran en 163 px. -->
+      <div class="col-span-2 md:col-span-1">
         <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Contacto</p>
-        <ul class="space-y-3">
+        <!-- Los íconos son los mismos que usan las tarjetas de /contacto: si el
+             correo lleva un sobre allá, acá también, o el visitante tiene que
+             volver a aprender la página.
+
+             ⚠️ Van DENTRO del <a>, no al lado. Un ícono afuera es decoración
+             muerta: se ve como parte del enlace, pero al hacerle clic no pasa
+             nada y el que apuntó al sobre queda pensando que la página está
+             rota. Adentro, el par entero es una sola zona de clic. -->
+        <ul class="space-y-3.5">
           <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="text-sm text-on-surface/55 hover:text-primary transition-colors break-all"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              {SITE.email}
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">mail</span>
+              <span class="break-words">{SITE.email}</span>
             </a>
           </li>
           <li>
@@ -75,9 +93,21 @@ const recursos = [
               href={SITE.calendly}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              Agende una llamada
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">event_available</span>
+              <span>Agende una llamada</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMensaje)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
+            >
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">chat</span>
+              <span>WhatsApp</span>
             </a>
           </li>
           <li>
@@ -85,9 +115,38 @@ const recursos = [
               href={SITE.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              LinkedIn
+              <IconoRed red="linkedin" class="marca-red" />
+              <span>LinkedIn</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
+            >
+              <IconoRed red="instagram" class="marca-red" />
+              <span>Instagram</span>
+            </a>
+          </li>
+          <!-- La dirección ahora sí lleva a alguna parte: al mapa. Es lo que el
+               visitante espera de un pin, y era la única línea de la columna que
+               no respondía al clic. El <address> queda por dentro para que los
+               buscadores sigan leyendo el domicilio. -->
+          <li>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.direccion.completa)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
+            >
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">location_on</span>
+              <address class="not-italic leading-relaxed">
+                {SITE.direccion.calle}<br />{SITE.direccion.comuna}, Santiago
+              </address>
             </a>
           </li>
         </ul>
@@ -101,3 +160,49 @@ const recursos = [
     </div>
   </div>
 </footer>
+
+<style>
+  /* El enlace envuelve al ícono y al texto, así que tiene que comportarse como
+     una fila y no como una línea de texto corrida. */
+  .pie-enlace {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+
+  .pie-icono {
+    font-size: 18px;
+    line-height: 1.35;
+    /* Los íconos acompañan, no compiten: quedan un punto más apagados que el
+       texto, que ya va al 55%. */
+    color: rgb(var(--c-on-surface) / 0.38);
+    flex-shrink: 0;
+    /* Material Symbols tiene más altura de caja que la línea de texto de al
+       lado; sin esto el ícono se sienta un pelo más abajo que la primera letra. */
+    margin-top: 1px;
+  }
+
+  /* Los logos de red son SVG dentro de otro componente, así que el ámbito de
+     este archivo no les llega: la regla va en :global. Miden un poco menos que
+     los Material Symbols porque una marca sólida pesa más a igual caja. */
+  .pie-enlace :global(.marca-red) {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: rgb(var(--c-on-surface) / 0.38);
+    transition: color 0.2s ease;
+  }
+  .pie-enlace:hover :global(.marca-red) {
+    color: rgb(var(--c-primary) / 0.8);
+  }
+
+  /* El ícono sigue al enlace en el hover: si solo cambiara el texto, el par se
+     partiría en dos al pasar el mouse. */
+  .pie-icono {
+    transition: color 0.2s ease;
+  }
+  .pie-enlace:hover .pie-icono {
+    color: rgb(var(--c-primary) / 0.8);
+  }
+</style>

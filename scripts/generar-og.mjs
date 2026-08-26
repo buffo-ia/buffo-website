@@ -10,8 +10,10 @@
  * correr: por eso la imagen quedó dos rediseños atrás, con el logo del átomo y
  * la paleta verde.
  *
- * El logotipo se incrusta desde src/assets/logo-buffo.svg — el mismo archivo que
- * usa el header. Cuando cambie el logo, esta imagen lo hereda sin tocar nada.
+ * El logotipo se incrusta desde src/assets/logo-sobre-oscuro.png — el colibrí
+ * turquesa con la palabra en blanco, que es la variante que corresponde sobre
+ * el azul noche de esta tarjeta. Cuando cambie el logo se vuelve a correr
+ * `importar-logo.mjs` y esta imagen lo hereda sin tocar nada más.
  *
  *   node scripts/generar-og.mjs [--abrir]
  */
@@ -28,7 +30,7 @@ const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 // tokens del tema oscuro de src/styles/global.css; si allá cambian, cambian acá.
 const CONFIG = {
   salida: join(RAIZ, 'public', 'og-image.png'),
-  logoSvg: join(RAIZ, 'src', 'assets', 'logo-buffo.svg'),
+  logo: join(RAIZ, 'src', 'assets', 'logo-sobre-oscuro.png'),
 
   // 1200×630 es la proporción 1.91:1 que piden Open Graph y Twitter. WhatsApp
   // usa la tarjeta grande solo si la imagen respeta esa forma.
@@ -46,13 +48,23 @@ const CONFIG = {
   },
 
   texto: {
-    badge: 'Inteligencia artificial aplicada al negocio',
+    // La misma cejilla que abre la home. Antes decía "aplicada al negocio", que
+    // no ubica a nadie; el ancla geográfica entró al sitio por el plan SEO y
+    // acá faltaba.
+    badge: 'Consultora de IA para gestión comercial · Santiago de Chile',
     titulo1: 'Consultoría en',
     titulo2: 'Inteligencia Artificial',
+    // Decisión de Simón (26-ago-2026): la bajada de la tarjeta se queda como
+    // está, aunque el sitio use otra desde la reescritura del mensaje (9ec57f3).
+    // Son dos frases distintas a propósito, no un descuido.
     bajada: 'Convertimos tus datos en decisiones.',
     cuerpo:
       'Dashboards ejecutivos, modelamiento de datos, automatización de procesos y agentes IA.',
+    // El pie lleva la llamada a la acción, no solo el dominio. Esta tarjeta ES
+    // el aviso cuando alguien reenvía el link por WhatsApp, y el diagnóstico es
+    // la salida a la que el sitio empuja en todas sus páginas.
     pie: 'buffoconsulting.cl',
+    pieAccion: 'Diagnóstico gratis en 3 minutos',
   },
 };
 
@@ -77,7 +89,7 @@ function buscarChrome() {
   return hallado;
 }
 
-function plantilla({ colores: c, texto: t, ancho, alto }, logoSvg) {
+function plantilla({ colores: c, texto: t, ancho, alto }, logoDataUri) {
   return `<!doctype html>
 <html lang="es-CL"><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,9 +116,11 @@ function plantilla({ colores: c, texto: t, ancho, alto }, logoSvg) {
     background: radial-gradient(circle, rgba(25,211,197,.14) 0%, rgba(25,211,197,0) 62%);
   }
   .capa { position:relative; z-index:1; display:flex; flex-direction:column; height:100%; }
-  /* El logotipo hereda color: la palabra "Buffo" del SVG usa currentColor. */
-  .logo { color:${c.texto}; height:78px; }
-  .logo svg { height:100%; width:auto; display:block; }
+  /* El logotipo ya trae su color adentro: es el PNG del diseñador, no un trazo
+     que se pueda teñir. Por eso acá va la variante blanca y no una regla de
+     color, que sobre una imagen no haría nada. */
+  .logo { height:78px; }
+  .logo img { height:100%; width:auto; display:block; }
   .badge {
     align-self:flex-start; margin-top:38px;
     font-size:15px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
@@ -120,21 +134,28 @@ function plantilla({ colores: c, texto: t, ancho, alto }, logoSvg) {
   .pie { margin-top:auto; padding-top:20px; display:flex; align-items:center; gap:14px;
          font-size:20px; font-weight:600; color:${c.apagado}; letter-spacing:.01em; }
   .pie .raya { width:44px; height:2px; background:${c.marca}; border-radius:2px; }
+  /* La acción va en el color de marca y el dominio apagado: en una vista previa
+     de WhatsApp el ojo cruza la tarjeta en un segundo, y si las dos mitades del
+     pie pesan igual no se lee ninguna. */
+  .pie .accion { color:${c.marca}; }
+  .pie .punto { opacity:.45; }
 </style></head>
 <body><div class="capa">
-  <div class="logo">${logoSvg}</div>
+  <div class="logo"><img src="${logoDataUri}" alt=""></div>
   <span class="badge">${t.badge}</span>
   <h1>${t.titulo1}<br><span class="marca">${t.titulo2}</span></h1>
   <p class="bajada">${t.bajada}</p>
   <p class="cuerpo">${t.cuerpo}</p>
-  <div class="pie"><span class="raya"></span>${t.pie}</div>
+  <div class="pie"><span class="raya"></span>${t.pie}<span class="punto">·</span><span class="accion">${t.pieAccion}</span></div>
 </div></body></html>`;
 }
 
-const logoSvg = readFileSync(CONFIG.logoSvg, 'utf8');
+// El PNG va incrustado como data URI y no como <img src="file://...">: así el
+// HTML temporal no depende de rutas relativas al directorio del sistema.
+const logoDataUri = `data:image/png;base64,${readFileSync(CONFIG.logo).toString('base64')}`;
 const dir = mkdtempSync(join(tmpdir(), 'buffo-og-'));
 const html = join(dir, 'og.html');
-writeFileSync(html, plantilla(CONFIG, logoSvg));
+writeFileSync(html, plantilla(CONFIG, logoDataUri));
 
 execFileSync(
   buscarChrome(),

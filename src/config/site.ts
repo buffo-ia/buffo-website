@@ -6,11 +6,28 @@ export const SITE = {
   email: 'contacto@buffoconsulting.cl',
   calendly: 'https://calendly.com/simon-buffoconsulting/llamada-de-consulta-buffo-ia',
   linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
+  // La cuenta existe y está a nombre de Buffo IA Consulting, pero al 26-ago-2026
+  // no tiene publicaciones. Si el perfil sigue vacío cuando el sitio empiece a
+  // recibir tráfico pagado, conviene sacar el enlace antes que mostrarlo: un
+  // visitante que llega a un perfil sin nada lee "esto está abandonado".
+  instagram: 'https://www.instagram.com/buffo.ia/',
   // ⚠️ Hoy es la línea personal de Simón. Ya es pública (está en el Google
   // Business Profile y en los datos fiscales), así que publicarla acá no la
   // expone más. Cuando llegue la eSIM de negocio, se cambia SOLO acá.
   whatsapp: '56983731652',
   whatsappMensaje: 'Hola, vengo del sitio de Buffo y quiero hacer una consulta.',
+  // Dirección comercial, la misma que va en el pie de firma del manual de marca.
+  // Publicarla no es decoración: el PostalAddress completo del schema.org es
+  // señal de SEO local, que es justo lo que se busca para "consultora IA
+  // Santiago". Sin calle ni comuna, Google solo ve "Chile".
+  direccion: {
+    calle: 'Badajoz 100, Of. 1014',
+    comuna: 'Las Condes',
+    region: 'Región Metropolitana',
+    pais: 'CL',
+    // Una línea, para cuando el espacio no da para tres.
+    completa: 'Badajoz 100, Of. 1014, Las Condes, Santiago',
+  },
   locale: 'es_CL',
   // 79 caracteres se cortaban en Google, que muestra cerca de 60. En menos de
   // 60 no caben las tres cosas —palabra clave, calificador y país—, así que se
