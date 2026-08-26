@@ -48,13 +48,23 @@ const CONFIG = {
   },
 
   texto: {
-    badge: 'Inteligencia artificial aplicada al negocio',
+    // La misma cejilla que abre la home. Antes decía "aplicada al negocio", que
+    // no ubica a nadie; el ancla geográfica entró al sitio por el plan SEO y
+    // acá faltaba.
+    badge: 'Consultora de IA para gestión comercial · Santiago de Chile',
     titulo1: 'Consultoría en',
     titulo2: 'Inteligencia Artificial',
+    // Decisión de Simón (26-ago-2026): la bajada de la tarjeta se queda como
+    // está, aunque el sitio use otra desde la reescritura del mensaje (9ec57f3).
+    // Son dos frases distintas a propósito, no un descuido.
     bajada: 'Convertimos tus datos en decisiones.',
     cuerpo:
       'Dashboards ejecutivos, modelamiento de datos, automatización de procesos y agentes IA.',
+    // El pie lleva la llamada a la acción, no solo el dominio. Esta tarjeta ES
+    // el aviso cuando alguien reenvía el link por WhatsApp, y el diagnóstico es
+    // la salida a la que el sitio empuja en todas sus páginas.
     pie: 'buffoconsulting.cl',
+    pieAccion: 'Diagnóstico gratis en 3 minutos',
   },
 };
 
@@ -124,6 +134,11 @@ function plantilla({ colores: c, texto: t, ancho, alto }, logoDataUri) {
   .pie { margin-top:auto; padding-top:20px; display:flex; align-items:center; gap:14px;
          font-size:20px; font-weight:600; color:${c.apagado}; letter-spacing:.01em; }
   .pie .raya { width:44px; height:2px; background:${c.marca}; border-radius:2px; }
+  /* La acción va en el color de marca y el dominio apagado: en una vista previa
+     de WhatsApp el ojo cruza la tarjeta en un segundo, y si las dos mitades del
+     pie pesan igual no se lee ninguna. */
+  .pie .accion { color:${c.marca}; }
+  .pie .punto { opacity:.45; }
 </style></head>
 <body><div class="capa">
   <div class="logo"><img src="${logoDataUri}" alt=""></div>
@@ -131,7 +146,7 @@ function plantilla({ colores: c, texto: t, ancho, alto }, logoDataUri) {
   <h1>${t.titulo1}<br><span class="marca">${t.titulo2}</span></h1>
   <p class="bajada">${t.bajada}</p>
   <p class="cuerpo">${t.cuerpo}</p>
-  <div class="pie"><span class="raya"></span>${t.pie}</div>
+  <div class="pie"><span class="raya"></span>${t.pie}<span class="punto">·</span><span class="accion">${t.pieAccion}</span></div>
 </div></body></html>`;
 }
 

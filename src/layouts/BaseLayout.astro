@@ -33,7 +33,7 @@ const canonical = new URL(path, SITE.url).href;
 // guardan la vista previa por URL y la sirven cacheada por semanas. Cambiar el
 // número es lo que los obliga a bajar la imagen de nuevo. SUBIRLO CADA VEZ que
 // se regenere og-image.png, o el cambio no se ve en los teléfonos.
-const OG_VERSION = 3;
+const OG_VERSION = 4;
 const ogImage = new URL(`/og-image.png?v=${OG_VERSION}`, SITE.url).href;
 
 // Las dimensiones de la tarjeta se DECLARAN, no se dejan a que el scraper las
