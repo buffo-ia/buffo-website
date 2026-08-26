@@ -133,16 +133,21 @@ const contactSchema = {
             <h3 class="font-display text-lg mb-1">LinkedIn</h3>
             <p class="text-on-surface-variant text-sm leading-relaxed">Conéctese con nosotros.</p>
           </a>
-          <!-- Es la única tarjeta que no es un enlace: no lleva a ninguna parte,
-               informa. Va en <div> y no en <a> para no fingir una acción que no
-               existe. -->
-          <div class="block bg-surface-container-low border border-on-surface/5 p-7">
-            <span class="material-symbols-outlined text-primary text-3xl mb-4 block">location_on</span>
+          <!-- Lleva al mapa, como las otras cinco llevan a algo. Era la única
+               tarjeta muerta de la grilla: se veía idéntica a sus vecinas y al
+               hacerle clic no pasaba nada. El <address> queda por dentro para
+               que los buscadores sigan leyendo el domicilio. -->
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.direccion.completa)}`}
+            target="_blank" rel="noopener noreferrer"
+            class="block bg-surface-container-low border border-on-surface/5 p-7 card-hover group"
+          >
+            <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">location_on</span>
             <h3 class="font-display text-lg mb-1">Oficina</h3>
             <address class="text-on-surface-variant text-sm leading-relaxed not-italic">
               {SITE.direccion.calle}<br />{SITE.direccion.comuna}, Santiago
             </address>
-          </div>
+          </a>
         </div>
       </div>
     </div>

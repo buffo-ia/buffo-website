@@ -4,19 +4,26 @@
  * Los archivos de Milo (milogotipo.cl, entregados el 25-ago-2026) vienen en un
  * lienzo cuadrado de 2250×2250 con el arte ocupando 1452×594 en el medio. Si se
  * usan tal cual, el <img> mide el cuadrado completo y el logo aparece diminuto
- * dentro de un marco de aire. Por eso acá se recortan al contenido real — es el
- * único cambio que se les hace: ni se recolorean ni se re-dibujan.
+ * dentro de un marco de aire. Por eso acá se recortan al contenido real.
  *
- * Se mantiene como script y no como un recorte hecho a mano porque el manual de
- * marca se va a revisar (queda pendiente confirmar el turquesa: la guía declara
- * #20C2BC pero el .ai trae #00C6BD). Cuando llegue una versión nueva, esto se
- * vuelve a correr y listo.
+ * ⚠️ Y se genera una variante que Milo NO entregó en PNG transparente: el
+ * colibrí turquesa con la palabra en BLANCO, que es la que corresponde sobre
+ * fondo oscuro. Él la mandó solo como JPG con el negro quemado (ORIGINAL_BUFFO-01),
+ * inservible sobre cualquier otro fondo. Las alternativas eran peores: la
+ * monocroma blanca deja la marca sin su único color, y ponerle una placa blanca
+ * detrás al logo de palabra negra se ve como un sticker pegado encima.
  *
- * Además de dejar los assets del sitio, escribe los DERIVADOS de public/: el
- * favicon, el icono de iOS, el logo que lee Google (schema.org) y el de la
- * portada del informe del diagnóstico. Todos salían antes de scripts distintos
- * y por eso se quedaban atrás de a uno; hasta agosto de 2026 el logo del
- * schema.org seguía con el átomo, dos rediseños atrás.
+ * La reconstrucción no interpreta nada. El archivo de palabra negra tiene
+ * exactamente DOS colores opacos —negro puro y #20C2BC, el turquesa que declara
+ * el manual—, así que repintar de blanco lo que no es turquesa reproduce la
+ * variante oficial pixel por pixel, con el mismo trazo y el mismo antialias.
+ * No es un logo nuevo: es el que ya está en la guía de uso sobre negro.
+ *
+ * Además escribe los DERIVADOS de public/: el favicon, el icono de iOS, el logo
+ * que lee Google (schema.org) y el de la portada del informe del diagnóstico.
+ * Todos salían antes de scripts distintos y por eso se quedaban atrás de a uno;
+ * hasta agosto de 2026 el logo del schema.org seguía con el átomo, dos rediseños
+ * atrás.
  *
  *   node scripts/importar-logo.mjs ["ruta/a/la/carpeta Marca"]
  */
@@ -36,25 +43,6 @@ const CONFIG = {
   subcarpeta: '03 Logo - PNG fondo transparente',
   destino: join(RAIZ, 'src', 'assets'),
   publico: join(RAIZ, 'public'),
-
-  // Qué variante de Milo cumple qué oficio en el sitio.
-  variantes: [
-    {
-      archivo: 'ORIGINAL_BUFFO-02.png',
-      salida: 'logo-buffo-negro.png',
-      para: 'fondo claro — colibrí turquesa con la palabra en negro (la barra del header)',
-    },
-    {
-      archivo: 'ORIGINAL_BUFFO-04.png',
-      salida: 'logo-buffo-blanco.png',
-      para: 'fondo oscuro — versión monocroma blanca (el pie de página en tema oscuro)',
-    },
-    {
-      archivo: 'ORIGINAL_BUFFO-07.png',
-      salida: 'isotipo-buffo.png',
-      para: 'el colibrí solo — favicon y avatares, donde el logo completo no se lee',
-    },
-  ],
 };
 
 const carpeta = join(CONFIG.origen, CONFIG.subcarpeta);
@@ -63,27 +51,64 @@ if (!existsSync(carpeta)) {
   process.exit(1);
 }
 
-for (const v of CONFIG.variantes) {
-  const entrada = join(carpeta, v.archivo);
-  if (!existsSync(entrada)) {
-    console.error(`  ✗ falta ${v.archivo}`);
-    process.exit(1);
+const original = (n) => join(carpeta, n);
+const asset = (n) => join(CONFIG.destino, n);
+const pub = (n) => join(CONFIG.publico, n);
+
+/** Recorta al arte. threshold 1 para no comerse el antialias del borde del ave. */
+const recortado = (ruta) => sharp(ruta).trim({ threshold: 1 });
+
+/**
+ * Repinta de blanco todo lo que no sea el turquesa de marca, respetando el
+ * canal alfa. Se decide por canal verde y no por igualdad exacta de color
+ * porque los píxeles del borde vienen con alfa parcial: ahí el turquesa sigue
+ * siendo turquesa (verde muy por encima del rojo) pero ya no es #20C2BC clavado.
+ */
+async function palabraEnBlanco(entrada) {
+  const { data, info } = await recortado(entrada).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  for (let i = 0; i < width * height; i++) {
+    const p = i * channels;
+    if (data[p + 3] === 0) continue;
+    const esTurquesa = data[p + 1] > data[p] + 20;
+    if (!esTurquesa) {
+      data[p] = 255;
+      data[p + 1] = 255;
+      data[p + 2] = 255;
+    }
   }
-  const info = await sharp(entrada)
-    // threshold 1 para que no se coma el antialias del borde del ave.
-    .trim({ threshold: 1 })
-    .png({ compressionLevel: 9 })
-    .toFile(join(CONFIG.destino, v.salida));
-  console.log(`  ✓ ${v.salida.padEnd(24)} ${info.width}×${info.height}  — ${v.para}`);
+  return sharp(data, { raw: { width, height, channels } });
 }
 
-// ── Derivados de public/ ───────────────────────────────────────────────────────
+// ── Assets del sitio ──────────────────────────────────────────────────────────
+
+const ASSETS = [
+  {
+    salida: 'logo-sobre-claro.png',
+    para: 'fondo claro — colibrí turquesa, palabra negra (la barra del header y el pie en tema claro)',
+    hacer: () => recortado(original('ORIGINAL_BUFFO-02.png')),
+  },
+  {
+    salida: 'logo-sobre-oscuro.png',
+    para: 'fondo oscuro — colibrí turquesa, palabra blanca (el pie en tema oscuro y la tarjeta al compartir)',
+    hacer: () => palabraEnBlanco(original('ORIGINAL_BUFFO-02.png')),
+  },
+  {
+    salida: 'isotipo-buffo.png',
+    para: 'el colibrí solo — favicon y avatares, donde el logo completo no se lee',
+    hacer: () => recortado(original('ORIGINAL_BUFFO-07.png')),
+  },
+];
+
+for (const a of ASSETS) {
+  const info = await (await a.hacer()).png({ compressionLevel: 9 }).toFile(asset(a.salida));
+  console.log(`  ✓ ${a.salida.padEnd(24)} ${info.width}×${info.height}  — ${a.para}`);
+}
+
+// ── Derivados de public/ ──────────────────────────────────────────────────────
 // Se generan a partir de lo que acaba de quedar en src/assets, no de los
 // originales, para que no haya dos caminos por los que el logo pueda llegar
 // distinto a dos lugares.
-
-const asset = (n) => join(CONFIG.destino, n);
-const pub = (n) => join(CONFIG.publico, n);
 
 const DERIVADOS = [
   {
@@ -91,12 +116,12 @@ const DERIVADOS = [
     para: 'el `logo` del schema.org Organization — lo que Google lee para el panel de conocimiento',
     // Google pide 112 px de lado como mínimo; se genera holgado para que sirva
     // también de logo en correos y presentaciones.
-    hacer: () => sharp(asset('logo-buffo-negro.png')).resize({ width: 1200 }),
+    hacer: () => sharp(asset('logo-sobre-claro.png')).resize({ width: 1200 }),
   },
   {
     salida: 'logo-firma.png',
     para: 'la portada del informe del diagnóstico, que se imprime sobre papel blanco',
-    hacer: () => sharp(asset('logo-buffo-negro.png')).resize({ width: 900 }),
+    hacer: () => sharp(asset('logo-sobre-claro.png')).resize({ width: 900 }),
   },
   {
     salida: 'favicon.png',

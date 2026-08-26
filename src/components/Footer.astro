@@ -16,15 +16,11 @@ const recursos = [
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-14">
       <!-- Marca -->
       <div class="col-span-2 md:col-span-1">
-        <!-- El logotipo va sobre una placa blanca, igual que en el header y por
-             el mismo motivo: el archivo del diseñador trae el colibrí turquesa
-             con la palabra en negro, y sobre el azul noche del pie esa palabra
-             casi desaparecía. La alternativa era la versión monocroma blanca,
-             que sí se leía pero perdía el turquesa — o sea, dejaba el logo sin
-             el único color de la marca justo donde se firma la página. -->
-        <span class="placa-logo mb-5">
-          <Logotipo tamano="pie" />
-        </span>
+        <!-- Sin placa blanca detrás: acá va la variante de palabra blanca, que
+             se apoya directo sobre el fondo del pie y conserva el colibrí
+             turquesa. La placa resolvía el contraste pero se leía como un
+             sticker pegado encima del pie. -->
+        <Logotipo tamano="pie" fondo="auto" class="mb-5" />
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
           Inteligencia artificial aplicada a la gestión comercial y operacional. Para pymes y
           grandes empresas en Chile.
@@ -75,48 +71,71 @@ const recursos = [
         <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Contacto</p>
         <!-- Los íconos son los mismos que usan las tarjetas de /contacto: si el
              correo lleva un sobre allá, acá también, o el visitante tiene que
-             volver a aprender la página. Van en aria-hidden porque no aportan
-             nada que el texto de al lado no diga ya. -->
+             volver a aprender la página.
+
+             ⚠️ Van DENTRO del <a>, no al lado. Un ícono afuera es decoración
+             muerta: se ve como parte del enlace, pero al hacerle clic no pasa
+             nada y el que apuntó al sobre queda pensando que la página está
+             rota. Adentro, el par entero es una sola zona de clic. -->
         <ul class="space-y-3.5">
-          <li class="flex items-start gap-2.5">
-            <span class="material-symbols-outlined pie-icono" aria-hidden="true">mail</span>
+          <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="text-sm text-on-surface/55 hover:text-primary transition-colors break-words"
+              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              {SITE.email}
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">mail</span>
+              <span class="break-words">{SITE.email}</span>
             </a>
           </li>
-          <li class="flex items-start gap-2.5">
-            <span class="material-symbols-outlined pie-icono" aria-hidden="true">event_available</span>
+          <li>
             <a
               href={SITE.calendly}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              Agende una llamada
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">event_available</span>
+              <span>Agende una llamada</span>
             </a>
           </li>
-          <li class="flex items-start gap-2.5">
-            <span class="material-symbols-outlined pie-icono" aria-hidden="true">link</span>
+          <li>
+            <a
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMensaje)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+            >
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">chat</span>
+              <span>WhatsApp</span>
+            </a>
+          </li>
+          <li>
             <a
               href={SITE.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-on-surface/55 hover:text-primary transition-colors"
+              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
-              LinkedIn
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">link</span>
+              <span>LinkedIn</span>
             </a>
           </li>
-          <!-- La dirección no es un enlace: no hay a dónde llevar al visitante
-               que no sea un mapa de un tercero. Va como <address>, que es lo
-               que los buscadores leen como el domicilio del sitio. -->
-          <li class="flex items-start gap-2.5">
-            <span class="material-symbols-outlined pie-icono" aria-hidden="true">location_on</span>
-            <address class="text-sm text-on-surface/55 not-italic leading-relaxed">
-              {SITE.direccion.calle}<br />{SITE.direccion.comuna}, Santiago
-            </address>
+          <!-- La dirección ahora sí lleva a alguna parte: al mapa. Es lo que el
+               visitante espera de un pin, y era la única línea de la columna que
+               no respondía al clic. El <address> queda por dentro para que los
+               buscadores sigan leyendo el domicilio. -->
+          <li>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.direccion.completa)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pie-enlace text-sm text-on-surface/55 hover:text-primary transition-colors"
+            >
+              <span class="material-symbols-outlined pie-icono" aria-hidden="true">location_on</span>
+              <address class="not-italic leading-relaxed">
+                {SITE.direccion.calle}<br />{SITE.direccion.comuna}, Santiago
+              </address>
+            </a>
           </li>
         </ul>
       </div>
@@ -131,15 +150,12 @@ const recursos = [
 </footer>
 
 <style>
-  /* La placa del logotipo. Ancho al contenido —no al ancho de la columna— para
-     que se lea como el sello de la marca y no como una tarjeta vacía con algo
-     adentro. El radio es el de "lo que contiene" de la escala del sitio. */
-  .placa-logo {
-    display: inline-block;
-    background: #ffffff;
-    padding: 0.7rem 1.1rem;
-    border-radius: 12px;
-    line-height: 0;
+  /* El enlace envuelve al ícono y al texto, así que tiene que comportarse como
+     una fila y no como una línea de texto corrida. */
+  .pie-enlace {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
   }
 
   .pie-icono {
@@ -156,8 +172,10 @@ const recursos = [
 
   /* El ícono sigue al enlace en el hover: si solo cambiara el texto, el par se
      partiría en dos al pasar el mouse. */
-  li:hover .pie-icono {
-    color: rgb(var(--c-primary) / 0.75);
+  .pie-icono {
     transition: color 0.2s ease;
+  }
+  .pie-enlace:hover .pie-icono {
+    color: rgb(var(--c-primary) / 0.8);
   }
 </style>

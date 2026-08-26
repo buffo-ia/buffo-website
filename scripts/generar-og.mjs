@@ -10,8 +10,8 @@
  * correr: por eso la imagen quedó dos rediseños atrás, con el logo del átomo y
  * la paleta verde.
  *
- * El logotipo se incrusta desde src/assets/logo-buffo-blanco.png — el original
- * del diseñador, la variante monocroma blanca, que es la que corresponde sobre
+ * El logotipo se incrusta desde src/assets/logo-sobre-oscuro.png — el colibrí
+ * turquesa con la palabra en blanco, que es la variante que corresponde sobre
  * el azul noche de esta tarjeta. Cuando cambie el logo se vuelve a correr
  * `importar-logo.mjs` y esta imagen lo hereda sin tocar nada más.
  *
@@ -30,7 +30,7 @@ const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 // tokens del tema oscuro de src/styles/global.css; si allá cambian, cambian acá.
 const CONFIG = {
   salida: join(RAIZ, 'public', 'og-image.png'),
-  logo: join(RAIZ, 'src', 'assets', 'logo-buffo-blanco.png'),
+  logo: join(RAIZ, 'src', 'assets', 'logo-sobre-oscuro.png'),
 
   // 1200×630 es la proporción 1.91:1 que piden Open Graph y Twitter. WhatsApp
   // usa la tarjeta grande solo si la imagen respeta esa forma.
