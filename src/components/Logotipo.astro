@@ -9,31 +9,21 @@
  * recurso que servía cuando el ave era espacio negativo; el logo nuevo trae su
  * color adentro, así que ya no hay nada que teñir desde el CSS.
  *
- * Dos variantes, y la razón de que sean dos es dónde cae el logotipo:
- *
- *   'negro'  — colibrí turquesa + palabra en negro. Es el uso principal, y va
- *              en el header, que ahora es una barra BLANCA en los dos temas
- *              justamente para que este archivo tenga contraste real.
- *   'auto'   — para el pie de página, que sí sigue el tema: en oscuro usa la
- *              versión monocroma blanca (uso autorizado por el manual) y en
- *              claro la de palabra negra.
- *
- * En 'auto' van los dos <img> al HTML y el CSS esconde el que sobra. Es a
- * propósito: el tema se resuelve antes de pintar, así que un intercambio por
- * JavaScript mostraría el logo equivocado durante el primer cuadro.
+ * Una sola variante: colibrí turquesa con la palabra en negro. Los dos lugares
+ * donde aparece —el header y el pie— le ponen fondo claro debajo, así que no
+ * hace falta intercambiar archivos por tema. La versión monocroma blanca sigue
+ * en src/assets, pero la usa `scripts/generar-og.mjs`, que sí dibuja sobre el
+ * azul noche.
  */
 import { Image } from 'astro:assets';
 import logoNegro from '../assets/logo-buffo-negro.png';
-import logoBlanco from '../assets/logo-buffo-blanco.png';
 
 interface Props {
   /** 'header' para la barra, 'pie' más chico. */
   tamano?: 'header' | 'pie';
-  /** 'negro' fijo (barra blanca) o 'auto' si el fondo sigue al tema. */
-  variante?: 'negro' | 'auto';
   class?: string;
 }
-const { tamano = 'header', variante = 'negro', class: clase = '' } = Astro.props;
+const { tamano = 'header', class: clase = '' } = Astro.props;
 
 const ALT = 'Buffo IA Consulting';
 // El logo entra a 1452 px de ancho y se muestra a ~150. Se declaran los anchos
@@ -41,27 +31,14 @@ const ALT = 'Buffo IA Consulting';
 const ANCHOS = [180, 300, 440];
 ---
 
-<span class:list={['logotipo', `logotipo-${tamano}`, `logotipo-${variante}`, clase]}>
+<span class:list={['logotipo', `logotipo-${tamano}`, clase]}>
   <Image
     src={logoNegro}
     alt={ALT}
     widths={ANCHOS}
     sizes="220px"
-    class="logotipo-negro"
     loading={tamano === 'header' ? 'eager' : 'lazy'}
   />
-  {
-    variante === 'auto' && (
-      <Image
-        src={logoBlanco}
-        alt={ALT}
-        widths={ANCHOS}
-        sizes="220px"
-        class="logotipo-blanco"
-        loading="lazy"
-      />
-    )
-  }
 </span>
 
 <style>
@@ -97,27 +74,4 @@ const ANCHOS = [180, 300, 440];
     }
   }
 
-  /* El intercambio por tema. Solo aplica a 'auto': en 'negro' el segundo
-     archivo ni siquiera se emite. El script inline del <head> siempre deja
-     data-theme puesto, así que no hace falta cubrir el caso "sin atributo". */
-  .logotipo-auto .logotipo-blanco {
-    display: none;
-  }
-  :global(:root[data-theme='dark']) .logotipo-auto .logotipo-negro {
-    display: none;
-  }
-  :global(:root[data-theme='dark']) .logotipo-auto .logotipo-blanco {
-    display: block;
-  }
-
-  /* El informe del diagnóstico se imprime siempre en claro (ver global.css),
-     así que el pie impreso lleva la palabra en negro, no la blanca. */
-  @media print {
-    .logotipo-auto .logotipo-negro {
-      display: block;
-    }
-    .logotipo-auto .logotipo-blanco {
-      display: none;
-    }
-  }
 </style>
