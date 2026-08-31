@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site';
+
+const path = '/privacidad';
+const metaTitle = 'Política de privacidad | Buffo IA Consulting';
+const metaDescription =
+  'Qué datos recoge buffoconsulting.cl, para qué se usan, con quién se comparten y cómo ejercer sus derechos conforme a la Ley 19.628.';
+
+// Se muestra al pie. Cambiar SOLO cuando cambie el contenido de la política:
+// una fecha que se mueve sola no le sirve a nadie para saber qué cambió.
+const ultimaActualizacion = '31 de agosto de 2026';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Política de privacidad',
+  url: `${SITE.url}${path}`,
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  publisher: { '@id': `${SITE.url}/#organization` },
+};
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} path={path} schema={schema} heroAncla={true}>
+  <!-- HERO -->
+  <section class="bloque-ancla resplandor px-8 md:px-12 pt-28 pb-20">
+    <div class="max-w-3xl mx-auto">
+      <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-8">Legal</p>
+      <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em]">
+        Política de <span class="text-primary">privacidad</span>
+      </h1>
+      <p class="reveal reveal-delay-2 text-lg md:text-xl text-on-surface-variant leading-relaxed">
+        Qué datos recogemos en este sitio, para qué los usamos, con quién los compartimos y cómo
+        puede pedirnos que los eliminemos. Sin letra chica.
+      </p>
+    </div>
+  </section>
+
+  <section class="px-8 md:px-12 py-20">
+    <div class="max-w-3xl mx-auto prosa-legal">
+      <h2>Quién trata sus datos</h2>
+      <p>
+        El responsable es <strong>Desarrollo de Negocios SAEC SpA</strong> (RUT 78.419.121-4), que
+        opera comercialmente como {SITE.name}, con domicilio en {SITE.direccion.completa}. Para
+        cualquier consulta sobre esta política puede escribir a
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>Qué datos recogemos</h2>
+      <p>Este sitio recoge datos personales únicamente cuando usted los entrega por su voluntad:</p>
+      <ul>
+        <li>
+          <strong>Formulario de contacto.</strong> Nombre, correo electrónico, empresa (opcional) y
+          el mensaje que escriba.
+        </li>
+        <li>
+          <strong>Diagnóstico de operación.</strong> Nombre, empresa, correo electrónico, teléfono
+          (opcional) y las respuestas que entregue durante el cuestionario.
+        </li>
+      </ul>
+      <p>
+        No pedimos datos sensibles ni información financiera, y el sitio no tiene registro de
+        usuarios ni contraseñas.
+      </p>
+
+      <h2>Para qué los usamos</h2>
+      <p>
+        Para responderle, para generar y enviarle el informe de diagnóstico que solicitó, y para
+        contactarlo respecto de los servicios por los que consultó. <strong>No vendemos ni cedemos
+        sus datos a terceros con fines comerciales</strong>, y no lo incorporamos a listas de correo
+        masivo sin que usted lo pida.
+      </p>
+
+      <h2>Con quién los compartimos</h2>
+      <p>
+        Para operar el sitio usamos proveedores que procesan datos por encargo nuestro y solo para
+        estos fines:
+      </p>
+      <ul>
+        <li><strong>Vercel</strong> — hospedaje del sitio.</li>
+        <li><strong>Supabase</strong> — almacenamiento de los formularios recibidos (servidores en Brasil).</li>
+        <li><strong>Anthropic</strong> — generación del texto del informe de diagnóstico.</li>
+        <li><strong>Resend</strong> — envío de los correos.</li>
+        <li><strong>Google</strong> — medición de audiencia y publicidad, según se detalla abajo.</li>
+      </ul>
+
+      <h2>Cookies y medición</h2>
+      <p>
+        Usamos <strong>Google Analytics 4</strong> para entender cómo se navega el sitio (qué páginas
+        se visitan, desde dónde llegan las visitas) y <strong>Google Ads</strong> para saber qué
+        anuncios generan contactos reales. Ambos usan cookies.
+      </p>
+      <p>
+        Tenemos activada la función de <strong>conversiones mejoradas</strong> de Google Ads. Esto
+        significa que, cuando usted completa un formulario, su correo electrónico se envía a Google
+        <strong>cifrado de forma irreversible</strong> (una huella digital del dato, no el dato
+        legible) para reconocer que ese contacto vino de un anuncio. Google no recibe su correo en
+        texto claro y no puede reconstruirlo.
+      </p>
+      <p>
+        Si prefiere no ser medido, puede bloquear las cookies desde su navegador o instalar el
+        <a
+          href="https://tools.google.com/dlpage/gaoptout"
+          target="_blank"
+          rel="noopener noreferrer">complemento de inhabilitación de Google Analytics</a
+        >. El sitio funciona igual.
+      </p>
+
+      <h2>Cuánto tiempo los guardamos</h2>
+      <p>
+        Conservamos los datos de contacto mientras exista una relación comercial o una conversación
+        abierta. Si nos pide eliminarlos, lo hacemos.
+      </p>
+
+      <h2>Sus derechos</h2>
+      <p>
+        Conforme a la <strong>Ley 19.628 sobre Protección de la Vida Privada</strong>, usted puede
+        pedirnos en cualquier momento acceder a los datos que tenemos suyos, corregirlos si están
+        equivocados, o eliminarlos. Basta con escribir a
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> desde el mismo correo con el que nos
+        contactó. Respondemos dentro de los plazos que fija la ley.
+      </p>
+
+      <h2>Cambios a esta política</h2>
+      <p>
+        Si cambiamos la forma en que tratamos los datos, actualizamos esta página y la fecha de
+        abajo. Le recomendamos revisarla si vuelve a enviarnos información.
+      </p>
+
+      <p class="fecha">Última actualización: {ultimaActualizacion}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Página de texto largo: el contenido manda y no hay componentes que estilar,
+     así que las reglas viven acá y no en global.css, donde solo estorbarían. */
+  .prosa-legal :global(h2) {
+    /* Los mismos valores que .font-display en global.css: acá no alcanza la
+       clase de utilidad porque los h2 se escriben en el markup sin clase. */
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin: 3rem 0 1rem;
+    color: rgb(var(--c-on-surface));
+  }
+  .prosa-legal :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .prosa-legal :global(p),
+  .prosa-legal :global(li) {
+    color: rgb(var(--c-on-surface-variant));
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .prosa-legal :global(ul) {
+    list-style: disc;
+    padding-left: 1.35rem;
+    margin-bottom: 1.5rem;
+  }
+  .prosa-legal :global(li) {
+    margin-bottom: 0.5rem;
+  }
+  .prosa-legal :global(strong) {
+    color: rgb(var(--c-on-surface));
+    font-weight: 600;
+  }
+  .prosa-legal :global(a) {
+    color: rgb(var(--c-primary));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prosa-legal :global(.fecha) {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(var(--c-on-surface) / 0.08);
+    font-size: 0.875rem;
+    color: rgb(var(--c-on-surface) / 0.45);
+  }
+</style>

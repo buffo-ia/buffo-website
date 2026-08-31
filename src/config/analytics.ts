@@ -13,17 +13,21 @@ export const MEDICION = {
   ga4: 'G-VSCTQ7SXXL',
 
   ads: {
-    // ⏳ Cuenta 373-390-4052, hoy en BORRADOR: Google no entrega el AW- ni las
-    // etiquetas mientras no haya facturación cargada. Formato: 'AW-123456789'.
-    id: '',
+    // ⚠️ Este AW- es de la cuenta ADMINISTRADORA (MCC 649-084-0478), no de la
+    // cuenta que va a pautar (373-390-4052). La hija sigue en borrador: Google
+    // la deja atrapada en el asistente de alta hasta que se cargue facturación.
+    // Se creó la conversión en el administrador justo para no depender de eso —
+    // las cuentas hijas usan las conversiones del administrador, así que cuando
+    // la campaña exista va a reportar contra estas mismas etiquetas.
+    id: 'AW-18234444065',
 
     // Se pega el valor "send_to" COMPLETO tal como lo entrega Google al crear
     // la conversión ('AW-123456789/AbC-dEf_1234567890'), sin recortarlo: así no
     // hay que acordarse de armar la barra a mano. Vacío = no se manda a Ads,
     // pero el evento igual queda registrado en GA4.
     etiquetas: {
-      diagnostico_completado: '',
-      contacto_enviado: '',
+      diagnostico_completado: 'AW-18234444065/h9dwCIXbtOscEKGS7vZD',
+      contacto_enviado: 'AW-18234444065/MjvNCIjbtOscEKGS7vZD',
     } as Record<string, string>,
   },
 
