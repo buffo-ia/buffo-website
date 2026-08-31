@@ -140,8 +140,8 @@ const breadcrumbSchema = {
   <!-- `flex items-center` centra el bloque en la pantalla. Antes el contenido
        quedaba pegado arriba dentro de una sección de alto completo, así que
        sobraba un tercio en blanco abajo y se leía como que faltaba algo. -->
-  <section class="flex min-h-[calc(100vh-4rem)] items-center hero-bg">
-    <div class="mx-auto w-full max-w-6xl px-6 py-16 sm:py-20">
+  <section id="lienzo" class="flex hero-bg">
+    <div class="mx-auto w-full max-w-6xl px-6 pb-10 pt-8 sm:pt-10">
       <!-- 1. Intro — dos columnas.
            La derecha contesta la pregunta que se hace un prospecto frío frente
            al botón: ¿qué me llevo por tres minutos? Es la única pantalla del
@@ -156,7 +156,7 @@ const breadcrumbSchema = {
             Diagnóstico gratuito · Consultora de IA · Santiago de Chile
           </p>
           <h1
-            class="reveal reveal-delay-1 font-display text-[2.4rem] leading-[1.06] tracking-[-0.025em] sm:text-[3.2rem] lg:text-[3.6rem]"
+            class="reveal reveal-delay-1 font-display text-[2.15rem] leading-[1.06] tracking-[-0.025em] sm:text-[3.2rem] lg:text-[3.6rem]"
           >
             {INTRO.titulo}
           </h1>
@@ -166,14 +166,14 @@ const breadcrumbSchema = {
           >
             Cuando el dato llega, la decisión ya se tomó.
           </p>
-          <p class="reveal reveal-delay-2 mt-5 max-w-xl text-base leading-relaxed text-on-surface-variant md:text-lg">
+          <p class="reveal reveal-delay-2 mt-4 max-w-xl text-base leading-[1.6] text-on-surface-variant md:text-lg">
             {INTRO.bajada}
           </p>
 
           <!-- Dos salidas, no una. El que ya está convencido agenda; el que no,
                prueba con tres minutos. Sin la segunda puerta, el que no quiere
                llenar un formulario simplemente se va. -->
-          <div class="reveal reveal-delay-3 mt-9 flex flex-col gap-4 sm:flex-row">
+          <div class="reveal reveal-delay-3 mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <button
               id="btn-empezar"
               class="btn-glow bg-primary px-9 py-5 text-base font-semibold text-on-primary"
@@ -189,7 +189,7 @@ const breadcrumbSchema = {
               Agendar 30 minutos
             </a>
           </div>
-          <p class="reveal reveal-delay-3 mt-5 text-sm text-outline">
+          <p class="reveal reveal-delay-3 mt-4 text-sm text-outline">
             {TOTAL_PREGUNTAS} preguntas · 3 minutos · informe en PDF · {INTRO.promesa}
           </p>
         </div>
@@ -387,117 +387,88 @@ const breadcrumbSchema = {
 
 
   <!-- ══ LANDING ══
-       Todo lo que sigue existe para el que llega desde un anuncio y no conoce
-       Buffo. Se oculta entero en cuanto arranca el cuestionario (ver mostrar()):
-       una vez que apretó Empezar, cualquier cosa que no sea la pregunta es una
-       fuga. -->
+       Vive SOLO en el paso intro y desaparece al apretar Empezar: con el
+       cuestionario abierto, todo lo que no sea la pregunta es una fuga.
+
+       ⚠️ Es corta a propósito. La primera versión tenía cinco secciones y 5.567
+       px — un segundo home. Esta página no compite con el home: lo que tiene
+       que hacer es que alguien apriete Empezar. Por eso lo que prueba quiénes
+       somos va COMPRIMIDO y arriba, en la misma pantalla del botón, y abajo
+       queda una sola cosa que mirar. -->
   <div id="landing-extra">
-    <!-- QUÉ SE LLEVA — antes que cualquier cosa sobre nosotros. La objeción
-         frente a 12 preguntas no es "quiénes son", es "esto para qué me sirve". -->
-    <section class="bg-surface px-8 py-16 md:px-12 md:py-20">
+    <!-- Cierra la primera pantalla: cuatro entregables en una línea y la banda
+         de herramientas. Sin titular de sección, porque no es una sección
+         nueva: es el pie del hero, y asomando invita a bajar. -->
+    <section class="overflow-hidden border-t border-on-surface/5 bg-background px-6 pb-8 pt-10 md:px-12">
       <div class="mx-auto max-w-6xl">
-        <div class="reveal mb-12 max-w-3xl">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Qué recibe</p>
-          <h2 class="font-display text-[2.1rem] leading-tight md:text-[2.7rem]">
-            No es un puntaje y un correo de vuelta.
-          </h2>
-          <p class="mt-4 leading-relaxed text-on-surface-variant">
-            Es el mismo análisis con el que abrimos cualquier proyecto, hecho sobre lo que usted
-            responda. Al terminar se lo lleva en PDF, sin haber hablado con nadie.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {
-            ENTREGA.map((e, i) => (
-              <div class:list={['card-hover bg-surface-container-highest p-8 reveal', i > 1 && 'reveal-delay-1']}>
-                <span class="material-symbols-outlined mb-5 block text-3xl text-primary">{e.icono}</span>
-                <h3 class="font-display text-lg leading-snug text-on-surface">{e.titulo}</h3>
-                <p class="mt-3 text-sm leading-relaxed text-on-surface-variant">{e.texto}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- CÓMO FUNCIONA -->
-    <section class="bg-background px-8 py-16 md:px-12 md:py-20">
-      <div class="mx-auto max-w-6xl">
-        <div class="reveal mb-12">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Cómo funciona</p>
-          <h2 class="font-display text-[2.1rem] leading-tight md:text-[2.7rem]">Tres minutos, tres pasos.</h2>
-        </div>
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {
-            COMO_FUNCIONA.map((s, i) => (
-              <div class:list={['reveal', i === 1 && 'reveal-delay-1', i === 2 && 'reveal-delay-2']}>
-                <p class="font-display text-4xl text-primary/30">{s.n}</p>
-                <h3 class="mt-4 font-display text-xl leading-snug">{s.titulo}</h3>
-                <p class="mt-3 leading-relaxed text-on-surface-variant">{s.texto}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- INFRAESTRUCTURA — el mismo marquee del home. Es la prueba de que detrás
-         del formulario hay una empresa que construye software de verdad. -->
-    <section class="overflow-hidden bg-surface px-8 py-16 md:px-12 md:py-20">
-      <div class="reveal mx-auto mb-10 max-w-5xl text-center">
-        <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Infraestructura</p>
-        <h2 class="mb-4 font-display text-[2.1rem] leading-tight md:text-[2.7rem]">
-          Tecnología de clase mundial, al servicio de su negocio
-        </h2>
-        <p class="mx-auto max-w-2xl leading-relaxed text-on-surface-variant">
-          Las mismas herramientas que usan las grandes tecnológicas. Este diagnóstico corre sobre
-          ellas: usted ve un informe simple; debajo, una base seria.
+        <p class="reveal mb-6 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
+          Al terminar se lleva
         </p>
-      </div>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-7 lg:grid-cols-4">
+          {
+            ENTREGA.map((e) => (
+              <div class="reveal flex items-start gap-3">
+                <span class="material-symbols-outlined mt-0.5 shrink-0 text-xl text-primary">{e.icono}</span>
+                <div>
+                  <h3 class="font-display text-[0.95rem] leading-snug text-on-surface">{e.titulo}</h3>
+                  <p class="mt-1 text-[0.8rem] leading-snug text-on-surface-variant">{e.texto}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
 
-      <div class="marquee-mask reveal reveal-delay-1">
-        <div class="marquee-track gap-10 md:gap-14">
-          {[...STACK_MARQUEE, ...STACK_MARQUEE].map((h, i) => (
-            <div class="group flex shrink-0 items-center gap-2.5" aria-hidden={i >= STACK_MARQUEE.length ? 'true' : undefined}>
-              <span class="stack-logo h-6 w-6 shrink-0 md:h-7 md:w-7" style={LOGO(h.src)} aria-hidden="true"></span>
-              <span class="whitespace-nowrap text-sm font-semibold text-on-surface/55 transition-colors group-hover:text-on-surface md:text-base">
-                {h.name}
-              </span>
+        <!-- Banda de herramientas: la señal de que hay una empresa que
+             construye software, en 40 px en vez de una sección entera. -->
+        <div class="reveal mt-9 flex flex-col gap-4 border-t border-on-surface/5 pt-7 sm:flex-row sm:items-center sm:gap-8">
+          <p class="shrink-0 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
+            Corre sobre
+          </p>
+          <div class="marquee-mask min-w-0 flex-1">
+            <div class="marquee-track gap-8 md:gap-10">
+              {[...STACK_MARQUEE, ...STACK_MARQUEE].map((h, i) => (
+                <div class="group flex shrink-0 items-center gap-2" aria-hidden={i >= STACK_MARQUEE.length ? 'true' : undefined}>
+                  <span class="stack-logo h-5 w-5 shrink-0" style={LOGO(h.src)} aria-hidden="true"></span>
+                  <span class="whitespace-nowrap text-xs font-semibold text-on-surface/45 transition-colors group-hover:text-on-surface md:text-sm">
+                    {h.name}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- QUÉ HACEMOS — el diagnóstico es la puerta; esto es la casa. -->
-    <section class="losa bg-background px-8 py-16 md:px-12 md:py-20">
+    <!-- LO ÚNICO QUE HAY QUE BAJAR A VER. Quiénes somos y qué construimos, en
+         un bloque: el párrafo va de entrada y los cuatro mockups hacen el resto
+         del trabajo. Es la parte que impacta, así que es la que se queda. -->
+    <section class="losa bg-surface px-6 py-14 md:px-12 md:py-16">
       <div class="mx-auto max-w-6xl">
-        <div class="reveal mb-12 max-w-3xl">
+        <div class="reveal mb-10 max-w-3xl">
           <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Quiénes somos</p>
-          <h2 class="font-display text-[2.1rem] leading-tight md:text-[2.7rem]">
+          <h2 class="font-display text-[1.9rem] leading-tight md:text-[2.5rem]">
             Una consultora que nació del otro lado del escritorio.
           </h2>
           <p class="mt-4 leading-relaxed text-on-surface-variant">
             Buffo IA Consulting no viene de TI: viene de diez años en áreas comerciales de retail y
-            consumo masivo, preparando el reporte del mes y respondiendo en reuniones por números que
-            llegaban tarde. Por eso hablamos de ventas, margen y stock, y no de tecnología. Esto es
-            lo que construimos.
+            consumo masivo, respondiendo en reuniones por números que llegaban tarde. Por eso
+            hablamos de ventas, margen y stock, y no de tecnología. Esto es lo que construimos.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-9">
           {
             CAPACIDADES.map((c, i) => (
               <div class:list={['reveal flex flex-col', i % 2 === 1 && 'reveal-delay-1']}>
                 <p class="text-xs font-semibold uppercase tracking-widest text-primary">{c.eyebrow}</p>
-                <h3 class="mb-5 mt-2 font-display text-xl leading-snug">{SERVICE_PAINS[c.slug]}</h3>
+                <h3 class="mb-4 mt-1.5 font-display text-lg leading-snug">{SERVICE_PAINS[c.slug]}</h3>
                 <VentanaNavegador url={c.url} pestana={c.eyebrow}>
                   <c.Mock />
                 </VentanaNavegador>
                 <a
                   href={VER(c.slug)}
-                  class="mt-5 inline-block self-start text-sm font-medium text-primary underline underline-offset-4 hover:no-underline"
+                  class="mt-4 inline-block self-start text-sm font-medium text-primary underline underline-offset-4 hover:no-underline"
                 >
                   Ver cómo lo resolvemos
                 </a>
@@ -508,19 +479,15 @@ const breadcrumbSchema = {
       </div>
     </section>
 
-    <!-- CIERRE — el botón vuelve al cuestionario de arriba, así que sube solo.
-         Las cuatro puertas de abajo son para el que llegó hasta acá sin
-         convencerse: mejor que recorra el sitio a que cierre la pestaña. -->
-    <section class="bg-surface px-8 py-16 md:px-12 md:py-20">
+    <!-- CIERRE, corto. El botón sube al cuestionario; los enlaces son para el
+         que llegó hasta acá sin convencerse: mejor que recorra el sitio a que
+         cierre la pestaña. -->
+    <section class="bg-background px-6 py-14 md:px-12 md:py-16">
       <div class="mx-auto max-w-3xl text-center">
-        <h2 class="reveal font-display text-[2.1rem] leading-tight md:text-[2.9rem]">
+        <h2 class="reveal font-display text-[1.9rem] leading-tight md:text-[2.5rem]">
           Tres minutos ahora, o seguir decidiendo a ciegas.
         </h2>
-        <p class="reveal reveal-delay-1 mx-auto mt-5 max-w-xl leading-relaxed text-on-surface-variant">
-          El diagnóstico es gratis y no termina en una presentación de ventas. Si algo de lo que
-          detectamos le hace sentido, conversamos; si no, se queda con el informe igual.
-        </p>
-        <div class="reveal reveal-delay-2 mt-9 flex flex-col justify-center gap-4 sm:flex-row">
+        <div class="reveal reveal-delay-1 mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <button id="btn-empezar-pie" class="btn-glow bg-primary px-9 py-5 text-base font-semibold text-on-primary">
             Empezar el diagnóstico
           </button>
@@ -533,17 +500,11 @@ const breadcrumbSchema = {
             Prefiero agendar una llamada
           </a>
         </div>
-
-        <div class="reveal reveal-delay-3 mt-14 border-t border-on-surface/5 pt-10">
-          <p class="mb-6 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
-            O conozca Buffo antes de responder
-          </p>
-          <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
-            <a href="/servicios" class="text-on-surface/70 transition-colors hover:text-primary">Servicios</a>
-            <a href="/sobre-nosotros" class="text-on-surface/70 transition-colors hover:text-primary">Sobre nosotros</a>
-            <a href="/blog" class="text-on-surface/70 transition-colors hover:text-primary">Blog</a>
-            <a href="/contacto" class="text-on-surface/70 transition-colors hover:text-primary">Contacto</a>
-          </div>
+        <div class="reveal reveal-delay-2 mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 border-t border-on-surface/5 pt-8 text-sm">
+          <a href="/servicios" class="text-on-surface/60 transition-colors hover:text-primary">Servicios</a>
+          <a href="/sobre-nosotros" class="text-on-surface/60 transition-colors hover:text-primary">Sobre nosotros</a>
+          <a href="/blog" class="text-on-surface/60 transition-colors hover:text-primary">Blog</a>
+          <a href="/contacto" class="text-on-surface/60 transition-colors hover:text-primary">Contacto</a>
         </div>
       </div>
     </section>
@@ -563,6 +524,10 @@ const breadcrumbSchema = {
       // La landing solo existe para el que todavía no empezó. Con el cuestionario
       // abierto, todo lo que no sea la pregunta es una salida.
       $('landing-extra').classList.toggle('hidden', nombre !== 'intro');
+      // El intro llena la pantalla solo; el cuestionario es corto y centrado se
+      // ve mejor. Va por clase propia y no por utilidad de Tailwind: una clase
+      // que solo existe en el JS no sobrevive a la purga del CSS.
+      $('lienzo').classList.toggle('paso-centrado', nombre !== 'intro');
       $('barra').classList.toggle('hidden', nombre === 'intro' || nombre === 'resultado');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -1374,6 +1339,14 @@ const breadcrumbSchema = {
   </script>
 
   <style is:global>
+    /* Centra el bloque en la pantalla. Lo lleva el cuestionario, no el intro:
+       el intro ya trae contenido de sobra y centrarlo dejaba un tercio de
+       pantalla en blanco arriba y otro abajo. */
+    .paso-centrado {
+      align-items: center;
+      min-height: calc(100vh - 4rem);
+    }
+
     /* --- Señal de avance de la transmisión --- */
 
     /* Encabeza el resultado, así que su tamaño tiene que ser estable: cualquier
