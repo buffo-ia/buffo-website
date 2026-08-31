@@ -13,8 +13,17 @@
  *
  * Datos ilustrativos: es una muestra de formato, no el resultado de nadie.
  */
+import { valorHora } from '../data/diagnostico';
 const PUNTAJE = 47; // cae en el tramo "Con esfuerzo"
 const TRAMO = 'Con esfuerzo';
+
+// La cifra NO se inventa: sale de valorHora(), la misma función con la que el
+// informe real calcula el costo. Si mañana cambia el sueldo base o la jornada
+// legal, esta muestra se corrige sola y nunca promete un número que el informe
+// no vaya a entregar.
+const HORAS_MES = [20, 60];
+const ANUAL = HORAS_MES.map((h) => h * 12 * valorHora());
+const pesos = (n) => '$' + Math.round(n).toLocaleString('es-CL');
 
 const HALLAZGOS = [
   { grave: 'alto', texto: 'El cierre comercial depende de una planilla que consolida una sola persona.' },
@@ -22,7 +31,7 @@ const HALLAZGOS = [
   { grave: 'medio', texto: 'Hay reportes por área, pero las cifras no cuadran entre sistemas.' },
 ];
 
-const R = 34;
+const R = 26;
 const CIRC = 2 * Math.PI * R;
 ---
 
@@ -37,12 +46,23 @@ const CIRC = 2 * Math.PI * R;
     <p class="cejilla">Diagnóstico de visibilidad operacional</p>
     <h3 class="titulo">Su operación hoy</h3>
 
-    <!-- puntaje -->
+    <!-- La plata primero. Pone el problema en pesos, que es el idioma en que
+         decide un gerente, y es lo único de esta muestra que nombra una
+         consecuencia. Va arriba porque la hoja se recorta por abajo cuando la
+         pantalla es baja: lo que va primero es lo que sobrevive al corte. -->
+    <div class="plata">
+      <p class="plata-rotulo">Lo que le cuesta al año el trabajo repetitivo</p>
+      <p class="plata-cifra">{pesos(ANUAL[0])} <span>a</span> {pesos(ANUAL[1])}</p>
+    </div>
+
+    <!-- Puntaje. Va compacto y NO de protagonista: el sitio promete "no
+         entregamos un número sin interpretación", así que un 47 gigante como
+         elemento dominante decía justo lo contrario de lo que vendemos. -->
     <div class="puntaje">
-      <svg viewBox="0 0 84 84" width="84" height="84" aria-hidden="true">
-        <circle cx="42" cy="42" r={R} class="pista" />
+      <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+        <circle cx="32" cy="32" r={R} class="pista" />
         <circle
-          cx="42" cy="42" r={R} class="avance"
+          cx="32" cy="32" r={R} class="avance"
           stroke-dasharray={CIRC}
           style={`--largo:${CIRC}; --hasta:${CIRC * (1 - PUNTAJE / 100)}`}
         />
@@ -63,6 +83,15 @@ const CIRC = 2 * Math.PI * R;
         </li>
       ))}
     </ul>
+
+    <!-- Y el qué hacer. Sin esto la muestra decía solo lo que pasó, que es
+         justo lo que hace cualquier test: el diferenciador declarado de Buffo
+         es "su sistema le dice lo que pasó, nosotros le decimos qué hacer". -->
+    <p class="subtitulo">Lo que proponemos</p>
+    <p class="propuesta">
+      Consolidar el cierre comercial en una fuente única y dejarlo corriendo solo. Primer tablero
+      en operación en cuatro semanas.
+    </p>
 
     <!-- El corte, y nada más: el degradado ya dice que el documento sigue.
          El bloque "Qué se puede resolver" con sus líneas de relleno decía lo
@@ -162,7 +191,7 @@ const CIRC = 2 * Math.PI * R;
     }
   }
   .cifra {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 600;
     letter-spacing: -0.04em;
     line-height: 1;
@@ -175,6 +204,40 @@ const CIRC = 2 * Math.PI * R;
   .tramo {
     margin-top: 0.3rem;
     font-size: 0.8rem;
+    color: var(--tinta-suave);
+  }
+
+  .plata {
+    margin-top: 0.9rem;
+    border: 1px solid var(--verde);
+    background: #f4faf7;
+    padding: 0.7rem 0.85rem;
+  }
+  .plata-rotulo {
+    margin: 0;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--tinta-suave);
+  }
+  .plata-cifra {
+    margin: 0.3rem 0 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: var(--verde);
+  }
+  .plata-cifra span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--tinta-suave);
+  }
+
+  .propuesta {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    line-height: 1.45;
     color: var(--tinta-suave);
   }
 
@@ -246,16 +309,16 @@ const CIRC = 2 * Math.PI * R;
      No hace falta inventar nada para que se vea bien cortado: .hoja ya tiene
      overflow hidden y el degradado de .corte encima, que es justo lo que
      comunica "el documento sigue". */
-  @media (max-height: 900px) {
-    .hoja { max-height: 360px; }
+  @media (max-height: 960px) {
+    .hoja { max-height: 400px; }
   }
   @media (max-height: 820px) {
-    .hoja { max-height: 300px; }
+    .hoja { max-height: 330px; }
     .pie { display: none; }
   }
   @media (max-height: 760px) {
-    .hoja { max-height: 265px; }
-    /* Degradado más corto: con 5.5rem se comía el puntaje entero. */
+    .hoja { max-height: 275px; }
+    /* Degradado más corto: con 5.5rem se comía el bloque de la cifra. */
     .corte { height: 2.5rem; }
   }
 
