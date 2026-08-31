@@ -12,7 +12,7 @@
 
 import { createServer } from 'node:http';
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -57,7 +57,14 @@ const servidor = createServer(async (req, res) => {
   adaptar(res);
   const inicio = Date.now();
   try {
-    const { default: handler } = await import(`${archivo}?v=${Date.now()}`); // sin caché: recarga al editar
+    // La ruta va convertida a file:// SIEMPRE. En Windows `archivo` es
+    // C:\Dev\..., y el cargador de módulos lee "c:" como si fuera el esquema de
+    // una URL: falla con "Only URLs with a scheme in: file, data, and node are
+    // supported". O sea la API local no corría en Windows, en ninguna función.
+    // El ?v= sigue estando para que recargue al editar, ahora como parámetro.
+    const modulo = pathToFileURL(archivo);
+    modulo.searchParams.set('v', String(Date.now()));
+    const { default: handler } = await import(modulo.href);
     await handler(req, res);
   } catch (err) {
     console.error(`✗ ${ruta}`, err);
