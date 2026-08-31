@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import BarraDiagnostico from '../components/BarraDiagnostico.astro';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import Analytics from '@vercel/analytics/astro';
+import Medicion from '../components/Medicion.astro';
 import '../styles/global.css';
 
 export interface Props {
@@ -160,6 +161,9 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     {extraSchemas.map((s) => (
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}
+
+    <!-- GA4 + Google Ads. Los identificadores viven en src/config/analytics.ts -->
+    <Medicion />
   </head>
   <body class="bg-background text-on-surface selection:bg-primary/30" data-hero={heroAncla ? 'ancla' : undefined}>
     <div class="h-px w-full accent-line"></div>

@@ -163,6 +163,8 @@ const contactSchema = {
   </section>
 
   <script>
+    import { medir } from '../config/analytics';
+
     const form = document.getElementById('contact-form') as HTMLFormElement;
     const status = document.getElementById('form-status') as HTMLParagraphElement;
     const btn = document.getElementById('submit-btn') as HTMLButtonElement;
@@ -191,6 +193,8 @@ const contactSchema = {
         if (json.success) {
           form.reset();
           show('Gracias. Recibimos su mensaje y le responderemos pronto.', true);
+          // Solo cuando el backend confirmó el envío: un error de Resend no es un lead.
+          medir('contacto_enviado');
         } else {
           show('No pudimos enviar el mensaje. Intenta de nuevo o escríbanos por correo.', false);
         }

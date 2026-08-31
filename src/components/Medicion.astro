@@ -1,0 +1,41 @@
+---
+// Carga gtag.js (GA4 + Ads) una sola vez, desde el <head> del layout base.
+//
+// El script se inyecta desde el navegador y NO desde el HTML, para que en
+// localhost y en las previews de rama no se descargue siquiera: así el sitio de
+// desarrollo no manda visitas falsas ni pesa 40 KB de más.
+import { MEDICION } from '../config/analytics';
+
+// Sin ID de GA4 no se emite absolutamente nada.
+const activo = Boolean(MEDICION.ga4);
+const ids = [MEDICION.ga4, MEDICION.ads.id].filter(Boolean);
+---
+
+{
+  activo && (
+    <script
+      is:inline
+      define:vars={{ ids, dominios: MEDICION.dominios, parametroDebug: MEDICION.parametroDebug }}
+    >
+      (function () {
+        var debug = new URLSearchParams(location.search).get(parametroDebug) === 'debug';
+        if (!debug && dominios.indexOf(location.hostname) === -1) return;
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+
+        for (var i = 0; i < ids.length; i++) {
+          window.gtag('config', ids[i], debug ? { debug_mode: true } : {});
+        }
+
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ids[0];
+        document.head.appendChild(s);
+      })();
+    </script>
+  )
+}

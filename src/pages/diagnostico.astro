@@ -262,6 +262,8 @@ const breadcrumbSchema = {
   <script id="banco-diagnostico" type="application/json" set:html={JSON.stringify(banco)} />
 
   <script>
+    import { medir } from '../config/analytics';
+
     const banco = JSON.parse(document.getElementById('banco-diagnostico').textContent);
     const $ = (id) => document.getElementById(id);
     const pasos = ['intro', 'ramal', 'pregunta', 'abierta', 'datos', 'resultado'];
@@ -425,6 +427,17 @@ const breadcrumbSchema = {
           throw new Error(detalle.error || 'No pudimos generar el análisis.');
         }
         await transmitir(res);
+
+        // LA conversión. Va acá y no antes: recién en este punto el informe se
+        // pidió, llegó completo y el visitante lo tiene en pantalla. Si el
+        // fetch falla o la transmisión se corta, el catch de abajo se lleva el
+        // control y no se cuenta nada. El modo de muestra (SIN_IA) tampoco pasa
+        // por acá, que es justo lo que corresponde: ese informe no es real.
+        medir('diagnostico_completado', {
+          ramal: cuerpo.ramal.id,
+          servicio: cuerpo.ramal.servicio,
+          puntaje: cuerpo.puntaje.tronco,
+        });
       } catch (err) {
         mostrar('datos');
         error.textContent = `${err.message} Puede reintentar o escribirnos a contacto@buffoconsulting.cl.`;
