@@ -573,9 +573,15 @@ const breadcrumbSchema = {
                    un análisis de muestra en vez de llamar a Claude. Sirve para
                    revisar preguntas, flujo y PDF sin gastar un peso en tokens.
         ?demo=1  — salta directo al resultado. Solo para iterar el diseño del PDF.
+        ?sinia=1&lento=1 — lo mismo, pero transmitiendo en ~30 s en vez de en 2.
+                   Es el ÚNICO modo en que se puede evaluar la señal de avance:
+                   a velocidad normal la muestra entra en 2,4 s y la espera no
+                   se siente, que es justamente el problema que el indicador
+                   existe para resolver. Sigue sin gastar un peso en tokens.
     */
     const parametros = new URLSearchParams(location.search);
     const SIN_IA = parametros.get('sinia') === '1';
+    const LENTO = parametros.get('lento') === '1';
 
     $('btn-empezar-pie').addEventListener('click', () => $('btn-empezar').click());
 
@@ -828,10 +834,15 @@ const breadcrumbSchema = {
       const texto = await fetch(muestra).then((r) => r.text());
       const trozo = Math.ceil(texto.length / 60);
 
+      // 40 ms por trozo son 2,4 s en total: bien para iterar diseño, inútil para
+      // juzgar la espera. Con ?lento=1 son ~30 s, el tiempo que de verdad tarda
+      // el modelo, y ahí sí se puede ver si el indicador aguanta el silencio.
+      const pausa = LENTO ? 500 : 40;
+
       for (let i = trozo; i < texto.length; i += trozo) {
         pintarAnalisis(texto.slice(0, i), true);
         avanceActualizar(texto.slice(0, i));
-        await new Promise((r) => setTimeout(r, 40));
+        await new Promise((r) => setTimeout(r, pausa));
       }
       pintarAnalisis(texto, false);
       avanceTerminar();
