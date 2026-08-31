@@ -145,7 +145,7 @@ const breadcrumbSchema = {
        quedaba pegado arriba dentro de una sección de alto completo, así que
        sobraba un tercio en blanco abajo y se leía como que faltaba algo. -->
   <section id="lienzo" class="flex hero-bg">
-    <div class="mx-auto w-full max-w-6xl px-6 pb-8 pt-6 sm:pt-7">
+    <div class="mx-auto w-full max-w-6xl px-6 pb-6 pt-6">
       <!-- 1. Intro — dos columnas.
            La derecha contesta la pregunta que se hace un prospecto frío frente
            al botón: ¿qué me llevo por tres minutos? Es la única pantalla del
@@ -165,19 +165,20 @@ const breadcrumbSchema = {
             {INTRO.titulo}
           </h1>
           <p
-            class="reveal reveal-delay-1 mt-4 font-display text-lg text-on-surface md:text-xl"
+            class="frase-marca reveal reveal-delay-1 mt-4 font-display text-lg text-on-surface md:text-xl"
             style="font-weight:600; letter-spacing:-0.01em;"
           >
             Cuando el dato llega, la decisión ya se tomó.
           </p>
-          <p class="reveal reveal-delay-2 mt-4 max-w-xl text-base leading-[1.6] text-on-surface-variant md:text-lg">
-            {INTRO.bajada}
+          <p class="reveal reveal-delay-2 mt-4 max-w-lg text-base leading-[1.6] text-on-surface-variant md:text-lg">
+            Doce preguntas sobre cómo circula hoy la información en su empresa. Al final recibe un
+            informe con lo que detectamos y qué se puede resolver.
           </p>
 
           <!-- Dos salidas, no una. El que ya está convencido agenda; el que no,
                prueba con tres minutos. Sin la segunda puerta, el que no quiere
                llenar un formulario simplemente se va. -->
-          <div class="reveal reveal-delay-3 mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <div class="acciones reveal reveal-delay-3 mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <button
               id="btn-empezar"
               class="btn-glow bg-primary px-9 py-5 text-base font-semibold text-on-primary"
@@ -193,14 +194,14 @@ const breadcrumbSchema = {
               Agendar 30 minutos
             </a>
           </div>
-          <p class="reveal reveal-delay-3 mt-4 text-sm text-outline">
+          <p class="micro reveal reveal-delay-3 mt-4 text-sm text-outline">
             {TOTAL_PREGUNTAS} preguntas · 3 minutos · informe en PDF · {INTRO.promesa}
           </p>
         </div>
 
         <!-- En celular va primero el texto y después la muestra: nadie decide
              mirando el formato antes de saber de qué se trata. -->
-        <div class="order-last">
+        <div class="muestra order-last">
           <InformeMockup />
         </div>
       </div>
@@ -403,14 +404,14 @@ const breadcrumbSchema = {
     <!-- Cierra la primera pantalla: cuatro entregables en una línea y la banda
          de herramientas. Sin titular de sección, porque no es una sección
          nueva: es el pie del hero, y asomando invita a bajar. -->
-    <section class="overflow-hidden border-t border-on-surface/5 bg-background px-6 pb-7 pt-9 md:px-12">
+    <section class="overflow-hidden border-t border-on-surface/5 bg-background px-6 pb-6 pt-7 md:px-12">
       <div class="mx-auto max-w-6xl">
         <!-- Qué se lleva. Una línea por entregable: el detalle largo estaba en
              tarjetas y ocupaba media pantalla para decir lo mismo. -->
-        <p class="reveal mb-5 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
+        <p class="reveal mb-4 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
           Al terminar se lleva
         </p>
-        <div class="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4">
+        <div class="grid grid-cols-2 gap-x-6 gap-y-4 lg:grid-cols-4">
           {
             ENTREGA.map((e) => (
               <div class="reveal flex items-start gap-2.5">
@@ -429,11 +430,11 @@ const breadcrumbSchema = {
              decide antes de bajar; los mockups grandes siguen abajo para el
              que quiera verlos funcionando. Cada uno lleva a su página: si no
              va a apretar Empezar, que al menos recorra el sitio. -->
-        <div class="mt-7 border-t border-on-surface/5 pt-7">
-          <p class="reveal mb-5 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
+        <div class="mt-5 border-t border-on-surface/5 pt-5">
+          <p class="reveal mb-4 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
             Y lo que construimos
           </p>
-          <div class="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4">
+          <div class="grid grid-cols-2 gap-x-6 gap-y-4 lg:grid-cols-4">
             {
               SERVICES.map((s) => (
                 <a href={VER(s.slug)} class="reveal group flex items-start gap-2.5">
@@ -454,7 +455,7 @@ const breadcrumbSchema = {
 
         <!-- Banda de herramientas: la señal de que hay una empresa que
              construye software, en una línea en vez de una sección entera. -->
-        <div class="reveal mt-7 flex flex-col gap-3 border-t border-on-surface/5 pt-6 sm:flex-row sm:items-center sm:gap-8">
+        <div class="reveal mt-5 flex flex-col gap-3 border-t border-on-surface/5 pt-5 sm:flex-row sm:items-center sm:gap-8">
           <p class="shrink-0 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
             Corre sobre
           </p>
@@ -1373,6 +1374,34 @@ const breadcrumbSchema = {
   </script>
 
   <style is:global>
+    /* La primera vista tiene que funcionar en el notebook de 13" a 15" que usa
+       la mayoría de las empresas, donde el navegador deja 600-750 px de alto,
+       no en un monitor de escritorio. Se comprime por ALTURA de ventana: en una
+       pantalla alta el hero se ve generoso, y en una baja cede lo justo para
+       que entren los entregables y los servicios sin hacer scroll. */
+    @media (max-height: 900px) {
+      #paso-intro h1 { font-size: 2.7rem; }
+      #paso-intro { gap: 2rem; }
+    }
+    @media (max-height: 780px) {
+      #paso-intro h1 { font-size: 2.3rem; }
+      #paso-intro .reveal-delay-2 { font-size: 0.95rem; margin-top: 0.75rem; }
+      /* La frase de marca cede antes que el titular y antes que el botón: es lo
+         único del hero que no informa ni empuja a la acción. */
+      #paso-intro .frase-marca { display: none; }
+      #paso-intro .acciones { margin-top: 1.25rem; }
+      #paso-intro .acciones > * { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+      #paso-intro .micro { margin-top: 0.75rem; }
+      #landing-extra section:first-child { padding-top: 1.1rem; padding-bottom: 1rem; }
+    }
+    @media (max-height: 660px) {
+      #paso-intro h1 { font-size: 2rem; }
+      #paso-intro .reveal-delay-2 { font-size: 0.9rem; }
+      #paso-intro .micro { display: none; }
+      #paso-intro { grid-template-columns: 1fr; }
+      #paso-intro .muestra { display: none; }
+    }
+
     /* Centra el bloque en la pantalla. Lo lleva el cuestionario, no el intro:
        el intro ya trae contenido de sobra y centrarlo dejaba un tercio de
        pantalla en blanco arriba y otro abajo. */

@@ -64,12 +64,10 @@ const CIRC = 2 * Math.PI * R;
       ))}
     </ul>
 
-    <!-- el corte: se ve que el documento sigue -->
-    <p class="subtitulo">Qué se puede resolver</p>
-    <div class="lineas" aria-hidden="true">
-      <span style="width:92%"></span>
-      <span style="width:70%"></span>
-    </div>
+    <!-- El corte, y nada más: el degradado ya dice que el documento sigue.
+         El bloque "Qué se puede resolver" con sus líneas de relleno decía lo
+         mismo y costaba 55 px de la primera pantalla, que es justo donde se
+         decide si esta persona aprieta Empezar. -->
     <div class="corte" aria-hidden="true"></div>
   </div>
 
@@ -241,6 +239,26 @@ const CIRC = 2 * Math.PI * R;
 
   /* El documento se desvanece abajo: deja claro que hay más y que esto es
      solo la portada. Sin esto parece un informe de media página. */
+  /* En un notebook de 13" a 15" el alto útil del navegador es de 600 a 750 px,
+     no los 900 y tantos de un monitor de escritorio. Ahí este mockup es lo que
+     decide si el visitante alcanza a ver qué hace Buffo antes de tener que
+     hacer scroll, así que se recorta por ALTURA de ventana.
+     No hace falta inventar nada para que se vea bien cortado: .hoja ya tiene
+     overflow hidden y el degradado de .corte encima, que es justo lo que
+     comunica "el documento sigue". */
+  @media (max-height: 900px) {
+    .hoja { max-height: 360px; }
+  }
+  @media (max-height: 820px) {
+    .hoja { max-height: 300px; }
+    .pie { display: none; }
+  }
+  @media (max-height: 760px) {
+    .hoja { max-height: 265px; }
+    /* Degradado más corto: con 5.5rem se comía el puntaje entero. */
+    .corte { height: 2.5rem; }
+  }
+
   .corte {
     position: absolute;
     left: 0;
