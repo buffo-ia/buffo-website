@@ -346,9 +346,17 @@ const breadcrumbSchema = {
                  mirando en ese momento, y que además sigue pegado abajo— pasa a
                  ser la puerta. Agregar otro cartel habría sido competir contra
                  el aviso que ya tenía la atención. -->
-            <button id="avance-pdf" class="avance-accion hidden" type="button">
-              Descargar el PDF
-            </button>
+            <div id="avance-acciones" class="avance-acciones hidden">
+              <button id="avance-pdf" class="avance-accion" type="button">Descargar el PDF</button>
+              <a
+                id="avance-agenda"
+                class="avance-accion-suave"
+                href={SITE.calendly}
+                target="_blank"
+                rel="noopener noreferrer"
+                >Agendar 30 min</a
+              >
+            </div>
           </div>
           <div
             id="avance-barra-pista"
@@ -802,22 +810,25 @@ const breadcrumbSchema = {
       $('resultado-encabezado').innerHTML = `
         <div class="no-imprimir">
           <p class="text-sm uppercase tracking-widest text-primary">Diagnóstico</p>
-          <h2 class="mt-3 font-display text-3xl leading-tight sm:text-4xl">${escapar(cuerpo.empresa || cuerpo.nombre)}</h2>
-          <div class="mt-10 flex flex-wrap items-end gap-x-10 gap-y-4 border-y border-outline-variant py-6">
-            <div>
-              <p class="font-display text-5xl text-primary">${cuerpo.puntaje.tronco}</p>
-              <p class="mt-1 text-sm text-on-surface-variant">de 100 en visibilidad</p>
-            </div>
-            <div>
-              <p class="text-lg font-medium">${escapar(tramo.etiqueta)}</p>
-              <p class="mt-1 max-w-md text-sm text-on-surface-variant">${escapar(tramo.resumen)}</p>
-            </div>
-          </div>
+          <h2 class="mt-2 font-display text-2xl leading-tight sm:text-3xl">${escapar(cuerpo.empresa || cuerpo.nombre)}</h2>
         </div>
 
-        <section class="mt-10 bloque">
+        <!-- Dos columnas en pantalla: el puntaje y las seis dimensiones dicen
+             cosas distintas y no hay razón para leerlas una debajo de la otra.
+             Apiladas gastaban dos pantallas de alto y empujaban el PDF y el
+             "agendemos" fuera de la vista. En el PDF vuelven a una columna
+             (ver @media print), porque ahí el papel sobra y manda la lectura. -->
+        <div class="resultado-cabecera mt-6">
+          <div class="no-imprimir resultado-puntaje">
+            <p class="font-display text-5xl text-primary">${cuerpo.puntaje.tronco}</p>
+            <p class="mt-1 text-sm text-on-surface-variant">de 100 en visibilidad</p>
+            <p class="mt-4 text-lg font-medium">${escapar(tramo.etiqueta)}</p>
+            <p class="mt-1 text-sm leading-relaxed text-on-surface-variant">${escapar(tramo.resumen)}</p>
+          </div>
+
+        <section class="bloque">
           <h3 class="rotulo">Dónde está parado</h3>
-          <div class="mt-5 grid gap-3">
+          <div class="mt-4 grid gap-2.5">
             ${barras
               .map(
                 (d, i) => `
@@ -831,7 +842,8 @@ const breadcrumbSchema = {
               )
               .join('')}
           </div>
-        </section>`;
+        </section>
+        </div>`;
     }
 
     // --- Transmisión ---
@@ -894,7 +906,7 @@ const breadcrumbSchema = {
       $('avance-barra').style.width = '2%';
       panel.querySelector('.avance-titulo').textContent = 'Estamos armando su informe';
       $('avance-detalle').textContent = 'Preparando las primeras secciones…';
-      $('avance-pdf').classList.add('hidden');
+      $('avance-acciones').classList.add('hidden');
     }
 
     function avanceActualizar(texto) {
@@ -931,7 +943,7 @@ const breadcrumbSchema = {
       $('avance-barra-pista').setAttribute('aria-valuenow', '100');
       $('avance-detalle').textContent = 'Con los tres hallazgos completos y el cálculo de horas.';
       panel.querySelector('.avance-titulo').textContent = 'Su informe está listo';
-      $('avance-pdf').classList.remove('hidden');
+      $('avance-acciones').classList.remove('hidden');
     }
 
     function avanceFallo() {
@@ -1433,6 +1445,52 @@ const breadcrumbSchema = {
       min-height: calc(100vh - 4rem);
     }
 
+    /* --- Cabecera del resultado --- */
+
+    .resultado-cabecera {
+      display: grid;
+      gap: 2rem;
+      align-items: start;
+      border-top: 1px solid rgb(var(--c-outline-variant));
+      border-bottom: 1px solid rgb(var(--c-outline-variant));
+      padding: 1.5rem 0;
+    }
+    @media (min-width: 768px) {
+      .resultado-cabecera {
+        grid-template-columns: 15rem 1fr;
+        gap: 3rem;
+      }
+    }
+    /* En el PDF vuelve a una columna: ahí el papel sobra y lo que manda es que
+       se lea de corrido, no que quepa. */
+    @media print {
+      .resultado-cabecera {
+        display: block;
+        border: 0;
+        padding: 0;
+      }
+    }
+
+    .avance-acciones {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .avance-accion-suave {
+      border: 1px solid rgb(var(--c-primary) / 0.45);
+      color: rgb(var(--c-primary));
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 0.9rem;
+      white-space: nowrap;
+      transition: background 0.2s ease;
+    }
+    .avance-accion-suave:hover {
+      background: rgb(var(--c-primary) / 0.08);
+    }
+
     /* --- Las seis dimensiones --- */
 
     .dim-pista {
@@ -1582,7 +1640,6 @@ const breadcrumbSchema = {
     /* Terminado: las ondas se quedan quietas y parejas, como un ecualizador que
        dejó de sonar. Sin cambiar de elemento, para que no parpadee. */
     .avance-accion {
-      margin-left: auto;
       flex-shrink: 0;
       background: rgb(var(--c-primary));
       color: rgb(var(--c-on-primary));
