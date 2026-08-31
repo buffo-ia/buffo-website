@@ -20,3 +20,7 @@ _build.log
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Capturas de las verificaciones con navegador. Los scripts de prueba corren
+# desde este directorio y escriben acá; sin esta regla se cuelan en la rama.
+/*.png
