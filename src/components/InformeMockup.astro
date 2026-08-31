@@ -36,6 +36,14 @@ const CIRC = 2 * Math.PI * R;
 ---
 
 <div class="informe" aria-label="Muestra del informe en PDF">
+  <div class="pila">
+    <!-- Dos hojas asomando detrás. Dicen "esto es un documento de varias
+         páginas" sin obligar a leer nada, que es lo que un prospecto hace de
+         verdad con un PDF de muestra: lo reconoce, no lo lee. Cuestan 14 px de
+         alto; meter las nueve secciones en esta columna habría costado
+         tipografía de 8 px, o sea textura en vez de información. -->
+    <div class="hoja-fondo hoja-fondo-2" aria-hidden="true"></div>
+    <div class="hoja-fondo" aria-hidden="true"></div>
   <div class="hoja">
     <!-- membrete -->
     <div class="membrete">
@@ -99,8 +107,9 @@ const CIRC = 2 * Math.PI * R;
          decide si esta persona aprieta Empezar. -->
     <div class="corte" aria-hidden="true"></div>
   </div>
+  </div>
 
-  <p class="pie">Muestra del formato. El informe real usa sus respuestas.</p>
+  <p class="pie">Muestra del formato · 9 secciones · El informe real usa sus respuestas.</p>
 </div>
 
 <style>
@@ -111,6 +120,27 @@ const CIRC = 2 * Math.PI * R;
     --papel: #ffffff;
     --verde: #0b7340;
     --linea: #e2e8e5;
+  }
+
+  .pila {
+    position: relative;
+  }
+  .hoja-fondo {
+    position: absolute;
+    left: 0.5rem;
+    right: -0.5rem;
+    top: -0.45rem;
+    bottom: 0.45rem;
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    box-shadow: 0 6px 16px -8px rgb(16 24 21 / 0.18);
+  }
+  .hoja-fondo-2 {
+    left: 1rem;
+    right: -1rem;
+    top: -0.9rem;
+    bottom: 0.9rem;
+    opacity: 0.6;
   }
 
   .hoja {
@@ -124,6 +154,7 @@ const CIRC = 2 * Math.PI * R;
       0 10px 24px -8px rgb(16 24 21 / 0.14),
       0 30px 60px -24px rgb(16 24 21 / 0.22);
     position: relative;
+    z-index: 1;
     overflow: hidden;
   }
 
@@ -310,7 +341,7 @@ const CIRC = 2 * Math.PI * R;
      overflow hidden y el degradado de .corte encima, que es justo lo que
      comunica "el documento sigue". */
   @media (max-height: 960px) {
-    .hoja { max-height: 400px; }
+    .hoja { max-height: 420px; }
   }
   @media (max-height: 820px) {
     .hoja { max-height: 330px; }
