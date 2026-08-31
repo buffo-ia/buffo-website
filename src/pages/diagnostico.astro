@@ -341,6 +341,14 @@ const breadcrumbSchema = {
               <p class="avance-titulo">Estamos armando su informe</p>
               <p id="avance-detalle" aria-live="polite"></p>
             </div>
+            <!-- El PDF y el cierre quedan bastante más abajo, después de todo el
+                 análisis. Al terminar, este panel —que es lo que la persona está
+                 mirando en ese momento, y que además sigue pegado abajo— pasa a
+                 ser la puerta. Agregar otro cartel habría sido competir contra
+                 el aviso que ya tenía la atención. -->
+            <button id="avance-pdf" class="avance-accion hidden" type="button">
+              Descargar el PDF
+            </button>
           </div>
           <div
             id="avance-barra-pista"
@@ -886,6 +894,7 @@ const breadcrumbSchema = {
       $('avance-barra').style.width = '2%';
       panel.querySelector('.avance-titulo').textContent = 'Estamos armando su informe';
       $('avance-detalle').textContent = 'Preparando las primeras secciones…';
+      $('avance-pdf').classList.add('hidden');
     }
 
     function avanceActualizar(texto) {
@@ -920,8 +929,9 @@ const breadcrumbSchema = {
       panel.classList.add('avance-listo');
       $('avance-barra').style.width = '100%';
       $('avance-barra-pista').setAttribute('aria-valuenow', '100');
-      $('avance-detalle').textContent = 'Ya puede descargarlo en PDF.';
+      $('avance-detalle').textContent = 'Con los tres hallazgos completos y el cálculo de horas.';
       panel.querySelector('.avance-titulo').textContent = 'Su informe está listo';
+      $('avance-pdf').classList.remove('hidden');
     }
 
     function avanceFallo() {
@@ -1325,6 +1335,10 @@ const breadcrumbSchema = {
 
     // El navegador imprime el <title> en su cabecera. Si el usuario dejó esa
     // casilla activada, al menos que se lea como documento y no como pestaña.
+    // No duplica la lógica del PDF: aprieta el botón de abajo, que es el que la
+    // tiene. Si mañana cambia cómo se genera, cambia en un solo lugar.
+    $('avance-pdf').addEventListener('click', () => $('btn-pdf').click());
+
     $('btn-pdf').addEventListener('click', () => {
       const titulo = document.title;
       document.title = `Diagnóstico — ${estado.datosCliente || 'Buffo IA Consulting'}`;
@@ -1567,6 +1581,33 @@ const breadcrumbSchema = {
 
     /* Terminado: las ondas se quedan quietas y parejas, como un ecualizador que
        dejó de sonar. Sin cambiar de elemento, para que no parpadee. */
+    .avance-accion {
+      margin-left: auto;
+      flex-shrink: 0;
+      background: rgb(var(--c-primary));
+      color: rgb(var(--c-on-primary));
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.6rem 1.1rem;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .avance-accion:hover {
+      opacity: 0.9;
+    }
+
+    /* Terminado también se queda pegado abajo: es el momento en que la persona
+       tiene que encontrar el PDF, y despegarlo justo ahí lo haría saltar a su
+       posición natural y desaparecer de la vista. Se suelta solo cuando el
+       scroll alcanza su lugar, como cualquier sticky. */
+    .avance-listo {
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      padding-bottom: 0.75rem;
+      background: rgb(var(--c-background));
+    }
+
     .avance-listo .ondas span {
       animation: none;
       transform: scaleY(0.55);
