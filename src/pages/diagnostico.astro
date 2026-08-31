@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import InformeMockup from '../components/InformeMockup.astro';
-import { SITE } from '../config/site';
+import DashboardMockup from '../components/DashboardMockup.astro';
+import ForecastMockup from '../components/ForecastMockup.astro';
+import AutomationMockup from '../components/AutomationMockup.astro';
+import AgentMockup from '../components/AgentMockup.astro';
+import VentanaNavegador from '../components/VentanaNavegador.astro';
+// El STACK de site.ts son las 16 herramientas del marquee. Ojo: data/diagnostico
+// exporta otro STACK, de 5, que es el que se imprime DENTRO del informe. Cumplen
+// cosas distintas y por eso no se unifican.
+import { SITE, SERVICE_PAINS, STACK as STACK_MARQUEE } from '../config/site';
 import {
   INTRO, TRONCO, RAMALES, PREGUNTA_ABIERTA, TRAMOS, TOTAL_PREGUNTAS, COSTO_HORA, valorHora,
   PROPUESTA, INCLUYE_SIEMPRE, FASES, STACK,
@@ -14,6 +22,57 @@ const stackConLogo = STACK.map((h) => ({
   // para que lo defina el CSS del informe.
   svg: readFileSync(`public/stack/${h.archivo}.svg`, 'utf8').replace(/\s*fill="[^"]*"/g, ''),
 }));
+
+// /diagnostico dejó de ser un formulario: es la página donde aterriza TODO el
+// tráfico pagado, así que tiene que sostenerse sola frente a alguien que llega
+// sin saber quiénes somos. Lo que sigue es esa landing. Vive únicamente en el
+// paso "intro" y desaparece en cuanto arranca el cuestionario, porque después de
+// apretar Empezar cualquier cosa que no sea la pregunta es una fuga.
+
+// Qué se lleva. Es la objeción número uno frente a un formulario de 12 preguntas:
+// "¿esto para qué me sirve a mí?". Va antes que cualquier cosa sobre nosotros.
+const ENTREGA = [
+  {
+    icono: 'speed',
+    titulo: 'Un puntaje de 0 a 100',
+    texto: 'Cuánta visibilidad real tiene hoy sobre su operación, con seis dimensiones medidas por separado.',
+  },
+  {
+    icono: 'troubleshoot',
+    titulo: 'Tres hallazgos concretos',
+    texto: 'Qué detectamos en sus respuestas, ordenado del más grave al menos grave. Sin diagnóstico genérico.',
+  },
+  {
+    icono: 'payments',
+    titulo: 'Cuánto le cuesta al año',
+    texto: 'El cálculo de lo que se va en trabajo repetitivo, sobre las horas que usted mismo declaró.',
+  },
+  {
+    icono: 'checklist',
+    titulo: 'Qué haría un consultor',
+    texto: 'Los próximos pasos concretos, y también lo que no podemos decirle sin conocerlos mejor.',
+  },
+];
+
+// Los cuatro servicios con su mockup animado. Mismo criterio que el home: el
+// titular es el DOLOR y el nombre del producto va de eyebrow, porque nadie
+// reconoce su problema en la palabra "modelamiento predictivo".
+const CAPACIDADES = [
+  { slug: 'dashboards-ejecutivos', eyebrow: 'Dashboards ejecutivos', url: 'app.buffoconsulting.cl/dashboard', Mock: DashboardMockup },
+  { slug: 'modelamiento-predictivo', eyebrow: 'Modelamiento de datos', url: 'app.buffoconsulting.cl/proyeccion', Mock: ForecastMockup },
+  { slug: 'automatizacion-procesos', eyebrow: 'Automatización de procesos', url: 'app.buffoconsulting.cl/flujos', Mock: AutomationMockup },
+  { slug: 'agentes-ia', eyebrow: 'Agentes IA', url: 'app.buffoconsulting.cl/agentes', Mock: AgentMockup },
+];
+
+// Dos ayudas mínimas para que el markup de abajo no lleve plantillas incrustadas.
+const LOGO = (src: string) => '--logo:url(' + JSON.stringify(src) + ')';
+const VER = (slug: string) => '/servicios/' + slug;
+
+const COMO_FUNCIONA = [
+  { n: '01', titulo: 'Responde doce preguntas', texto: 'Sobre cómo circula hoy la información en su empresa. Tres minutos, sin preparar nada.' },
+  { n: '02', titulo: 'Se analiza con IA', texto: 'Sus respuestas se cruzan contra el criterio de alguien que tuvo que responder por esos números.' },
+  { n: '03', titulo: 'Recibe el informe', texto: 'En pantalla al momento y en PDF a su correo. Sin llamada de por medio y sin compromiso.' },
+];
 
 // El banco completo viaja al cliente: el flujo es puro front hasta que el
 // visitante entrega su correo. Así nadie abandona por un formulario al inicio.
@@ -88,16 +147,50 @@ const breadcrumbSchema = {
            al botón: ¿qué me llevo por tres minutos? Es la única pantalla del
            flujo con esta medida ancha; en cuanto empieza el cuestionario se
            vuelve a la columna angosta, que es la que se lee cómoda. -->
-      <div id="paso-intro" class="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-16">
+      <div id="paso-intro" class="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,27rem)] lg:gap-16">
         <div>
-          <p class="mb-4 text-sm uppercase tracking-widest text-primary">Diagnóstico</p>
-          <h1 class="font-display text-4xl leading-tight sm:text-5xl">{INTRO.titulo}</h1>
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-on-surface-variant">{INTRO.bajada}</p>
-          <button id="btn-empezar" class="mt-10 bg-primary px-8 py-4 font-medium text-on-primary btn-glow">
-            Empezar
-          </button>
-          <p class="mt-4 text-sm text-outline">
-            Sin costo · 3 min · {TOTAL_PREGUNTAS} preguntas · informe en PDF
+          <!-- La cejilla ubica dos cosas de golpe: que esto es gratis y que hay
+               una consultora chilena detrás. El que llega desde un anuncio no
+               sabe ninguna de las dos. -->
+          <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-6">
+            Diagnóstico gratuito · Consultora de IA · Santiago de Chile
+          </p>
+          <h1
+            class="reveal reveal-delay-1 font-display text-[2.4rem] leading-[1.06] tracking-[-0.025em] sm:text-[3.2rem] lg:text-[3.6rem]"
+          >
+            {INTRO.titulo}
+          </h1>
+          <p
+            class="reveal reveal-delay-1 mt-4 font-display text-lg text-on-surface md:text-xl"
+            style="font-weight:600; letter-spacing:-0.01em;"
+          >
+            Cuando el dato llega, la decisión ya se tomó.
+          </p>
+          <p class="reveal reveal-delay-2 mt-5 max-w-xl text-base leading-relaxed text-on-surface-variant md:text-lg">
+            {INTRO.bajada}
+          </p>
+
+          <!-- Dos salidas, no una. El que ya está convencido agenda; el que no,
+               prueba con tres minutos. Sin la segunda puerta, el que no quiere
+               llenar un formulario simplemente se va. -->
+          <div class="reveal reveal-delay-3 mt-9 flex flex-col gap-4 sm:flex-row">
+            <button
+              id="btn-empezar"
+              class="btn-glow bg-primary px-9 py-5 text-base font-semibold text-on-primary"
+            >
+              Empezar el diagnóstico · 3 minutos
+            </button>
+            <a
+              href={SITE.calendly}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="border border-outline-variant px-9 py-5 text-center text-base font-semibold text-on-surface transition-all hover:border-primary/40"
+            >
+              Agendar 30 minutos
+            </a>
+          </div>
+          <p class="reveal reveal-delay-3 mt-5 text-sm text-outline">
+            {TOTAL_PREGUNTAS} preguntas · 3 minutos · informe en PDF · {INTRO.promesa}
           </p>
         </div>
 
@@ -292,6 +385,170 @@ const breadcrumbSchema = {
     </div>
   </section>
 
+
+  <!-- ══ LANDING ══
+       Todo lo que sigue existe para el que llega desde un anuncio y no conoce
+       Buffo. Se oculta entero en cuanto arranca el cuestionario (ver mostrar()):
+       una vez que apretó Empezar, cualquier cosa que no sea la pregunta es una
+       fuga. -->
+  <div id="landing-extra">
+    <!-- QUÉ SE LLEVA — antes que cualquier cosa sobre nosotros. La objeción
+         frente a 12 preguntas no es "quiénes son", es "esto para qué me sirve". -->
+    <section class="bg-surface px-8 py-16 md:px-12 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal mb-12 max-w-3xl">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Qué recibe</p>
+          <h2 class="font-display text-[2.1rem] leading-tight md:text-[2.7rem]">
+            No es un puntaje y un correo de vuelta.
+          </h2>
+          <p class="mt-4 leading-relaxed text-on-surface-variant">
+            Es el mismo análisis con el que abrimos cualquier proyecto, hecho sobre lo que usted
+            responda. Al terminar se lo lleva en PDF, sin haber hablado con nadie.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            ENTREGA.map((e, i) => (
+              <div class:list={['card-hover bg-surface-container-highest p-8 reveal', i > 1 && 'reveal-delay-1']}>
+                <span class="material-symbols-outlined mb-5 block text-3xl text-primary">{e.icono}</span>
+                <h3 class="font-display text-lg leading-snug text-on-surface">{e.titulo}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-on-surface-variant">{e.texto}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section class="bg-background px-8 py-16 md:px-12 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal mb-12">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Cómo funciona</p>
+          <h2 class="font-display text-[2.1rem] leading-tight md:text-[2.7rem]">Tres minutos, tres pasos.</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+          {
+            COMO_FUNCIONA.map((s, i) => (
+              <div class:list={['reveal', i === 1 && 'reveal-delay-1', i === 2 && 'reveal-delay-2']}>
+                <p class="font-display text-4xl text-primary/30">{s.n}</p>
+                <h3 class="mt-4 font-display text-xl leading-snug">{s.titulo}</h3>
+                <p class="mt-3 leading-relaxed text-on-surface-variant">{s.texto}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- INFRAESTRUCTURA — el mismo marquee del home. Es la prueba de que detrás
+         del formulario hay una empresa que construye software de verdad. -->
+    <section class="overflow-hidden bg-surface px-8 py-16 md:px-12 md:py-20">
+      <div class="reveal mx-auto mb-10 max-w-5xl text-center">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Infraestructura</p>
+        <h2 class="mb-4 font-display text-[2.1rem] leading-tight md:text-[2.7rem]">
+          Tecnología de clase mundial, al servicio de su negocio
+        </h2>
+        <p class="mx-auto max-w-2xl leading-relaxed text-on-surface-variant">
+          Las mismas herramientas que usan las grandes tecnológicas. Este diagnóstico corre sobre
+          ellas: usted ve un informe simple; debajo, una base seria.
+        </p>
+      </div>
+
+      <div class="marquee-mask reveal reveal-delay-1">
+        <div class="marquee-track gap-10 md:gap-14">
+          {[...STACK_MARQUEE, ...STACK_MARQUEE].map((h, i) => (
+            <div class="group flex shrink-0 items-center gap-2.5" aria-hidden={i >= STACK_MARQUEE.length ? 'true' : undefined}>
+              <span class="stack-logo h-6 w-6 shrink-0 md:h-7 md:w-7" style={LOGO(h.src)} aria-hidden="true"></span>
+              <span class="whitespace-nowrap text-sm font-semibold text-on-surface/55 transition-colors group-hover:text-on-surface md:text-base">
+                {h.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- QUÉ HACEMOS — el diagnóstico es la puerta; esto es la casa. -->
+    <section class="losa bg-background px-8 py-16 md:px-12 md:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal mb-12 max-w-3xl">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">Quiénes somos</p>
+          <h2 class="font-display text-[2.1rem] leading-tight md:text-[2.7rem]">
+            Una consultora que nació del otro lado del escritorio.
+          </h2>
+          <p class="mt-4 leading-relaxed text-on-surface-variant">
+            Buffo IA Consulting no viene de TI: viene de diez años en áreas comerciales de retail y
+            consumo masivo, preparando el reporte del mes y respondiendo en reuniones por números que
+            llegaban tarde. Por eso hablamos de ventas, margen y stock, y no de tecnología. Esto es
+            lo que construimos.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+          {
+            CAPACIDADES.map((c, i) => (
+              <div class:list={['reveal flex flex-col', i % 2 === 1 && 'reveal-delay-1']}>
+                <p class="text-xs font-semibold uppercase tracking-widest text-primary">{c.eyebrow}</p>
+                <h3 class="mb-5 mt-2 font-display text-xl leading-snug">{SERVICE_PAINS[c.slug]}</h3>
+                <VentanaNavegador url={c.url} pestana={c.eyebrow}>
+                  <c.Mock />
+                </VentanaNavegador>
+                <a
+                  href={VER(c.slug)}
+                  class="mt-5 inline-block self-start text-sm font-medium text-primary underline underline-offset-4 hover:no-underline"
+                >
+                  Ver cómo lo resolvemos
+                </a>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CIERRE — el botón vuelve al cuestionario de arriba, así que sube solo.
+         Las cuatro puertas de abajo son para el que llegó hasta acá sin
+         convencerse: mejor que recorra el sitio a que cierre la pestaña. -->
+    <section class="bg-surface px-8 py-16 md:px-12 md:py-20">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="reveal font-display text-[2.1rem] leading-tight md:text-[2.9rem]">
+          Tres minutos ahora, o seguir decidiendo a ciegas.
+        </h2>
+        <p class="reveal reveal-delay-1 mx-auto mt-5 max-w-xl leading-relaxed text-on-surface-variant">
+          El diagnóstico es gratis y no termina en una presentación de ventas. Si algo de lo que
+          detectamos le hace sentido, conversamos; si no, se queda con el informe igual.
+        </p>
+        <div class="reveal reveal-delay-2 mt-9 flex flex-col justify-center gap-4 sm:flex-row">
+          <button id="btn-empezar-pie" class="btn-glow bg-primary px-9 py-5 text-base font-semibold text-on-primary">
+            Empezar el diagnóstico
+          </button>
+          <a
+            href={SITE.calendly}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border border-outline-variant px-9 py-5 text-center text-base font-semibold text-on-surface transition-all hover:border-primary/40"
+          >
+            Prefiero agendar una llamada
+          </a>
+        </div>
+
+        <div class="reveal reveal-delay-3 mt-14 border-t border-on-surface/5 pt-10">
+          <p class="mb-6 text-xs font-semibold uppercase tracking-widest text-on-surface/40">
+            O conozca Buffo antes de responder
+          </p>
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
+            <a href="/servicios" class="text-on-surface/70 transition-colors hover:text-primary">Servicios</a>
+            <a href="/sobre-nosotros" class="text-on-surface/70 transition-colors hover:text-primary">Sobre nosotros</a>
+            <a href="/blog" class="text-on-surface/70 transition-colors hover:text-primary">Blog</a>
+            <a href="/contacto" class="text-on-surface/70 transition-colors hover:text-primary">Contacto</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <script id="banco-diagnostico" type="application/json" set:html={JSON.stringify(banco)} />
 
   <script>
@@ -303,6 +560,9 @@ const breadcrumbSchema = {
 
     const mostrar = (nombre) => {
       pasos.forEach((p) => $(`paso-${p}`).classList.toggle('hidden', p !== nombre));
+      // La landing solo existe para el que todavía no empezó. Con el cuestionario
+      // abierto, todo lo que no sea la pregunta es una salida.
+      $('landing-extra').classList.toggle('hidden', nombre !== 'intro');
       $('barra').classList.toggle('hidden', nombre === 'intro' || nombre === 'resultado');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -323,6 +583,8 @@ const breadcrumbSchema = {
     */
     const parametros = new URLSearchParams(location.search);
     const SIN_IA = parametros.get('sinia') === '1';
+
+    $('btn-empezar-pie').addEventListener('click', () => $('btn-empezar').click());
 
     $('btn-empezar').addEventListener('click', () => {
       actualizarBarra('Contexto', 0);

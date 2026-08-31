@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE, SERVICES, SERVICE_PAINS } from '../config/site';
+import { SITE, SERVICES, SERVICE_PAINS, STACK } from '../config/site';
 import DashboardMockup from '../components/DashboardMockup.astro';
 import ForecastMockup from '../components/ForecastMockup.astro';
 import AutomationMockup from '../components/AutomationMockup.astro';
@@ -49,25 +49,6 @@ const SHOWCASE = [
   },
 ];
 
-// Stack tecnológico real para el marquee (logos en public/stack/).
-const STACK = [
-  { src: '/stack/anthropic.svg', name: 'Anthropic' },
-  { src: '/stack/openai.svg', name: 'OpenAI' },
-  { src: '/stack/perplexity.svg', name: 'Perplexity' },
-  { src: '/stack/gemini.svg', name: 'Gemini' },
-  { src: '/stack/googlecloud.svg', name: 'Google Cloud' },
-  { src: '/stack/python.svg', name: 'Python' },
-  { src: '/stack/pandas.svg', name: 'pandas' },
-  { src: '/stack/numpy.svg', name: 'NumPy' },
-  { src: '/stack/react.svg', name: 'React' },
-  { src: '/stack/typescript.svg', name: 'TypeScript' },
-  { src: '/stack/nodedotjs.svg', name: 'Node.js' },
-  { src: '/stack/supabase.svg', name: 'Supabase' },
-  { src: '/stack/postgresql.svg', name: 'PostgreSQL' },
-  { src: '/stack/tailwindcss.svg', name: 'Tailwind CSS' },
-  { src: '/stack/vercel.svg', name: 'Vercel' },
-  { src: '/stack/railway.svg', name: 'Railway' },
-];
 
 // Preguntas frecuentes de un decisor que llega frío. El plan de Perplexity las
 // pide explícitamente (5-8) y alimentan el FAQPage schema, que es de lo que más

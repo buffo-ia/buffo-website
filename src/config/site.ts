@@ -124,3 +124,25 @@ export const SERVICES = [
       'Software que trabaja solo: monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pida.',
   },
 ];
+
+// Stack tecnológico real (logos en public/stack/). Fuente única: lo usan el
+// marquee del home y el de /diagnostico. Si se agrega una herramienta, se agrega
+// acá y aparece en las dos, que es el punto: son la misma promesa.
+export const STACK = [
+  { src: '/stack/anthropic.svg', name: 'Anthropic' },
+  { src: '/stack/openai.svg', name: 'OpenAI' },
+  { src: '/stack/perplexity.svg', name: 'Perplexity' },
+  { src: '/stack/gemini.svg', name: 'Gemini' },
+  { src: '/stack/googlecloud.svg', name: 'Google Cloud' },
+  { src: '/stack/python.svg', name: 'Python' },
+  { src: '/stack/pandas.svg', name: 'pandas' },
+  { src: '/stack/numpy.svg', name: 'NumPy' },
+  { src: '/stack/react.svg', name: 'React' },
+  { src: '/stack/typescript.svg', name: 'TypeScript' },
+  { src: '/stack/nodedotjs.svg', name: 'Node.js' },
+  { src: '/stack/supabase.svg', name: 'Supabase' },
+  { src: '/stack/postgresql.svg', name: 'PostgreSQL' },
+  { src: '/stack/tailwindcss.svg', name: 'Tailwind CSS' },
+  { src: '/stack/vercel.svg', name: 'Vercel' },
+  { src: '/stack/railway.svg', name: 'Railway' },
+];
