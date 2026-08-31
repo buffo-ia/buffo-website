@@ -47,8 +47,11 @@ const CIRC = 2 * Math.PI * R;
   <div class="hoja">
     <!-- membrete -->
     <div class="membrete">
-      <span class="marca">buffo <b>IA</b> consulting</span>
-      <span class="sello">Informe · PDF</span>
+      <img src="/logo-firma.png" alt="Buffo IA Consulting" class="marca" />
+      <span class="sello">
+        <span class="material-symbols-outlined" aria-hidden="true">picture_as_pdf</span>
+        Informe · PDF
+      </span>
     </div>
 
     <p class="cejilla">Diagnóstico de visibilidad operacional</p>
@@ -166,19 +169,30 @@ const CIRC = 2 * Math.PI * R;
     border-bottom: 1px solid var(--linea);
   }
   .marca {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    height: 1.15rem;
+    width: auto;
+    display: block;
   }
   .marca b {
     color: var(--verde);
     font-weight: 600;
   }
   .sello {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
     font-size: 0.6rem;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.13em;
     color: var(--tinta-suave);
+    white-space: nowrap;
+  }
+  /* El ícono es el genérico de documento PDF, no el logotipo de Adobe: meter
+     una marca ajena adentro de nuestro entregable no dice nada nuestro y nos
+     obligaría a respetar SUS reglas de uso. */
+  .sello .material-symbols-outlined {
+    font-size: 0.95rem;
+    color: var(--verde);
   }
 
   .cejilla {
