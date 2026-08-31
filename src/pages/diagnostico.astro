@@ -220,7 +220,40 @@ const breadcrumbSchema = {
       <div id="paso-resultado" class="hidden">
         <div id="portada-pdf" class="solo-imprimir"></div>
         <div id="membrete" class="solo-imprimir"></div>
+        <!-- Señal de que el informe se sigue escribiendo.
+             Existe porque en pantalla solo se pinta "### titulares", que es la
+             PRIMERA de las once secciones: las otras diez son solo-imprimir y se
+             van al PDF. O sea el visitante pasa medio minuto mirando algo que no
+             cambia mientras el modelo trabaja, y no tiene cómo saber si se colgó.
+             Antes de que hubiera tráfico pagado eso era una molestia; con la
+             campaña apuntando acá es un clic comprado que se abandona.
+
+             ⚠️ Va ARRIBA DEL TODO, antes del puntaje. Primero estuvo entre el
+             encabezado y el análisis, y en un celular de 390 px quedaba a 892 px
+             del borde: o sea justo fuera de la pantalla, invisible para el que
+             está esperando. La señal de que algo sigue vivo no sirve si hay que
+             ir a buscarla.
+
+             ⚠️ Altura FIJA a propósito: nace junto con el resultado y no cambia
+             de alto, así nada de lo que hay debajo se mueve mientras se lee. Por
+             eso el detalle es una línea que se reemplaza, nunca una lista que se
+             acumula. -->
+        <div id="avance-informe" class="no-imprimir hidden">
+          <div
+            id="avance-barra-pista"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            aria-label="Avance del informe"
+          >
+            <div id="avance-barra"></div>
+          </div>
+          <p id="avance-detalle" aria-live="polite"></p>
+        </div>
+
         <div id="resultado-encabezado"></div>
+
         <div id="resultado-analisis" class="mt-4"></div>
 
         <div id="teaser-pdf" class="no-imprimir hidden">
@@ -412,6 +445,7 @@ const breadcrumbSchema = {
       // transmitido debajo. Así no hay espera muerta mirando un spinner.
       pintarPortada(cuerpo);
       pintarEncabezado(cuerpo, barras);
+      avanceIniciar();
       mostrar('resultado');
 
       if (SIN_IA) return transmitirMuestra();
@@ -439,6 +473,14 @@ const breadcrumbSchema = {
           puntaje: cuerpo.puntaje.tronco,
         });
       } catch (err) {
+        // Si ya había informe en pantalla, devolverlo al formulario sería borrarle
+        // algo que es suyo y que además es correcto: el puntaje y las barras los
+        // calcula el front, y el servidor guarda el lead y despacha los correos
+        // ANTES de cerrar la respuesta. Se avisa sin quitarle nada.
+        if (avance.recibido > 0) {
+          avanceFallo();
+          return;
+        }
         mostrar('datos');
         error.textContent = `${err.message} Puede reintentar o escribirnos a contacto@buffoconsulting.cl.`;
         error.classList.remove('hidden');
@@ -533,9 +575,11 @@ const breadcrumbSchema = {
 
       for (let i = trozo; i < texto.length; i += trozo) {
         pintarAnalisis(texto.slice(0, i), true);
+        avanceActualizar(texto.slice(0, i));
         await new Promise((r) => setTimeout(r, 40));
       }
       pintarAnalisis(texto, false);
+      avanceTerminar();
 
       $('resultado-analisis').insertAdjacentHTML(
         'afterbegin',
@@ -549,6 +593,77 @@ const breadcrumbSchema = {
       $('resultado-cierre').classList.remove('hidden');
     }
 
+    // --- Señal de avance ---
+
+    // Once bloques "### ": titulares, resumen, tres hallazgos, horas, vistazo,
+    // atencion, limites, propuesta y pasos. Si el prompt de api/diagnostico.js
+    // cambia de secciones, este número se corrige acá.
+    const BLOQUES_ESPERADOS = 11;
+    // Largo del informe real medido el 27-ago-2026 (5.935 caracteres). Sirve para
+    // que la barra avance de forma continua mientras el texto llega, en vez de
+    // saltar solo once veces. Es una referencia, no una promesa: por eso la barra
+    // se topa en 97% y solo la llega a 100 el final de verdad.
+    const LARGO_TIPICO = 5900;
+
+    const avance = { pct: 0, recibido: 0, seccion: '', hechos: 0 };
+
+    function avanceIniciar() {
+      avance.pct = 0;
+      avance.recibido = 0;
+      avance.seccion = '';
+      avance.hechos = 0;
+      const panel = $('avance-informe');
+      panel.classList.remove('hidden', 'avance-listo', 'avance-roto');
+      panel.classList.add('avance-vivo');
+      $('avance-barra').style.width = '2%';
+      $('avance-detalle').textContent = 'Preparando su informe…';
+    }
+
+    function avanceActualizar(texto) {
+      avance.recibido = texto.length;
+
+      // La barra nunca retrocede: un texto que se reescribe no puede leerse como
+      // que el trabajo se deshizo.
+      const estimado = Math.round((texto.length / LARGO_TIPICO) * 100);
+      avance.pct = Math.min(97, Math.max(avance.pct, estimado));
+      $('avance-barra').style.width = `${Math.max(2, avance.pct)}%`;
+      $('avance-barra-pista').setAttribute('aria-valuenow', String(avance.pct));
+
+      const marcadores = texto.match(/^### +(\w+)/gm) || [];
+      if (!marcadores.length) return;
+
+      const actual = marcadores[marcadores.length - 1].replace(/^### +/, '');
+      const hechos = Math.min(marcadores.length, BLOQUES_ESPERADOS);
+      if (actual === avance.seccion && hechos === avance.hechos) return;
+      avance.seccion = actual;
+      avance.hechos = hechos;
+
+      // Decir QUÉ se está escribiendo es lo que convierte la espera en algo que
+      // se ve avanzar. Y de paso cuenta lo que trae el informe, que es contenido
+      // que en pantalla no se muestra nunca.
+      const rotulo = ROTULOS[actual] || actual;
+      $('avance-detalle').textContent = `Escribiendo: ${rotulo} · ${hechos} de ${BLOQUES_ESPERADOS}`;
+    }
+
+    function avanceTerminar() {
+      const panel = $('avance-informe');
+      panel.classList.remove('avance-vivo', 'avance-roto');
+      panel.classList.add('avance-listo');
+      $('avance-barra').style.width = '100%';
+      $('avance-barra-pista').setAttribute('aria-valuenow', '100');
+      $('avance-detalle').textContent = 'Informe completo.';
+    }
+
+    function avanceFallo() {
+      const panel = $('avance-informe');
+      panel.classList.remove('avance-vivo', 'avance-listo');
+      panel.classList.add('avance-roto');
+      $('avance-detalle').textContent =
+        'La conexión se cortó antes de terminar. Lo que ve arriba es suyo y es correcto; ' +
+        'el informe completo va camino a su correo. Si no llega en unos minutos, escríbanos a ' +
+        'contacto@buffoconsulting.cl.';
+    }
+
     async function transmitir(res) {
       const lector = res.body.getReader();
       const decodificador = new TextDecoder();
@@ -560,9 +675,11 @@ const breadcrumbSchema = {
         texto += decodificador.decode(value, { stream: true });
         if (texto.startsWith('__ERROR__')) throw new Error(texto.replace('__ERROR__', ''));
         pintarAnalisis(texto, true);
+        avanceActualizar(texto);
       }
 
       pintarAnalisis(texto, false);
+      avanceTerminar();
       $('teaser-pdf').classList.remove('hidden');
       $('resultado-cierre').classList.remove('hidden');
     }
@@ -995,6 +1112,85 @@ const breadcrumbSchema = {
   </script>
 
   <style is:global>
+    /* --- Señal de avance de la transmisión --- */
+
+    /* Encabeza el resultado, así que su tamaño tiene que ser estable: cualquier
+       crecimiento empuja hacia abajo todo lo que la persona está leyendo. */
+    #avance-informe {
+      margin-bottom: 2.25rem;
+    }
+
+    #avance-barra-pista {
+      height: 3px;
+      background: rgb(var(--c-on-surface) / 0.09);
+      overflow: hidden;
+    }
+
+    #avance-barra {
+      height: 100%;
+      width: 2%;
+      background: rgb(var(--c-primary));
+      transition: width 0.45s ease-out;
+    }
+
+    /* Mientras transmite, la barra respira. Entre sección y sección el ancho casi
+       no cambia, y sin esto un tramo lento se lee igual que un cuelgue. */
+    .avance-vivo #avance-barra {
+      background-image: linear-gradient(
+        90deg,
+        rgb(var(--c-primary)) 0%,
+        rgb(var(--c-primary) / 0.55) 50%,
+        rgb(var(--c-primary)) 100%
+      );
+      background-size: 200% 100%;
+      animation: avanceLatido 1.4s linear infinite;
+    }
+
+    @keyframes avanceLatido {
+      from { background-position: 200% 0; }
+      to { background-position: 0 0; }
+    }
+
+    #avance-detalle {
+      margin-top: 0.6rem;
+      font-size: 0.8125rem;
+      line-height: 1.45;
+      min-height: 1.45em;
+      color: rgb(var(--c-on-surface) / 0.55);
+      /* Una línea siempre. En 390 px un rótulo como "Lo que no podemos decirle
+         sin conocerlos mejor" ocuparía tres, y el salto de alto en cada sección
+         se vería como que la página se mueve sola. */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .avance-listo #avance-detalle {
+      color: rgb(var(--c-primary));
+    }
+
+    .avance-roto #avance-barra {
+      background: rgb(var(--c-error, 239 68 68));
+      animation: none;
+    }
+
+    /* El aviso de corte sí puede ocupar lo que necesite: es un estado terminal y
+       hay que poder leerlo entero. Ya no hay transmisión que interrumpir. */
+    .avance-roto #avance-detalle {
+      white-space: normal;
+      color: rgb(var(--c-error, 239 68 68));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #avance-barra {
+        transition: none;
+      }
+      .avance-vivo #avance-barra {
+        animation: none;
+        background-image: none;
+      }
+    }
+
     /* Los titulares son lo único que se lee en pantalla: tipografía grande y
        aire, para que se puedan barrer en cinco segundos. */
     .titulares { list-style: none; padding: 0; margin: 0; }
