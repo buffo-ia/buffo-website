@@ -318,25 +318,30 @@ const breadcrumbSchema = {
       <div id="paso-resultado" class="hidden">
         <div id="portada-pdf" class="solo-imprimir"></div>
         <div id="membrete" class="solo-imprimir"></div>
+        <div id="resultado-encabezado"></div>
+
         <!-- Señal de que el informe se sigue escribiendo.
              Existe porque en pantalla solo se pinta "### titulares", que es la
              PRIMERA de las once secciones: las otras diez son solo-imprimir y se
              van al PDF. O sea el visitante pasa medio minuto mirando algo que no
              cambia mientras el modelo trabaja, y no tiene cómo saber si se colgó.
-             Antes de que hubiera tráfico pagado eso era una molestia; con la
-             campaña apuntando acá es un clic comprado que se abandona.
 
-             ⚠️ Va ARRIBA DEL TODO, antes del puntaje. Primero estuvo entre el
-             encabezado y el análisis, y en un celular de 390 px quedaba a 892 px
-             del borde: o sea justo fuera de la pantalla, invisible para el que
-             está esperando. La señal de que algo sigue vivo no sirve si hay que
-             ir a buscarla.
+             Va acá abajo, después del puntaje y las seis barras, y no
+             encabezando el resultado como estuvo primero: este bloque anuncia lo
+             que está por aparecer JUSTO DEBAJO, así que ponerlo en otro lado lo
+             desconectaba de aquello que anuncia.
 
-             ⚠️ Altura FIJA a propósito: nace junto con el resultado y no cambia
-             de alto, así nada de lo que hay debajo se mueve mientras se lee. Por
-             eso el detalle es una línea que se reemplaza, nunca una lista que se
-             acumula. -->
+             ⚠️ Alto FIJO: crece hacia adentro, nunca empuja el análisis. -->
         <div id="avance-informe" class="no-imprimir hidden">
+          <div class="avance-caja">
+            <div class="ondas" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="avance-texto">
+              <p class="avance-titulo">Estamos armando su informe</p>
+              <p id="avance-detalle" aria-live="polite"></p>
+            </div>
+          </div>
           <div
             id="avance-barra-pista"
             role="progressbar"
@@ -347,10 +352,7 @@ const breadcrumbSchema = {
           >
             <div id="avance-barra"></div>
           </div>
-          <p id="avance-detalle" aria-live="polite"></p>
         </div>
-
-        <div id="resultado-encabezado"></div>
 
         <div id="resultado-analisis" class="mt-4"></div>
 
@@ -810,13 +812,13 @@ const breadcrumbSchema = {
           <div class="mt-5 grid gap-3">
             ${barras
               .map(
-                (d) => `
+                (d, i) => `
               <div class="fila-barra grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 sm:grid-cols-[13rem_1fr_2.5rem]">
                 <span class="text-sm text-on-surface-variant">${escapar(d.etiqueta)}</span>
-                <div class="order-3 h-1.5 w-full bg-surface-container sm:order-none">
-                  <div class="h-1.5 bg-primary transition-all duration-700" style="width:${d.valor}%"></div>
+                <div class="order-3 dim-pista sm:order-none">
+                  <div class="dim-valor ${d.valor < 50 ? 'bajo' : ''}" style="--hasta:${d.valor}%; --orden:${i}"></div>
                 </div>
-                <span class="text-right text-sm tabular-nums ${d.valor < 50 ? 'text-error' : 'text-on-surface-variant'}">${d.valor}</span>
+                <span class="dim-cifra ${d.valor < 50 ? 'text-error' : 'text-on-surface'}">${d.valor}</span>
               </div>`
               )
               .join('')}
@@ -882,7 +884,8 @@ const breadcrumbSchema = {
       panel.classList.remove('hidden', 'avance-listo', 'avance-roto');
       panel.classList.add('avance-vivo');
       $('avance-barra').style.width = '2%';
-      $('avance-detalle').textContent = 'Preparando su informe…';
+      panel.querySelector('.avance-titulo').textContent = 'Estamos armando su informe';
+      $('avance-detalle').textContent = 'Preparando las primeras secciones…';
     }
 
     function avanceActualizar(texto) {
@@ -917,13 +920,15 @@ const breadcrumbSchema = {
       panel.classList.add('avance-listo');
       $('avance-barra').style.width = '100%';
       $('avance-barra-pista').setAttribute('aria-valuenow', '100');
-      $('avance-detalle').textContent = 'Informe completo.';
+      $('avance-detalle').textContent = 'Ya puede descargarlo en PDF.';
+      panel.querySelector('.avance-titulo').textContent = 'Su informe está listo';
     }
 
     function avanceFallo() {
       const panel = $('avance-informe');
       panel.classList.remove('avance-vivo', 'avance-listo');
       panel.classList.add('avance-roto');
+      panel.querySelector('.avance-titulo').textContent = 'Se interrumpió la conexión';
       $('avance-detalle').textContent =
         'La conexión se cortó antes de terminar. Lo que ve arriba es suyo y es correcto; ' +
         'el informe completo va camino a su correo. Si no llega en unos minutos, escríbanos a ' +
@@ -1414,52 +1419,133 @@ const breadcrumbSchema = {
       min-height: calc(100vh - 4rem);
     }
 
-    /* --- Señal de avance de la transmisión --- */
+    /* --- Las seis dimensiones --- */
 
-    /* Encabeza el resultado, así que su tamaño tiene que ser estable: cualquier
-       crecimiento empuja hacia abajo todo lo que la persona está leyendo. */
-    #avance-informe {
-      margin-bottom: 2.25rem;
-    }
-
-    #avance-barra-pista {
-      height: 3px;
-      background: rgb(var(--c-on-surface) / 0.09);
+    .dim-pista {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgb(var(--c-on-surface) / 0.07);
       overflow: hidden;
     }
-
-    #avance-barra {
+    .dim-valor {
       height: 100%;
-      width: 2%;
-      background: rgb(var(--c-primary));
-      transition: width 0.45s ease-out;
-    }
-
-    /* Mientras transmite, la barra respira. Entre sección y sección el ancho casi
-       no cambia, y sin esto un tramo lento se lee igual que un cuelgue. */
-    .avance-vivo #avance-barra {
-      background-image: linear-gradient(
+      width: 0;
+      border-radius: 999px;
+      background: linear-gradient(
         90deg,
-        rgb(var(--c-primary)) 0%,
-        rgb(var(--c-primary) / 0.55) 50%,
-        rgb(var(--c-primary)) 100%
+        rgb(var(--c-primary) / 0.65),
+        rgb(var(--c-primary))
       );
-      background-size: 200% 100%;
-      animation: avanceLatido 1.4s linear infinite;
+      /* Se llenan en escalera, no todas de golpe: el ojo sigue el recorrido y
+         de paso la pantalla tiene movimiento propio mientras el informe se
+         escribe más abajo. */
+      animation: dimLlenar 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: calc(var(--orden) * 90ms);
+    }
+    .dim-valor.bajo {
+      background: linear-gradient(
+        90deg,
+        rgb(var(--c-error, 239 68 68) / 0.55),
+        rgb(var(--c-error, 239 68 68))
+      );
+    }
+    @keyframes dimLlenar {
+      to { width: var(--hasta); }
+    }
+    .dim-cifra {
+      text-align: right;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
     }
 
-    @keyframes avanceLatido {
-      from { background-position: 200% 0; }
-      to { background-position: 0 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .dim-valor {
+        animation: none;
+        width: var(--hasta);
+      }
+    }
+
+    /* --- Señal de avance de la transmisión --- */
+
+    #avance-informe {
+      margin-top: 2.5rem;
+    }
+
+    /* MIENTRAS TRANSMITE se pega al borde de abajo. En su sitio natural —bajo
+       las seis barras, que es donde tiene que estar porque anuncia lo que
+       aparece justo debajo— queda a 666 px, y en un notebook de 14" eso es 106
+       px por debajo del pliegue: la señal de vida existía y el que esperaba no
+       la veía. Pegada abajo cumple las dos cosas a la vez, y en cuanto termina
+       vuelve a su lugar sola. */
+    .avance-vivo {
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      padding-bottom: 0.75rem;
+      /* Fondo sólido: va a pasar por encima del informe que se escribe debajo. */
+      background: rgb(var(--c-background));
+    }
+
+    .avance-caja {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      border: 1px solid rgb(var(--c-primary) / 0.28);
+      background: rgb(var(--c-primary) / 0.05);
+      padding: 0.9rem 1.1rem;
+    }
+
+    .avance-texto {
+      min-width: 0;
+    }
+
+    .avance-titulo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      font-size: 0.98rem;
+      line-height: 1.25;
+      color: rgb(var(--c-on-surface));
+    }
+
+    /* Cinco barras que suben y bajan. Es el mismo lenguaje del resto de la
+       página —el sitio entero explica con barras— así que el indicador se lee
+       como parte del informe y no como un spinner pegado encima. */
+    .ondas {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+    .ondas span {
+      width: 4px;
+      height: 100%;
+      background: rgb(var(--c-primary));
+      transform-origin: bottom;
+      transform: scaleY(0.35);
+      animation: onda 1s ease-in-out infinite;
+    }
+    .ondas span:nth-child(2) { animation-delay: 0.12s; }
+    .ondas span:nth-child(3) { animation-delay: 0.24s; }
+    .ondas span:nth-child(4) { animation-delay: 0.36s; }
+    .ondas span:nth-child(5) { animation-delay: 0.48s; }
+
+    @keyframes onda {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
     }
 
     #avance-detalle {
-      margin-top: 0.6rem;
-      font-size: 0.8125rem;
-      line-height: 1.45;
-      min-height: 1.45em;
-      color: rgb(var(--c-on-surface) / 0.55);
-      /* Una línea siempre. En 390 px un rótulo como "Lo que no podemos decirle
+      margin-top: 0.2rem;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      min-height: 1.4em;
+      color: rgb(var(--c-on-surface) / 0.6);
+      /* Una línea siempre: en 390 px un rótulo como "Lo que no podemos decirle
          sin conocerlos mejor" ocuparía tres, y el salto de alto en cada sección
          se vería como que la página se mueve sola. */
       white-space: nowrap;
@@ -1467,15 +1553,44 @@ const breadcrumbSchema = {
       text-overflow: ellipsis;
     }
 
+    #avance-barra-pista {
+      height: 2px;
+      background: rgb(var(--c-on-surface) / 0.08);
+      overflow: hidden;
+    }
+    #avance-barra {
+      height: 100%;
+      width: 2%;
+      background: rgb(var(--c-primary));
+      transition: width 0.45s ease-out;
+    }
+
+    /* Terminado: las ondas se quedan quietas y parejas, como un ecualizador que
+       dejó de sonar. Sin cambiar de elemento, para que no parpadee. */
+    .avance-listo .ondas span {
+      animation: none;
+      transform: scaleY(0.55);
+      background: rgb(var(--c-primary) / 0.45);
+    }
+    .avance-listo .avance-caja {
+      border-color: rgb(var(--c-primary) / 0.5);
+    }
     .avance-listo #avance-detalle {
       color: rgb(var(--c-primary));
     }
 
+    .avance-roto .ondas span {
+      animation: none;
+      transform: scaleY(0.3);
+      background: rgb(var(--c-error, 239 68 68) / 0.6);
+    }
+    .avance-roto .avance-caja {
+      border-color: rgb(var(--c-error, 239 68 68) / 0.5);
+      background: rgb(var(--c-error, 239 68 68) / 0.05);
+    }
     .avance-roto #avance-barra {
       background: rgb(var(--c-error, 239 68 68));
-      animation: none;
     }
-
     /* El aviso de corte sí puede ocupar lo que necesite: es un estado terminal y
        hay que poder leerlo entero. Ya no hay transmisión que interrumpir. */
     .avance-roto #avance-detalle {
@@ -1484,13 +1599,8 @@ const breadcrumbSchema = {
     }
 
     @media (prefers-reduced-motion: reduce) {
-      #avance-barra {
-        transition: none;
-      }
-      .avance-vivo #avance-barra {
-        animation: none;
-        background-image: none;
-      }
+      #avance-barra { transition: none; }
+      .ondas span { animation: none; transform: scaleY(0.6); }
     }
 
     /* Los titulares son lo único que se lee en pantalla: tipografía grande y
