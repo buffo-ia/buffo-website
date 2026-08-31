@@ -13,15 +13,15 @@ const recursos = [
 ---
 
 <footer class="bg-background border-t border-on-surface/5">
-  <div class="max-w-screen-2xl mx-auto px-8 md:px-12 py-16">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-14">
+  <div class="max-w-screen-2xl mx-auto px-8 md:px-12 py-11">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8 mb-9">
       <!-- Marca -->
       <div class="col-span-2 md:col-span-1">
         <!-- Sin placa blanca detrás: acá va la variante de palabra blanca, que
              se apoya directo sobre el fondo del pie y conserva el colibrí
              turquesa. La placa resolvía el contraste pero se leía como un
              sticker pegado encima del pie. -->
-        <Logotipo tamano="pie" fondo="auto" class="mb-5" />
+        <Logotipo tamano="pie" fondo="auto" class="mb-4" />
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
           Inteligencia artificial aplicada a la gestión comercial y operacional. Para pymes y
           grandes empresas en Chile.
@@ -30,8 +30,8 @@ const recursos = [
 
       <!-- Servicios -->
       <div>
-        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Servicios</p>
-        <ul class="space-y-3">
+        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-4">Servicios</p>
+        <ul class="space-y-2.5">
           {
             SERVICES_CONTENT.map((s) => (
               <li>
@@ -49,8 +49,8 @@ const recursos = [
 
       <!-- Recursos -->
       <div>
-        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Recursos</p>
-        <ul class="space-y-3">
+        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-4">Recursos</p>
+        <ul class="space-y-2.5">
           {
             recursos.map((r) => (
               <li>
@@ -69,7 +69,7 @@ const recursos = [
            ("contacto@buffoconsultin / g.cl"): 27 caracteres más el ícono no
            entran en 163 px. -->
       <div class="col-span-2 md:col-span-1">
-        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-5">Contacto</p>
+        <p class="text-xs tracking-widest uppercase text-on-surface/40 font-semibold mb-4">Contacto</p>
         <!-- Los íconos son los mismos que usan las tarjetas de /contacto: si el
              correo lleva un sobre allá, acá también, o el visitante tiene que
              volver a aprender la página.
@@ -78,7 +78,7 @@ const recursos = [
              muerta: se ve como parte del enlace, pero al hacerle clic no pasa
              nada y el que apuntó al sobre queda pensando que la página está
              rota. Adentro, el par entero es una sola zona de clic. -->
-        <ul class="space-y-3.5">
+        <ul class="space-y-2.5">
           <li>
             <a
               href={`mailto:${SITE.email}`}
@@ -153,7 +153,7 @@ const recursos = [
       </div>
     </div>
 
-    <div class="border-t border-on-surface/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="border-t border-on-surface/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="text-xs tracking-widest uppercase text-on-surface/45 text-center md:text-left">
         © {year} {SITE.name}. Todos los derechos reservados.
       </p>
