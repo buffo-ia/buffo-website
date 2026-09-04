@@ -137,13 +137,19 @@ const serviceSchema = {
            El claim va PRIMERO y el descriptor después: puesto al final se leía
            como un tercer dato de la enumeración en vez de como el claim. El
            separador es una barra y no un punto medio por lo mismo — marca que
-           son dos cosas distintas, no una lista. -->
+           son dos cosas distintas, no una lista.
+
+           ⚠️ Y NO van con el mismo peso (Simón, 4-sep: "debe verse fuerte, no
+           débil"). Puestos iguales el ojo los leía como una sola tira de texto
+           chico y el claim desaparecía dentro del descriptor. El claim va más
+           grande, en negrita y a color pleno; el descriptor baja a 55% — sigue
+           ahí para el AEO, pero deja de competir. -->
       <p
-        class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-7"
+        class="reveal text-[0.7rem] tracking-[0.2em] uppercase mb-7"
       >
-        Business-First AI
-        <span class="hidden md:inline opacity-40 mx-1">/</span>
-        <span class="block md:inline mt-2 md:mt-0">Consultora de IA para gestión comercial · Santiago de Chile</span>
+        <span class="text-primary text-[0.82rem] tracking-[0.26em] font-bold">Business-First AI</span>
+        <span class="hidden md:inline text-primary/30 mx-2">/</span>
+        <span class="block md:inline mt-2 md:mt-0 text-primary/55 font-semibold">Consultora de IA para gestión comercial · Santiago de Chile</span>
       </p>
       <!-- Antes el H1 decía "Inteligencia Artificial" a secas: más amplio que
            el negocio real, y ni siquiera coincidía con el <title>, que ya
@@ -299,10 +305,19 @@ const serviceSchema = {
         <section class:list={['px-8 md:px-12 py-10 md:py-12 my-2', escena]}>
           <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
-              <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold mb-4">
-                {String(i + 1).padStart(2, '0')} · {s.eyebrow}
-                <span class="opacity-45 font-normal">&nbsp;/&nbsp;{s.eyebrowEn}</span>
-              </p>
+              {/* El acento en inglés va en el MISMO badge que ya usan las páginas
+                  de servicio: no se inventa un elemento nuevo, se unifica el que
+                  existe. Iba inline al 45% de opacidad y se leía como una nota al
+                  pie; en badge tiene peso propio sin pelearle a la cejilla, que
+                  es texto plano. */}
+              <div class="flex items-center gap-3 flex-wrap mb-4">
+                <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold">
+                  {String(i + 1).padStart(2, '0')} · {s.eyebrow}
+                </p>
+                <span class="inline-flex items-center px-3 py-1 bg-primary/10 border border-primary/25 text-primary text-[0.68rem] tracking-[0.18em] uppercase font-bold">
+                  {s.eyebrowEn}
+                </span>
+              </div>
               <h3 class="text-[1.9rem] md:text-[2.5rem] font-display mb-5 leading-tight">{s.title}</h3>
               <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>
               <a

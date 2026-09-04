@@ -52,7 +52,13 @@ const itemListSchema = {
             <p class="text-on-surface-variant/70 text-[0.7rem] tracking-[0.17em] uppercase font-semibold mb-2">
               {SERVICE_PAINS[s.slug]}
             </p>
-            <h2 class="text-2xl font-display mb-3">{s.navTitle}</h2>
+            <h2 class="text-2xl font-display mb-2">{s.navTitle}</h2>
+            {/* El acento en inglés faltaba justo acá, que es LA página donde se
+                habla de los cuatro productos juntos. Mismo badge que el home y
+                que la cabecera de cada servicio. */}
+            <span class="inline-flex items-center px-3 py-1 bg-primary/10 border border-primary/25 text-primary text-[0.68rem] tracking-[0.18em] uppercase font-bold mb-4">
+              {s.nameEn}
+            </span>
             <p class="text-on-surface-variant leading-relaxed mb-6">{s.lead}</p>
             <span class="text-primary text-sm font-semibold">Conocer más →</span>
           </a>
