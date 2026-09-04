@@ -85,7 +85,13 @@ const recursos = [
               class="pie-enlace group text-sm text-on-surface/55 hover:text-primary transition-colors"
             >
               <span class="material-symbols-outlined pie-icono" aria-hidden="true">mail</span>
-              <span class="break-words">{SITE.email}</span>
+              {/* El <wbr> ofrece un punto de corte DESPUÉS del arroba. Sin él,
+                  `overflow-wrap: anywhere` parte el correo donde caiga y en
+                  tablet quedaba "contacto@buffoc / onsulting.cl". Con esto
+                  prefiere cortar en el arroba, que es donde el ojo ya espera la
+                  división; `anywhere` sigue como red de seguridad para pantallas
+                  aún más angostas. */}
+              <span class="break-words" set:html={SITE.email.replace('@', '@<wbr>')} />
             </a>
           </li>
           <li>
@@ -177,6 +183,24 @@ const recursos = [
     display: flex;
     align-items: flex-start;
     gap: 0.625rem;
+  }
+
+  /* ⭐ ESTO ARREGLA UN DESBORDE DE 26 px QUE ESTABA EN PRODUCCIÓN, en TODAS las
+     páginas, solo en el rango de tablet (~768 px). Encontrado el 4-sep-2026.
+
+     Causa: `.pie-enlace` es flex, y un hijo de flex nace con `min-width: auto`,
+     o sea NO puede encoger por debajo de su contenido. `contacto@buffoconsulting.cl`
+     es más ancho que su columna a ese ancho, y en vez de cortarse empujaba la
+     página entera. `break-words` no alcanzaba: solo parte la palabra cuando la
+     caja YA está limitada, y acá la caja crecía con el texto.
+
+     `min-width: 0` le devuelve el permiso de encoger y `anywhere` corta el
+     correo donde sea. Vale para cualquier flex con texto largo adentro — es el
+     desborde más común de todos y casi nunca se ve, porque a 390 px y a 1440 px
+     no aparece: hay que mirar justo el rango de tablet. */
+  .pie-enlace > :not(.pie-icono):not(.marca-red) {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .pie-icono {
