@@ -160,7 +160,7 @@ export const valorHora = () =>
  * Tampoco van precios: se conversan en la reunión. Ver project_noviembre_4.
  */
 export const PROPUESTA: Record<string, { titular: string; entregables: string[] }> = {
-  'Dashboards ejecutivos': {
+  'Inteligencia de Gestión': {
     titular: 'Una vista única de su negocio, actualizada sola',
     entregables: [
       'El estado del mes en una pantalla, sin que nadie arme nada',
@@ -169,7 +169,7 @@ export const PROPUESTA: Record<string, { titular: string; entregables: string[] 
       'Alertas cuando un número se sale de lo normal',
     ],
   },
-  'Modelamiento de datos': {
+  'Modelamiento de Datos': {
     titular: 'Un solo número, y que ese número aguante ser revisado',
     entregables: [
       'Maestro único de clientes, productos y precios',
@@ -178,7 +178,7 @@ export const PROPUESTA: Record<string, { titular: string; entregables: string[] 
       'Cuadratura automática entre fuentes, con las diferencias a la vista',
     ],
   },
-  'Automatización de procesos': {
+  'Automatización de Procesos': {
     titular: 'Que el trabajo repetitivo deje de ocurrir',
     entregables: [
       'La consolidación que hoy es manual, corriendo sola',
@@ -187,7 +187,7 @@ export const PROPUESTA: Record<string, { titular: string; entregables: string[] 
       'El proceso sigue funcionando aunque la persona esté de vacaciones',
     ],
   },
-  'Agentes IA': {
+  'Agentes de Negocio': {
     titular: 'Algo que vigila su operación mientras usted hace otra cosa',
     entregables: [
       'Vigilancia continua de cobranza, stock, ventas y clientes',
@@ -243,7 +243,7 @@ export const RAMALES: Ramal[] = [
     id: 'visibilidad',
     dolor: 'No tengo la foto de cómo va el negocio',
     detalle: 'Decido sin ver los números, o los veo cuando ya pasó el mes',
-    servicio: 'Dashboards ejecutivos',
+    servicio: 'Inteligencia de Gestión',
     icono: 'monitoring',
     preguntas: [
       {
@@ -302,7 +302,7 @@ export const RAMALES: Ramal[] = [
     id: 'datos',
     dolor: 'Mis datos son un desorden',
     detalle: 'Están repartidos en varios sistemas, no cuadran entre sí, o no confío en ellos',
-    servicio: 'Modelamiento de datos',
+    servicio: 'Modelamiento de Datos',
     icono: 'schema',
     preguntas: [
       {
@@ -358,7 +358,7 @@ export const RAMALES: Ramal[] = [
     id: 'procesos',
     dolor: 'Mi equipo pierde horas en tareas repetitivas',
     detalle: 'Trabajo manual que se repite todos los meses y no agrega valor',
-    servicio: 'Automatización de procesos',
+    servicio: 'Automatización de Procesos',
     icono: 'precision_manufacturing',
     preguntas: [
       {
@@ -420,7 +420,7 @@ export const RAMALES: Ramal[] = [
     id: 'vigilancia',
     dolor: 'Me entero tarde de los problemas',
     detalle: 'Todo se detecta cuando ya es un problema, no antes',
-    servicio: 'Agentes IA',
+    servicio: 'Agentes de Negocio',
     icono: 'notifications_active',
     preguntas: [
       {

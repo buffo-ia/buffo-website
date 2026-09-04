@@ -18,32 +18,44 @@ const MOCKS: Record<string, any> = {
 // Escaparate de servicios del home: cada fila combina texto + su mockup.
 // El titular es el DOLOR (SERVICE_PAINS); el nombre del producto va de eyebrow.
 // Mismo criterio que el selector del diagnóstico: nadie elige por el nombre del producto.
+//
+// ⭐ 4-sep-2026: cada producto lleva además un acento en inglés (`eyebrowEn`).
+// Decisión de Simón tras mirar rits.center. Va en la cejilla y en gris, nunca
+// como titular: es señal de oficio para el visitante, no señal para Google.
+// Fíjese que RITS dice "AI" UNA sola vez en sus cuatro productos — poner AI
+// delante de todo se lee como AI-washing, y contradice el propio claim
+// ("el negocio primero"). Por eso acá el inglés nombra la disciplina, no la
+// tecnología, salvo en Agentes, donde la tecnología ES el producto.
 const SHOWCASE = [
   {
     slug: 'dashboards-ejecutivos',
     url: 'app.buffoconsulting.cl/dashboard',
-    eyebrow: 'Dashboards ejecutivos',
+    eyebrow: 'Inteligencia de Gestión',
+    eyebrowEn: 'AI Business Analytics',
     title: SERVICE_PAINS['dashboards-ejecutivos'],
     desc: 'Sus ventas, su margen y su avance contra presupuesto en una pantalla que se actualiza sola. Con la lectura puesta: qué está fuera de lo esperado y dónde mirar primero.',
   },
   {
     slug: 'modelamiento-predictivo',
     url: 'app.buffoconsulting.cl/proyeccion',
-    eyebrow: 'Modelamiento de datos',
+    eyebrow: 'Modelamiento de Datos',
+    eyebrowEn: 'Data Modeling & Integration',
     title: SERVICE_PAINS['modelamiento-predictivo'],
     desc: 'Cada área guarda lo suyo a su manera y las cifras no cuadran entre sistemas. Conectamos las fuentes una vez, con definiciones únicas. Recién ahí se puede proyectar, presupuestar y anticipar un quiebre.',
   },
   {
     slug: 'automatizacion-procesos',
     url: 'app.buffoconsulting.cl/flujos',
-    eyebrow: 'Automatización de procesos',
+    eyebrow: 'Automatización de Procesos',
+    eyebrowEn: 'Process Automation',
     title: SERVICE_PAINS['automatizacion-procesos'],
     desc: 'Copiar y pegar entre planillas, rearmar el mismo informe cada lunes. Trabajo necesario, pero que no aprovecha el criterio de su equipo. Lo dejamos corriendo solo, empezando por el proceso que más horas libera.',
   },
   {
     slug: 'agentes-ia',
     url: 'app.buffoconsulting.cl/agentes',
-    eyebrow: 'Agentes IA',
+    eyebrow: 'Agentes de Negocio',
+    eyebrowEn: 'AI Agents',
     title: SERVICE_PAINS['agentes-ia'],
     desc: 'Un agente vigila el negocio de forma continua: revisa el pipeline cada mañana, detecta la cobranza en riesgo, avisa del quiebre de stock antes de que ocurra. No lo inunda: le avisa cuando hay que actuar.',
   },
@@ -289,6 +301,7 @@ const serviceSchema = {
             <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
               <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold mb-4">
                 {String(i + 1).padStart(2, '0')} · {s.eyebrow}
+                <span class="opacity-45 font-normal">&nbsp;/&nbsp;{s.eyebrowEn}</span>
               </p>
               <h3 class="text-[1.9rem] md:text-[2.5rem] font-display mb-5 leading-tight">{s.title}</h3>
               <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>

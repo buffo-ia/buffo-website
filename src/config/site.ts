@@ -94,32 +94,41 @@ export const BLOG_CATEGORIES: Record<string, { label: string; service: string | 
 };
 
 // Los 4 servicios — fuente única para cards de home, página madre y schema.
+//
+// ⚠️ 4-sep-2026: los NOMBRES cambiaron, los SLUGS no. Es a propósito.
+// "Dashboards ejecutivos" pasó a "Inteligencia de Gestión" y "Agentes IA" a
+// "Agentes de Negocio": el primero nombraba un objeto de pantalla y el segundo
+// una tecnología; ninguno de los dos nombraba algo que se pueda cotizar.
+// Pero /servicios/dashboards-ejecutivos SIGUE SIENDO la URL, y el metaTitle y
+// la metaDescription siguen diciendo "dashboards ejecutivos", porque eso es lo
+// que la gente BUSCA. El nombre de producto y la identidad de búsqueda no
+// tienen por qué ser el mismo texto: el H1 de cada página los une.
 export const SERVICES = [
   {
     slug: 'dashboards-ejecutivos',
     icon: 'dashboard_customize',
-    title: 'Dashboards ejecutivos',
+    title: 'Inteligencia de Gestión',
     short:
       'Su negocio en tiempo real, sin reportería manual. Visualizaciones diseñadas para decidir en el momento, no a fin de mes.',
   },
   {
     slug: 'modelamiento-predictivo',
     icon: 'schema',
-    title: 'Modelamiento de datos',
+    title: 'Modelamiento de Datos',
     short:
       'Conectamos sus fuentes y les damos sentido. Estructuramos el caos para que la información fluya hacia la rentabilidad.',
   },
   {
     slug: 'automatizacion-procesos',
     icon: 'precision_manufacturing',
-    title: 'Automatización de procesos',
+    title: 'Automatización de Procesos',
     short:
       'Elimina las tareas que no generan valor. Flujos que liberan el talento de su equipo para lo que sí importa.',
   },
   {
     slug: 'agentes-ia',
     icon: 'smart_toy',
-    title: 'Agentes IA',
+    title: 'Agentes de Negocio',
     short:
       'Software que trabaja solo: monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pida.',
   },

@@ -16,7 +16,13 @@ export interface ServiceContent {
   slug: string;
   icon: string; // Material Symbol
   navTitle: string; // título corto para listados
+  nameEn: string; // acento en inglés — va en el badge, nunca en el H1 ni el metaTitle
   h1: string; // titular con keyword + Chile
+  // ⚠️ 4-sep-2026: donde el nombre de producto cambió, el H1 lleva LOS DOS:
+  // "Inteligencia de Gestión: dashboards ejecutivos para empresas en Chile".
+  // El nombre nuevo presenta el producto, la keyword vieja conserva el
+  // posicionamiento. Sacar "dashboards ejecutivos" del H1 habría botado el
+  // término por el que la gente llega, y ese término está indexado.
   metaTitle: string;
   metaDescription: string;
   lead: string; // párrafo de respuesta directa (50-80 palabras) — clave para GEO/AEO
@@ -31,8 +37,9 @@ export const SERVICES_CONTENT: ServiceContent[] = [
   {
     slug: 'dashboards-ejecutivos',
     icon: 'dashboard_customize',
-    navTitle: 'Dashboards ejecutivos',
-    h1: 'Dashboards ejecutivos para empresas en Chile',
+    navTitle: 'Inteligencia de Gestión',
+    nameEn: 'AI Business Analytics',
+    h1: 'Inteligencia de Gestión: dashboards ejecutivos para empresas en Chile',
     metaTitle: 'Dashboards Ejecutivos en Chile | Buffo IA Consulting',
     metaDescription:
       'Diseñamos dashboards ejecutivos para empresas en Chile: sus ventas, finanzas y operación en tiempo real, sin reportería manual. Visualizaciones para decidir, no solo para mirar.',
@@ -113,7 +120,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
   {
     slug: 'modelamiento-predictivo',
     icon: 'schema',
-    navTitle: 'Modelamiento de datos',
+    navTitle: 'Modelamiento de Datos',
+    nameEn: 'Data Modeling & Integration',
     h1: 'Modelamiento y análisis de datos para empresas en Chile',
     metaTitle: 'Modelamiento de Datos y Forecasting en Chile | Buffo IA',
     metaDescription:
@@ -196,7 +204,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
   {
     slug: 'automatizacion-procesos',
     icon: 'precision_manufacturing',
-    navTitle: 'Automatización de procesos',
+    navTitle: 'Automatización de Procesos',
+    nameEn: 'Process Automation',
     h1: 'Automatización de procesos con IA para empresas en Chile',
     metaTitle: 'Automatización de Procesos con IA en Chile | Buffo IA',
     metaDescription:
@@ -279,8 +288,9 @@ export const SERVICES_CONTENT: ServiceContent[] = [
   {
     slug: 'agentes-ia',
     icon: 'smart_toy',
-    navTitle: 'Agentes IA',
-    h1: 'Agentes de inteligencia artificial para empresas en Chile',
+    navTitle: 'Agentes de Negocio',
+    nameEn: 'AI Agents',
+    h1: 'Agentes de Negocio: agentes de inteligencia artificial para empresas en Chile',
     metaTitle: 'Agentes IA para Empresas en Chile | Buffo IA Consulting',
     metaDescription:
       'Desarrollamos agentes de IA para empresas en Chile: software que trabaja solo, monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pidan. IA proactiva, no reactiva.',
