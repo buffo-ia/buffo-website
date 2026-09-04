@@ -113,11 +113,25 @@ const serviceSchema = {
     <div class="relative z-10 max-w-5xl mx-auto text-center">
       <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
            H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
-           que pide el plan de Perplexity y no estaba en ninguna parte visible. -->
+           que pide el plan de Perplexity y no estaba en ninguna parte visible.
+
+           ⭐ 4-sep-2026: el acento en inglés entra ACÁ y no como segunda cejilla.
+           Se probó con una línea propia arriba y quedaban DOS cejillas apiladas,
+           con el mismo tratamiento tipográfico: se anulaban entre ellas. Es un
+           KICKER, no un titular — el H1, el <title>, la meta description y el
+           areaServed siguen en español y no se tocan, que es donde vive el SEO
+           de "consultoría IA Chile". El inglés lo lee el visitante, no Google.
+
+           El claim va PRIMERO y el descriptor después: puesto al final se leía
+           como un tercer dato de la enumeración en vez de como el claim. El
+           separador es una barra y no un punto medio por lo mismo — marca que
+           son dos cosas distintas, no una lista. -->
       <p
         class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-7"
       >
-        Consultora de IA para gestión comercial · Santiago de Chile
+        Business-First AI
+        <span class="hidden md:inline opacity-40 mx-1">/</span>
+        <span class="block md:inline mt-2 md:mt-0">Consultora de IA para gestión comercial · Santiago de Chile</span>
       </p>
       <!-- Antes el H1 decía "Inteligencia Artificial" a secas: más amplio que
            el negocio real, y ni siquiera coincidía con el <title>, que ya
@@ -157,7 +171,13 @@ const serviceSchema = {
           rel="noopener noreferrer"
           class="border border-outline-variant bg-surface-container-highest/20 backdrop-blur-sm text-on-surface px-10 py-5 font-semibold text-base text-center hover:bg-surface-container-highest/40 hover:border-primary/25 transition-all"
         >
-          Agendar 30 minutos
+          <!-- El botón dice lo que el visitante SE LLEVA, no lo que tiene que
+               dar. "Agendar 30 minutos" pide tiempo; la segunda línea promete
+               un entregable, que es lo que mueve la conversión. -->
+          <span class="block">Agendar 30 minutos</span>
+          <span class="block text-xs font-normal text-on-surface-variant mt-1">
+            30 minutos, 3 ideas concretas para su negocio
+          </span>
         </a>
       </div>
     </div>
