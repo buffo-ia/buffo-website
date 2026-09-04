@@ -274,12 +274,41 @@ const serviceSchema = {
       </div>
     </div>
 
-    <!-- El mapa va a ANCHO COMPLETO y no dentro de la tarjeta de La Respuesta.
-         Metido en media columna crecía hacia abajo y se leía como una torre;
-         acá las doce baldosas rodean el centro, que es lo que hace que se lea
-         como un mapa y no como una lista. -->
-    <div class="max-w-6xl mx-auto mt-10 md:mt-12 reveal reveal-delay-3">
-      <MapaIntegraciones />
+    <!-- MITAD Y MITAD (Simón, 4-sep-2026): el mapa a un lado y a la otra lo que
+         el mapa está diciendo. A ancho completo el dibujo quedaba solo, sin
+         nadie que lo explicara; y el texto de arriba habla del problema, no de
+         cómo se resuelve. Acá el texto nombra los cuatro productos, así el
+         diagrama deja de ser una ilustración y pasa a ser la entrada a ellos. -->
+    <div class="max-w-6xl mx-auto mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="reveal order-2 lg:order-1">
+        <p class="acento-en mb-5">Data Modeling &amp; Integration</p>
+        <h3 class="text-[1.9rem] md:text-[2.4rem] font-display leading-tight tracking-[-0.02em] mb-5">
+          Sus datos ya existen. Están repartidos.
+        </h3>
+        <p class="text-on-surface-variant text-base md:text-lg leading-relaxed mb-5">
+          Su ERP, sus planillas, la base de datos y las campañas hablan idiomas distintos y
+          ninguno se entiende con el otro. Nos conectamos a cada uno donde está y como está:
+          nadie cambia de sistema, y nadie exporta nada a mano.
+        </p>
+        <p class="text-on-surface-variant text-base md:text-lg leading-relaxed mb-7">
+          Con esa base única funcionan los cuatro productos: la
+          <strong class="text-on-surface font-semibold">Inteligencia de Gestión</strong> que le
+          muestra el negocio al día, el
+          <strong class="text-on-surface font-semibold">Modelamiento</strong> que hace que las
+          cifras cuadren entre fuentes, la
+          <strong class="text-on-surface font-semibold">Automatización</strong> que saca el
+          trabajo repetitivo y los
+          <strong class="text-on-surface font-semibold">Agentes</strong> que vigilan mientras
+          usted hace otra cosa.
+        </p>
+        <a href="/servicios" class="inline-flex items-center gap-2 text-primary font-semibold text-sm group">
+          Ver los cuatro productos
+          <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+      <div class="reveal reveal-delay-2 order-1 lg:order-2">
+        <MapaIntegraciones />
+      </div>
     </div>
   </section>
 

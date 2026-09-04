@@ -5,21 +5,22 @@
 // pidió "exactamente el mismo, con fondo oscuro dentro de nuestra paleta, con
 // matices y brillos". Lo que hace que ESO funcione —y que la hélice del hero,
 // rechazada el mismo día, no funcionara— es que no es decoración: el dibujo
-// dice una frase. La frase es la que ya estaba escrita al lado sin ninguna
-// imagen que la sostuviera: «No reemplazamos sus sistemas: los leemos».
+// dice una frase. La frase es la que va escrita al lado: no reemplazamos sus
+// sistemas, los leemos donde están.
 //
 // ⚠️ EL RESPLANDOR ES UNA EXCEPCIÓN DELIBERADA, NO UN DESCUIDO.
 // El diagnóstico del rediseño de agosto listaba el glow entre los tics que
-// hacían ver el sitio "hecho con IA", y se limpió de todo el sitio. Acá vuelve,
-// pedido explícitamente por Simón y CONTENIDO dentro de este panel: es una
-// pieza cerrada, con su propio fondo oscuro, que no se derrama al resto de la
-// página. Si aparece glow FUERA de este componente, es un descuido; acá adentro
-// es una decisión. No extenderlo a otras secciones sin preguntarle.
+// hacían ver el sitio "hecho con IA" y se limpió de todo el sitio. Vuelve acá
+// por pedido explícito de Simón y CONTENIDO dentro de este panel: es una pieza
+// cerrada, con su propio fondo oscuro, que no se derrama al resto de la página.
+// Si aparece glow FUERA de este componente es un descuido; acá adentro es una
+// decisión. No extenderlo a otras secciones sin preguntarle.
 //
-// El panel es oscuro SIEMPRE, en tema claro y en oscuro. No es un olvido: así
-// se comporta como un objeto —una pantalla apoyada sobre la página— y no como
-// un bloque de la página que cambia de piel. También evita tener que resolver
-// doce logotipos de colores sobre dos fondos distintos.
+// ── EL ANILLO ──────────────────────────────────────────────────────────────
+// Las posiciones eran un desorden a mano y Simón pidió ordenarlo. Ahora son
+// tres por lado en un anillo simétrico. Se ganó lectura: con doce cosas
+// alrededor, la simetría es lo que hace que se entienda de un vistazo; el
+// desorden solo funciona con pocos elementos.
 //
 // ── LOGOS ──────────────────────────────────────────────────────────────────
 // Los .svg de public/sistemas/ vienen de simple-icons y se pintan con el hex
@@ -29,8 +30,15 @@
 // ⛔ Excel y SQL Server van con glifo y no con logotipo, a propósito: Microsoft
 // pidió que sus iconos se retiraran de simple-icons, y dibujarlos igual sería
 // pasar por encima de una restricción del titular.
-// ⛔ Defontana y Bsale no tienen marca vectorial pública: van con inicial. Se
-// probó con siglas de dos letras (DE, BS, EX) y se leían como error de carga.
+// ⛔ Defontana y Bsale no tienen marca vectorial pública: van con inicial.
+//
+// ── EL COLIBRÍ DEL CENTRO ──────────────────────────────────────────────────
+// ⚠️ Va como PNG incrustado y no como trazo. El diseñador entregó el logotipo
+// en PNG y .ai, nunca en SVG, y calcarlo a mano sería dibujar la marca de nuevo
+// — el mismo motivo por el que el favicon vectorial se retiró en agosto.
+// El isotipo original es TURQUESA y el hub también, así que sería invisible: se
+// generó `isotipo-oscuro.png` conservando el alfa y cambiando el color al azul
+// noche. Si algún día aparece el vectorial, se reemplaza y se borra ese PNG.
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -40,6 +48,7 @@ function trazo(archivo: string): string | null {
   if (!existsSync(ruta)) return null;
   return readFileSync(ruta, 'utf8').match(/ d="([^"]+)"/)?.[1] ?? null;
 }
+const isotipo = `data:image/png;base64,${readFileSync(`${dirLogos}isotipo-oscuro.png`).toString('base64')}`;
 
 const GLIFOS = {
   planilla: 'M3 4h18v16H3zM3 9h18M3 14h18M9 4v16M15 4v16',
@@ -47,70 +56,55 @@ const GLIFOS = {
 } as const;
 
 // ── geometría ──────────────────────────────────────────────────────────────
-const W = 1200, H = 640;
-const CX = 600, CY = 320;
-const HUB = 156;
-const HUB_IZQ = CX - HUB / 2, HUB_DER = CX + HUB / 2;
-const HUB_ARR = CY - HUB / 2, HUB_ABA = CY + HUB / 2;
-const LADO = 66, R = LADO / 2;
+const W = 660, H = 660;
+const CX = 330, CY = 330;
+const HUB = 152;
+const BI = CX - HUB / 2, BD = CX + HUB / 2, BA = CY - HUB / 2, BB = CY + HUB / 2;
+const LADO = 58, R = LADO / 2;
 
-// Los sistemas rodean el hub por los CUATRO lados, como en la referencia. Las
-// posiciones están puestas a mano y descolocadas a propósito: una grilla
-// perfecta se lee como plantilla; el desorden ordenado se lee como diagrama.
-// `d` es el cable, con codos rectos, entrando por el borde más cercano del hub.
 type Nodo = {
   nombre: string; logo?: string; glifo?: keyof typeof GLIFOS; inicial?: string;
-  hex: string; x: number; y: number; d: string; destacado?: boolean;
+  hex: string; x: number; y: number; d: string;
 };
 
+// Tres por lado. `d` es el cable con codos rectos, entrando por el borde más
+// cercano del hub; los de esquina salen de costado para no cruzar su rótulo.
 const NODOS: Nodo[] = [
   // arriba
-  { nombre: 'Defontana', inicial: 'D', hex: '#19D3C5', x: 452, y: 92,
-    d: 'M 485 92 H 552 V 242' },
-  { nombre: 'Google Sheets', logo: 'googlesheets', hex: '#34A853', x: 636, y: 62,
-    d: 'M 603 62 H 560 V 242' },
-  { nombre: 'Drive', logo: 'googledrive', hex: '#4285F4', x: 800, y: 112,
-    d: 'M 767 112 H 648 V 242' },
-
-  // izquierda
-  { nombre: 'SAP', logo: 'sap', hex: '#0FAAFF', x: 268, y: 168,
-    d: 'M 301 168 H 432 V 282 H 522' },
-  { nombre: 'Odoo', logo: 'odoo', hex: '#A16B93', x: 142, y: 330,
-    d: 'M 175 330 H 408 V 320 H 522' },
-  { nombre: 'Excel', glifo: 'planilla', hex: '#21A366', x: 262, y: 486, destacado: true,
-    d: 'M 295 486 H 432 V 358 H 522' },
+  { nombre: 'SAP', logo: 'sap', hex: '#0FAAFF', x: 176, y: 70, d: 'M 205 70 H 268 V 254' },
+  { nombre: 'Defontana', inicial: 'D', hex: '#19D3C5', x: 330, y: 62, d: 'M 330 91 V 254' },
+  { nombre: 'Odoo', logo: 'odoo', hex: '#A16B93', x: 484, y: 70, d: 'M 455 70 H 392 V 254' },
 
   // derecha
-  { nombre: 'Gmail', logo: 'gmail', hex: '#EA4335', x: 936, y: 176,
-    d: 'M 903 176 H 768 V 282 H 678' },
-  { nombre: 'WhatsApp', logo: 'whatsapp', hex: '#25D366', x: 1062, y: 330,
-    d: 'M 1029 330 H 792 V 320 H 678' },
-  { nombre: 'Google Ads', logo: 'googleads', hex: '#4285F4', x: 942, y: 482,
-    d: 'M 909 482 H 768 V 358 H 678' },
+  { nombre: 'Sheets', logo: 'googlesheets', hex: '#34A853', x: 582, y: 206, d: 'M 553 206 H 460 V 292 H 406' },
+  { nombre: 'Drive', logo: 'googledrive', hex: '#4285F4', x: 596, y: 330, d: 'M 567 330 H 406' },
+  { nombre: 'Gmail', logo: 'gmail', hex: '#EA4335', x: 582, y: 454, d: 'M 553 454 H 460 V 368 H 406' },
 
   // abajo
-  { nombre: 'SQL Server', glifo: 'base', hex: '#E14B49', x: 448, y: 548,
-    d: 'M 481 548 H 552 V 398' },
-  { nombre: 'Bsale', inicial: 'B', hex: '#19D3C5', x: 616, y: 560,
-    d: 'M 583 560 H 560 V 398' },
-  { nombre: 'Meta Ads', logo: 'meta', hex: '#0081FB', x: 792, y: 536,
-    d: 'M 759 536 H 648 V 398' },
+  { nombre: 'Excel', glifo: 'planilla', hex: '#21A366', x: 484, y: 590, d: 'M 455 590 H 392 V 406' },
+  { nombre: 'SQL Server', glifo: 'base', hex: '#E14B49', x: 330, y: 598, d: 'M 330 569 V 406' },
+  { nombre: 'Bsale', inicial: 'B', hex: '#19D3C5', x: 176, y: 590, d: 'M 205 590 H 268 V 406' },
+
+  // izquierda
+  { nombre: 'Meta Ads', logo: 'meta', hex: '#0081FB', x: 78, y: 454, d: 'M 107 454 H 200 V 368 H 254' },
+  { nombre: 'Google Ads', logo: 'googleads', hex: '#4285F4', x: 64, y: 330, d: 'M 93 330 H 254' },
+  { nombre: 'WhatsApp', logo: 'whatsapp', hex: '#25D366', x: 78, y: 206, d: 'M 107 206 H 200 V 292 H 254' },
 ];
 
 const rutas = NODOS.map((n) => ({ ...n, trazo: n.logo ? trazo(n.logo) : null }));
+const TURNO = 1.9;                       // segundos que cada sistema queda encendido
+const CICLO = (rutas.length * TURNO).toFixed(1);
 ---
 
 <figure class="mapa" aria-labelledby="mapa-pie">
-  <!-- ⚠️ En celular el SVG NO se encoge hasta caber: a 390 px un lienzo de 1200
-       deja los rótulos en 4 px, ilegibles. Conserva un ancho mínimo y se desliza
-       dentro de esta caja. La PÁGINA no gana scroll horizontal —eso sí está
-       prohibido—, solo el mapa, que es un gesto que el visitante entiende. -->
+  <!-- ⚠️ En celular el SVG NO se encoge hasta caber: los rótulos quedarían
+       ilegibles. Conserva un ancho mínimo y se desliza dentro de esta caja. La
+       PÁGINA no gana scroll horizontal —eso sí está prohibido—, solo el mapa. -->
   <div class="riel" tabindex="0" role="group" aria-label="Mapa de integraciones, deslizable">
     <svg viewBox={`0 0 ${W} ${H}`} role="img"
+         style={`--ciclo:${CICLO}s`}
          aria-label="Los sistemas que su empresa ya usa, conectados a Buffo">
       <defs>
-        <!-- el matiz del panel: más claro y turquesa al centro, apagándose
-             hacia los bordes. Es lo que da profundidad sin poner una foto. -->
         <radialGradient id="mi-fondo" cx="50%" cy="48%" r="72%">
           <stop offset="0%" stop-color="#0C3A52" />
           <stop offset="55%" stop-color="#082A3F" />
@@ -125,66 +119,60 @@ const rutas = NODOS.map((n) => ({ ...n, trazo: n.logo ? trazo(n.logo) : null }))
           <stop offset="0%" stop-color="#19D3C5" stop-opacity="0.34" />
           <stop offset="100%" stop-color="#19D3C5" stop-opacity="0.10" />
         </linearGradient>
-        <!-- el resplandor: un desenfoque de la propia forma, puesto por debajo -->
         <filter id="mi-brillo" x="-70%" y="-70%" width="240%" height="240%">
-          <feGaussianBlur stdDeviation="16" />
+          <feGaussianBlur stdDeviation="15" />
         </filter>
-        <filter id="mi-brillo-suave" x="-90%" y="-90%" width="280%" height="280%">
-          <feGaussianBlur stdDeviation="7" />
+        <filter id="mi-realce" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="9" />
         </filter>
       </defs>
 
-      <!-- el panel -->
-      <rect x="1" y="1" width={W - 2} height={H - 2} rx="26"
+      <rect x="1" y="1" width={W - 2} height={H - 2} rx="24"
             fill="url(#mi-fondo)" stroke="url(#mi-borde)" stroke-width="1.5" />
 
-      <!-- los cables, quietos -->
-      <g fill="none" stroke="#19D3C5" stroke-opacity="0.20" stroke-width="1.25"
+      <g fill="none" stroke="#19D3C5" stroke-opacity="0.20" stroke-width="1.2"
          stroke-linecap="round" stroke-linejoin="round">
         {rutas.map((r) => <path d={r.d} />)}
       </g>
 
-      <!-- el pulso: un guion corto recorriendo el MISMO cable hacia el centro.
-           Es stroke-dashoffset animado, no una librería. Los desfases no son
-           múltiplos entre sí para que nunca lleguen todos juntos. -->
-      <g class="pulsos" fill="none" stroke="#4FF3E4" stroke-width="2.5" stroke-linecap="round">
-        {rutas.map((r, i) => <path d={r.d} style={`animation-delay:${(i * 0.53).toFixed(2)}s`} />)}
+      <!-- el pulso: un guion corto recorriendo el MISMO cable hacia el centro -->
+      <g class="pulsos" fill="none" stroke="#4FF3E4" stroke-width="2.4" stroke-linecap="round">
+        {rutas.map((r, i) => <path d={r.d} style={`animation-delay:${(i * 0.47).toFixed(2)}s`} />)}
       </g>
 
-      <!-- los sistemas del cliente -->
-      {rutas.map((r) => (
-        <g class="nodo">
-          {r.destacado && (
-            <rect x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="18"
-                  fill="none" stroke={r.hex} stroke-width="3" opacity="0.55"
-                  filter="url(#mi-brillo-suave)" />
-          )}
-          <rect x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="18"
-                fill="#07222F"
-                stroke={r.destacado ? r.hex : '#19D3C5'}
-                stroke-opacity={r.destacado ? 0.75 : 0.18} stroke-width="1.25" />
+      {rutas.map((r, i) => (
+        <g class="nodo" style={`--turno:${(i * TURNO).toFixed(2)}s`}>
+          {/* El realce que va pasando de sistema en sistema. En la referencia era
+              UNO fijo; Simón lo quiso rotando, y así además dice algo: no es un
+              adorno, es "ahora estoy leyendo este". */}
+          <rect class="halo" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
+                fill="none" stroke="#FFFFFF" stroke-width="3" filter="url(#mi-realce)" />
+          <rect class="marco" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
+                fill="#07222F" stroke="#19D3C5" stroke-opacity="0.18" stroke-width="1.2" />
+          <rect class="marco-vivo" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
+                fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1.4" />
           {r.trazo ? (
-            <g transform={`translate(${r.x - 17} ${r.y - 17}) scale(1.4167)`}>
+            <g transform={`translate(${r.x - 15} ${r.y - 15}) scale(1.25)`}>
               <path d={r.trazo} fill={r.hex} />
             </g>
           ) : r.glifo ? (
-            <g transform={`translate(${r.x - 16} ${r.y - 16}) scale(1.3333)`} fill="none"
-               stroke={r.hex} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <g transform={`translate(${r.x - 14} ${r.y - 14}) scale(1.1667)`} fill="none"
+               stroke={r.hex} stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
               <path d={GLIFOS[r.glifo]} />
             </g>
           ) : (
-            <text x={r.x} y={r.y + 9} text-anchor="middle" class="inicial" fill={r.hex}>{r.inicial}</text>
+            <text x={r.x} y={r.y + 8} text-anchor="middle" class="inicial" fill={r.hex}>{r.inicial}</text>
           )}
-          <text x={r.x} y={r.y + R + 21} text-anchor="middle" class="rotulo">{r.nombre}</text>
+          <text x={r.x} y={r.y + R + 19} text-anchor="middle" class="rotulo">{r.nombre}</text>
         </g>
       ))}
 
-      <!-- el hub: primero su resplandor, debajo, y encima la pieza -->
-      <rect x={HUB_IZQ} y={HUB_ARR} width={HUB} height={HUB} rx="38"
+      <!-- el hub: su resplandor debajo, y encima la pieza con el colibrí -->
+      <rect x={BI} y={BA} width={HUB} height={HUB} rx="37"
             fill="#19D3C5" opacity="0.42" filter="url(#mi-brillo)" />
-      <rect x={HUB_IZQ} y={HUB_ARR} width={HUB} height={HUB} rx="38" fill="url(#mi-hub)" />
-      <text x={CX} y={CY + 6} text-anchor="middle" class="marca">buffo<tspan class="punto">.</tspan></text>
-      <text x={CX} y={CY + 32} text-anchor="middle" class="marca-pie">IA CONSULTING</text>
+      <rect x={BI} y={BA} width={HUB} height={HUB} rx="37" fill="url(#mi-hub)" />
+      <image href={isotipo} x={CX - 31} y={BA + 26} width="62" height="62" preserveAspectRatio="xMidYMid meet" />
+      <text x={CX} y={BB - 26} text-anchor="middle" class="marca">buffo<tspan class="punto">.</tspan></text>
     </svg>
   </div>
 
@@ -196,7 +184,7 @@ const rutas = NODOS.map((n) => ({ ...n, trazo: n.logo ? trazo(n.logo) : null }))
 <style>
   .mapa { margin: 0; }
 
-  .riel { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; border-radius: 26px; }
+  .riel { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; border-radius: 24px; }
   .riel::-webkit-scrollbar { height: 4px; }
   .riel::-webkit-scrollbar-thumb { background: rgb(var(--c-primary) / 0.35); border-radius: 4px; }
 
@@ -206,41 +194,54 @@ const rutas = NODOS.map((n) => ({ ...n, trazo: n.logo ? trazo(n.logo) : null }))
     display: block;
     width: 100%;
     height: auto;
-    min-width: 900px;
-    border-radius: 26px;
-    box-shadow: 0 0 90px -20px rgb(25 211 197 / 0.28), 0 24px 60px -30px rgb(4 21 31 / 0.7);
+    min-width: 520px;
+    border-radius: 24px;
+    box-shadow: 0 0 80px -24px rgb(25 211 197 / 0.30), 0 20px 50px -28px rgb(4 21 31 / 0.7);
   }
-  @media (min-width: 980px) { .mapa svg { min-width: 0; } }
+  @media (min-width: 620px) { .mapa svg { min-width: 0; } }
 
   /* Guion corto y hueco largo: el cable queda vacío casi todo el ciclo, así el
      conjunto respira en vez de parpadear. */
   .pulsos path {
-    stroke-dasharray: 14 900;
-    stroke-dashoffset: 914;
-    animation: correr 6s linear infinite;
+    stroke-dasharray: 12 620;
+    stroke-dashoffset: 632;
+    animation: correr 5s linear infinite;
     filter: drop-shadow(0 0 4px rgb(79 243 228 / 0.85));
   }
   @keyframes correr { to { stroke-dashoffset: 0; } }
 
-  .rotulo { fill: #BCD6E0; font-size: 13.5px; font-weight: 500; }
-  .inicial { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; }
+  /* El realce recorre los sistemas de a uno. El desfase es el turno de cada
+     baldosa dentro del ciclo completo; con doce, cada una se enciende una vez
+     por vuelta y el ojo siempre tiene un solo punto al que ir. */
+  .halo, .marco-vivo {
+    opacity: 0;
+    animation: turno var(--ciclo) linear infinite;
+    animation-delay: var(--turno);
+  }
+  .halo { animation-name: turno-halo; }
+  @keyframes turno {
+    0%, 8.34%, 100% { opacity: 0; }
+    1.2%, 6.5% { opacity: 1; }
+  }
+  @keyframes turno-halo {
+    0%, 8.34%, 100% { opacity: 0; }
+    1.2%, 6.5% { opacity: 0.55; }
+  }
 
-  .marca { fill: #04222C; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; }
+  .rotulo { fill: #BCD6E0; font-size: 13px; font-weight: 500; }
+  .inicial { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+  .marca { fill: #04222C; font-size: 27px; font-weight: 800; letter-spacing: -0.03em; }
   .marca .punto { fill: #FFFFFF; }
-  .marca-pie { fill: #04222C; fill-opacity: 0.72; font-size: 9px; font-weight: 700; letter-spacing: 0.24em; }
 
   figcaption {
-    margin: 1.4rem auto 0;
-    max-width: 46rem;
-    text-align: center;
-    font-size: 0.9rem;
+    margin: 1.1rem 0 0;
+    font-size: 0.85rem;
     line-height: 1.55;
     color: rgb(var(--c-on-surface-variant) / 1);
   }
 
-  /* Quien pidió menos movimiento ve el diagrama completo y quieto: el dibujo ya
-     dice lo que tiene que decir sin que nada se mueva. */
   @media (prefers-reduced-motion: reduce) {
     .pulsos path { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.35; filter: none; }
+    .halo, .marco-vivo { animation: none; opacity: 0; }
   }
 </style>
