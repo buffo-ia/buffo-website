@@ -290,24 +290,54 @@ const serviceSchema = {
       <div class="reveal order-2">
         <p class="text-primary uppercase tracking-widest text-xs font-semibold mb-5">Cómo nos conectamos</p>
         <h3 class="text-[1.9rem] md:text-[2.4rem] font-display leading-tight tracking-[-0.02em] mb-5">
-          Sus datos ya existen. Están repartidos.
+          Nos conectamos a todo lo que ya usa.
         </h3>
-        <p class="text-on-surface-variant text-base md:text-lg leading-relaxed mb-5">
-          Su ERP, sus planillas, la base de datos y las campañas hablan idiomas distintos y
-          ninguno se entiende con el otro. Nos conectamos a cada uno donde está y como está:
-          nadie cambia de sistema, y nadie exporta nada a mano.
+        <p class="text-on-surface-variant text-base md:text-lg leading-relaxed mb-8">
+          Su ERP, sus planillas, la base de datos y las campañas hablan idiomas distintos.
+          Los leemos donde están y como están, y encima ponemos la lectura.
         </p>
-        <p class="text-on-surface-variant text-base md:text-lg leading-relaxed mb-7">
-          Con esa base única funcionan los cuatro productos: la
-          <strong class="text-on-surface font-semibold">Inteligencia de Gestión</strong> que le
-          muestra el negocio al día, el
-          <strong class="text-on-surface font-semibold">Modelamiento</strong> que hace que las
-          cifras cuadren entre fuentes, la
-          <strong class="text-on-surface font-semibold">Automatización</strong> que saca el
-          trabajo repetitivo y los
-          <strong class="text-on-surface font-semibold">Agentes</strong> que vigilan mientras
-          usted hace otra cosa.
-        </p>
+
+        {/* ⛔ LAS CIFRAS DE ESTE BLOQUE SALEN DE COSAS QUE EL SITIO YA AFIRMA, y
+            ninguna se inventó. Importa: en el rediseño de agosto se retiraron 4
+            afirmaciones sin respaldo y una estadística sin fuente, justamente
+            para no tener que sostener después lo que nadie midió.
+              · «0 sistemas que cambiar» y «no reemplazamos» → respuesta publicada
+                en las preguntas frecuentes de esta misma página.
+              · «0 líneas de código de su lado» → es el modelo de trabajo: se
+                construye ENCIMA de lo que la empresa ya tiene.
+              · «3 minutos» → el diagnóstico, que ya se promete en los dos CTA.
+            Si algún día se quiere poner un número de integraciones o un plazo de
+            puesta en marcha —que serían más fuertes— tiene que darlo Simón: no
+            hay de dónde sacarlos sin inventarlos. */}
+        <dl class="grid grid-cols-3 gap-5 mb-8 border-t border-outline-variant pt-7">
+          <div>
+            <dd class="text-[2.6rem] md:text-[3.1rem] font-display leading-none text-primary tracking-[-0.04em]">0</dd>
+            <dt class="text-sm font-semibold mt-2 leading-snug">Sistemas que cambiar</dt>
+          </div>
+          <div>
+            <dd class="text-[2.6rem] md:text-[3.1rem] font-display leading-none text-primary tracking-[-0.04em]">0</dd>
+            <dt class="text-sm font-semibold mt-2 leading-snug">Líneas de código de su lado</dt>
+          </div>
+          <div>
+            <dd class="text-[2.6rem] md:text-[3.1rem] font-display leading-none text-primary tracking-[-0.04em]">3<span class="text-[1.4rem] md:text-[1.7rem] ml-1">min</span></dd>
+            <dt class="text-sm font-semibold mt-2 leading-snug">Para saber por dónde partir</dt>
+          </div>
+        </dl>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
+          {[
+            'Su ERP, sus planillas y su base de datos',
+            'Nadie exporta ni pega nada a mano',
+            'Sin migrar a un sistema nuevo',
+            'Si no hay API, lo leemos igual',
+          ].map((t) => (
+            <li class="flex items-start gap-2.5 text-sm md:text-[0.95rem] text-on-surface-variant leading-snug">
+              <span class="material-symbols-outlined text-primary text-lg leading-none mt-px">check</span>
+              {t}
+            </li>
+          ))}
+        </ul>
+
         <a href="/servicios" class="inline-flex items-center gap-2 text-primary font-semibold text-sm group">
           Ver los cuatro productos
           <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
