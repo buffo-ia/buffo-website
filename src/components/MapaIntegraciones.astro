@@ -49,6 +49,13 @@ function trazo(archivo: string): string | null {
   return readFileSync(ruta, 'utf8').match(/ d="([^"]+)"/)?.[1] ?? null;
 }
 const isotipo = `data:image/png;base64,${readFileSync(`${dirLogos}isotipo-oscuro.png`).toString('base64')}`;
+// ⚠️ El logotipo va como IMAGEN y no como texto. Escrito en Inter no es la
+// marca: "buffo" tiene letras propias (el manual pide All Round Gothic, que es
+// de pago y que Simón decidió no comprar, pero el logotipo viene vectorizado y
+// no la necesita). Simón lo cachó al tiro: "ocupa las letras de buffo, esas no
+// son". Se recortó del PNG del manual descartando los píxeles turquesa —el pico
+// del colibrí se metía en el recorte— y se recoloreó al azul noche.
+const logotipo = `data:image/png;base64,${readFileSync(`${dirLogos}logotipo-oscuro.png`).toString('base64')}`;
 
 const GLIFOS = {
   planilla: 'M3 4h18v16H3zM3 9h18M3 14h18M9 4v16M15 4v16',
@@ -92,7 +99,7 @@ const NODOS: Nodo[] = [
 ];
 
 const rutas = NODOS.map((n) => ({ ...n, trazo: n.logo ? trazo(n.logo) : null }));
-const TURNO = 1.9;                       // segundos que cada sistema queda encendido
+const TURNO = 0.85;                      // segundos que cada sistema queda encendido
 const CICLO = (rutas.length * TURNO).toFixed(1);
 ---
 
@@ -122,8 +129,11 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
         <filter id="mi-brillo" x="-70%" y="-70%" width="240%" height="240%">
           <feGaussianBlur stdDeviation="15" />
         </filter>
-        <filter id="mi-realce" x="-120%" y="-120%" width="340%" height="340%">
-          <feGaussianBlur stdDeviation="9" />
+        <filter id="mi-realce" x="-140%" y="-140%" width="380%" height="380%">
+          <feGaussianBlur stdDeviation="12" />
+        </filter>
+        <filter id="mi-realce-cerca" x="-90%" y="-90%" width="280%" height="280%">
+          <feGaussianBlur stdDeviation="4" />
         </filter>
       </defs>
 
@@ -146,7 +156,9 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
               UNO fijo; Simón lo quiso rotando, y así además dice algo: no es un
               adorno, es "ahora estoy leyendo este". */}
           <rect class="halo" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
-                fill="none" stroke="#FFFFFF" stroke-width="3" filter="url(#mi-realce)" />
+                fill="#FFFFFF" stroke="#FFFFFF" stroke-width="5" filter="url(#mi-realce)" />
+          <rect class="halo-cerca" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
+                fill="none" stroke="#FFFFFF" stroke-width="3" filter="url(#mi-realce-cerca)" />
           <rect class="marco" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
                 fill="#07222F" stroke="#19D3C5" stroke-opacity="0.18" stroke-width="1.2" />
           <rect class="marco-vivo" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
@@ -171,8 +183,8 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
       <rect x={BI} y={BA} width={HUB} height={HUB} rx="37"
             fill="#19D3C5" opacity="0.42" filter="url(#mi-brillo)" />
       <rect x={BI} y={BA} width={HUB} height={HUB} rx="37" fill="url(#mi-hub)" />
-      <image href={isotipo} x={CX - 31} y={BA + 26} width="62" height="62" preserveAspectRatio="xMidYMid meet" />
-      <text x={CX} y={BB - 26} text-anchor="middle" class="marca">buffo<tspan class="punto">.</tspan></text>
+      <image href={isotipo} x={CX - 27} y={BA + 28} width="54" height="54" preserveAspectRatio="xMidYMid meet" />
+      <image href={logotipo} x={CX - 46} y={BA + 94} width="92" height="25" preserveAspectRatio="xMidYMid meet" />
     </svg>
   </div>
 
@@ -213,25 +225,31 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
   /* El realce recorre los sistemas de a uno. El desfase es el turno de cada
      baldosa dentro del ciclo completo; con doce, cada una se enciende una vez
      por vuelta y el ojo siempre tiene un solo punto al que ir. */
-  .halo, .marco-vivo {
+  .halo, .halo-cerca, .marco-vivo {
     opacity: 0;
     animation: turno var(--ciclo) linear infinite;
     animation-delay: var(--turno);
   }
   .halo { animation-name: turno-halo; }
+  .halo-cerca { animation-name: turno-halo-cerca; }
+  /* Entra rápido y sale rápido: encendido casi todo su turno y apagado en el
+     salto al siguiente. Es lo que hace que se lea como un recorrido y no como
+     doce cosas parpadeando cada una por su cuenta. */
   @keyframes turno {
     0%, 8.34%, 100% { opacity: 0; }
-    1.2%, 6.5% { opacity: 1; }
+    0.7%, 7.2% { opacity: 1; }
   }
   @keyframes turno-halo {
     0%, 8.34%, 100% { opacity: 0; }
-    1.2%, 6.5% { opacity: 0.55; }
+    0.7%, 7.2% { opacity: 0.85; }
+  }
+  @keyframes turno-halo-cerca {
+    0%, 8.34%, 100% { opacity: 0; }
+    0.7%, 7.2% { opacity: 0.95; }
   }
 
   .rotulo { fill: #BCD6E0; font-size: 13px; font-weight: 500; }
   .inicial { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
-  .marca { fill: #04222C; font-size: 27px; font-weight: 800; letter-spacing: -0.03em; }
-  .marca .punto { fill: #FFFFFF; }
 
   figcaption {
     margin: 1.1rem 0 0;
@@ -242,6 +260,6 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
 
   @media (prefers-reduced-motion: reduce) {
     .pulsos path { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.35; filter: none; }
-    .halo, .marco-vivo { animation: none; opacity: 0; }
+    .halo, .halo-cerca, .marco-vivo { animation: none; opacity: 0; }
   }
 </style>
