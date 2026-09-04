@@ -37,7 +37,7 @@
 // en PNG y .ai, nunca en SVG, y calcarlo a mano sería dibujar la marca de nuevo
 // — el mismo motivo por el que el favicon vectorial se retiró en agosto.
 // El isotipo original es TURQUESA y el hub también, así que sería invisible: se
-// generó `isotipo-oscuro.png` conservando el alfa y cambiando el color al azul
+// generó `isotipo-blanco.png` conservando el alfa y cambiando el color al azul
 // noche. Si algún día aparece el vectorial, se reemplaza y se borra ese PNG.
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -48,14 +48,14 @@ function trazo(archivo: string): string | null {
   if (!existsSync(ruta)) return null;
   return readFileSync(ruta, 'utf8').match(/ d="([^"]+)"/)?.[1] ?? null;
 }
-const isotipo = `data:image/png;base64,${readFileSync(`${dirLogos}isotipo-oscuro.png`).toString('base64')}`;
+const isotipo = `data:image/png;base64,${readFileSync(`${dirLogos}isotipo-blanco.png`).toString('base64')}`;
 // ⚠️ El logotipo va como IMAGEN y no como texto. Escrito en Inter no es la
 // marca: "buffo" tiene letras propias (el manual pide All Round Gothic, que es
 // de pago y que Simón decidió no comprar, pero el logotipo viene vectorizado y
 // no la necesita). Simón lo cachó al tiro: "ocupa las letras de buffo, esas no
 // son". Se recortó del PNG del manual descartando los píxeles turquesa —el pico
 // del colibrí se metía en el recorte— y se recoloreó al azul noche.
-const logotipo = `data:image/png;base64,${readFileSync(`${dirLogos}logotipo-oscuro.png`).toString('base64')}`;
+const logotipo = `data:image/png;base64,${readFileSync(`${dirLogos}logotipo-blanco.png`).toString('base64')}`;
 
 const GLIFOS = {
   planilla: 'M3 4h18v16H3zM3 9h18M3 14h18M9 4v16M15 4v16',
@@ -194,7 +194,10 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
 </figure>
 
 <style>
-  .mapa { margin: 0; }
+  /* Tope de ancho: el mapa es CUADRADO, así que cada píxel de ancho es un píxel
+     de alto. Sin tope se comía 608 px de alto en pantalla grande, que es de
+     donde salía buena parte de lo "infinito hacia abajo". */
+  .mapa { margin: 0 auto; max-width: 520px; }
 
   .riel { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; border-radius: 24px; }
   .riel::-webkit-scrollbar { height: 4px; }
@@ -252,7 +255,7 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
   .inicial { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
 
   figcaption {
-    margin: 1.1rem 0 0;
+    margin: 0.9rem 0 0;
     font-size: 0.85rem;
     line-height: 1.55;
     color: rgb(var(--c-on-surface-variant) / 1);

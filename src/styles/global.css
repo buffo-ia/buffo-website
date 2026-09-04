@@ -684,3 +684,19 @@ textarea:focus {
   opacity: 0.85;
   flex: none;
 }
+
+/* ── Maquetas de las capacidades, comprimidas ───────────────────────────────
+   Simón, 4-sep-2026: "apretemos el sitio para que no quede infinito hacia
+   abajo". Medido, el alto de cada capacidad lo fijaba la maqueta (636 px)
+   mientras la columna de texto medía 297: la mitad de la sección era aire.
+
+   Se usa `zoom` y no `transform: scale` a propósito: scale encoge el dibujo
+   pero DEJA EL HUECO en el layout, así que no se gana un solo píxel de alto.
+   `zoom` sí reduce la caja. Y no se usa `max-width` porque estas maquetas
+   tienen alto fijo por dentro: acotarlas de ancho las angosta sin acortarlas.
+
+   En celular no se comprime: ahí la maqueta ya va a ancho completo y encogerla
+   la volvería ilegible. */
+@media (min-width: 1024px) {
+  .mockup-comprimido { zoom: 0.87; }
+}

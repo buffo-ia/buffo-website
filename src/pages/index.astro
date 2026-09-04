@@ -122,7 +122,7 @@ const serviceSchema = {
 
 <BaseLayout schema={[serviceSchema, faqSchema]} heroAncla>
   <!-- HERO -->
-  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-24 pb-20 md:pt-28 md:pb-24">
+  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-16 pb-14 md:pt-20 md:pb-16">
     <div class="relative z-10 max-w-5xl mx-auto text-center">
       <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
            H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
@@ -203,7 +203,7 @@ const serviceSchema = {
   </section>
 
   <!-- STACK TECNOLÓGICO (marquee) -->
-  <section class="bg-surface py-10 px-8 md:px-12 overflow-hidden">
+  <section class="bg-surface py-7 px-8 md:px-12 overflow-hidden">
     <div class="max-w-5xl mx-auto text-center mb-10 reveal">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Infraestructura</p>
       <h2 class="text-[2.3rem] md:text-[2.9rem] font-display leading-tight mb-4">
@@ -236,7 +236,7 @@ const serviceSchema = {
   </section>
 
   <!-- PROBLEMA + SOLUCIÓN -->
-  <section class="py-12 px-8 md:px-12 bg-background" id="approach">
+  <section class="py-9 px-8 md:px-12 bg-background" id="approach">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-start">
       <div class="space-y-5 reveal">
         <div class="text-error uppercase tracking-widest text-xs font-semibold">El Conflicto</div>
@@ -285,13 +285,13 @@ const serviceSchema = {
 
        `bloque-ancla` redefine los tokens de color en local, así que todo lo de
        adentro —texto, cifras, enlaces— se adapta solo sin tocar una clase. -->
-  <section class="px-8 md:px-12 py-14 md:py-16 my-2 bloque-ancla losa resplandor">
+  <section class="px-8 md:px-12 py-10 md:py-11 my-2 bloque-ancla losa resplandor">
     <!-- MITAD Y MITAD (Simón, 4-sep-2026): el mapa a un lado y a la otra lo que
          el mapa está diciendo. A ancho completo el dibujo quedaba solo, sin
          nadie que lo explicara; y el texto de arriba habla del problema, no de
          cómo se resuelve. Acá el texto nombra los cuatro productos, así el
          diagrama deja de ser una ilustración y pasa a ser la entrada a ellos. -->
-    <div class="max-w-6xl mx-auto mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
       <!-- ⚠️ EL MAPA VA A LA IZQUIERDA y el texto a la derecha. Es ritmo, no
            capricho: arriba venían tres bloques pesados seguidos del mismo lado
            —la tarjeta de La Respuesta, el mapa y el mockup de la capacidad 01—
@@ -362,7 +362,7 @@ const serviceSchema = {
   </section>
 
   <!-- SERVICIOS — escaparate visual con mockups -->
-  <section class="pt-10 pb-2 px-8 md:px-12 bg-background" id="services">
+  <section class="pt-8 pb-1 px-8 md:px-12 bg-background" id="services">
     <div class="max-w-6xl mx-auto">
       <div class="mb-2 reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
@@ -395,7 +395,7 @@ const serviceSchema = {
       // que es el golpe de contraste.
       const escena = ['bg-surface losa', 'bg-surface losa', 'bloque-ancla losa resplandor', 'bg-surface losa'][i];
       return (
-        <section class:list={['px-8 md:px-12 py-10 md:py-12 my-2', escena]}>
+        <section class:list={['px-8 md:px-12 py-7 md:py-8 my-2', escena]}>
           <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
               {/* ⚠️ 4-sep-2026, segunda pasada: el acento estuvo un rato en una CAJA
@@ -421,7 +421,17 @@ const serviceSchema = {
                 <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </a>
             </div>
-            <div class:list={['reveal reveal-delay-1', flip ? 'lg:order-1' : 'lg:order-2']}>
+            {/* ⭐ EL MOCKUP SE REDUCE CON `zoom`, no con max-width.
+                Medido: la columna del mockup daba 636 px de alto contra 297 de la
+                del texto — o sea el alto de cada capacidad lo fijaba la ventana,
+                y al lado quedaba medio bloque de aire. Se probó con `max-width`
+                y NO sirvió: estas maquetas tienen alto FIJO por dentro, así que
+                acotarlas de ancho las angosta sin acortarlas.
+                `zoom` sí reduce la caja que ocupa en el layout —a diferencia de
+                `transform: scale`, que encoge el dibujo pero deja el hueco—, y
+                los textos de la maqueta siguen siendo texto, no una imagen
+                reescalada. */}
+            <div class:list={['reveal reveal-delay-1 mockup-comprimido', flip ? 'lg:order-1' : 'lg:order-2']}>
               <VentanaNavegador url={s.url} pestana={s.eyebrow}>
                 <Mock />
               </VentanaNavegador>
@@ -437,7 +447,7 @@ const serviceSchema = {
        desglose por área del deck de BarloSport (lámina 7) tiene cuatro y es
        mucho más concreto: es lo que de verdad contesta "¿qué me van a
        construir?". Sin cifras, sin nombres de clientes y sin precios. -->
-  <section class="py-12 px-8 md:px-12 bg-surface losa my-2" id="portfolio">
+  <section class="py-9 px-8 md:px-12 bg-surface losa my-2" id="portfolio">
     <div class="max-w-6xl mx-auto">
       <div class="mb-10 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Portafolio</p>
@@ -502,12 +512,12 @@ const serviceSchema = {
               ],
             },
           ].map((a, i) => (
-            <div class:list={['bg-surface-container-highest p-8 md:p-9 card-hover reveal', i > 1 && 'reveal-delay-1']}>
-              <div class="flex items-center gap-3 mb-6">
+            <div class:list={['bg-surface-container-highest p-6 md:p-7 card-hover reveal', i > 1 && 'reveal-delay-1']}>
+              <div class="flex items-center gap-3 mb-4">
                 <span class="material-symbols-outlined text-primary text-2xl">{a.icono}</span>
                 <h3 class="text-primary font-display text-xl">{a.area}</h3>
               </div>
-              <ul class="space-y-3">
+              <ul class="space-y-2.5">
                 {a.items.map((x) => (
                   <li class="flex items-start gap-3 text-sm text-on-surface/85 leading-relaxed">
                     <span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0 mt-2"></span>
@@ -520,8 +530,8 @@ const serviceSchema = {
         }
       </div>
 
-      <div class="gradient-border p-10 md:p-12 mt-4 reveal reveal-delay-2">
-        <span class="material-symbols-outlined text-primary/40 text-4xl mb-4 block">format_quote</span>
+      <div class="gradient-border p-7 md:p-8 mt-4 reveal reveal-delay-2">
+        <span class="material-symbols-outlined text-primary/40 text-3xl mb-3 block">format_quote</span>
         <p class="text-xl md:text-2xl font-display leading-relaxed text-on-surface">
           No entregamos un número sin interpretación. Cada solución llega con la sugerencia puesta:
           qué mirar primero, y qué haría alguien que ya tuvo que responder por ese número frente a
@@ -536,9 +546,9 @@ const serviceSchema = {
        Pedido explícito del plan de Perplexity (5-8 preguntas de decisores) y
        alimenta el FAQPage schema, que es de lo que más se cita en respuestas
        generadas. El texto va arriba, en FAQ_HOME. -->
-  <section class="px-8 md:px-12 py-14 bg-background">
+  <section class="px-8 md:px-12 py-10 bg-background">
     <div class="max-w-3xl mx-auto">
-      <h2 class="text-[2.3rem] md:text-[2.9rem] font-display mb-10 reveal">Preguntas frecuentes</h2>
+      <h2 class="text-[2.3rem] md:text-[2.9rem] font-display mb-7 reveal">Preguntas frecuentes</h2>
       <div class="grid gap-px bg-on-surface/5 border border-on-surface/5">
         {
           FAQ_HOME.map((f, i) => (
@@ -557,7 +567,7 @@ const serviceSchema = {
     </div>
   </section>
 
-<section class="bloque-ancla losa py-16 px-8 md:px-12 my-2">
+<section class="bloque-ancla losa py-11 px-8 md:px-12 my-2">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4 reveal">Contacto</p>
       <h2 class="text-3xl md:text-4xl font-display mb-10 leading-tight reveal">
