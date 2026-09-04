@@ -1,150 +1,191 @@
 ---
 // Mapa de integraciones — los sistemas del CLIENTE conectados a Buffo.
 //
-// ⭐ POR QUÉ EXISTE (Simón, 4-sep-2026). Trajo heatlatam.com como referencia:
-// el producto al centro, las herramientas alrededor, pulsos viajando por las
-// líneas. Lo que hace que ESO funcione —y que la hélice del hero, rechazada el
-// mismo día, no funcionara— es que no es decoración: el dibujo dice una frase.
-// La memoria del rediseño ya lo tenía escrito: "lo que de verdad hace que algo
-// no se vea hecho con IA es que una decisión visual tenga una razón detrás".
+// ⭐ POR QUÉ EXISTE (Simón, 4-sep-2026). Trajo heatlatam.com como referencia y
+// pidió "exactamente el mismo, con fondo oscuro dentro de nuestra paleta, con
+// matices y brillos". Lo que hace que ESO funcione —y que la hélice del hero,
+// rechazada el mismo día, no funcionara— es que no es decoración: el dibujo
+// dice una frase. La frase es la que ya estaba escrita al lado sin ninguna
+// imagen que la sostuviera: «No reemplazamos sus sistemas: los leemos».
 //
-// La frase que dice este diagrama es la que ya estaba escrita al lado sin
-// ninguna imagen que la sostuviera: «No reemplazamos sus sistemas: los leemos».
-// Por eso son los sistemas del cliente y NO nuestro stack: el carrusel de
-// Anthropic/React/Vercel que el sitio ya tiene son nuestras herramientas, no
-// los problemas de un gerente.
+// ⚠️ EL RESPLANDOR ES UNA EXCEPCIÓN DELIBERADA, NO UN DESCUIDO.
+// El diagnóstico del rediseño de agosto listaba el glow entre los tics que
+// hacían ver el sitio "hecho con IA", y se limpió de todo el sitio. Acá vuelve,
+// pedido explícitamente por Simón y CONTENIDO dentro de este panel: es una
+// pieza cerrada, con su propio fondo oscuro, que no se derrama al resto de la
+// página. Si aparece glow FUERA de este componente, es un descuido; acá adentro
+// es una decisión. No extenderlo a otras secciones sin preguntarle.
 //
-// ⚠️ SE ROBÓ LA IDEA, NO LA PIEL. Heat va con morado neón sobre casi negro y
-// resplandor en todo — el look del que este sitio se salió a propósito. Acá:
-// líneas finas, la paleta del sitio, y el color lo ponen los logotipos.
+// El panel es oscuro SIEMPRE, en tema claro y en oscuro. No es un olvido: así
+// se comporta como un objeto —una pantalla apoyada sobre la página— y no como
+// un bloque de la página que cambia de piel. También evita tener que resolver
+// doce logotipos de colores sobre dos fondos distintos.
 //
 // ── LOGOS ──────────────────────────────────────────────────────────────────
-// Los `.svg` de public/sistemas/ vienen de simple-icons y se pintan con el hex
-// OFICIAL de cada marca. Se leen en tiempo de build y se incrustan: cero
+// Los .svg de public/sistemas/ vienen de simple-icons y se pintan con el hex
+// OFICIAL de cada marca. El trazo se lee en tiempo de BUILD y se incrusta: cero
 // peticiones de red y ningún salto al pintar.
 //
-// ⛔ Excel y SQL Server van como MARCA DENOMINATIVA, no como logotipo, y es a
-// propósito: Microsoft pidió que sus iconos se retiraran de simple-icons.
-// Dibujarlos igual sería pasar por encima de una restricción del titular. El
-// nombre en su color de marca dice lo mismo sin ese problema.
-//
-// ⛔ Defontana, Bsale, Softland y KAME no tienen marca vectorial pública, así
-// que también van como texto. Además, escrito así el diagrama no insinúa una
-// alianza comercial que no existe: dice "leemos esto", no "somos partners".
+// ⛔ Excel y SQL Server van con glifo y no con logotipo, a propósito: Microsoft
+// pidió que sus iconos se retiraran de simple-icons, y dibujarlos igual sería
+// pasar por encima de una restricción del titular.
+// ⛔ Defontana y Bsale no tienen marca vectorial pública: van con inicial. Se
+// probó con siglas de dos letras (DE, BS, EX) y se leían como error de carga.
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const dirLogos = fileURLToPath(new URL('../../public/sistemas/', import.meta.url));
-
-// Del SVG de simple-icons solo interesa el trazo: el resto se arma acá para
-// poder darle el color, el tamaño y el encuadre que necesita este diagrama.
 function trazo(archivo: string): string | null {
   const ruta = `${dirLogos}${archivo}.svg`;
   if (!existsSync(ruta)) return null;
   return readFileSync(ruta, 'utf8').match(/ d="([^"]+)"/)?.[1] ?? null;
 }
 
-// ── los sistemas ───────────────────────────────────────────────────────────
-// Elegidos por lo que de verdad aparece en los clientes: los ERP que usan, la
-// planilla donde termina todo, y de dónde sale el dato de marketing.
-// `x`/`y` están puestos a mano y a propósito descolocados: una grilla perfecta
-// se lee como plantilla; el desorden ordenado se lee como diagrama.
-type Nodo = { nombre: string; logo?: string; glifo?: 'planilla' | 'base'; inicial?: string;
-              hex: string; x: number; y: number; bus: number; entrada: number; lado: 'izq' | 'der' };
-
-// Para los que no tienen logotipo: un glifo cuando la cosa tiene forma evidente
-// (una planilla, una base de datos) y UNA inicial cuando no. Se probó con
-// siglas de dos letras — "DE", "BS", "EX" — y se leían como un error de carga.
 const GLIFOS = {
   planilla: 'M3 4h18v16H3zM3 9h18M3 14h18M9 4v16M15 4v16',
   base: 'M4 6c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2zM4 6v12c0 1.1 3.6 2 8 2s8-.9 8-2V6M4 12c0 1.1 3.6 2 8 2s8-.9 8-2',
 } as const;
 
-const NODOS: Nodo[] = [
-  // izquierda — de dónde sale el dato
-  { nombre: 'SAP',           logo: 'sap',          hex: '#0FAAFF', x: 168, y: 86,  bus: 392, entrada: 214, lado: 'izq' },
-  { nombre: 'Defontana', inicial: 'D',             hex: '#0E9E93', x: 330, y: 46,  bus: 428, entrada: 228, lado: 'izq' },
-  { nombre: 'Odoo',          logo: 'odoo',         hex: '#714B67', x: 84,  y: 262, bus: 358, entrada: 242, lado: 'izq' },
-  { nombre: 'Bsale', inicial: 'B',                 hex: '#0E9E93', x: 262, y: 232, bus: 452, entrada: 256, lado: 'izq' },
-  { nombre: 'Excel', glifo: 'planilla',            hex: '#217346', x: 160, y: 424, bus: 392, entrada: 292, lado: 'izq' },
-  { nombre: 'SQL Server', glifo: 'base',           hex: '#CC2927', x: 344, y: 458, bus: 428, entrada: 306, lado: 'izq' },
+// ── geometría ──────────────────────────────────────────────────────────────
+const W = 1200, H = 640;
+const CX = 600, CY = 320;
+const HUB = 156;
+const HUB_IZQ = CX - HUB / 2, HUB_DER = CX + HUB / 2;
+const HUB_ARR = CY - HUB / 2, HUB_ABA = CY + HUB / 2;
+const LADO = 66, R = LADO / 2;
 
-  // derecha — dónde vive el resto
-  { nombre: 'Google Sheets', logo: 'googlesheets', hex: '#34A853', x: 878,  y: 62,  bus: 800, entrada: 214, lado: 'der' },
-  { nombre: 'Drive',         logo: 'googledrive',  hex: '#4285F4', x: 1046, y: 118, bus: 764, entrada: 228, lado: 'der' },
-  { nombre: 'Gmail',         logo: 'gmail',        hex: '#EA4335', x: 946,  y: 258, bus: 838, entrada: 242, lado: 'der' },
-  { nombre: 'WhatsApp',      logo: 'whatsapp',     hex: '#25D366', x: 1108, y: 300, bus: 740, entrada: 256, lado: 'der' },
-  { nombre: 'Google Ads',    logo: 'googleads',    hex: '#4285F4', x: 892,  y: 432, bus: 800, entrada: 292, lado: 'der' },
-  { nombre: 'Meta Ads',      logo: 'meta',         hex: '#0081FB', x: 1054, y: 470, bus: 764, entrada: 306, lado: 'der' },
+// Los sistemas rodean el hub por los CUATRO lados, como en la referencia. Las
+// posiciones están puestas a mano y descolocadas a propósito: una grilla
+// perfecta se lee como plantilla; el desorden ordenado se lee como diagrama.
+// `d` es el cable, con codos rectos, entrando por el borde más cercano del hub.
+type Nodo = {
+  nombre: string; logo?: string; glifo?: keyof typeof GLIFOS; inicial?: string;
+  hex: string; x: number; y: number; d: string; destacado?: boolean;
+};
+
+const NODOS: Nodo[] = [
+  // arriba
+  { nombre: 'Defontana', inicial: 'D', hex: '#19D3C5', x: 452, y: 92,
+    d: 'M 485 92 H 552 V 242' },
+  { nombre: 'Google Sheets', logo: 'googlesheets', hex: '#34A853', x: 636, y: 62,
+    d: 'M 603 62 H 560 V 242' },
+  { nombre: 'Drive', logo: 'googledrive', hex: '#4285F4', x: 800, y: 112,
+    d: 'M 767 112 H 648 V 242' },
+
+  // izquierda
+  { nombre: 'SAP', logo: 'sap', hex: '#0FAAFF', x: 268, y: 168,
+    d: 'M 301 168 H 432 V 282 H 522' },
+  { nombre: 'Odoo', logo: 'odoo', hex: '#A16B93', x: 142, y: 330,
+    d: 'M 175 330 H 408 V 320 H 522' },
+  { nombre: 'Excel', glifo: 'planilla', hex: '#21A366', x: 262, y: 486, destacado: true,
+    d: 'M 295 486 H 432 V 358 H 522' },
+
+  // derecha
+  { nombre: 'Gmail', logo: 'gmail', hex: '#EA4335', x: 936, y: 176,
+    d: 'M 903 176 H 768 V 282 H 678' },
+  { nombre: 'WhatsApp', logo: 'whatsapp', hex: '#25D366', x: 1062, y: 330,
+    d: 'M 1029 330 H 792 V 320 H 678' },
+  { nombre: 'Google Ads', logo: 'googleads', hex: '#4285F4', x: 942, y: 482,
+    d: 'M 909 482 H 768 V 358 H 678' },
+
+  // abajo
+  { nombre: 'SQL Server', glifo: 'base', hex: '#E14B49', x: 448, y: 548,
+    d: 'M 481 548 H 552 V 398' },
+  { nombre: 'Bsale', inicial: 'B', hex: '#19D3C5', x: 616, y: 560,
+    d: 'M 583 560 H 560 V 398' },
+  { nombre: 'Meta Ads', logo: 'meta', hex: '#0081FB', x: 792, y: 536,
+    d: 'M 759 536 H 648 V 398' },
 ];
 
-// ── geometría ──────────────────────────────────────────────────────────────
-// Todo en un viewBox fijo: el SVG escala solo, sin cálculos en el navegador y
-// sin que haya que sincronizar posiciones de HTML con las líneas.
-const W = 1200, H = 540;
-const CX = 600, CY = 260;
-const HUB_W = 176, HUB_H = 104;
-const HUB_IZQ = CX - HUB_W / 2, HUB_DER = CX + HUB_W / 2;
-const LADO = 62;
-
-const rutas = NODOS.map((n) => ({
-  ...n,
-  d: n.lado === 'izq'
-    ? `M ${n.x + LADO / 2} ${n.y} H ${n.bus} V ${n.entrada} H ${HUB_IZQ}`
-    : `M ${n.x - LADO / 2} ${n.y} H ${n.bus} V ${n.entrada} H ${HUB_DER}`,
-  trazo: n.logo ? trazo(n.logo) : null,
-}));
+const rutas = NODOS.map((n) => ({ ...n, trazo: n.logo ? trazo(n.logo) : null }));
 ---
 
 <figure class="mapa" aria-labelledby="mapa-pie">
   <!-- ⚠️ En celular el SVG NO se encoge hasta caber: a 390 px un lienzo de 1200
-       deja los rótulos en 4 px, ilegibles. Conserva su ancho mínimo y se desliza
+       deja los rótulos en 4 px, ilegibles. Conserva un ancho mínimo y se desliza
        dentro de esta caja. La PÁGINA no gana scroll horizontal —eso sí está
        prohibido—, solo el mapa, que es un gesto que el visitante entiende. -->
   <div class="riel" tabindex="0" role="group" aria-label="Mapa de integraciones, deslizable">
-  <svg viewBox={`0 0 ${W} ${H}`} role="img"
-       aria-label="Los sistemas que su empresa ya usa, conectados a Buffo">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img"
+         aria-label="Los sistemas que su empresa ya usa, conectados a Buffo">
+      <defs>
+        <!-- el matiz del panel: más claro y turquesa al centro, apagándose
+             hacia los bordes. Es lo que da profundidad sin poner una foto. -->
+        <radialGradient id="mi-fondo" cx="50%" cy="48%" r="72%">
+          <stop offset="0%" stop-color="#0C3A52" />
+          <stop offset="55%" stop-color="#082A3F" />
+          <stop offset="100%" stop-color="#04151F" />
+        </radialGradient>
+        <linearGradient id="mi-hub" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2BE8D8" />
+          <stop offset="55%" stop-color="#19D3C5" />
+          <stop offset="100%" stop-color="#0E8FA6" />
+        </linearGradient>
+        <linearGradient id="mi-borde" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#19D3C5" stop-opacity="0.34" />
+          <stop offset="100%" stop-color="#19D3C5" stop-opacity="0.10" />
+        </linearGradient>
+        <!-- el resplandor: un desenfoque de la propia forma, puesto por debajo -->
+        <filter id="mi-brillo" x="-70%" y="-70%" width="240%" height="240%">
+          <feGaussianBlur stdDeviation="16" />
+        </filter>
+        <filter id="mi-brillo-suave" x="-90%" y="-90%" width="280%" height="280%">
+          <feGaussianBlur stdDeviation="7" />
+        </filter>
+      </defs>
 
-    <!-- las líneas, quietas -->
-    <g class="hilos" fill="none" stroke="currentColor" stroke-width="1.25"
-       stroke-linecap="round" stroke-linejoin="round">
-      {rutas.map((r) => <path d={r.d} />)}
-    </g>
+      <!-- el panel -->
+      <rect x="1" y="1" width={W - 2} height={H - 2} rx="26"
+            fill="url(#mi-fondo)" stroke="url(#mi-borde)" stroke-width="1.5" />
 
-    <!-- el pulso: un guion corto recorriendo la MISMA línea hacia el centro.
-         Es stroke-dashoffset animado, no una librería. Los desfases no son
-         múltiplos entre sí para que nunca lleguen todos juntos. -->
-    <g class="pulsos" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round">
-      {rutas.map((r, i) => <path d={r.d} style={`animation-delay:${(i * 0.61).toFixed(2)}s`} />)}
-    </g>
-
-    <!-- los sistemas del cliente -->
-    {rutas.map((r) => (
-      <g class="nodo">
-        <rect x={r.x - LADO / 2} y={r.y - LADO / 2} width={LADO} height={LADO} rx="17" />
-        {r.trazo ? (
-          <g transform={`translate(${r.x - 16} ${r.y - 16}) scale(1.3333)`}>
-            <path d={r.trazo} fill={r.hex} />
-          </g>
-        ) : r.glifo ? (
-          <g transform={`translate(${r.x - 15} ${r.y - 15}) scale(1.25)`} fill="none"
-             stroke={r.hex} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d={GLIFOS[r.glifo]} />
-          </g>
-        ) : (
-          <text x={r.x} y={r.y + 8} text-anchor="middle" class="inicial" fill={r.hex}>{r.inicial}</text>
-        )}
-        <text x={r.x} y={r.y + LADO / 2 + 19} text-anchor="middle" class="rotulo">{r.nombre}</text>
+      <!-- los cables, quietos -->
+      <g fill="none" stroke="#19D3C5" stroke-opacity="0.20" stroke-width="1.25"
+         stroke-linecap="round" stroke-linejoin="round">
+        {rutas.map((r) => <path d={r.d} />)}
       </g>
-    ))}
 
-    <!-- el hub -->
-    <g class="hub">
-      <rect x={HUB_IZQ} y={CY - HUB_H / 2} width={HUB_W} height={HUB_H} rx="20" />
-      <text x={CX} y={CY + 2} text-anchor="middle" class="marca">buffo<tspan class="punto">.</tspan></text>
-      <text x={CX} y={CY + 26} text-anchor="middle" class="marca-pie">IA CONSULTING</text>
-    </g>
-  </svg>
+      <!-- el pulso: un guion corto recorriendo el MISMO cable hacia el centro.
+           Es stroke-dashoffset animado, no una librería. Los desfases no son
+           múltiplos entre sí para que nunca lleguen todos juntos. -->
+      <g class="pulsos" fill="none" stroke="#4FF3E4" stroke-width="2.5" stroke-linecap="round">
+        {rutas.map((r, i) => <path d={r.d} style={`animation-delay:${(i * 0.53).toFixed(2)}s`} />)}
+      </g>
+
+      <!-- los sistemas del cliente -->
+      {rutas.map((r) => (
+        <g class="nodo">
+          {r.destacado && (
+            <rect x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="18"
+                  fill="none" stroke={r.hex} stroke-width="3" opacity="0.55"
+                  filter="url(#mi-brillo-suave)" />
+          )}
+          <rect x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="18"
+                fill="#07222F"
+                stroke={r.destacado ? r.hex : '#19D3C5'}
+                stroke-opacity={r.destacado ? 0.75 : 0.18} stroke-width="1.25" />
+          {r.trazo ? (
+            <g transform={`translate(${r.x - 17} ${r.y - 17}) scale(1.4167)`}>
+              <path d={r.trazo} fill={r.hex} />
+            </g>
+          ) : r.glifo ? (
+            <g transform={`translate(${r.x - 16} ${r.y - 16}) scale(1.3333)`} fill="none"
+               stroke={r.hex} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d={GLIFOS[r.glifo]} />
+            </g>
+          ) : (
+            <text x={r.x} y={r.y + 9} text-anchor="middle" class="inicial" fill={r.hex}>{r.inicial}</text>
+          )}
+          <text x={r.x} y={r.y + R + 21} text-anchor="middle" class="rotulo">{r.nombre}</text>
+        </g>
+      ))}
+
+      <!-- el hub: primero su resplandor, debajo, y encima la pieza -->
+      <rect x={HUB_IZQ} y={HUB_ARR} width={HUB} height={HUB} rx="38"
+            fill="#19D3C5" opacity="0.42" filter="url(#mi-brillo)" />
+      <rect x={HUB_IZQ} y={HUB_ARR} width={HUB} height={HUB} rx="38" fill="url(#mi-hub)" />
+      <text x={CX} y={CY + 6} text-anchor="middle" class="marca">buffo<tspan class="punto">.</tspan></text>
+      <text x={CX} y={CY + 32} text-anchor="middle" class="marca-pie">IA CONSULTING</text>
+    </svg>
   </div>
 
   <figcaption id="mapa-pie">
@@ -154,57 +195,39 @@ const rutas = NODOS.map((n) => ({
 
 <style>
   .mapa { margin: 0; }
-  .riel { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+
+  .riel { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; border-radius: 26px; }
   .riel::-webkit-scrollbar { height: 4px; }
   .riel::-webkit-scrollbar-thumb { background: rgb(var(--c-primary) / 0.35); border-radius: 4px; }
-  .mapa svg { display: block; width: 100%; height: auto; min-width: 880px; }
-  /* Desde que cabe entero, el ancho mínimo estorba: se saca. */
-  @media (min-width: 940px) { .mapa svg { min-width: 0; } }
 
-  .hilos  { color: rgb(var(--c-primary) / 0.30); }
-  .pulsos { color: rgb(var(--c-primary) / 0.95); }
+  /* El halo exterior del panel va en CSS y no en el SVG porque tiene que
+     desbordar la caja; dentro del viewBox quedaría recortado. */
+  .mapa svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 900px;
+    border-radius: 26px;
+    box-shadow: 0 0 90px -20px rgb(25 211 197 / 0.28), 0 24px 60px -30px rgb(4 21 31 / 0.7);
+  }
+  @media (min-width: 980px) { .mapa svg { min-width: 0; } }
 
-  /* Guion corto y hueco largo: la línea queda vacía casi todo el ciclo, así el
+  /* Guion corto y hueco largo: el cable queda vacío casi todo el ciclo, así el
      conjunto respira en vez de parpadear. */
   .pulsos path {
-    stroke-dasharray: 12 900;
-    stroke-dashoffset: 912;
-    animation: correr 6.5s linear infinite;
+    stroke-dasharray: 14 900;
+    stroke-dashoffset: 914;
+    animation: correr 6s linear infinite;
+    filter: drop-shadow(0 0 4px rgb(79 243 228 / 0.85));
   }
   @keyframes correr { to { stroke-dashoffset: 0; } }
 
-  /* La baldosa es del color de la superficie, no un gris inventado: en claro es
-     blanca y en oscuro es el azul del sitio, y el único color lo pone el logo. */
-  .nodo rect {
-    fill: rgb(var(--c-container-high) / 1);
-    stroke: rgb(var(--c-outline-variant) / 1);
-    stroke-width: 1;
-  }
-  .rotulo {
-    fill: rgb(var(--c-on-surface-variant) / 1);
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .inicial { font-size: 25px; font-weight: 800; letter-spacing: -0.02em; }
+  .rotulo { fill: #BCD6E0; font-size: 13.5px; font-weight: 500; }
+  .inicial { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; }
 
-  .hub rect {
-    fill: rgb(var(--c-primary) / 0.12);
-    stroke: rgb(var(--c-primary) / 0.6);
-    stroke-width: 1.5;
-  }
-  .marca {
-    fill: rgb(var(--c-on-surface) / 1);
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-  .marca .punto { fill: rgb(var(--c-primary) / 1); }
-  .marca-pie {
-    fill: rgb(var(--c-primary) / 0.9);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.24em;
-  }
+  .marca { fill: #04222C; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; }
+  .marca .punto { fill: #FFFFFF; }
+  .marca-pie { fill: #04222C; fill-opacity: 0.72; font-size: 9px; font-weight: 700; letter-spacing: 0.24em; }
 
   figcaption {
     margin: 1.4rem auto 0;
@@ -218,6 +241,6 @@ const rutas = NODOS.map((n) => ({
   /* Quien pidió menos movimiento ve el diagrama completo y quieto: el dibujo ya
      dice lo que tiene que decir sin que nada se mueva. */
   @media (prefers-reduced-motion: reduce) {
-    .pulsos path { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.3; }
+    .pulsos path { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.35; filter: none; }
   }
 </style>
