@@ -122,7 +122,15 @@ const serviceSchema = {
 
 <BaseLayout schema={[serviceSchema, faqSchema]} heroAncla>
   <!-- HERO -->
-  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-16 pb-14 md:pt-20 md:pb-16">
+  <!-- ⛔ NO BAJAR EL PADDING SUPERIOR DE ESTE HERO por debajo de pt-24 / md:pt-28.
+       El header es `position: fixed` en las páginas de hero oscuro —a propósito,
+       para que el contenido le pase por detrás— y por eso NO reserva su espacio.
+       Mide 94 px en escritorio y 84 en celular: todo lo que esté más arriba que
+       eso queda tapado.
+       Pasó el 4-sep-2026 apretando la página: se bajó a pt-16 y la cejilla quedó
+       13 px debajo del header en escritorio y 19 en celular.
+       El padding INFERIOR sí se puede apretar; ahí no hay nada encima. -->
+  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-24 pb-14 md:pt-28 md:pb-16">
     <div class="relative z-10 max-w-5xl mx-auto text-center">
       <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
            H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
