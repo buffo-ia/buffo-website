@@ -516,9 +516,7 @@ const breadcrumbSchema = {
               <div class:list={['reveal flex flex-col', i % 2 === 1 && 'reveal-delay-1']}>
                 <div class="flex items-center gap-3 flex-wrap">
                   <p class="text-xs font-semibold uppercase tracking-widest text-primary">{c.eyebrow}</p>
-                  <span class="inline-flex items-center px-3 py-1 bg-primary/10 border border-primary/25 text-primary text-[0.68rem] tracking-[0.18em] uppercase font-bold">
-                    {c.eyebrowEn}
-                  </span>
+                  <span class="acento-en">{c.eyebrowEn}</span>
                 </div>
                 <h3 class="mb-4 mt-1.5 font-display text-lg leading-snug">{SERVICE_PAINS[c.slug]}</h3>
                 <VentanaNavegador url={c.url} pestana={c.eyebrow}>

@@ -1,0 +1,186 @@
+---
+// Mapa de integraciones — los sistemas del CLIENTE conectados a Buffo.
+//
+// ⭐ POR QUÉ EXISTE (Simón, 4-sep-2026). Trajo heatlatam.com como referencia:
+// un diagrama con el producto al centro, las herramientas alrededor y pulsos
+// viajando por las líneas. Lo que hace que ESO funcione —y que la hélice del
+// hero no funcionara, rechazada el mismo día— es que no es decoración: el
+// dibujo dice una frase. La memoria del rediseño ya lo tenía escrito: "lo que
+// de verdad hace que algo no se vea hecho con IA es que una decisión visual
+// tenga una razón detrás".
+//
+// La frase que dice este diagrama es la que ya estaba escrita al lado y no
+// tenía ninguna imagen que la sostuviera: «No reemplazamos sus sistemas: los
+// leemos». Por eso son los sistemas del cliente y NO nuestro stack. El sitio
+// ya tiene un carrusel con Anthropic, React y Vercel: a un gerente eso no le
+// dice nada, son nuestras herramientas, no sus problemas.
+//
+// ⚠️ SE ROBÓ LA IDEA, NO LA PIEL. Heat va con morado neón sobre casi negro,
+// glow en todo y cuadrados brillantes — eso SÍ es el look estándar de startup
+// de IA, del que este sitio se salió a propósito. Acá: líneas finas, la paleta
+// del sitio y ningún resplandor.
+//
+// ⚠️ NO SE USAN LOGOS DE MARCA. Los glifos son abstractos (planilla, base de
+// datos, documento, carpeta). Poner los logotipos reales de SAP o Defontana
+// insinuaría una alianza que no existe, y además Defontana, Bsale, Softland y
+// KAME no tienen marca vectorial pública decente. El nombre en texto dice lo
+// mismo sin prometer nada.
+//
+// Todo es SVG: sin librería, sin imágenes que descargar, escala solo y anda
+// igual en los dos temas porque hereda `currentColor`.
+
+// Izquierda: ERP y sistemas de gestión. Derecha: donde vive el dato suelto.
+// Se eligieron los que de verdad aparecen en los clientes chilenos.
+const IZQUIERDA = [
+  { nombre: 'SAP', glifo: 'erp' },
+  { nombre: 'Defontana', glifo: 'erp' },
+  { nombre: 'Softland', glifo: 'erp' },
+  { nombre: 'Bsale', glifo: 'venta' },
+  { nombre: 'Odoo', glifo: 'erp' },
+];
+const DERECHA = [
+  { nombre: 'Excel', glifo: 'planilla' },
+  { nombre: 'Google Sheets', glifo: 'planilla' },
+  { nombre: 'SQL Server', glifo: 'base' },
+  { nombre: 'KAME', glifo: 'venta' },
+  { nombre: 'Drive', glifo: 'carpeta' },
+];
+
+// ── geometría ──────────────────────────────────────────────────────────────
+// Coordenadas fijas en un viewBox: el SVG escala solo y no hay que calcular
+// nada en el navegador ni sincronizar posiciones de HTML con líneas.
+const W = 640, H = 500;
+const CENTRO_X = 320, CENTRO_Y = 250;
+const HUB_W = 148, HUB_H = 84;
+const HUB_IZQ = CENTRO_X - HUB_W / 2, HUB_DER = CENTRO_X + HUB_W / 2;
+
+const LADO = 52;                 // lado del cuadrado de cada sistema
+const X_IZQ = 62, X_DER = 578;   // centro de cada columna
+const YS = [58, 155, 250, 345, 442];
+const BUS_IZQ = 178, BUS_DER = 462;         // por dónde bajan las líneas
+const ENTRADAS = [222, 236, 250, 264, 278]; // dónde entran al hub
+
+const rutas = [
+  ...IZQUIERDA.map((s, i) => ({
+    ...s, x: X_IZQ, y: YS[i], lado: 'izq' as const,
+    d: `M ${X_IZQ + LADO / 2} ${YS[i]} H ${BUS_IZQ} V ${ENTRADAS[i]} H ${HUB_IZQ}`,
+  })),
+  ...DERECHA.map((s, i) => ({
+    ...s, x: X_DER, y: YS[i], lado: 'der' as const,
+    d: `M ${X_DER - LADO / 2} ${YS[i]} H ${BUS_DER} V ${ENTRADAS[i]} H ${HUB_DER}`,
+  })),
+];
+
+// Glifos abstractos, 24×24, trazo. Nada que se parezca a un logotipo real.
+const GLIFOS: Record<string, string> = {
+  erp:      'M4 7h16M4 12h16M4 17h16M9 4v16',
+  planilla: 'M3 4h18v16H3zM3 9h18M3 14h18M9 4v16M15 4v16',
+  base:     'M4 6c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2zM4 6v12c0 1.1 3.6 2 8 2s8-.9 8-2V6M4 12c0 1.1 3.6 2 8 2s8-.9 8-2',
+  carpeta:  'M3 6h6l2 2h10v11H3zM3 11h18',
+  venta:    'M4 5h3l2.5 10h9L21 8H7M10 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2m8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2',
+};
+---
+
+<figure class="mapa-integraciones reveal" aria-labelledby="mapa-pie">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Los sistemas que ya usa su empresa, conectados a Buffo">
+    <!-- las líneas, quietas -->
+    <g class="hilos" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      {rutas.map((r) => <path d={r.d} />)}
+    </g>
+
+    <!-- el pulso: un guion corto que recorre la misma línea hacia el centro.
+         Es `stroke-dashoffset` animado, no una librería. Los desfases son
+         primos entre sí para que nunca lleguen todos juntos. -->
+    <g class="pulsos" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      {rutas.map((r, i) => (
+        <path d={r.d} style={`animation-delay:${(i * 0.73).toFixed(2)}s`} />
+      ))}
+    </g>
+
+    <!-- los sistemas del cliente -->
+    {rutas.map((r) => (
+      <g class="nodo">
+        <rect x={r.x - LADO / 2} y={r.y - LADO / 2} width={LADO} height={LADO} rx="13" />
+        <g transform={`translate(${r.x - 12} ${r.y - 12})`} fill="none" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+          <path d={GLIFOS[r.glifo]} />
+        </g>
+        <text x={r.x} y={r.y + LADO / 2 + 17} text-anchor="middle">{r.nombre}</text>
+      </g>
+    ))}
+
+    <!-- el hub -->
+    <g class="hub">
+      <rect x={HUB_IZQ} y={CENTRO_Y - HUB_H / 2} width={HUB_W} height={HUB_H} rx="16" />
+      <text x={CENTRO_X} y={CENTRO_Y + 3} text-anchor="middle" class="hub-marca">buffo<tspan class="punto">.</tspan></text>
+      <text x={CENTRO_X} y={CENTRO_Y + 23} text-anchor="middle" class="hub-pie">IA CONSULTING</text>
+    </g>
+  </svg>
+
+  <figcaption id="mapa-pie">
+    No reemplazamos sus sistemas: los leemos. Estos son los que más vemos —
+    si el suyo no está, igual se conecta.
+  </figcaption>
+</figure>
+
+<style>
+  .mapa-integraciones { margin: 0; }
+  .mapa-integraciones svg { display: block; width: 100%; height: auto; }
+
+  .hilos   { color: rgb(var(--c-primary) / 0.32); }
+  .pulsos  { color: rgb(var(--c-primary) / 0.95); }
+
+  /* Un guion corto viajando: el hueco largo deja la línea vacía casi todo el
+     ciclo, así el conjunto respira en vez de parpadear. */
+  .pulsos path {
+    stroke-dasharray: 10 640;
+    stroke-dashoffset: 650;
+    animation: correr 7s linear infinite;
+  }
+  @keyframes correr { to { stroke-dashoffset: 0; } }
+
+  .nodo rect {
+    fill: rgb(var(--c-primary) / 0.07);
+    stroke: rgb(var(--c-primary) / 0.28);
+    stroke-width: 1;
+  }
+  .nodo g { stroke: rgb(var(--c-primary) / 0.9); }
+  .nodo text {
+    fill: rgb(var(--c-on-surface-variant) / 1);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .hub rect {
+    fill: rgb(var(--c-primary) / 0.10);
+    stroke: rgb(var(--c-primary) / 0.55);
+    stroke-width: 1.5;
+  }
+  .hub-marca {
+    fill: rgb(var(--c-on-surface) / 1);
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .hub-marca .punto { fill: rgb(var(--c-primary) / 1); }
+  .hub-pie {
+    fill: rgb(var(--c-primary) / 0.85);
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+  }
+
+  figcaption {
+    margin-top: 1.1rem;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: rgb(var(--c-on-surface-variant) / 1);
+  }
+
+  /* Quien pidió menos movimiento ve el diagrama completo y quieto: el dibujo
+     ya dice lo que tiene que decir sin que nada se mueva. */
+  @media (prefers-reduced-motion: reduce) {
+    .pulsos path { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.35; }
+  }
+</style>

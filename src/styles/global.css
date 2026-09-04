@@ -656,3 +656,31 @@ textarea:focus {
 .prose-buffo h3 + p {
   margin-top: 0;
 }
+
+/* ── Acento en inglés de los productos ──────────────────────────────────────
+   Simón, 4-sep-2026: estuvo un rato dentro de una caja con borde y la bajó —
+   "esas cajas son de página web hecha con IA, se huele a lejos". El diagnóstico
+   del rediseño de agosto ya había contado las píldoras entre los tics.
+
+   La regla guía delante NO es un elemento nuevo: es el mismo recurso que el
+   sitio usa en sus cejillas de sección. Ese es el punto — un contenedor extra
+   se lee como plantilla; una marca tipográfica que ya está en el sistema, no. */
+.acento-en {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: rgb(var(--c-primary) / 1);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.acento-en::before {
+  content: '';
+  width: 26px;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.85;
+  flex: none;
+}

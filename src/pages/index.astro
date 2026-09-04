@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, SERVICES, SERVICE_PAINS, STACK } from '../config/site';
 import DashboardMockup from '../components/DashboardMockup.astro';
+import MapaIntegraciones from '../components/MapaIntegraciones.astro';
 import ForecastMockup from '../components/ForecastMockup.astro';
 import AutomationMockup from '../components/AutomationMockup.astro';
 import AgentMockup from '../components/AgentMockup.astro';
@@ -249,21 +250,23 @@ const serviceSchema = {
           >. Cuando el reporte llega el día 10, lo que informa del día 3 ya es historia.
         </p>
       </div>
+      <!-- Acá había una tarjeta con un párrafo y cuatro cajitas (Visualiza /
+           Proyecta / Automatiza / Actúa). Simón, 4-sep-2026: "esas cajas son de
+           página web hecha con IA, se huele a lejos" — y además esta mitad del
+           primer scroll era espacio caro gastado en texto plano.
+
+           Lo que se queda es el ARGUMENTO: la frase «su sistema le dice lo que
+           pasó» es lo mejor escrito que tiene el sitio. Lo que se va es la
+           tarjeta que la acompañaba sin aportarle nada.
+
+           El diagrama no es adorno: es la prueba de la frase que está justo
+           debajo de él. Ver MapaIntegraciones.astro. -->
       <div class="reveal reveal-delay-2 relative p-8 md:p-10 gradient-border">
         <div class="text-primary uppercase tracking-widest text-xs font-semibold mb-4">La Respuesta</div>
-        <p class="text-lg md:text-xl font-display leading-snug text-on-surface mb-4">
+        <p class="text-lg md:text-xl font-display leading-snug text-on-surface mb-6">
           Su sistema le dice lo que pasó. Nosotros le decimos qué hacer.
         </p>
-        <p class="text-base md:text-lg mb-6 leading-relaxed text-on-surface-variant">
-          No reemplazamos sus sistemas: los leemos, y a cada número le ponemos la lectura encima.
-          Qué se salió de rango y qué revisar primero — con el criterio de quien tuvo que responder
-          por esos números.
-        </p>
-        <div class="flex flex-wrap gap-2">
-          {['Visualiza', 'Proyecta', 'Automatiza', 'Actúa'].map((t) => (
-            <span class="text-[0.7rem] tracking-wide uppercase font-semibold text-primary border border-primary/25 bg-primary/5 px-3 py-1.5">{t}</span>
-          ))}
-        </div>
+        <MapaIntegraciones />
       </div>
     </div>
   </section>
@@ -305,18 +308,18 @@ const serviceSchema = {
         <section class:list={['px-8 md:px-12 py-10 md:py-12 my-2', escena]}>
           <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div class:list={['reveal', flip ? 'lg:order-2' : 'lg:order-1']}>
-              {/* El acento en inglés va en el MISMO badge que ya usan las páginas
-                  de servicio: no se inventa un elemento nuevo, se unifica el que
-                  existe. Iba inline al 45% de opacidad y se leía como una nota al
-                  pie; en badge tiene peso propio sin pelearle a la cejilla, que
-                  es texto plano. */}
+              {/* ⚠️ 4-sep-2026, segunda pasada: el acento estuvo un rato en una CAJA
+                  con borde y Simón la bajó — "esas cajas son de página web hecha con
+                  IA, se huele a lejos". Tenía razón y el diagnóstico del rediseño de
+                  agosto ya lo decía: "Píldoras: 10 × rounded-full" era uno de los tics
+                  contados. Ahora usa `.acento-en`, la regla guía delante, que es el
+                  patrón que el sitio YA tiene en sus cejillas: no se inventa un
+                  elemento, se habla el vocabulario que existe. */}
               <div class="flex items-center gap-3 flex-wrap mb-4">
                 <p class="text-primary tracking-[0.2em] uppercase text-xs font-semibold">
                   {String(i + 1).padStart(2, '0')} · {s.eyebrow}
                 </p>
-                <span class="inline-flex items-center px-3 py-1 bg-primary/10 border border-primary/25 text-primary text-[0.68rem] tracking-[0.18em] uppercase font-bold">
-                  {s.eyebrowEn}
-                </span>
+                <span class="acento-en">{s.eyebrowEn}</span>
               </div>
               <h3 class="text-[1.9rem] md:text-[2.5rem] font-display mb-5 leading-tight">{s.title}</h3>
               <p class="text-on-surface-variant text-lg leading-relaxed mb-8">{s.desc}</p>

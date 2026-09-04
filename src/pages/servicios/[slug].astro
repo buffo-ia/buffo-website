@@ -66,10 +66,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <div>
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[0.7rem] tracking-[0.17em] uppercase font-semibold mb-7">
-            <span class="material-symbols-outlined text-sm">{service.icon}</span>
-            {service.nameEn}
-          </div>
+          <div class="acento-en mb-7">{service.nameEn}</div>
           <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
             {service.h1}
           </h1>
