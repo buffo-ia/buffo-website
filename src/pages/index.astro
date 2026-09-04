@@ -280,7 +280,14 @@ const serviceSchema = {
          cómo se resuelve. Acá el texto nombra los cuatro productos, así el
          diagrama deja de ser una ilustración y pasa a ser la entrada a ellos. -->
     <div class="max-w-6xl mx-auto mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-      <div class="reveal order-2 lg:order-1">
+      <!-- ⚠️ EL MAPA VA A LA IZQUIERDA y el texto a la derecha. Es ritmo, no
+           capricho: arriba venían tres bloques pesados seguidos del mismo lado
+           —la tarjeta de La Respuesta, el mapa y el mockup de la capacidad 01—
+           y la página se leía repetida. Las cuatro capacidades de más abajo ya
+           alternan con `flip`, así que el desajuste estaba solo acá.
+           Solo se ve mirando la home ENTERA de corrido; por secciones sueltas
+           cada bloque se veía bien. -->
+      <div class="reveal order-2">
         <p class="text-primary uppercase tracking-widest text-xs font-semibold mb-5">Cómo nos conectamos</p>
         <h3 class="text-[1.9rem] md:text-[2.4rem] font-display leading-tight tracking-[-0.02em] mb-5">
           Sus datos ya existen. Están repartidos.
@@ -306,7 +313,7 @@ const serviceSchema = {
           <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
         </a>
       </div>
-      <div class="reveal reveal-delay-2 order-1 lg:order-2">
+      <div class="reveal reveal-delay-2 order-1">
         <MapaIntegraciones />
       </div>
     </div>
