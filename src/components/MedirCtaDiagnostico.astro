@@ -1,0 +1,19 @@
+---
+// Mide el clic en cada botón al diagnóstico marcado con data-cta-diagnostico,
+// para saber qué posición de la página funciona (hero, medio, cierre).
+// Es solo un evento de GA4: la conversión sigue siendo diagnostico_completado,
+// y por eso clic_cta_diagnostico no tiene etiqueta de Ads en config/analytics.
+---
+
+<script>
+  import { medir } from '../config/analytics';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-cta-diagnostico]').forEach((a) => {
+    a.addEventListener('click', () => {
+      medir('clic_cta_diagnostico', {
+        posicion: a.dataset.ctaDiagnostico,
+        pagina: location.pathname,
+      });
+    });
+  });
+</script>

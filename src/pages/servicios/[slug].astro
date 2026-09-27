@@ -5,6 +5,8 @@ import ServiceSteps from '../../components/ServiceSteps.astro';
 import ForecastMockup from '../../components/ForecastMockup.astro';
 import AutomationMockup from '../../components/AutomationMockup.astro';
 import AgentMockup from '../../components/AgentMockup.astro';
+import FranjaDiagnostico from '../../components/FranjaDiagnostico.astro';
+import MedirCtaDiagnostico from '../../components/MedirCtaDiagnostico.astro';
 import { SITE } from '../../config/site';
 import { SERVICES_CONTENT } from '../../data/services';
 import { STEPS } from '../../data/serviceSteps';
@@ -25,11 +27,11 @@ const path = `/servicios/${service.slug}`;
 const others = SERVICES_CONTENT.filter((s) => s.slug !== service.slug);
 const stepData = STEPS[service.slug];
 
-// CTA del hero por servicio
-const heroCta: Record<string, string> = {
-  'modelamiento-predictivo': 'Quiero ordenar mis datos',
-  'automatizacion-procesos': 'Quiero automatizar esto',
-  'agentes-ia': 'Quiero un agente así',
+// Pregunta de la franja al diagnóstico, por servicio
+const preguntaDiagnostico: Record<string, string> = {
+  'modelamiento-predictivo': '¿Tus proyecciones dependen de una planilla y de la intuición?',
+  'automatizacion-procesos': '¿Tu equipo pierde horas pasando datos a mano entre planillas y sistemas?',
+  'agentes-ia': '¿Tu equipo responde una y otra vez las mismas consultas?',
 };
 
 const serviceSchema = {
@@ -65,20 +67,31 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
         <Breadcrumbs items={[{ label: 'Servicios', href: '/servicios' }, { label: service.navTitle, href: path }]} />
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
+        <!-- En celular el botón va antes del lead: si no, en «Dashboards» queda bajo
+             el borde de la pantalla y la barra fija no aparece hasta salir del hero. -->
+        <div class="flex flex-col">
           <div class="acento-en mb-7">{service.nameEn}</div>
           <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-6 tracking-[-0.02em]">
             {service.h1}
           </h1>
-          <p class="text-lg text-on-surface-variant leading-relaxed mb-8">{service.lead}</p>
-          <a
-            href={SITE.calendly}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-glow bg-primary text-on-primary px-9 py-4 font-semibold text-base inline-block"
-          >
-            {heroCta[service.slug] ?? 'Agende una llamada'}
-          </a>
+          <p class="text-lg text-on-surface-variant leading-relaxed order-last mt-8 lg:order-none lg:mt-0 lg:mb-8">{service.lead}</p>
+          <div>
+            <a
+              href="/diagnostico"
+              data-cta-diagnostico="hero"
+              class="btn-glow bg-primary text-on-primary px-9 py-4 font-semibold text-base inline-block"
+            >
+              Haz tu diagnóstico gratis · 3 min
+            </a>
+            <p class="text-sm text-on-surface-variant mt-4">
+              o <a
+                href={SITE.calendly}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="underline underline-offset-4 hover:text-primary transition-colors"
+              >agenda una llamada de 30 min</a>
+            </p>
+          </div>
         </div>
         <div class="reveal reveal-delay-1">
           {service.slug === 'modelamiento-predictivo' && <ForecastMockup />}
@@ -160,6 +173,9 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
     </div>
   </section>
 
+  <!-- DIAGNÓSTICO al medio: justo después de lo que se entrega -->
+  <FranjaDiagnostico pregunta={preguntaDiagnostico[service.slug] ?? '¿Tus datos te ayudan a decidir o solo a reportar?'} />
+
   <!-- PARA QUIÉN -->
   <section class="px-8 md:px-12 py-20 bg-surface-container-lowest border-y border-on-surface/5">
     <div class="max-w-5xl mx-auto">
@@ -229,13 +245,14 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
         ¿Quiere ver cómo aplicaría a su empresa?
       </h2>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="btn-glow bg-primary text-on-primary px-10 py-5 font-semibold text-base">
-          Agende una llamada de 30 minutos
+        <a href="/diagnostico" data-cta-diagnostico="cierre" class="btn-glow bg-primary text-on-primary px-10 py-5 font-semibold text-base">
+          Haz tu diagnóstico gratis · 3 min
         </a>
-        <a href="/contacto" class="border border-outline-variant text-on-surface px-10 py-5 font-semibold text-base hover:border-primary/30 transition-all">
-          Enviar un mensaje
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="border border-outline-variant text-on-surface px-10 py-5 font-semibold text-base hover:border-primary/30 transition-all">
+          Agenda una llamada de 30 min
         </a>
       </div>
     </div>
   </section>
+  <MedirCtaDiagnostico />
 </BaseLayout>

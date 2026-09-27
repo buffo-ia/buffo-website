@@ -1,0 +1,26 @@
+---
+// Franja al medio de una página de servicio: una pregunta que el visitante se
+// reconoce y el botón al diagnóstico. La pauta aterriza en estas páginas y,
+// antes de esta franja, el diagnóstico solo aparecía en el header y en la
+// barra del celular — nunca en el cuerpo.
+interface Props {
+  pregunta: string;
+}
+const { pregunta } = Astro.props;
+---
+
+<section id="franja-diagnostico" class="px-8 md:px-12 py-16 bg-background border-t border-on-surface/5">
+  <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8 reveal">
+    <div>
+      <p class="text-[1.4rem] md:text-[1.7rem] font-display leading-tight mb-2">{pregunta}</p>
+      <p class="text-on-surface-variant">Descúbrelo en 3 minutos.</p>
+    </div>
+    <a
+      href="/diagnostico"
+      data-cta-diagnostico="medio"
+      class="btn-glow bg-primary text-on-primary px-9 py-4 font-semibold text-base text-center flex-shrink-0"
+    >
+      Haz tu diagnóstico gratis · 3 min
+    </a>
+  </div>
+</section>
