@@ -18,7 +18,7 @@ const pipeline = [
 ];
 ---
 
-<div class="dash bg-surface-container-lowest p-5 md:p-6 select-none">
+<div class="dash bg-surface-container-lowest p-3.5 sm:p-5 md:p-6 select-none">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
@@ -35,14 +35,16 @@ const pipeline = [
       </p>
       <span class="text-[0.6rem] txt-critico/70 font-semibold">~6 h / semana</span>
     </div>
-    <div class="flex items-center gap-1">
+    <!-- En celular la fila de cuatro no cabe (pide ~270 px y hay ~200): pasa a
+         2×2 y las flechas se esconden. Desde sm vuelve a ser una fila. -->
+    <div class="grid grid-cols-2 gap-1.5 sm:flex sm:items-center sm:gap-1">
       {pasosManual.map((p, i) => (
         <>
           <div class="manual-step flex-1 bg-error/5 border border-[rgb(var(--d-critico))]/15 p-2 flex flex-col items-center gap-1" style={`--d:${i * 0.15}s`}>
             <span class="material-symbols-outlined txt-critico/60 text-base">{p.icon}</span>
             <span class="text-[0.5rem] text-on-surface-variant text-center leading-tight">{p.label}</span>
           </div>
-          {i < pasosManual.length - 1 && <span class="material-symbols-outlined txt-critico/30 text-sm">chevron_right</span>}
+          {i < pasosManual.length - 1 && <span class="hidden sm:inline material-symbols-outlined txt-critico/30 text-sm">chevron_right</span>}
         </>
       ))}
     </div>
@@ -61,7 +63,7 @@ const pipeline = [
       </p>
       <span class="text-[0.6rem] txt-ok font-semibold">0 intervención</span>
     </div>
-    <div class="relative flex items-center gap-1">
+    <div class="relative grid grid-cols-2 gap-1.5 sm:flex sm:items-center sm:gap-1">
       {pipeline.map((p, i) => (
         <>
           <div class="auto-step flex-1 bg-primary/10 border border-primary/25 p-2 flex flex-col items-center gap-1 relative" style={`--d:${i * 0.4}s`}>
@@ -69,7 +71,7 @@ const pipeline = [
             <span class="text-[0.5rem] text-on-surface/80 text-center leading-tight">{p.label}</span>
             <span class="check-badge material-symbols-outlined text-primary text-[0.7rem] absolute -top-1.5 -right-1.5 bg-surface-container-lowest rounded-full" style={`--d:${1.6 + i * 0.4}s`}>check_circle</span>
           </div>
-          {i < pipeline.length - 1 && <span class="material-symbols-outlined text-primary/40 text-sm pipe-arrow" style={`--d:${0.2 + i * 0.4}s`}>chevron_right</span>}
+          {i < pipeline.length - 1 && <span class="hidden sm:inline material-symbols-outlined text-primary/40 text-sm pipe-arrow" style={`--d:${0.2 + i * 0.4}s`}>chevron_right</span>}
         </>
       ))}
     </div>

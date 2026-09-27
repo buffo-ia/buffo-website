@@ -104,10 +104,11 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
 ---
 
 <figure class="mapa" aria-labelledby="mapa-pie">
-  <!-- ⚠️ En celular el SVG NO se encoge hasta caber: los rótulos quedarían
-       ilegibles. Conserva un ancho mínimo y se desliza dentro de esta caja. La
-       PÁGINA no gana scroll horizontal —eso sí está prohibido—, solo el mapa. -->
-  <div class="riel" tabindex="0" role="group" aria-label="Mapa de integraciones, deslizable">
+  <!-- En celular el SVG se encoge hasta caber y los rótulos crecen para seguir
+       legibles (ver el @media de abajo). Antes conservaba 520 px de ancho y se
+       deslizaba de lado dentro de esta caja: Simón, 26-sep-2026, «se ve super
+       mal en mobile... nada de scroll lateral». -->
+  <div class="riel">
     <svg viewBox={`0 0 ${W} ${H}`} role="img"
          style={`--ciclo:${CICLO}s`}
          aria-label="Los sistemas que su empresa ya usa, conectados a Buffo">
@@ -199,9 +200,7 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
      donde salía buena parte de lo "infinito hacia abajo". */
   .mapa { margin: 0 auto; max-width: 520px; }
 
-  .riel { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; border-radius: 24px; }
-  .riel::-webkit-scrollbar { height: 4px; }
-  .riel::-webkit-scrollbar-thumb { background: rgb(var(--c-primary) / 0.35); border-radius: 4px; }
+  .riel { border-radius: 24px; }
 
   /* El halo exterior del panel va en CSS y no en el SVG porque tiene que
      desbordar la caja; dentro del viewBox quedaría recortado. */
@@ -209,11 +208,17 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
     display: block;
     width: 100%;
     height: auto;
-    min-width: 520px;
     border-radius: 24px;
     box-shadow: 0 0 80px -24px rgb(25 211 197 / 0.30), 0 20px 50px -28px rgb(4 21 31 / 0.7);
   }
-  @media (min-width: 620px) { .mapa svg { min-width: 0; } }
+  /* En celular el mapa queda a ~la mitad de su tamaño (viewBox de 660 en
+     ~330 px): los rótulos se agrandan en unidades del SVG para que en pantalla
+     sigan midiendo ~11 px. Los anchos caben: el rótulo más largo de un costado
+     («Google Ads») no pasa del borde del panel. */
+  @media (max-width: 619px) {
+    .rotulo { font-size: 21px; font-weight: 600; }
+    .inicial { font-size: 30px; }
+  }
 
   /* Guion corto y hueco largo: el cable queda vacío casi todo el ciclo, así el
      conjunto respira en vez de parpadear. */

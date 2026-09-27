@@ -16,7 +16,7 @@ const COLOR = { ok: 'txt-ok', alerta: 'txt-alerta', critico: 'txt-critico', neut
 const FONDO = { ok: 'bg-ok', alerta: 'bg-alerta', critico: 'bg-critico', neutro: 'bg-on-surface/20' };
 ---
 
-<div class="dash bg-surface-container-lowest p-5 md:p-6 select-none">
+<div class="dash bg-surface-container-lowest p-3.5 sm:p-5 md:p-6 select-none">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-2.5">
       <span class="live-dot w-2.5 h-2.5 rounded-full bg-primary"></span>
@@ -29,18 +29,18 @@ const FONDO = { ok: 'bg-ok', alerta: 'bg-alerta', critico: 'bg-critico', neutro:
 
   <!-- estado del agente -->
   <div class="grid grid-cols-3 gap-2.5 mb-4">
-    <div class="bg-surface-container-low border border-on-surface/5 p-3 text-center">
-      <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Vigilando</p>
+    <div class="bg-surface-container-low border border-on-surface/5 p-2 sm:p-3 text-center min-w-0">
+      <p class="text-[0.55rem] uppercase tracking-normal sm:tracking-widest text-on-surface-variant mb-1">Vigilando</p>
       <p class="text-base font-display text-on-surface">142</p>
       <p class="text-[0.55rem] txt-ok font-semibold">▲ 6 nuevas</p>
     </div>
-    <div class="bg-surface-container-low border border-on-surface/5 p-3 text-center">
-      <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Frecuencia</p>
+    <div class="bg-surface-container-low border border-on-surface/5 p-2 sm:p-3 text-center min-w-0">
+      <p class="text-[0.55rem] uppercase tracking-normal sm:tracking-widest text-on-surface-variant mb-1">Frecuencia</p>
       <p class="text-base font-display text-on-surface">24/7</p>
       <p class="text-[0.55rem] text-on-surface-variant/70">sin pausa</p>
     </div>
-    <div class="bg-surface-container-low border border-primary/25 p-3 text-center">
-      <p class="text-[0.55rem] uppercase tracking-widest text-on-surface-variant mb-1">Alertas hoy</p>
+    <div class="bg-surface-container-low border border-primary/25 p-2 sm:p-3 text-center min-w-0">
+      <p class="text-[0.55rem] uppercase tracking-normal sm:tracking-widest text-on-surface-variant mb-1">Alertas hoy</p>
       <p class="text-base font-display text-primary">3</p>
       <p class="text-[0.55rem] text-primary/70">accionadas</p>
     </div>
