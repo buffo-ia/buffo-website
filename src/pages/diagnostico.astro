@@ -777,7 +777,8 @@ const breadcrumbSchema = {
       estado.datosCliente = cliente;
 
       $('portada-pdf').innerHTML = `
-        <img src="/logo-firma.png" alt="Buffo IA Consulting" class="portada-logo" />
+        <img src="/marca/logo-buffo-oscuro.png" alt="Buffo IA Consulting" class="portada-logo" />
+        <img src="/marca/isotipo-turquesa.png" alt="" class="portada-isotipo" />
         <div class="portada-centro">
           <p class="eyebrow">Diagnóstico de operación</p>
           <p class="wordmark">Buffo<span class="verde"> IA</span></p>
@@ -793,8 +794,9 @@ const breadcrumbSchema = {
             </div>
           </div>
         </div>
+        <div class="portada-barra"></div>
         <div class="portada-pie">
-          <span>Preparado para ${escapar(cuerpo.nombre)}</span>
+          <span><small>Preparado para</small>${escapar(cuerpo.nombre)}</span>
           <span>${hoyLargo()}</span>
         </div>`;
 
@@ -1751,7 +1753,7 @@ const breadcrumbSchema = {
     /* Etiqueta del frente de trabajo en el selector de dolor. Mono y en gris
        para que el ojo lea primero el dolor; se enciende al pasar por encima. */
     .etiqueta-frente {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: .68rem;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -1833,13 +1835,13 @@ const breadcrumbSchema = {
       .portada-logo { position: absolute; top: 0; right: 0; width: 42mm; }
       .portada-centro { margin-top: -10mm; }
       #portada-pdf .eyebrow {
-        font-family: 'IBM Plex Mono', monospace;
+        font-family: 'Inter', sans-serif;
         font-size: 8.5pt; text-transform: uppercase; letter-spacing: .2em;
-        color: #0e8a4f; margin-bottom: 10mm;
+        color: #0F7C78; margin-bottom: 10mm;
       }
       #portada-pdf .eyebrow::before {
         content: ''; display: inline-block; width: 7mm; height: 1.5pt;
-        background: #09726a; vertical-align: middle; margin-right: 3mm;
+        background: #20C2BC; vertical-align: middle; margin-right: 3mm;
       }
       #portada-pdf .wordmark,
       #portada-pdf .wordmark-cliente {
@@ -1847,7 +1849,7 @@ const breadcrumbSchema = {
         font-size: 40pt; margin: 0;
       }
       #portada-pdf .wordmark-cliente { color: #0d0e10; }
-      #portada-pdf .verde { color: #09726a; }
+      #portada-pdf .verde { color: #20C2BC; }
       #portada-pdf .por { color: #5b616b; font-weight: 800; }
 
       .portada-puntaje {
@@ -1857,11 +1859,11 @@ const breadcrumbSchema = {
       }
       .portada-puntaje .cifra {
         font-size: 46pt; font-weight: 900; letter-spacing: -.04em;
-        color: #09726a; line-height: 1; margin: 0;
+        color: #20C2BC; line-height: 1; margin: 0;
       }
       .portada-puntaje .de { font-size: 18pt; color: #5b616b; }
       .cifra-rotulo {
-        font-family: 'IBM Plex Mono', monospace; font-size: 8pt;
+        font-family: 'Inter', sans-serif; font-size: 8pt;
         text-transform: uppercase; letter-spacing: .12em; color: #5b616b; margin-top: 3mm;
       }
       .portada-tramo { flex: 1; }
@@ -1871,7 +1873,7 @@ const breadcrumbSchema = {
       .portada-pie {
         position: absolute; bottom: 0; left: 0; right: 0;
         display: flex; justify-content: space-between;
-        font-family: 'IBM Plex Mono', monospace; font-size: 8pt;
+        font-family: 'Inter', sans-serif; font-size: 8pt;
         color: #5b616b; border-top: 1px solid rgba(13,14,16,.10); padding-top: 3mm;
       }
 
@@ -1880,10 +1882,10 @@ const breadcrumbSchema = {
         display: flex !important; justify-content: space-between; align-items: baseline;
         border-bottom: 1px solid rgba(13,14,16,.10);
         padding-bottom: 3mm; margin-bottom: 9mm;
-        font-family: 'IBM Plex Mono', monospace; font-size: 8pt; color: #5b616b;
+        font-family: 'Inter', sans-serif; font-size: 8pt; color: #5b616b;
       }
       .membrete-marca { font-family: 'Inter', sans-serif; font-weight: 800; color: #0d0e10; }
-      #membrete .verde { color: #09726a; }
+      #membrete .verde { color: #20C2BC; }
 
       .titulares li {
         font-size: 10pt !important;
@@ -1895,25 +1897,25 @@ const breadcrumbSchema = {
 
       /* ---------- Rótulos y bloques ---------- */
       #paso-resultado .rotulo {
-        font-family: 'IBM Plex Mono', monospace !important;
+        font-family: 'Inter', sans-serif !important;
         font-size: 8pt !important; text-transform: uppercase; letter-spacing: .18em;
-        color: #0e8a4f !important; font-weight: 500;
+        color: #0F7C78 !important; font-weight: 500;
       }
       #paso-resultado .rotulo::before {
         content: ''; display: inline-block; width: 5mm; height: 1.2pt;
-        background: #09726a; vertical-align: middle; margin-right: 2.5mm;
+        background: #20C2BC; vertical-align: middle; margin-right: 2.5mm;
       }
       #paso-resultado .bloque { break-inside: avoid; margin-top: 9mm !important; }
       #paso-resultado .bloque-largo { margin-top: 9mm !important; }
       #paso-resultado .hallazgo {
         break-inside: avoid;
-        border-left: 2pt solid #09726a !important;
+        border-left: 2pt solid #20C2BC !important;
         padding-left: 5mm !important;
         margin-top: 6mm !important;
       }
       #paso-resultado .destacado {
         background: #f2faf6 !important;
-        border: 1px solid #09726a !important;
+        border: 1px solid #20C2BC !important;
         border-radius: 14px; padding: 6mm !important;
       }
 
@@ -1922,7 +1924,7 @@ const breadcrumbSchema = {
       .text-outline { color: #6b7178 !important; }
       .text-error { color: #c0392b !important; }
       .bg-surface-container { background: #e9ecef !important; }
-      .bg-primary { background: #09726a !important; }
+      .bg-primary { background: #20C2BC !important; }
       .fila-barra { break-inside: avoid; }
 
       /* ---------- Maqueta "cómo se vería su información" ---------- */
@@ -1938,7 +1940,7 @@ const breadcrumbSchema = {
         width: 2.4mm; height: 2.4mm; border-radius: 50%;
         background: rgba(13,14,16,.16); display: inline-block;
       }
-      .maqueta-barra span:first-child { background: #09726a; }
+      .maqueta-barra span:first-child { background: #20C2BC; }
       .maqueta-grilla {
         display: grid; grid-template-columns: 1fr 1fr; gap: 0;
       }
@@ -1951,7 +1953,7 @@ const breadcrumbSchema = {
       .maqueta-barra .sello {
         margin-left: auto; width: auto; height: auto; border-radius: 4px;
         background: rgba(13,14,16,.06); color: #6b7178;
-        font-family: 'IBM Plex Mono', monospace; font-size: 6.5pt;
+        font-family: 'Inter', sans-serif; font-size: 6.5pt;
         letter-spacing: .1em; text-transform: uppercase; padding: .8mm 2mm;
       }
       .maqueta-nombre { font-weight: 700; font-size: 10pt; margin: 0; }
@@ -1964,10 +1966,10 @@ const breadcrumbSchema = {
       .chip {
         font-size: 7.5pt; font-weight: 700; padding: .5mm 1.8mm; border-radius: 4px;
       }
-      .chip.sube { background: #e7f7ef; color: #0e8a4f; }
+      .chip.sube { background: #e7f7ef; color: #0F7C78; }
       .chispa {
         width: 100%; height: 9mm; margin-top: 2mm;
-        fill: none; stroke: #09726a; stroke-width: 2; stroke-linejoin: round;
+        fill: none; stroke: #20C2BC; stroke-width: 2; stroke-linejoin: round;
       }
 
       /* 2. Avance con barra de progreso */
@@ -1979,7 +1981,7 @@ const breadcrumbSchema = {
         height: 2.2mm; background: #e9ecef; border-radius: 999px;
         margin-top: 2.5mm; overflow: hidden;
       }
-      .progreso div { height: 100%; background: #09726a; }
+      .progreso div { height: 100%; background: #20C2BC; }
 
       /* 3. Ranking */
       .t-lista .fila { display: flex; align-items: center; gap: 2mm; margin-bottom: 1.8mm; }
@@ -1987,11 +1989,11 @@ const breadcrumbSchema = {
         flex: 0 0 12mm; height: 1.8mm; border-radius: 999px; background: rgba(13,14,16,.13);
       }
       .t-lista .mini { flex: 1; height: 2.2mm; background: #e9ecef; border-radius: 999px; overflow: hidden; }
-      .t-lista .mini div { height: 100%; background: #09726a; }
+      .t-lista .mini div { height: 100%; background: #20C2BC; }
       .t-lista .mini div.bajo { background: #e0a13a; }
       .t-lista .num {
         flex: 0 0 auto; font-size: 7.5pt; color: #5b616b;
-        font-family: 'IBM Plex Mono', monospace;
+        font-family: 'Inter', sans-serif;
       }
 
       /* 4. Alertas */
@@ -2005,16 +2007,16 @@ const breadcrumbSchema = {
 
       /* ---------- Cuadro de costo ---------- */
       .costo {
-        border: 1px solid #09726a; border-radius: 16px; padding: 6mm;
+        border: 1px solid #20C2BC; border-radius: 16px; padding: 6mm;
         background: #f7fbf9; break-inside: avoid;
       }
       .costo-titulo {
-        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        font-family: 'Inter', sans-serif; font-size: 7.5pt;
         text-transform: uppercase; letter-spacing: .14em; color: #5b616b; margin: 0;
       }
       .costo-cifra {
         font-size: 24pt; font-weight: 900; letter-spacing: -.035em;
-        color: #0e8a4f; margin: 2.5mm 0 0; line-height: 1.1;
+        color: #0F7C78; margin: 2.5mm 0 0; line-height: 1.1;
       }
       .costo-cifra .a { font-size: 13pt; font-weight: 600; color: #5b616b; }
 
@@ -2027,7 +2029,7 @@ const breadcrumbSchema = {
         display: grid; grid-template-columns: repeat(3, 1fr);
         gap: 5mm; margin-top: 5.5mm;
       }
-      .cifra-tarjeta { border-top: 2pt solid #09726a; padding-top: 3mm; }
+      .cifra-tarjeta { border-top: 2pt solid #20C2BC; padding-top: 3mm; }
       .cifra-valor {
         font-size: 17pt; font-weight: 800; letter-spacing: -.03em;
         color: #0d0e10; margin: 0; line-height: 1.1;
@@ -2057,7 +2059,7 @@ const breadcrumbSchema = {
         font-size: 9.5pt; line-height: 1.55; color: #0d0e10;
       }
       .maqueta-nota {
-        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        font-family: 'Inter', sans-serif; font-size: 7.5pt;
         color: #6b7178; margin-top: 2.5mm;
       }
 
@@ -2072,7 +2074,7 @@ const breadcrumbSchema = {
       }
       .propuesta-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
       .mini-rotulo {
-        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        font-family: 'Inter', sans-serif; font-size: 7.5pt;
         text-transform: uppercase; letter-spacing: .14em; color: #5b616b;
         margin: 0 0 3mm;
       }
@@ -2084,17 +2086,17 @@ const breadcrumbSchema = {
       .lista-check li::before {
         content: ''; position: absolute; left: 0; top: 1.4mm;
         width: 2.6mm; height: 1.4mm;
-        border-left: 1.4pt solid #09726a; border-bottom: 1.4pt solid #09726a;
+        border-left: 1.4pt solid #20C2BC; border-bottom: 1.4pt solid #20C2BC;
         transform: rotate(-45deg);
       }
 
       .fases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
       .fase {
-        border-top: 2pt solid #09726a; padding-top: 3mm;
+        border-top: 2pt solid #20C2BC; padding-top: 3mm;
       }
       .fase-plazo {
-        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
-        color: #0e8a4f; margin: 0 0 1.5mm; letter-spacing: .06em;
+        font-family: 'Inter', sans-serif; font-size: 7.5pt;
+        color: #0F7C78; margin: 0 0 1.5mm; letter-spacing: .06em;
       }
       .fase-que { font-weight: 700; font-size: 9.5pt; margin: 0; line-height: 1.3; }
       .fase-detalle { font-size: 8.5pt; color: #5b616b; margin: 1.5mm 0 0; line-height: 1.4; }
@@ -2122,14 +2124,14 @@ const breadcrumbSchema = {
       .pasos li { display: flex; gap: 4mm; margin-bottom: 4mm; align-items: flex-start; }
       .paso-n {
         flex: 0 0 auto; width: 6.5mm; height: 6.5mm; border-radius: 50%;
-        background: #09726a; color: #fff; font-weight: 800; font-size: 9pt;
+        background: #20C2BC; color: #fff; font-weight: 800; font-size: 9pt;
         display: flex; align-items: center; justify-content: center;
       }
       .paso-que { font-weight: 700; margin: 0; }
       .paso-resultado { color: #5b616b; margin: 1mm 0 0; font-size: 9.5pt; }
       .boton-agendar {
         display: inline-block; margin-top: 4mm;
-        background: #09726a !important; color: #fff !important;
+        background: #20C2BC !important; color: #fff !important;
         padding: 3.5mm 8mm; border-radius: 10px;
         font-weight: 700; text-decoration: none; font-size: 10pt;
       }
@@ -2138,7 +2140,7 @@ const breadcrumbSchema = {
       #pie-impreso {
         margin-top: 12mm; padding-top: 3mm;
         border-top: 1px solid rgba(13,14,16,.10);
-        font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt;
+        font-family: 'Inter', sans-serif; font-size: 7.5pt;
         line-height: 1.5; color: #6b7178; break-inside: avoid;
       }
       #pie-impreso p { margin: 1mm 0; }
@@ -2146,5 +2148,80 @@ const breadcrumbSchema = {
       /* El cursor del streaming no va al papel. */
       .animate-pulse { display: none !important; }
     }
-  </style>
+  
+    /* ══ Marca Buffo 2026 en el PDF (plantilla Marca/07 Plantillas/Documento A4) ══
+       Simón, 12-oct-2026: «¿El PDF tiene el look nuevo del manual de marca?». No lo
+       tenía: portada blanca, verde oscuro, barras ámbar y rojo, y la letra mono caía
+       a Courier. Va al final para mandar sobre las reglas de impresión de arriba.
+       Solo cambia el vestido: el contenido y el orden del informe son los mismos. */
+    .portada-isotipo, .portada-barra { display: none; }
+    @media print {
+      /* Hoja sin margen propio: así la portada puede pintar hasta el borde. Los
+         márgenes de las hojas interiores los dan dos espaciadores que la tabla
+         repite arriba y abajo de cada hoja. */
+      @page { size: A4; margin: 0; }
+      #paso-resultado { display: table !important; width: 100%; box-sizing: border-box; padding: 0 14mm; }
+      #paso-resultado::before { content: ''; display: table-header-group; height: 15mm; }
+      #paso-resultado::after { content: ''; display: table-footer-group; height: 16mm; }
+      #pie-impreso { margin-left: 14mm; margin-right: 14mm; }
+      #paso-resultado, #paso-resultado *, #portada-pdf, #portada-pdf *, #membrete, #membrete *, #pie-impreso, #pie-impreso * { font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif !important; }
+
+      /* Portada negra a hoja completa, con el colibrí de fondo. */
+      #portada-pdf {
+        /* Ocupa el área útil de la primera hoja y la sombra negra, que no cuenta
+           como ancho, pinta los márgenes hasta el borde del papel. (Con una
+           portada de 210 mm o con @page :first sin margen, Chrome achica todo
+           el documento para que quepa.) */
+        position: relative; height: 266mm; box-sizing: border-box; margin: 0;
+        padding: 9mm 6mm 4mm;
+        /* Hacia abajo solo 16 mm (el espaciador del pie): más que eso manchaba la hoja 2. */
+        box-shadow: -32mm 0 0 #000, 32mm 0 0 #000, 0 -32mm 0 #000, -32mm -32mm 0 #000, 32mm -32mm 0 #000, 0 14.6mm 0 #000, -32mm 14.6mm 0 #000, 32mm 14.6mm 0 #000;
+        background: #000 !important; color: #fff !important;
+        justify-content: flex-start; overflow: hidden;
+      }
+      #portada-pdf * { color: inherit; }
+      .portada-logo { position: static; width: 58mm; }
+      .portada-isotipo { display: block; position: absolute; right: -52mm; top: 62mm; width: 150mm; opacity: .09; }
+      /* La portada es un bloque (solo-imprimir fuerza display:block): el aire sobre el título va con margen. */
+      .portada-centro { margin-top: 78mm; position: relative; }
+      #portada-pdf .eyebrow { font-size: 8.5pt; font-weight: 600; letter-spacing: .22em; color: #20C2BC !important; margin-bottom: 6mm; }
+      #portada-pdf .eyebrow::before { display: none; }
+      #portada-pdf .wordmark, #portada-pdf .wordmark-cliente { color: #fff !important; }
+      #portada-pdf .verde { color: #20C2BC !important; }
+      /* El signo × se dibuja: la letra del sitio no lo trae y caía a otra fuente. */
+      #portada-pdf .por { font-size: 0; }
+      #portada-pdf .por::before {
+        content: ''; display: inline-block; width: 6.2mm; height: 6.2mm; margin-right: 2.5mm; vertical-align: -0.4mm;
+        background:
+          linear-gradient(45deg, transparent 43%, rgba(255,255,255,.55) 43% 57%, transparent 57%),
+          linear-gradient(-45deg, transparent 43%, rgba(255,255,255,.55) 43% 57%, transparent 57%);
+      }
+
+      .portada-puntaje { border-color: rgba(255,255,255,.18) !important; }
+      .portada-puntaje .cifra { color: #20C2BC !important; }
+      .portada-puntaje .de, .portada-puntaje .cifra-rotulo, .tramo-resumen { color: rgba(255,255,255,.7) !important; }
+      .portada-puntaje .cifra-rotulo { letter-spacing: .18em; }
+      .tramo-etiqueta { color: #fff !important; }
+      .portada-barra { display: block; width: 22mm; height: 1.6mm; background: #20C2BC; border-radius: 1mm; margin: 11mm 0 0; position: relative; }
+      .portada-pie {
+        position: relative; margin-top: 26mm; align-items: flex-end;
+        font-size: 9pt; color: rgba(255,255,255,.7) !important;
+        border-top: .3mm solid rgba(255,255,255,.18); padding-top: 8mm;
+      }
+      .portada-pie span:first-child { color: #fff !important; font-weight: 600; font-size: 11pt; }
+      .portada-pie small { display: block; font-size: 7.5pt; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.55) !important; margin-bottom: 3mm; }
+
+      /* Interior: un solo acento, el turquesa. Relleno #20C2BC; texto chico sobre blanco en #0F7C78. */
+      #membrete .verde, #paso-resultado .rotulo, #paso-resultado .text-primary { color: #0F7C78 !important; }
+      #paso-resultado .rotulo::before, #paso-resultado .bg-primary, .progreso div, .t-lista .mini div, .maqueta-barra span:first-child { background: #20C2BC !important; }
+      #paso-resultado [class*="border-primary"], #paso-resultado .bloque { border-color: #20C2BC !important; }
+      .chip.sube { background: #E8F8F7 !important; color: #0F7C78 !important; }
+      #paso-resultado svg polyline, #paso-resultado svg path[stroke] { stroke: #20C2BC; }
+      /* Sin semáforo: lo que iba en ámbar o rojo va en tinta, y las barras en turquesa. */
+      .dim-valor, .dim-valor.bajo, .t-lista .mini div.bajo { background: #20C2BC !important; }
+      #paso-resultado .rotulo { letter-spacing: .16em; font-weight: 600; }
+      #paso-resultado .text-error, #paso-resultado [class*="text-tertiary"], #paso-resultado [class*="text-amber"] { color: #0D0E10 !important; }
+      #paso-resultado [class*="bg-error"], #paso-resultado [class*="bg-tertiary"], #paso-resultado [class*="bg-amber"] { background: #20C2BC !important; }
+    }
+</style>
 </BaseLayout>
