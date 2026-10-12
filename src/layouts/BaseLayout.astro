@@ -114,8 +114,8 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
             try {
               var visto = sessionStorage.getItem('buffo-entrada');
               var quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
-              if (visto || quieto) document.documentElement.dataset.entrada = 'no';
-              else sessionStorage.setItem('buffo-entrada', '1');
+              document.documentElement.dataset.entrada = visto || quieto ? 'no' : 'si';
+              if (!visto && !quieto) sessionStorage.setItem('buffo-entrada', '1');
             } catch (e) {}
           })();
         </script>

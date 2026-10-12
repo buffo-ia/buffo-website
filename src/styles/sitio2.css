@@ -69,8 +69,12 @@
    se muestra una vez por sesión (lo decide el script inline del <head>, que
    pone data-entrada='no' en las visitas siguientes y con movimiento reducido).
    `--entrada-espera` es lo que esperan las piezas de la portada para entrar. */
-:root { --entrada-espera: 1.05s; }
-:root[data-entrada='no'] { --entrada-espera: 0s; }
+/* La espera solo existe cuando la cortina de verdad se muestra ('si' lo pone
+   el script del <head>). En las páginas interiores y en las visitas siguientes
+   es cero: medido el 12-oct, con la espera fija el texto de una página de
+   servicio tardaba 1 s más en aparecer sin que hubiera cortina que esperar. */
+:root { --entrada-espera: 0s; }
+:root[data-entrada='si'] { --entrada-espera: 1.05s; }
 
 .v2-entrada {
   position: fixed;
@@ -120,11 +124,14 @@
    Suben desde el desenfoque, escalonadas con --i. Es animación CSS con `both`,
    no una clase que ponga JavaScript: si el script falla, el texto igual llega. */
 .v2-sube {
-  animation: v2-sube 0.9s var(--v2-suave) both;
-  animation-delay: calc(var(--entrada-espera) + var(--i, 0) * 90ms);
+  animation: v2-sube 0.7s var(--v2-suave) both;
+  animation-delay: calc(var(--entrada-espera) + var(--i, 0) * 60ms);
 }
 @keyframes v2-sube {
-  from { opacity: 0; transform: translateY(26px); filter: blur(12px); }
+  /* Parte casi invisible y no en cero: con opacidad 0 Chrome no cuenta el
+     texto como pintado y el LCP queda sin registrar hasta el siguiente
+     repintado (se midieron 20 s en una página que se leía a los 2). */
+  from { opacity: 0.01; transform: translateY(26px); filter: blur(12px); }
   to { opacity: 1; transform: none; filter: blur(0); }
 }
 
