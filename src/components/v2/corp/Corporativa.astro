@@ -48,10 +48,10 @@ const FRASES = [
 const ENLACES = [
   { texto: 'Agendar 30 minutos', href: SITE.calendly, cta: false, externo: true },
   { texto: 'Empezar por el diagnóstico', href: '/diagnostico', cta: true },
-  { texto: 'Conocer más', href: '/servicios/dashboards-ejecutivos', cta: false },
-  { texto: 'Conocer más', href: '/servicios/agentes-ia', cta: false },
+  { texto: 'Inteligencia de Gestión', href: '/servicios/dashboards-ejecutivos', cta: false, otro: { texto: 'Modelamiento de Datos', href: '/servicios/modelamiento-predictivo' } },
+  { texto: 'Agentes de Negocio', href: '/servicios/agentes-ia', cta: false, otro: { texto: 'Automatización de Procesos', href: '/servicios/automatizacion-procesos' } },
 ];
-const SERVICIOS = LINEAS.map((l, k) => ({ ...l, enlace: ENLACES[k] as { texto: string; href: string; cta: boolean; externo?: boolean } }));
+const SERVICIOS = LINEAS.map((l, k) => ({ ...l, enlace: ENLACES[k] as { texto: string; href: string; cta: boolean; externo?: boolean; otro?: { texto: string; href: string } } }));
 const METODO = [
   { t: 'Diagnóstico', d: 'Definimos el objetivo de negocio y el retorno esperado.' },
   { t: 'Caso de negocio', d: 'Estimamos retorno, costo y plazo antes de construir.' },
@@ -146,6 +146,12 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
                 {s.enlace.texto}
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </a>
+              {s.enlace.otro && (
+                <a href={s.enlace.otro.href} class="v2-enlace">
+                  {s.enlace.otro.texto}
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </a>
+              )}
             </article>
           ))}
         </div>
