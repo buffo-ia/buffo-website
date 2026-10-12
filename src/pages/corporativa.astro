@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SERVICES } from '../config/site';
+import Cintas from '../components/v2/Cintas.astro';
+import Portada from '../components/v2/Portada.astro';
+import Flujo from '../components/v2/Flujo.astro';
+import Demo from '../components/v2/Demo.astro';
+import Stack from '../components/v2/Stack.astro';
+import Frase from '../components/v2/Frase.astro';
+import Corporativa from '../components/v2/corp/Corporativa.astro';
+import Tablero from '../components/v2/Tablero.astro';
+import Nodos from '../components/v2/Nodos.astro';
+import Guia from '../components/v2/Guia.astro';
+import Lineas from '../components/v2/Lineas.astro';
+import Prueba from '../components/v2/Prueba.astro';
+import Conexion from '../components/v2/Conexion.astro';
+import Construimos from '../components/v2/Construimos.astro';
+import Preguntas from '../components/v2/Preguntas.astro';
+import Cierre from '../components/v2/Cierre.astro';
+import Aparecer from '../components/v2/Aparecer.astro';
+import MedirCtaDiagnostico from '../components/MedirCtaDiagnostico.astro';
+
+// Preguntas frecuentes de un decisor que llega frío. El plan de Perplexity las
+// pide explícitamente (5-8) y alimentan el FAQPage schema, que es de lo que más
+// aparece citado en respuestas generadas.
+// ⚠️ Sin precios: la tarifa depende del alcance y no se publica.
+const FAQ_HOME = [
+  {
+    q: '¿Qué tipo de consultoría de inteligencia artificial es Buffo?',
+    a: 'De inteligencia artificial aplicada a la gestión comercial y operacional: ventas, margen, presupuesto, stock, cobranza y reportería. No es un laboratorio de investigación ni un equipo que entrena modelos experimentales: la técnica es el medio y la decisión de negocio es el objetivo.',
+  },
+  {
+    q: '¿Cuánto cuesta una consultoría de inteligencia artificial en Chile?',
+    a: 'No hay una tarifa única: el alcance cambia mucho entre ordenar unas planillas y dejar agentes operando. El diagnóstico de tres minutos es gratuito y entrega por escrito por dónde partir, sin compromiso.',
+  },
+  {
+    q: '¿Cuánto demora ver el primer resultado?',
+    a: 'Los proyectos se ordenan por etapas para que el primer entregable útil llegue pronto y no en varios meses: se parte por la fuente de datos más importante y por el proceso que más horas libera.',
+  },
+  {
+    q: '¿Tengo que cambiar mi ERP o mis sistemas actuales?',
+    a: 'No. Todo se construye encima de lo que la empresa ya usa: el ERP, el sistema de ventas, las planillas de control de gestión. Conectar es más barato y menos riesgoso que reemplazar.',
+  },
+  {
+    q: '¿Por dónde empiezo si todavía no sé qué necesito?',
+    a: 'Por el diagnóstico: doce preguntas sobre cómo se mueve hoy su información y un informe con lo que detectamos y qué conviene resolver primero.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_HOME.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+// Schema de servicios para la home
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#service`,
+  name: SITE.name,
+  provider: { '@id': `${SITE.url}/#organization` },
+  serviceType: 'Consultoría en Inteligencia Artificial aplicada a la gestión comercial y operacional',
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios Buffo IA',
+    itemListElement: SERVICES.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.title, description: s.short },
+    })),
+  },
+};
+// Preguntas de comprador corporativo (borrador de Comercial). Solo se ven en
+// esta página de trabajo; no entran al FAQPage schema hasta que Simón apruebe.
+const FAQ_CORPORATIVA = [
+  ...FAQ_HOME,
+  { q: '¿De quién es lo que se construye?', a: '[CONFIRMAR respuesta con Simón]' },
+  { q: '¿Cómo se protegen los datos de mi empresa?', a: '[CONFIRMAR respuesta con Simón]' },
+  {
+    q: '¿Buffo reemplaza a mi equipo de TI o a mi área de control de gestión?',
+    a: 'No. Trabajamos con ellos: TI mantiene los sistemas y control de gestión mantiene el criterio. Buffo conecta, construye y acompaña.',
+  },
+];
+---
+
+<BaseLayout schema={[serviceSchema, faqSchema]} heroAncla entrada noindex path="/corporativa">
+  <!-- VERSIÓN CORPORATIVA DEL HOME (borrador de Comercial, 12-oct-2026).
+       Página de comparación contra «/» y «/recorte»: no se indexa ni va al
+       sitemap. La clase v2--formal aplica el cambio de letras solo acá. -->
+  <div class="v2 v2--formal">
+    <Cintas /><Guia />
+    <Portada />
+    <Corporativa parte="detras" />
+    <Corporativa parte="frases" />
+    <Corporativa parte="servicios" />
+    <Corporativa parte="metodo" />
+    <Prueba retorno />
+    <Corporativa parte="casos" />
+    <Conexion corto />
+    <Preguntas preguntas={FAQ_CORPORATIVA} />
+    <Cierre />
+  </div>
+  <Aparecer />
+  <MedirCtaDiagnostico />
+</BaseLayout>

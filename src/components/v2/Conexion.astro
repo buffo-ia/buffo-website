@@ -11,6 +11,8 @@
 // las tiene Simón: cuando las dé, van acá.
 import MapaIntegraciones from '../MapaIntegraciones.astro';
 
+// `corto`: versión corporativa, sin los cuatro puntos de apoyo.
+const { corto = false } = Astro.props;
 const PUNTOS = [
   'Su ERP, sus planillas y su base de datos',
   'Nadie exporta ni pega nada a mano',
@@ -22,17 +24,19 @@ const PUNTOS = [
 <section class="v2-seccion v2-conexion">
   <div class="v2-marco v2-conexion__grilla">
     <div class="v2-e-sube" data-v2-entra>
-      <p class="v2-indice">Cómo nos conectamos</p>
-      <h2 class="v2-titulo">Nos conectamos a todo <em>lo que ya usa.</em></h2>
+      <p class="v2-indice">{corto ? 'Integraciones' : 'Cómo nos conectamos'}</p>
+      {corto ? <h2 class="v2-titulo">Trabajamos sobre lo que <em>su empresa ya usa.</em></h2> : <h2 class="v2-titulo">Nos conectamos a todo <em>lo que ya usa.</em></h2>}
       <p class="v2-parrafo">
         Su ERP, sus planillas, la base de datos y las campañas hablan idiomas distintos.
         Los leemos donde están y como están, y encima ponemos la lectura.
       </p>
       {/* Las cifras «0 / 0 / 3 min» que iban acá pasaron a la sección
           «Lo que cambia, en números» (Prueba.astro), el 12-oct-2026. */}
-      <ul class="v2-puntos">
-        {PUNTOS.map((t) => <li>{t}</li>)}
-      </ul>
+      {!corto && (
+        <ul class="v2-puntos">
+          {PUNTOS.map((t) => <li>{t}</li>)}
+        </ul>
+      )}
     </div>
     <div class="v2-conexion__mapa" data-v2-entra="0.8">
       <MapaIntegraciones />

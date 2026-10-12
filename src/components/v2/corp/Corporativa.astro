@@ -1,0 +1,208 @@
+---
+// Bloques propios de la versión corporativa del home (borrador de Comercial,
+// 12-oct-2026: S-Lab/Buffo Consulting/Sitio 2.0/HOME_version_corporativa_borrador.md).
+// Enfoque pedido por Simón: vender un servicio de consultoría y no un
+// producto. Un archivo, un bloque por `parte`, para que el texto de los cinco
+// quede junto y sea fácil de corregir.
+//
+// ⛔ BORRADOR. Lo que va entre corchetes con [CONFIRMAR] necesita un dato de
+// Simón y queda a la vista a propósito: no se inventa y no se publica así.
+import { Image } from 'astro:assets';
+import foto from '../../../assets/simon-espinoza.jpg';
+import { FOUNDER } from '../../../config/site';
+
+interface Props {
+  parte: 'detras' | 'frases' | 'servicios' | 'metodo' | 'casos';
+}
+const { parte } = Astro.props;
+
+const DETRAS = {
+  texto:
+    'Buffo nació en áreas comerciales. Por eso cada proyecto parte de una decisión de negocio y de su retorno, y recién después elige la tecnología.',
+  // ⚠️ El borrador decía «Ingeniero Comercial y MBA de la Universidad del
+  // Desarrollo». En config/site.ts el título de Ingeniero Comercial es de la
+  // Universidad Central y el MBA de la UDD: se escribe así hasta que Simón diga.
+  bio: 'Ingeniero Comercial (Universidad Central) y MBA de la Universidad del Desarrollo, con formación en IA aplicada a los negocios y análisis de datos. Más de diez años en áreas comerciales de retail y consumo masivo, y dos años en consultoría comercial, IA empresarial y automatización de procesos.',
+  datos: [
+    { n: '+10', t: 'años en áreas comerciales', pendiente: false },
+    { n: '[N]', t: '[CONFIRMAR] empresas chilenas trabajando con Buffo', pendiente: true },
+    { n: '0', t: 'sistemas que cambiar para partir', pendiente: false },
+  ],
+};
+const FRASES = [
+  { q: 'No tengo la foto de cómo va el negocio', a: 'Los datos existen, pero están repartidos. Se parte por conectar las fuentes y acordar una sola definición de cada número.' },
+  { q: 'Mis datos son un desorden', a: 'Ordenar todo no es el primer paso. Se ordena lo que hace falta para la primera decisión, y desde ahí se amplía.' },
+  { q: 'Me entero tarde de los problemas', a: 'El problema no es la falta de reportes, es que nadie los está mirando a tiempo. Ahí un agente de IA sí justifica su costo.' },
+  { q: 'Mi equipo pierde horas en tareas repetitivas', a: 'Se mide cuántas horas son y se automatiza primero el proceso que más libera.' },
+];
+const SERVICIOS = [
+  {
+    en: 'Decision Solutions with AI',
+    nombre: 'Decisiones de negocio con IA',
+    frase: 'Tomamos una decisión que hoy se toma con información incompleta y la dejamos resuelta con datos y criterio comercial.',
+    recibe: ['Diagnóstico de la decisión y de los datos disponibles', 'Caso de negocio con el retorno esperado', 'Modelo o herramienta de decisión para precio, surtido, metas o cobranza', 'Acompañamiento a su equipo en el uso'],
+    enlace: { texto: 'Empezar por el diagnóstico', href: '/diagnostico', cta: true },
+  },
+  {
+    en: 'Business Analytics with AI',
+    nombre: 'Analítica de negocio con IA',
+    frase: 'El negocio completo en un solo lugar, con una sola definición de cada número y con la lectura de qué atender primero.',
+    recibe: ['Integración de sus fuentes de datos sin cambiar sistemas', 'Modelo de datos con definiciones acordadas con su equipo', 'Informes de gestión que se actualizan solos', 'Lectura periódica de lo que se salió de lo esperado'],
+    enlace: { texto: 'Conocer más', href: '/servicios/dashboards-ejecutivos', cta: false },
+  },
+  {
+    en: 'Agentic Workflows for Business',
+    nombre: 'Flujos de trabajo con agentes',
+    frase: 'Diseñamos e implementamos flujos donde agentes de IA apoyan a su equipo en tareas de seguimiento, preparación y alerta.',
+    recibe: ['Levantamiento del proceso y de dónde se pierden las horas', 'Diseño del flujo, con un responsable de su equipo en cada uno', 'Implementación sobre sus sistemas actuales', 'Operación y mejora continua'],
+    enlace: { texto: 'Conocer más', href: '/servicios/agentes-ia', cta: false },
+  },
+];
+const METODO = [
+  { t: 'Diagnóstico', d: 'Definimos qué decisión se quiere mejorar y cuánto vale. Si la IA no hace falta, lo decimos.' },
+  { t: 'Caso de negocio', d: 'Estimamos el retorno, el costo y el plazo antes de construir. Usted decide con esa información.' },
+  { t: 'Piloto con sus datos', d: 'Probamos con datos reales de su empresa, no con una demostración. Lo que no funciona se ve temprano y cuesta poco.' },
+  { t: 'Operación y acompañamiento', d: 'Lo que se construye queda funcionando y seguimos con su equipo. El estándar es que se siga usando el mes doce.' },
+];
+const CASOS = [
+  { rubro: 'Distribución', t: 'La cobranza dejó de revisarse a fin de mes: el equipo ve cada día qué cuentas necesitan una gestión.' },
+  { rubro: 'Alimentos', t: 'El estado de resultados del mes se carga una vez y queda leído contra presupuesto, sin rearmar planillas.' },
+  { rubro: 'Consumo masivo', t: 'Las metas por vendedor se siguen en un solo lugar, con el avance del mes a la vista.' },
+];
+const flecha = 'M3 8h10M9 4l4 4-4 4';
+---
+
+{
+  parte === 'detras' && (
+    <section class="v2-seccion v2-detras">
+      <div class="v2-marco">
+        <div class="v2-cabeza v2-e-sube" data-v2-entra>
+          <p class="v2-indice">Quién está detrás</p>
+          <h2 class="v2-titulo">Una consultora que viene del negocio, <em>no de la tecnología.</em></h2>
+          <p class="v2-parrafo">{DETRAS.texto}</p>
+        </div>
+        <div class="v2-detras__grilla">
+          <div class="v2-detras__tarjeta v2-e-sube" data-v2-entra>
+            <Image src={foto} alt={`Retrato de ${FOUNDER.name}`} width={220} height={220} class="v2-detras__foto" />
+            <div>
+              <h3>{FOUNDER.name}</h3>
+              <p class="v2-indice">{FOUNDER.role}</p>
+              <p class="v2-detras__bio">{DETRAS.bio}</p>
+              <a href="/sobre-nosotros" class="v2-enlace">
+                Conocer a Buffo
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </a>
+            </div>
+          </div>
+          <ul class="v2-detras__datos" data-v2-entra="0.7">
+            {DETRAS.datos.map((d, k) => (
+              <li class:list={['v2-pieza', d.pendiente && 'es-pendiente']} style={`--r:${(0.1 + k * 0.15).toFixed(2)}`}>
+                <b>{d.n}</b>
+                <span>{d.t}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  parte === 'frases' && (
+    <section class="v2-seccion v2-frases">
+      <div class="v2-marco">
+        <div class="v2-cabeza v2-e-sube" data-v2-entra>
+          <p class="v2-indice">Por qué nos llaman</p>
+          <h2 class="v2-titulo">Cuatro frases que escuchamos <em>en la primera reunión.</em></h2>
+          <p class="v2-parrafo">Casi ninguna empresa llega pidiendo inteligencia artificial. Llega con uno de estos problemas.</p>
+        </div>
+        <ol class="v2-rejilla v2-rejilla--dos" data-v2-entra="0.75">
+          {FRASES.map((f, k) => (
+            <li class="v2-celda v2-pieza v2-frases__celda" style={`--r:${(k * 0.14).toFixed(2)}`}>
+              <p class="v2-celda__rotulo">{String(k + 1).padStart(2, '0')}</p>
+              <h3>«{f.q}»</h3>
+              <p class="v2-celda__chica">{f.a}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="v2-frases__cierre v2-e-sube" data-v2-entra>
+          Su sistema le dice lo que pasó. <b>Nosotros le decimos qué hacer.</b>
+        </p>
+      </div>
+    </section>
+  )
+}
+
+{
+  parte === 'servicios' && (
+    <section class="v2-seccion v2-lineas-sec v2-lineas-sec--corta" id="services">
+      <div class="v2-marco">
+        <div class="v2-cabeza v2-e-sube" data-v2-entra>
+          <p class="v2-indice">Servicios</p>
+          <h2 class="v2-titulo">Tres líneas de servicio. <em>Un criterio: el negocio primero.</em></h2>
+        </div>
+        <div class="v2-rejilla" data-v2-entra="0.75">
+          {SERVICIOS.map((s, k) => (
+            <article class="v2-celda v2-pieza v2-oferta" style={`--r:${(k * 0.14).toFixed(2)}`}>
+              <p class="v2-celda__rotulo" lang="en">{String(k + 1).padStart(2, '0')} · {s.en}</p>
+              <h3>{s.nombre}</h3>
+              <p class="v2-oferta__frase">{s.frase}</p>
+              <p class="v2-celda__rotulo">Qué recibe</p>
+              <ul>{s.recibe.map((r) => <li>{r}</li>)}</ul>
+              <a href={s.enlace.href} class="v2-enlace" data-cta-diagnostico={s.enlace.cta ? 'lineas' : undefined}>
+                {s.enlace.texto}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  parte === 'metodo' && (
+    <section class="v2-seccion v2-metodo">
+      <div class="v2-marco">
+        <div class="v2-cabeza v2-e-sube" data-v2-entra>
+          <p class="v2-indice">Cómo trabajamos</p>
+          <h2 class="v2-titulo">Primero el problema, <em>después la tecnología.</em></h2>
+        </div>
+        <ol class="v2-metodo__pasos" data-v2-entra="0.8">
+          <li class="v2-metodo__riel" aria-hidden="true"><i class="v2-l" style="--r:0.05;--v:1.3" /></li>
+          {METODO.map((m, k) => (
+            <li class="v2-pieza" style={`--r:${(0.08 + k * 0.17).toFixed(2)}`}>
+              <b>{String(k + 1).padStart(2, '0')}</b>
+              <h3>{m.t}</h3>
+              <p>{m.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
+{
+  parte === 'casos' && (
+    <section class="v2-seccion v2-casos">
+      <div class="v2-marco">
+        <div class="v2-cabeza v2-e-sube" data-v2-entra>
+          <p class="v2-indice">Casos</p>
+          <h2 class="v2-titulo">Proyectos <em>en operación.</em></h2>
+        </div>
+        <div class="v2-rejilla" data-v2-entra="0.75">
+          {CASOS.map((c, k) => (
+            <div class="v2-celda v2-pieza v2-respaldo__pendiente" style={`--r:${(k * 0.14).toFixed(2)}`}>
+              <p class="v2-celda__rotulo">{c.rubro} · [CONFIRMAR]</p>
+              <p class="v2-casos__texto">{c.t}</p>
+            </div>
+          ))}
+        </div>
+        <p class="v2-tablero__nota">Situaciones reales de clientes de Buffo. Los nombres se reservan por confidencialidad. · [CONFIRMAR las tres y si algún cliente autoriza nombre o logo]</p>
+      </div>
+    </section>
+  )
+}

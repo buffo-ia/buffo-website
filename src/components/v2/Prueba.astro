@@ -24,15 +24,18 @@ const CALC = {
 // del video de referencia): hoy se encienden los diez; con Buffo, el primero.
 // `sinComparacion`: saca «Hoy día 10 / Con Buffo día 1» hasta tener un caso
 // real (recorte del home, 12-oct-2026).
-const { sinComparacion = false } = Astro.props;
+// `retorno`: versión corporativa (12-oct-2026): solo la calculadora, con el
+// costo mensual como campo opcional para traducir las horas a pesos.
+const { retorno = false } = Astro.props;
+const sinComparacion = Astro.props.sinComparacion || retorno;
 const DIAS = Array.from({ length: 10 }, (_, k) => k);
 ---
 
 <section class="v2-seccion v2-prueba">
   <div class="v2-marco">
     <div class="v2-cabeza v2-e-sube" data-v2-entra>
-      <p class="v2-indice">La diferencia</p>
-      <h2 class="v2-titulo">Lo que cambia, <em>en números.</em></h2>
+      <p class="v2-indice">{retorno ? 'Retorno' : 'La diferencia'}</p>
+      {retorno ? <h2 class="v2-titulo">¿Cuánto le cuesta hoy <em>armar la información?</em></h2> : <h2 class="v2-titulo">Lo que cambia, <em>en números.</em></h2>}
     </div>
 
     <div class:list={['v2-rejilla v2-e-sube', sinComparacion && 'v2-rejilla--dos']} data-v2-entra="0.7">
@@ -59,11 +62,13 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
       </div>
       )}
 
+      {!retorno && (
       <div class="v2-celda v2-celda--cifra">
         <p class="v2-celda__rotulo">Sistemas que cambiar</p>
         <p class="v2-celda__numero"><span data-v2-cuenta="0" data-desde="6">0</span></p>
         <p class="v2-celda__chica">Construimos encima de lo que ya usa: su ERP, sus planillas, su base de datos.</p>
       </div>
+      )}
 
       <!-- Calculadora -->
       <div class="v2-celda v2-celda--ancha v2-calc" data-v2-calc data-semanas={CALC.semanasAlAnio} data-mes={CALC.horasPorMes}>
@@ -78,23 +83,33 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
               <span>Horas a la semana, cada una <b data-ver="horas">{CALC.horas.inicio}</b></span>
               <input type="range" data-campo="horas" min={CALC.horas.min} max={CALC.horas.max} value={CALC.horas.inicio} />
             </label>
+            {retorno && (
+              <label class="v2-calc__costo">
+                <span>Costo mensual promedio de esas personas <small>(opcional)</small></span>
+                <input type="text" inputmode="numeric" data-campo="costo" placeholder="$ 1.500.000" autocomplete="off" />
+              </label>
+            )}
           </div>
           <div class="v2-calc__resultado">
             <p class="v2-celda__numero"><span data-salida="horas">{(CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio).toLocaleString('es-CL')}</span><small>horas al año</small></p>
             <p class="v2-celda__chica">Son <span data-salida="meses">{((CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio) / CALC.horasPorMes).toFixed(1).replace('.', ',')}</span> meses de trabajo de una persona.</p>
+            {retorno && <p class="v2-calc__pesos" data-salida="pesos" hidden></p>}
           </div>
         </div>
+        {retorno && <p class="v2-celda__chica v2-calc__pie">Es una estimación del costo actual, no una promesa de ahorro. El diagnóstico dice cuánto de eso se puede recuperar.</p>}
         <a href="/diagnostico" data-cta-diagnostico="calculadora" class="v2-enlace">
           Ver cuánto de eso se puede recuperar
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </a>
       </div>
 
+      {!retorno && (
       <div class="v2-celda v2-celda--cifra">
         <p class="v2-celda__rotulo">Para saber por dónde partir</p>
         <p class="v2-celda__numero"><span data-v2-cuenta="3" data-desde="12">3</span><small>min</small></p>
         <p class="v2-celda__chica">El diagnóstico: doce preguntas, gratis, y el informe llega por escrito.</p>
       </div>
+      )}
     </div>
   </div>
 </section>
@@ -114,6 +129,15 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
       poner('[data-ver="horas"]', String(horas));
       poner('[data-salida="horas"]', total.toLocaleString('es-CL'));
       poner('[data-salida="meses"]', (total / horasPorMes).toFixed(1).replace('.', ','));
+      // Con el costo mensual (opcional): horas al año × costo por hora.
+      const costo = calc.querySelector<HTMLInputElement>('[data-campo="costo"]');
+      const pesos = calc.querySelector<HTMLElement>('[data-salida="pesos"]');
+      if (costo && pesos) {
+        const mensual = Number(costo.value.replace(/\D/g, ''));
+        if (document.activeElement === costo && mensual) costo.value = '$ ' + mensual.toLocaleString('es-CL');
+        pesos.hidden = !mensual;
+        if (mensual) pesos.textContent = `Unos $${Math.round((total / horasPorMes) * mensual).toLocaleString('es-CL')} al año.`;
+      }
       // El tramo recorrido del deslizador se pinta con una variable.
       for (const n of ['personas', 'horas']) {
         const c = campo(n);
