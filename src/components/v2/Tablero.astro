@@ -34,7 +34,7 @@ const ultimo = { x: 600, y: MARGEN[MARGEN.length - 1] };
 
     <div class="v2-rejilla" data-v2-entra="0.75" aria-hidden="true">
       <div class="v2-celda v2-celda--ancha v2-pieza" style="--r:0">
-        <p class="v2-celda__rotulo">Ventas por semana · últimas 12</p>
+        <p class="v2-celda__rotulo">Ventas por semana, últimas 12</p>
         <div class="v2-columnas">
           {SEMANAS.map((h, k) => <i class="v2-l" style={`--h:${h}%;--r:${(0.08 + k * 0.03).toFixed(2)}`} />)}
         </div>
@@ -68,7 +68,7 @@ const ultimo = { x: 600, y: MARGEN[MARGEN.length - 1] };
       </div>
 
       <div class="v2-celda v2-celda--ancha v2-pieza" style="--r:0.4">
-        <p class="v2-celda__rotulo">Margen · 12 semanas <span class="v2-onda__aviso v2-l" style="--r:0.82;--v:6">fuera de rango</span></p>
+        <p class="v2-celda__rotulo">Margen, 12 semanas <span class="v2-onda__aviso v2-l" style="--r:0.82;--v:6">fuera de rango</span></p>
         <svg class="v2-onda" viewBox="-6 14 618 70">
           <rect x="0" y="30" width="600" height="18" class="v2-onda__rango"></rect>
           <path d={linea} pathLength="1" class="v2-onda__linea v2-l" style="--r:0.5;--v:2.6"></path>
@@ -76,6 +76,6 @@ const ultimo = { x: 600, y: MARGEN[MARGEN.length - 1] };
         <p class="v2-celda__chica">La línea salió del rango esperado: ahí parte la lectura del agente.</p>
       </div>
     </div>
-    <p class="v2-tablero__nota">Ejemplo ilustrativo · las cifras no son de un cliente</p>
+    <p class="v2-tablero__nota">Ejemplo ilustrativo. Las cifras no son de un cliente.</p>
   </div>
 </section>

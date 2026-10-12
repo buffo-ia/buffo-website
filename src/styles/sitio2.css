@@ -2399,3 +2399,5 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
   .v2-acompana ul { grid-template-columns: 1fr; }
 }
 @media (min-width: 768px) { .v2-lineas[style*="--cols:4"] li { font-size: 0.86rem; gap: 0.6rem; white-space: nowrap; } }
+
+.v2-oferta .v2-celda__rotulo b { font-weight: 600; margin-right: 0.5em; color: rgb(var(--c-primary)); }

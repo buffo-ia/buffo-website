@@ -157,7 +157,7 @@ const breadcrumbSchema = {
                una consultora chilena detrás. El que llega desde un anuncio no
                sabe ninguna de las dos. -->
           <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-6">
-            Diagnóstico gratuito · Consultora de IA · Santiago de Chile
+            Diagnóstico gratuito, Consultora de IA, Santiago de Chile
           </p>
           <h1
             class="reveal reveal-delay-1 font-display text-[2.15rem] leading-[1.06] tracking-[-0.025em] sm:text-[3.2rem] lg:text-[3.6rem]"
@@ -183,7 +183,7 @@ const breadcrumbSchema = {
               id="btn-empezar"
               class="btn-glow bg-primary px-9 py-5 text-base font-semibold text-on-primary"
             >
-              Empezar el diagnóstico · 3 minutos
+              Empezar el diagnóstico en 3 minutos
             </button>
             <a
               href={SITE.calendly}
@@ -195,7 +195,7 @@ const breadcrumbSchema = {
             </a>
           </div>
           <p class="micro reveal reveal-delay-3 mt-4 text-sm text-outline">
-            {TOTAL_PREGUNTAS} preguntas · 3 minutos · informe en PDF · {INTRO.promesa}
+            {TOTAL_PREGUNTAS} preguntas, 3 minutos, informe en PDF. {INTRO.promesa}
           </p>
         </div>
 
@@ -935,7 +935,7 @@ const breadcrumbSchema = {
       // se ve avanzar. Y de paso cuenta lo que trae el informe, que es contenido
       // que en pantalla no se muestra nunca.
       const rotulo = ROTULOS[actual] || actual;
-      $('avance-detalle').textContent = `Escribiendo: ${rotulo} · ${hechos} de ${BLOQUES_ESPERADOS}`;
+      $('avance-detalle').textContent = `Escribiendo: ${rotulo}, ${hechos} de ${BLOQUES_ESPERADOS}`;
     }
 
     function avanceTerminar() {

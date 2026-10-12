@@ -21,13 +21,13 @@ const PASOS = [
 // La conversación de la terminal. `paso` dice con qué paso aparece cada bloque
 // (0 datos, 1 agentes, 2 persona) y `orden` su turno dentro de ese paso.
 const TERMINAL = {
-  contexto: 'ERP · CRM · planilla de costos',
+  contexto: 'ERP, CRM, planilla de costos',
   pedido: '¿Por qué cayó el margen en septiembre?',
   bloques: [
-    { paso: 0, orden: 0, accion: 'Conectando las fuentes…', detalle: '', lineas: ['ERP · ventas: 48.210 líneas leídas.', 'CRM · condiciones: 94 clientes.'] },
+    { paso: 0, orden: 0, accion: 'Conectando las fuentes…', detalle: '', lineas: ['ERP, ventas: 48.210 líneas leídas.', 'CRM, condiciones: 94 clientes.'] },
     { paso: 0, orden: 1, accion: 'Leer', detalle: '(planilla de costos)', lineas: ['312 productos, una sola definición de margen.'] },
     { paso: 1, orden: 0, accion: 'Vigila', detalle: '(margen mensual)', lineas: ['Septiembre salió del rango esperado: −2,1 puntos.'] },
-    { paso: 1, orden: 1, accion: 'Prepara', detalle: '(desglose de la caída)', lineas: ['70% descuentos a dos clientes · 30% costo de importación.'] },
+    { paso: 1, orden: 1, accion: 'Prepara', detalle: '(desglose de la caída)', lineas: ['70% descuentos a dos clientes, 30% costo de importación.'] },
     { paso: 1, orden: 2, accion: 'Propone', detalle: '', lineas: ['Revisar los descuentos de esos dos clientes antes del cierre.'] },
     { paso: 2, orden: 0, accion: 'Propuesta enviada al gerente comercial.', detalle: '', lineas: ['La decisión es de una persona de su equipo.'] },
   ],
@@ -82,7 +82,7 @@ const { corto = false } = Astro.props;
         </div>
 
         <div class="v2-term__cuerpo">
-          <p class="v2-term__marco"><b>Agente de margen</b> · {TERMINAL.contexto}</p>
+          <p class="v2-term__marco"><b>Agente de margen</b> {TERMINAL.contexto}</p>
           <p class="v2-term__pedido">{TERMINAL.pedido}</p>
           {
             TERMINAL.bloques.map((b, k) => (

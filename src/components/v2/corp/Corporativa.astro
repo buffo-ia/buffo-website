@@ -92,7 +92,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
       <div class="v2-marco">
         <div class="v2-cabeza v2-e-sube" data-v2-entra>
           <p class="v2-indice">Quién está detrás</p>
-          <h2 class="v2-titulo">Dirección estratégica, <em>con foco en el retorno.</em></h2>
+          <h2 class="v2-titulo">Su socio estratégico <em>en la toma de decisiones.</em></h2>
           <p class="v2-parrafo">{DETRAS.texto}</p>
         </div>
         <div class="v2-detras__grilla">
@@ -135,14 +135,11 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           {FRASES.map((f, k) => (
             <li class="v2-celda v2-pieza v2-frases__celda" style={`--r:${(k * 0.14).toFixed(2)}`}>
               <p class="v2-celda__rotulo">{String(k + 1).padStart(2, '0')}</p>
-              <h3>«{f.q}»</h3>
+              <h3>{f.q}</h3>
               <p class="v2-celda__chica">{f.a}</p>
             </li>
           ))}
         </ol>
-        <p class="v2-frases__cierre v2-e-sube" data-v2-entra>
-          Su sistema le dice lo que pasó. <b>Nosotros le decimos qué hacer.</b>
-        </p>
       </div>
     </section>
   )
@@ -160,7 +157,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
         <div class="v2-rejilla v2-rejilla--cuatro" data-v2-entra="0.75">
           {SERVICIOS.map((s, k) => (
             <article class="v2-celda v2-pieza v2-oferta" style={`--r:${(k * 0.14).toFixed(2)}`}>
-              <p class="v2-celda__rotulo" lang="en">{String(k + 1).padStart(2, '0')} · {s.en}</p>
+              <p class="v2-celda__rotulo" lang="en"><b>{String(k + 1).padStart(2, '0')}</b> {s.en}</p>
               <h3>{s.nombre}</h3>
               <p class="v2-oferta__frase">{s.frase}</p>
               <p class="v2-celda__rotulo">Qué recibe</p>
