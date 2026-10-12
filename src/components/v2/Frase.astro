@@ -1,29 +1,35 @@
 ---
 // El argumento, en grande: «Su sistema le dice lo que pasó. Nosotros le decimos
 // qué hacer.» Es la frase mejor escrita del sitio anterior (venía en la tarjeta
-// «La Respuesta») y acá se queda sola en pantalla.
+// «La Respuesta»).
 //
-// Las palabras se encienden de a una con el scroll: cada una lleva su turno en
-// --w (0 a 1) y se compara contra el avance --e del bloque.
-const PARTES = [
-  { texto: 'Su sistema le dice lo que pasó.', cursiva: false },
-  { texto: 'Nosotros le decimos qué hacer.', cursiva: true },
-];
-const palabras = PARTES.flatMap((p) => p.texto.split(' ').map((t) => ({ t, cursiva: p.cursiva })));
+// Formato del 12-oct-2026, tomado del video de referencia (reel de Relay,
+// segundos 5 a 6): la placa del color de acento con el ícono, que crece hasta
+// llenar la pantalla, deja leer una frase y vuelve a cerrarse. La escena queda
+// pegada a la pantalla y el scroll decide cuánto se abrió (--g) y cuánto se
+// lee el texto (--t).
+//
+// Sin JavaScript o con movimiento reducido, --g y --t valen 1 y la sección es
+// una franja turquesa con la frase, sin escena pegada.
+import { getImage } from 'astro:assets';
+import isotipo from '../../assets/isotipo-buffo.png';
+
+const mascara = await getImage({ src: isotipo, width: 160, format: 'webp' });
+const FRASE = { recto: 'Su sistema le dice lo que pasó.', cursiva: 'Nosotros le decimos qué hacer.' };
 ---
+
+<section class="v2-barrido" data-v2-barrido style={`--isotipo:url('${mascara.src}')`}>
+  <div class="v2-barrido__escena">
+    <div class="v2-barrido__placa">
+      <i class="v2-barrido__icono" aria-hidden="true"></i>
+      <h2 class="v2-barrido__texto">{FRASE.recto} <em>{FRASE.cursiva}</em></h2>
+    </div>
+  </div>
+</section>
 
 <section class="v2-seccion v2-frase">
   <div class="v2-marco">
     <p class="v2-indice">El punto de partida</p>
-    <h2 class="v2-frase__texto" data-v2-entra="0.85" aria-label={PARTES.map((p) => p.texto).join(' ')}>
-      {
-        palabras.map((p, i) => (
-          <span class:list={['v2-palabra', p.cursiva && 'v2-palabra--cursiva']} style={`--w:${(i / palabras.length).toFixed(3)}`} aria-hidden="true">
-            {p.t}{' '}
-          </span>
-        ))
-      }
-    </h2>
     <p class="v2-frase__nota v2-e-sube" data-v2-entra>
       No reemplazamos sus sistemas: los leemos, y a cada número le ponemos la lectura encima.
       Qué se salió de rango y qué revisar primero, con el criterio de quien tuvo que responder
@@ -31,3 +37,40 @@ const palabras = PARTES.flatMap((p) => p.texto.split(' ').map((t) => ({ t, cursi
     </p>
   </div>
 </section>
+
+<script>
+  const seccion = document.querySelector<HTMLElement>('[data-v2-barrido]');
+  // Tramos del recorrido: abre, se queda, cierra.
+  const ABRE = 0.38;
+  const CIERRA = 0.74;
+  const tramo = (x: number, a: number, b: number) => Math.min(1, Math.max(0, (x - a) / (b - a)));
+  const suave = (x: number) => x * x * (3 - 2 * x);
+
+  if (seccion && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seccion.classList.add('es-escena');
+    let pendiente = false;
+    const pintar = () => {
+      pendiente = false;
+      const r = seccion.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight)));
+      const g = suave(tramo(p, 0, ABRE)) * (1 - suave(tramo(p, CIERRA, 1)));
+      const t = tramo(p, ABRE - 0.08, ABRE + 0.04) * (1 - tramo(p, CIERRA - 0.05, CIERRA + 0.03));
+      seccion.style.setProperty('--g', g.toFixed(3));
+      seccion.style.setProperty('--t', t.toFixed(3));
+    };
+    const alScroll = () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(pintar);
+    };
+    new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) window.addEventListener('scroll', alScroll, { passive: true });
+        else window.removeEventListener('scroll', alScroll);
+        pintar();
+      },
+      { rootMargin: '20% 0px' }
+    ).observe(seccion);
+    pintar();
+  }
+</script>

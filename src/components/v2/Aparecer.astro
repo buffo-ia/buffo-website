@@ -51,5 +51,55 @@
     todos.forEach((el) => vigia.observe(el));
     window.addEventListener('scroll', alScroll, { passive: true });
     window.addEventListener('resize', alScroll);
+
+    // Los gráficos de las maquetas (líneas que se dibujan, barras que crecen,
+    // la dona) ya traían su animación, pero corría al cargar la página: cuando
+    // el visitante llegaba, ya había terminado. Ahora quedan en pausa hasta que
+    // la pantalla entra (el CSS las suelta con .es-visto). La clase en <html>
+    // es la que activa la pausa: sin este script, todo se ve terminado.
+    document.documentElement.classList.add('v2-anima');
+    const vistos = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((x) => {
+          if (!x.isIntersecting) return;
+          x.target.classList.add('es-visto');
+          vistos.unobserve(x.target);
+        });
+      },
+      { threshold: 0.3 }
+    );
+    document.querySelectorAll('.v2-e-panel, [data-v2-visto]').forEach((el) => vistos.observe(el));
+
+    // Cifras que cuentan hasta su valor al entrar en pantalla (data-v2-cuenta
+    // = valor final, data-desde = de dónde parte; por defecto 0).
+    const contar = (el: HTMLElement) => {
+      const hasta = Number(el.dataset.v2Cuenta);
+      const desde = Number(el.dataset.desde || 0);
+      const dura = 1100;
+      let t0 = 0;
+      const paso = (t: number) => {
+        t0 ||= t;
+        const k = Math.min(1, (t - t0) / dura);
+        const suave = 1 - Math.pow(1 - k, 3);
+        el.textContent = Math.round(desde + (hasta - desde) * suave).toLocaleString('es-CL');
+        if (k < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    };
+    const cuentas = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((x) => {
+          if (!x.isIntersecting) return;
+          contar(x.target as HTMLElement);
+          cuentas.unobserve(x.target);
+        });
+      },
+      { threshold: 0.9 }
+    );
+    document.querySelectorAll<HTMLElement>('[data-v2-cuenta]').forEach((el) => {
+      // Solo las que todavía no se ven parten desde su valor inicial.
+      if (el.getBoundingClientRect().top > window.innerHeight) el.textContent = el.dataset.desde || '0';
+      cuentas.observe(el);
+    });
   }
 </script>

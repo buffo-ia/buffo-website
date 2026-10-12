@@ -20,6 +20,9 @@ const CALC = {
   // Para traducir horas a «meses de una persona»: jornada de 44 h semanales.
   horasPorMes: 190,
 };
+// Los diez días del informe, uno por segmento (medidor por tramos, como los
+// del video de referencia): hoy se encienden los diez; con Buffo, el primero.
+const DIAS = Array.from({ length: 10 }, (_, k) => k);
 ---
 
 <section class="v2-seccion v2-prueba">
@@ -36,12 +39,12 @@ const CALC = {
         <div class="v2-compara">
           <div class="v2-compara__fila">
             <span>Hoy</span>
-            <i class="v2-compara__barra"></i>
-            <b>día 10</b>
+            <span class="v2-compara__dias" aria-hidden="true">{DIAS.map((k) => <i style={`--k:${k}`} />)}</span>
+            <b>día <span data-v2-cuenta="10">10</span></b>
           </div>
           <div class="v2-compara__fila v2-compara__fila--buffo">
             <span>Con Buffo</span>
-            <i class="v2-compara__punto"></i>
+            <span class="v2-compara__dias v2-compara__dias--buffo" aria-hidden="true">{DIAS.map((k) => <i style={`--k:${k}`} />)}</span>
             <b>día 1</b>
           </div>
         </div>
@@ -53,7 +56,7 @@ const CALC = {
 
       <div class="v2-celda v2-celda--cifra">
         <p class="v2-celda__rotulo">Sistemas que cambiar</p>
-        <p class="v2-celda__numero">0</p>
+        <p class="v2-celda__numero"><span data-v2-cuenta="0" data-desde="6">0</span></p>
         <p class="v2-celda__chica">Construimos encima de lo que ya usa: su ERP, sus planillas, su base de datos.</p>
       </div>
 
@@ -84,7 +87,7 @@ const CALC = {
 
       <div class="v2-celda v2-celda--cifra">
         <p class="v2-celda__rotulo">Para saber por dónde partir</p>
-        <p class="v2-celda__numero">3<small>min</small></p>
+        <p class="v2-celda__numero"><span data-v2-cuenta="3" data-desde="12">3</span><small>min</small></p>
         <p class="v2-celda__chica">El diagnóstico: doce preguntas, gratis, y el informe llega por escrito.</p>
       </div>
     </div>
