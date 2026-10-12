@@ -2401,3 +2401,8 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
 @media (min-width: 768px) { .v2-lineas[style*="--cols:4"] li { font-size: 0.86rem; gap: 0.6rem; white-space: nowrap; } }
 
 .v2-oferta .v2-celda__rotulo b { font-weight: 600; margin-right: 0.5em; color: rgb(var(--c-primary)); }
+
+/* El titular de portada del 12-oct («…productivity, efficiency and profitable
+   growth.») es más largo que el anterior: un punto menos de tamaño y cortes de
+   línea parejos, para que los botones sigan en la primera pantalla. */
+.v2 .v2-titular { font-size: clamp(2.1rem, 3.9vw, 3.7rem); text-wrap: balance; }
