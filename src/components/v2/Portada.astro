@@ -31,16 +31,18 @@ const TEXTO = {
 
 <section class="v2-portada">
   <div class="v2-portada__contenido">
-    <p class="v2-cejilla v2-sube" style="--i:0">
-      <span>{TEXTO.cejilla}</span><i></i><span>{TEXTO.lugar}</span>
-    </p>
-    <p class="v2-titular v2-sube" style="--i:1" lang="en">
-      {TEXTO.titular.recto} <em>{TEXTO.titular.cursiva}</em>
-    </p>
-    <!-- Debajo del titular: a la izquierda la bajada y los botones, a la
-         derecha la barra donde se escribe sola una pregunta de gerente. -->
+    <!-- Dos columnas (Simón, 12-oct-2026: «ese cuadro debe ser igual al que
+         tenemos abajo y debe quedar en la parte derecha de la portada…
+         debemos ordenar más esa parte»). A la izquierda todo el mensaje; a la
+         derecha, a toda la altura, la ventana del agente. -->
     <div class="v2-portada__bajo">
       <div>
+      <p class="v2-cejilla v2-sube" style="--i:0">
+        <span>{TEXTO.cejilla}</span><i></i><span>{TEXTO.lugar}</span>
+      </p>
+      <p class="v2-titular v2-sube" style="--i:1" lang="en">
+        {TEXTO.titular.recto} <em>{TEXTO.titular.cursiva}</em>
+      </p>
       <div class="v2-bajada v2-sube" style="--i:3">
         <h1>{TEXTO.bajada}</h1>
         <p>{TEXTO.bajadaResto}</p>

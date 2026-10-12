@@ -321,101 +321,74 @@
    ============================================================ */
 .v2-portada__bajo {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
-}
-.v2-pregunta {
-  border: 1px solid rgb(255 255 255 / 0.14);
-  border-radius: 16px;
-  background: rgb(8 8 8 / 0.72);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  overflow: hidden;
-}
-.v2-pregunta__barra {
-  display: flex;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4.5vw, 4.5rem);
   align-items: center;
-  gap: 0.8rem;
-  padding: 1.05rem 1.2rem;
-  border-bottom: 1px solid rgb(255 255 255 / 0.1);
-  color: rgb(var(--c-on-surface) / 0.5);
 }
-.v2-pregunta__barra p {
-  font-size: 1.02rem;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: rgb(var(--c-on-surface));
-  /* Una sola línea de alto fijo: la barra no cambia de tamaño al escribir. */
-  min-height: 1.5em;
-  line-height: 1.5;
+/* Con la ventana al lado, el titular va en una columna: baja de tamaño para
+   leerse en tres o cuatro líneas en vez de cruzar toda la pantalla. */
+.v2-portada__bajo .v2-titular {
+  font-size: clamp(2.7rem, 4.7vw, 4.5rem);
+  line-height: 1;
 }
+/* La ventana del agente de la portada usa las clases v2-term; acá va solo lo
+   propio: el cursor que escribe y la respuesta que aparece línea por línea. */
+.v2-pregunta { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); background: rgb(14 14 14 / 0.86); }
+/* Alto fijo: al rotar de pregunta nada empuja a lo que está debajo. */
+.v2-pregunta .v2-pregunta__cuerpo { height: 21.5rem; }
+.v2-pregunta .v2-term__pedido { margin-top: 0; font-size: 0.9rem; min-height: 1.55em; }
 .v2-pregunta__cursor {
   display: inline-block;
-  width: 2px;
-  height: 1.1em;
+  width: 0.5em;
+  height: 1.05em;
   margin-left: 2px;
-  vertical-align: -0.18em;
+  vertical-align: -0.16em;
   background: rgb(var(--c-primary));
   animation: v2-cursor 1s steps(1) infinite;
 }
 .v2-pregunta.escribiendo .v2-pregunta__cursor { animation: none; }
 @keyframes v2-cursor { 50% { opacity: 0; } }
-
-/* Alto fijo: tres líneas y la sugerencia caben siempre, así al rotar de
-   pregunta nada empuja a lo que está debajo. */
-.v2-pregunta__respuesta { padding: 0.4rem 1.2rem 0; min-height: 17.5rem; }
-.v2-pregunta__respuesta li {
+.v2-pregunta__cuerpo li {
   display: grid;
-  gap: 0.35rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  gap: 0.1rem;
+  margin-bottom: 0.8rem;
   opacity: 0;
-  transform: translateY(8px);
-  filter: blur(6px);
-  transition: opacity 0.45s ease, transform 0.45s var(--v2-suave), filter 0.45s ease;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.45s var(--v2-suave);
 }
-.v2-pregunta__respuesta li span {
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: rgb(var(--c-on-surface) / 0.88);
+.v2-pregunta__cuerpo li span { position: relative; padding-left: 1.05rem; font-weight: 600; color: rgb(var(--c-on-surface)); }
+.v2-pregunta__cuerpo li span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: rgb(var(--c-primary));
 }
 /* La cita: de qué sistema salió el dato. */
-.v2-pregunta__respuesta li b,
-.v2-pregunta__primero b {
-  font-family: var(--v2-mono);
-  font-weight: 400;
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgb(var(--c-on-surface) / 0.45);
-}
-.v2-pregunta__respuesta li b::before { content: '↳ '; }
+.v2-pregunta__cuerpo li b { padding-left: 1.05rem; font-weight: 400; color: rgb(var(--c-on-surface) / 0.6); }
+.v2-pregunta__cuerpo li b::before { content: '└ '; color: rgb(var(--c-on-surface) / 0.35); }
 .v2-pregunta__primero {
   display: grid;
-  gap: 0.35rem;
-  padding: 0.95rem 0 0.2rem;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgb(var(--c-primary) / 0.55);
+  border-radius: 8px;
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.45s ease, transform 0.45s var(--v2-suave);
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.45s var(--v2-suave);
 }
-.v2-pregunta__primero b { color: rgb(var(--c-primary)); }
-.v2-pregunta__primero span { font-size: 0.98rem; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; }
-.v2-pregunta .es-visible { opacity: 1; transform: none; filter: none; }
-.v2-pregunta__pie {
-  font-family: var(--v2-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgb(var(--c-on-surface) / 0.3);
-  padding: 0.7rem 1.2rem 0.85rem;
-}
+.v2-pregunta__primero b { font-weight: 500; color: rgb(var(--c-primary)); }
+.v2-pregunta .es-visible { opacity: 1; transform: none; }
 @media (max-width: 1023px) {
   .v2-portada__bajo { grid-template-columns: 1fr; }
 }
 @media (max-width: 767px) {
-  .v2-pregunta__respuesta { min-height: 19.5rem; }
-  .v2-pregunta__barra p { font-size: 0.95rem; }
+  .v2-pregunta .v2-pregunta__cuerpo { height: 25.5rem; font-size: 0.74rem; }
+  .v2-pregunta .v2-term__nota { display: none; }
 }
 
 /* ============================================================
@@ -697,7 +670,7 @@
   .v2-term__marco { display: none; }
   .v2-term__pedido { margin-top: 0; }
   .v2-term__barra { padding: 0.75rem 1rem 0.6rem; }
-  .v2-term__pestanas span:nth-child(n + 2):not(.v2-term__mas) { display: none; }
+  .v2-term__pestanas span:not(.es-activa):not(.v2-term__mas) { display: none; }
   .v2-term__nota { display: none; }
   /* En teléfono no cabe el registro entero: se ve solo lo del paso en curso. */
   .v2-flujo[data-paso='1'] .v2-term__bloque[data-n='0'],

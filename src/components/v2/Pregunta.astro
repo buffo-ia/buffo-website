@@ -12,6 +12,7 @@
 // cambiar de pregunta.
 const CASOS = [
   {
+    pestana: 'margen',
     pregunta: '¿Por qué cayó el margen en septiembre?',
     lineas: [
       { texto: 'El margen bajó 2,1 puntos frente a agosto.', fuente: 'ERP · ventas' },
@@ -21,6 +22,7 @@ const CASOS = [
     primero: 'Revisar los descuentos de esos dos clientes antes del cierre.',
   },
   {
+    pestana: 'ventas',
     pregunta: '¿Llegamos a la meta de ventas del mes?',
     lineas: [
       { texto: 'Van 82% de la meta con 68% del mes transcurrido.', fuente: 'ERP · ventas' },
@@ -30,6 +32,7 @@ const CASOS = [
     primero: 'Hablar hoy con los vendedores de las dos zonas atrasadas.',
   },
   {
+    pestana: 'clientes',
     pregunta: '¿Qué clientes están comprando menos?',
     lineas: [
       { texto: 'Doce clientes bajaron su compra más de 20% en el trimestre.', fuente: 'ERP · ventas' },
@@ -41,15 +44,21 @@ const CASOS = [
 ];
 ---
 
-<div class="v2-pregunta v2-sube" style="--i:5" data-v2-pregunta data-casos={JSON.stringify(CASOS)}>
-  <div class="v2-pregunta__barra">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-      <circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path>
-    </svg>
-    <p><span data-texto>{CASOS[0].pregunta}</span><i class="v2-pregunta__cursor" aria-hidden="true"></i></p>
+<!-- Misma ventana que la terminal de «Cómo trabajamos» (clases v2-term de
+     sitio2.css): así el agente se ve igual arriba y abajo. La pestaña activa
+     cambia con cada pregunta. -->
+<div class="v2-term v2-pregunta v2-sube" style="--i:5" data-v2-pregunta data-casos={JSON.stringify(CASOS)} aria-hidden="true">
+  <div class="v2-term__barra">
+    <span class="v2-term__botones"><i></i><i></i><i></i></span>
+    <span class="v2-term__nombre">buffo-agent</span>
+  </div>
+  <div class="v2-term__pestanas" data-pestanas>
+    {CASOS.map((c, i) => <span class:list={[i === 0 && 'es-activa']}>{c.pestana}</span>)}
+    <span class="v2-term__mas">+</span>
   </div>
 
-  <div class="v2-pregunta__respuesta" aria-live="off">
+  <div class="v2-term__cuerpo v2-pregunta__cuerpo">
+    <p class="v2-term__pedido"><span data-texto>{CASOS[0].pregunta}</span><i class="v2-pregunta__cursor"></i></p>
     <ul data-lineas>
       {
         CASOS[0].lineas.map((l) => (
@@ -65,7 +74,11 @@ const CASOS = [
       <span>{CASOS[0].primero}</span>
     </p>
   </div>
-  <p class="v2-pregunta__pie">Ejemplo ilustrativo</p>
+
+  <div class="v2-term__pie">
+    <span class="v2-term__entrada"><i style="opacity:1">Pregunte por su negocio…</i></span>
+    <span class="v2-term__nota">Ejemplo ilustrativo</span>
+  </div>
 </div>
 
 <script>
@@ -119,6 +132,7 @@ const CASOS = [
           await espera(RITMO.borrar);
         }
         turno = (turno + 1) % casos.length;
+        caja.querySelectorAll('[data-pestanas] span:not(.v2-term__mas)').forEach((t, i) => t.classList.toggle('es-activa', i === turno));
         await mostrar(casos[turno]);
         await espera(RITMO.leer);
       }
