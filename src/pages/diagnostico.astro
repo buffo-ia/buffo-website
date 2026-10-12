@@ -1797,6 +1797,16 @@ const breadcrumbSchema = {
       header, footer, .accent-line, #barra, .no-imprimir {
         display: none !important;
       }
+      /* El sitio 2.0 fija el tema oscuro en <html>. Al imprimir, el lienzo fuera
+         del body (los márgenes de la hoja) salía negro: se vuelve a claro acá. */
+      html {
+        background: #fff !important;
+        color-scheme: light !important;
+      }
+      /* El botón flotante de WhatsApp no va en el informe. */
+      a[href*="wa.me"], a[href*="api.whatsapp.com"] {
+        display: none !important;
+      }
       body, .hero-bg, main, section {
         background: #fff !important;
         color: #0d0e10 !important;
