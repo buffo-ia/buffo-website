@@ -5,8 +5,9 @@
 // producto. Un archivo, un bloque por `parte`, para que el texto de los cinco
 // quede junto y sea fácil de corregir.
 //
-// ⛔ BORRADOR. Lo que va entre corchetes con [CONFIRMAR] necesita un dato de
-// Simón y queda a la vista a propósito: no se inventa y no se publica así.
+// Texto de Comercial, con los datos que Simón confirmó el 12-oct-2026: sin
+// número de clientes, casos sin nombres (por confidencialidad) y el título
+// del fundador según config/site.ts.
 import { Image } from 'astro:assets';
 import foto from '../../../assets/simon-espinoza.jpg';
 import { FOUNDER } from '../../../config/site';
@@ -25,7 +26,6 @@ const DETRAS = {
   bio: 'Ingeniero Comercial (Universidad Central) y MBA de la Universidad del Desarrollo, con formación en IA aplicada a los negocios y análisis de datos. Más de diez años en áreas comerciales de retail y consumo masivo, y dos años en consultoría comercial, IA empresarial y automatización de procesos.',
   datos: [
     { n: '+10', t: 'años en áreas comerciales', pendiente: false },
-    { n: '[N]', t: '[CONFIRMAR] empresas chilenas trabajando con Buffo', pendiente: true },
     { n: '0', t: 'sistemas que cambiar para partir', pendiente: false },
   ],
 };
@@ -65,9 +65,9 @@ const METODO = [
   { t: 'Operación y acompañamiento', d: 'Lo que se construye queda funcionando y seguimos con su equipo. El estándar es que se siga usando el mes doce.' },
 ];
 const CASOS = [
-  { rubro: 'Distribución', t: 'La cobranza dejó de revisarse a fin de mes: el equipo ve cada día qué cuentas necesitan una gestión.' },
-  { rubro: 'Alimentos', t: 'El estado de resultados del mes se carga una vez y queda leído contra presupuesto, sin rearmar planillas.' },
-  { rubro: 'Consumo masivo', t: 'Las metas por vendedor se siguen en un solo lugar, con el avance del mes a la vista.' },
+  { rubro: 'Cobranza', t: 'La cobranza dejó de revisarse a fin de mes: el equipo ve cada día qué cuentas necesitan una gestión.' },
+  { rubro: 'Resultados', t: 'El estado de resultados del mes se carga una vez y queda leído contra presupuesto, sin rearmar planillas.' },
+  { rubro: 'Metas de venta', t: 'Las metas por vendedor se siguen en un solo lugar, con el avance del mes a la vista.' },
 ];
 const flecha = 'M3 8h10M9 4l4 4-4 4';
 ---
@@ -195,13 +195,13 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
         </div>
         <div class="v2-rejilla" data-v2-entra="0.75">
           {CASOS.map((c, k) => (
-            <div class="v2-celda v2-pieza v2-respaldo__pendiente" style={`--r:${(k * 0.14).toFixed(2)}`}>
-              <p class="v2-celda__rotulo">{c.rubro} · [CONFIRMAR]</p>
+            <div class="v2-celda v2-pieza v2-casos__celda" style={`--r:${(k * 0.14).toFixed(2)}`}>
+              <p class="v2-celda__rotulo">{c.rubro}</p>
               <p class="v2-casos__texto">{c.t}</p>
             </div>
           ))}
         </div>
-        <p class="v2-tablero__nota">Situaciones reales de clientes de Buffo. Los nombres se reservan por confidencialidad. · [CONFIRMAR las tres y si algún cliente autoriza nombre o logo]</p>
+        <p class="v2-tablero__nota">Situaciones reales de clientes de Buffo. Los nombres se reservan por confidencialidad.</p>
       </div>
     </section>
   )

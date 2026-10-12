@@ -2282,12 +2282,12 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
    ============================================================ */
 /* Letras (Simón, 12-oct-2026: «las distintas letras del sitio nos juegan en
    contra, no las animaciones»). Inter en todo; la letra de terminal solo
-   dentro de la ventana del agente y la cursiva con serifa solo en el titular
-   de la portada. En el resto, el énfasis va en turquesa. */
+   dentro de la ventana del agente. El énfasis de los titulares va en turquesa. */
 .v2--formal { --v2-mono: Inter, system-ui, sans-serif; --v2-serif: Inter, system-ui, sans-serif; }
 .v2--formal .v2-term { --v2-mono: 'IBM Plex Mono', ui-monospace, monospace; }
-.v2--formal .v2-titular { --v2-serif: 'Instrument Serif', 'Times New Roman', serif; }
-.v2--formal :is(.v2-titulo em, .v2-cierre__frase em, .v2-cita em) {
+/* El titular de la portada tampoco lleva cursiva con serifa (Comercial, 12-oct:
+   recomendación a Simón; si él prefiere la cursiva, se devuelve acá). */
+.v2--formal :is(.v2-titular em, .v2-titulo em, .v2-cierre__frase em, .v2-cita em) {
   font-style: normal;
   font-weight: inherit;
   font-size: 1em;
@@ -2369,3 +2369,5 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
   .v2-detras__tarjeta { grid-template-columns: 1fr; }
   .v2-metodo__pasos { grid-template-columns: 1fr; }
 }
+.v2-casos__celda { min-height: 13rem; }
+.v2-casos__celda .v2-celda__rotulo { color: rgb(var(--c-primary)); }

@@ -75,12 +75,12 @@ const serviceSchema = {
     })),
   },
 };
-// Preguntas de comprador corporativo (borrador de Comercial). Solo se ven en
-// esta página de trabajo; no entran al FAQPage schema hasta que Simón apruebe.
+// Pregunta de comprador corporativo (Comercial, 12-oct-2026). Las de propiedad
+// de lo construido y protección de datos NO van: Simón no tiene definición y
+// hay un tema legal detrás. Cuando esta página pase a ser el home, esta lista
+// reemplaza a FAQ_HOME también en el FAQPage schema.
 const FAQ_CORPORATIVA = [
   ...FAQ_HOME,
-  { q: '¿De quién es lo que se construye?', a: '[CONFIRMAR respuesta con Simón]' },
-  { q: '¿Cómo se protegen los datos de mi empresa?', a: '[CONFIRMAR respuesta con Simón]' },
   {
     q: '¿Buffo reemplaza a mi equipo de TI o a mi área de control de gestión?',
     a: 'No. Trabajamos con ellos: TI mantiene los sistemas y control de gestión mantiene el criterio. Buffo conecta, construye y acompaña.',
