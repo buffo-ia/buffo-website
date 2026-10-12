@@ -2436,3 +2436,12 @@ body[data-sitio='v2'] #theme-toggle { display: none; }
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
 }
+
+/* Calculadora del home: la cifra en pesos es larga y no debe cortarse. */
+.v2 .v2-calc__plata {
+  font-size: clamp(2.2rem, 4.4vw, 4rem);
+  white-space: nowrap;
+}
+.v2 .v2-calc__plata small {
+  white-space: nowrap;
+}
