@@ -1,0 +1,81 @@
+---
+// «Un lunes cualquiera, visto desde Buffo»: un tablero que se arma por piezas
+// mientras se baja (video de referencia, tramo «A Tuesday, seen from Relay»:
+// columnas que se llenan, un anillo de porcentaje, personas que aparecen de a
+// una y una línea que se dibuja).
+//
+// Todo va atado al scroll: la cuadrícula recibe --e (0 a 1) del motor de
+// Aparecer.astro y cada pieza lleva su turno en --r. Sin JavaScript --e vale 1
+// y el tablero se ve armado.
+//
+// ⚠️ CIFRAS ILUSTRATIVAS, las mismas del resto de la portada (82% de la meta,
+// −2,1 puntos de margen). No son de un cliente.
+const SEMANAS = [46, 52, 49, 58, 55, 63, 60, 68, 64, 72, 70, 82];
+const PERSONAS = [
+  { sigla: 'GC', rol: 'Gerente comercial', pendiente: true },
+  { sigla: 'FI', rol: 'Finanzas', pendiente: true },
+  { sigla: 'CO', rol: 'Compras', pendiente: true },
+  { sigla: 'OP', rol: 'Operaciones', pendiente: false },
+  { sigla: 'GG', rol: 'Gerente general', pendiente: false },
+];
+// Margen de las últimas 12 semanas (puntos sobre un alto de 100).
+const MARGEN = [38, 36, 40, 37, 39, 36, 38, 41, 39, 42, 55, 68];
+const paso = 600 / (MARGEN.length - 1);
+const linea = MARGEN.map((y, i) => `${i === 0 ? 'M' : 'L'}${(i * paso).toFixed(1)} ${y}`).join(' ');
+const ultimo = { x: 600, y: MARGEN[MARGEN.length - 1] };
+---
+
+<section class="v2-seccion v2-tablero">
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">El tablero</p>
+      <h2 class="v2-titulo">Un lunes cualquiera, <em>visto desde Buffo.</em></h2>
+    </div>
+
+    <div class="v2-rejilla" data-v2-entra="0.75" aria-hidden="true">
+      <div class="v2-celda v2-celda--ancha v2-pieza" style="--r:0">
+        <p class="v2-celda__rotulo">Ventas por semana · últimas 12</p>
+        <div class="v2-columnas">
+          {SEMANAS.map((h, k) => <i class="v2-l" style={`--h:${h}%;--r:${(0.08 + k * 0.03).toFixed(2)}`} />)}
+        </div>
+        <p class="v2-celda__chica">La semana que cierra va sobre la meta.</p>
+      </div>
+
+      <div class="v2-celda v2-pieza" style="--r:0.18">
+        <p class="v2-celda__rotulo">Cumplimiento de la meta</p>
+        <div class="v2-anillo">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" class="v2-anillo__fondo"></circle>
+            <circle cx="50" cy="50" r="42" pathLength="100" class="v2-anillo__arco v2-l" style="--r:0.28;--v:2.2"></circle>
+          </svg>
+          <b><span data-v2-cuenta="82">82</span>%</b>
+        </div>
+        <p class="v2-celda__chica">Del mes, al día de hoy.</p>
+      </div>
+
+      <div class="v2-celda v2-pieza" style="--r:0.3">
+        <p class="v2-celda__rotulo">Con algo por decidir hoy</p>
+        <ul class="v2-personas">
+          {
+            PERSONAS.map((p, k) => (
+              <li class:list={['v2-l', p.pendiente && 'es-pendiente']} style={`--r:${(0.4 + k * 0.05).toFixed(2)};--v:5`} title={p.rol}>
+                {p.sigla}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="v2-celda__chica">Tres propuestas del agente esperan una aprobación.</p>
+      </div>
+
+      <div class="v2-celda v2-celda--ancha v2-pieza" style="--r:0.4">
+        <p class="v2-celda__rotulo">Margen · 12 semanas <span class="v2-onda__aviso v2-l" style="--r:0.82;--v:6">fuera de rango</span></p>
+        <svg class="v2-onda" viewBox="-6 14 618 70">
+          <rect x="0" y="30" width="600" height="18" class="v2-onda__rango"></rect>
+          <path d={linea} pathLength="1" class="v2-onda__linea v2-l" style="--r:0.5;--v:2.6"></path>
+        </svg>
+        <p class="v2-celda__chica">La línea salió del rango esperado: ahí parte la lectura del agente.</p>
+      </div>
+    </div>
+    <p class="v2-tablero__nota">Ejemplo ilustrativo · las cifras no son de un cliente</p>
+  </div>
+</section>

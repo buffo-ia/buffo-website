@@ -7,6 +7,9 @@ import Flujo from '../components/v2/Flujo.astro';
 import Demo from '../components/v2/Demo.astro';
 import Stack from '../components/v2/Stack.astro';
 import Frase from '../components/v2/Frase.astro';
+import Tablero from '../components/v2/Tablero.astro';
+import Nodos from '../components/v2/Nodos.astro';
+import Guia from '../components/v2/Guia.astro';
 import Lineas from '../components/v2/Lineas.astro';
 import Prueba from '../components/v2/Prueba.astro';
 import Conexion from '../components/v2/Conexion.astro';
@@ -87,12 +90,12 @@ const serviceSchema = {
        cierre la última: la barra del diagnóstico en celular las busca así para
        saber cuándo aparecer y cuándo retirarse. -->
   <div class="v2">
-    <Cintas />
+    <Cintas /><Guia />
     <Portada />
     <Flujo />
-    <Demo />
+    <Demo /><Nodos />
     <Stack />
-    <Frase />
+    <Frase /><Tablero />
     <Lineas />
     <Prueba />
     <Conexion />

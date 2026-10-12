@@ -2046,3 +2046,207 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
 /* Los gráficos de las maquetas esperan a que la pantalla entre. */
 .v2-anima .v2-e-panel:not(.es-visto) *,
 .v2-anima [data-v2-visto]:not(.es-visto) * { animation-play-state: paused !important; }
+
+
+/* ============================================================
+   PIEZAS QUE SE ARMAN CON EL SCROLL
+   .v2-l: avance propio de una pieza (0 a 1) dentro del avance --e de su
+   contenedor. --r = cuándo le toca, --v = qué tan rápido entra.
+   ============================================================ */
+.v2-l, .v2-pieza { --l: clamp(0, calc((var(--e) - var(--r, 0)) * var(--v, 3)), 1); }
+.v2-pieza > * {
+  opacity: var(--l);
+  transform: translateY(calc((1 - var(--l)) * 22px));
+}
+
+/* ----- El tablero (components/v2/Tablero.astro) ----- */
+.v2-tablero__nota {
+  margin-top: 1rem;
+  font-family: var(--v2-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--c-on-surface) / 0.4);
+}
+.v2-columnas {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: end;
+  gap: clamp(4px, 0.9vw, 12px);
+  height: 9.5rem;
+  margin: auto 0 1.25rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.14);
+}
+.v2-columnas i {
+  height: var(--h);
+  border-radius: 3px 3px 0 0;
+  background: rgb(var(--c-on-surface) / 0.26);
+  transform-origin: bottom;
+  transform: scaleY(var(--l));
+}
+.v2-columnas i:last-child {
+  background: rgb(var(--c-primary));
+  box-shadow: 0 0 24px rgb(var(--c-primary) / 0.45);
+}
+.v2-anillo { position: relative; width: min(100%, 10rem); margin: auto auto 1.25rem; }
+.v2-anillo svg { display: block; transform: rotate(-90deg); }
+.v2-anillo circle { fill: none; stroke-width: 7; }
+.v2-anillo__fondo { stroke: rgb(255 255 255 / 0.1); }
+.v2-anillo__arco {
+  stroke: rgb(var(--c-primary));
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - 82 * var(--l));
+}
+.v2-anillo b {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.v2-anillo b span { display: contents; }
+.v2-personas { display: flex; margin: auto 0 1.25rem; padding: 0; list-style: none; }
+.v2-personas li {
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  margin-right: -0.55rem;
+  border-radius: 50%;
+  border: 2px solid #060606;
+  background: rgb(38 38 38);
+  font-family: var(--v2-mono);
+  font-size: 0.72rem;
+  color: rgb(var(--c-on-surface) / 0.75);
+  opacity: var(--l);
+  transform: scale(calc(0.4 + var(--l) * 0.6));
+}
+.v2-personas li.es-pendiente { background: rgb(var(--c-primary)); color: #000; }
+.v2-onda { display: block; width: 100%; height: auto; margin: auto 0 1.25rem; overflow: visible; }
+.v2-onda__rango { fill: rgb(255 255 255 / 0.06); }
+.v2-onda__linea {
+  fill: none;
+  stroke: rgb(var(--c-primary));
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--l));
+}
+.v2-onda__aviso {
+  margin-left: 0.6rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--c-primary));
+  color: #000;
+  opacity: var(--l);
+}
+
+/* ----- El ícono guía (components/v2/Guia.astro) ----- */
+.v2-guia { display: none; }
+@media (min-width: 1280px) {
+  .v2-guia {
+    --p: 0;
+    display: block;
+    position: fixed;
+    z-index: 30;
+    left: clamp(18px, calc((100vw - 76rem) / 4), 64px);
+    top: 24vh;
+    height: 52vh;
+    width: 1px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .v2-guia.es-visible { opacity: 1; }
+  .v2-guia__riel { position: absolute; inset: 0; background: rgb(255 255 255 / 0.14); }
+  .v2-guia__riel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(var(--c-primary));
+    transform-origin: top;
+    transform: scaleY(var(--p));
+  }
+  .v2-guia__icono {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--p) * 100%);
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border-radius: 9px;
+    background: rgb(var(--c-primary));
+    box-shadow: 0 0 22px rgb(var(--c-primary) / 0.5);
+  }
+  .v2-guia__icono::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    background: #000;
+    -webkit-mask: var(--isotipo) center / contain no-repeat;
+    mask: var(--isotipo) center / contain no-repeat;
+  }
+}
+
+/* ----- El diagrama de nodos (components/v2/Nodos.astro) — PRUEBA ----- */
+.v2-nodos__vista { position: relative; }
+.v2-nodos__vista svg { display: block; width: 100%; height: auto; overflow: visible; }
+.v2-nodos__vista--alta { display: none; max-width: 24rem; margin: 0 auto; }
+@media (max-width: 767px) {
+  .v2-nodos__vista--ancha { display: none; }
+  .v2-nodos__vista--alta { display: block; }
+}
+.v2-nodos__trazo {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.3);
+  stroke-width: 1.2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--l));
+}
+.v2-nodos__trazo.es-acento { stroke: rgb(var(--c-primary)); }
+/* Los pulsos que recorren las líneas solo se ven con el diagrama ya armado. */
+.v2-nodos__pulso { fill: rgb(var(--c-primary)); opacity: clamp(0, calc((var(--e) - 0.92) * 14), 0.9); }
+.v2-nodos__caja { opacity: var(--l); }
+.v2-nodos__caja rect { fill: rgb(10 10 10); stroke: rgb(255 255 255 / 0.2); stroke-width: 1; }
+.v2-nodos__caja.es-persona rect { fill: rgb(var(--c-on-surface)); stroke: none; }
+.v2-nodos__texto {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 0 0.5rem;
+  font-family: var(--v2-mono);
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  color: rgb(var(--c-on-surface) / 0.85);
+}
+.v2-nodos__caja.es-persona .v2-nodos__texto { color: #000; font-weight: 600; font-family: Inter, sans-serif; }
+.v2-nodos__icono {
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+  width: var(--lado);
+  aspect-ratio: 1;
+  border-radius: 22%;
+  background: rgb(var(--c-primary));
+  box-shadow: 0 0 44px rgb(var(--c-primary) / 0.5);
+  opacity: var(--l);
+  transform: translate(-50%, -50%) scale(calc(0.5 + var(--l) * 0.5));
+}
+.v2-nodos__icono::after {
+  content: '';
+  position: absolute;
+  inset: 22%;
+  background: #000;
+  -webkit-mask: var(--isotipo) center / contain no-repeat;
+  mask: var(--isotipo) center / contain no-repeat;
+}
+@media (max-width: 767px) {
+  .v2-nodos__vista--alta { --lado: 19% !important; }
+  .v2-nodos__texto { font-size: 11px; }
+}

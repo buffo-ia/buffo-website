@@ -1,0 +1,95 @@
+---
+// PRUEBA (Simón, 12-oct-2026: «me gustaría ver la 3, para ver cómo queda»).
+// El diagrama de nodos del video de referencia: las fuentes a un lado, el
+// ícono al centro, lo que el agente prepara al otro, y una persona al final.
+// Las líneas se trazan y las cajas aparecen con el scroll (--e del motor de
+// Aparecer.astro, turno de cada pieza en --r).
+//
+// Cuenta lo mismo que la sección «Cómo trabajamos» y que el mapa del colibrí:
+// si se queda, hay que decidir a cuál de las dos reemplaza.
+//
+// Se dibuja dos veces con los mismos datos: horizontal para pantallas anchas y
+// vertical para teléfono, donde un diagrama acostado quedaría ilegible.
+import { getImage } from 'astro:assets';
+import isotipo from '../../assets/isotipo-buffo.png';
+
+const mascara = await getImage({ src: isotipo, width: 160, format: 'webp' });
+const FUENTES = ['ERP · ventas', 'CRM · clientes', 'Planilla de costos'];
+const SALIDAS = ['Alerta: margen fuera de rango', 'Propuesta: revisar descuentos', 'Informe del mes, listo'];
+const SALIDAS_CORTAS = ['Alerta', 'Propuesta', 'Informe'];
+const PERSONA = 'Una persona decide';
+
+type Caja = { x: number; y: number; w: number; h: number; texto: string; r: number; clase?: string };
+type Trazo = { d: string; r: number; clase?: string };
+
+function armar(vertical: boolean) {
+  const cajas: Caja[] = [];
+  const trazos: Trazo[] = [];
+  if (!vertical) {
+    const W = 1000, H = 400, ys = [70, 200, 330], cx = 395, cy = 200;
+    const f = { x: 20, w: 190, h: 50 }, s = { x: 545, w: 250, h: 50 }, p = { x: 860, w: 130, h: 64 };
+    FUENTES.forEach((t, i) => {
+      cajas.push({ x: f.x, y: ys[i] - f.h / 2, w: f.w, h: f.h, texto: t, r: 0.02 + i * 0.05 });
+      trazos.push({ d: `M${f.x + f.w} ${ys[i]} C ${f.x + f.w + 90} ${ys[i]}, ${cx - 120} ${cy}, ${cx - 34} ${cy}`, r: 0.1 + i * 0.05 });
+    });
+    SALIDAS.forEach((t, i) => {
+      trazos.push({ d: `M${cx + 34} ${cy} C ${cx + 110} ${cy}, ${s.x - 80} ${ys[i]}, ${s.x} ${ys[i]}`, r: 0.4 + i * 0.05, clase: 'es-acento' });
+      cajas.push({ x: s.x, y: ys[i] - s.h / 2, w: s.w, h: s.h, texto: t, r: 0.52 + i * 0.05 });
+      trazos.push({ d: `M${s.x + s.w} ${ys[i]} C ${s.x + s.w + 40} ${ys[i]}, ${p.x - 40} ${cy}, ${p.x} ${cy}`, r: 0.66 + i * 0.03 });
+    });
+    cajas.push({ x: p.x, y: cy - p.h / 2, w: p.w, h: p.h, texto: PERSONA, r: 0.8, clase: 'es-persona' });
+    return { W, H, cajas, trazos, cx, cy };
+  }
+  const W = 360, H = 620, xs = [62, 180, 298], cx = 180, cy = 235;
+  const f = { y: 30, w: 108, h: 54 }, s = { y: 390, w: 108, h: 44 }, p = { y: 530, w: 200, h: 54 };
+  FUENTES.forEach((t, i) => {
+    cajas.push({ x: xs[i] - f.w / 2, y: f.y, w: f.w, h: f.h, texto: t, r: 0.02 + i * 0.05 });
+    trazos.push({ d: `M${xs[i]} ${f.y + f.h} C ${xs[i]} ${f.y + f.h + 60}, ${cx} ${cy - 100}, ${cx} ${cy - 34}`, r: 0.1 + i * 0.05 });
+  });
+  SALIDAS_CORTAS.forEach((t, i) => {
+    trazos.push({ d: `M${cx} ${cy + 34} C ${cx} ${cy + 100}, ${xs[i]} ${s.y - 60}, ${xs[i]} ${s.y}`, r: 0.4 + i * 0.05, clase: 'es-acento' });
+    cajas.push({ x: xs[i] - s.w / 2, y: s.y, w: s.w, h: s.h, texto: t, r: 0.52 + i * 0.05 });
+    trazos.push({ d: `M${xs[i]} ${s.y + s.h} C ${xs[i]} ${s.y + s.h + 40}, ${cx} ${p.y - 50}, ${cx} ${p.y}`, r: 0.66 + i * 0.03 });
+  });
+  cajas.push({ x: cx - p.w / 2, y: p.y, w: p.w, h: p.h, texto: PERSONA, r: 0.8, clase: 'es-persona' });
+  return { W, H, cajas, trazos, cx, cy };
+}
+const VISTAS = [
+  { clase: 'v2-nodos__vista--ancha', ...armar(false) },
+  { clase: 'v2-nodos__vista--alta', ...armar(true) },
+];
+---
+
+<section class="v2-seccion v2-nodos">
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">El recorrido</p>
+      <h2 class="v2-titulo">De sus sistemas <em>a una decisión.</em></h2>
+    </div>
+
+    {
+      VISTAS.map((v) => (
+        <div class:list={['v2-nodos__vista', v.clase]} data-v2-entra="0.8" aria-hidden="true" style={`--isotipo:url('${mascara.src}');--cx:${(v.cx / v.W) * 100}%;--cy:${(v.cy / v.H) * 100}%;--lado:${(68 / v.W) * 100}%`}>
+          <svg viewBox={`0 0 ${v.W} ${v.H}`}>
+            {v.trazos.map((t, i) => (
+              <>
+                <path id={`${v.clase}-t${i}`} d={t.d} pathLength="1" class:list={['v2-nodos__trazo v2-l', t.clase]} style={`--r:${t.r.toFixed(2)};--v:6`} />
+                <circle r="3" class="v2-nodos__pulso">
+                  <animateMotion dur="2.4s" begin={`${(i * 0.37).toFixed(2)}s`} repeatCount="indefinite"><mpath href={`#${v.clase}-t${i}`} /></animateMotion>
+                </circle>
+              </>
+            ))}
+            {v.cajas.map((c) => (
+              <g class:list={['v2-nodos__caja v2-l', c.clase]} style={`--r:${c.r.toFixed(2)};--v:6`}>
+                <rect x={c.x} y={c.y} width={c.w} height={c.h} rx="8" />
+                <foreignObject x={c.x} y={c.y} width={c.w} height={c.h}><div class="v2-nodos__texto">{c.texto}</div></foreignObject>
+              </g>
+            ))}
+          </svg>
+          <i class="v2-nodos__icono v2-l" style="--r:0.26;--v:6"></i>
+        </div>
+      ))
+    }
+    <p class="v2-tablero__nota">Los agentes preparan y proponen · la decisión es de una persona de su equipo</p>
+  </div>
+</section>

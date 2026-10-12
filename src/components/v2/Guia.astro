@@ -1,0 +1,47 @@
+---
+// El ícono guía: el cuadrito turquesa con el colibrí que acompaña el scroll
+// por el borde izquierdo (video de referencia: el ícono reaparece entre
+// secciones y baja con la página). Marca cuánto de la página va recorrido.
+//
+// Se esconde en la portada, mientras el barrido está en pantalla (ahí el
+// cuadrito ES la placa que crece) y al llegar al cierre. Solo en pantallas
+// anchas: en teléfono no hay margen donde ponerlo sin tapar texto.
+import { getImage } from 'astro:assets';
+import isotipo from '../../assets/isotipo-buffo.png';
+
+const mascara = await getImage({ src: isotipo, width: 160, format: 'webp' });
+---
+
+<div class="v2-guia" data-v2-guia aria-hidden="true" style={`--isotipo:url('${mascara.src}')`}>
+  <i class="v2-guia__riel"></i>
+  <i class="v2-guia__icono"></i>
+</div>
+
+<script>
+  const guia = document.querySelector<HTMLElement>('[data-v2-guia]');
+  if (guia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const barrido = document.querySelector<HTMLElement>('[data-v2-barrido]');
+    const cierre = document.querySelector<HTMLElement>('.v2-cierre');
+    let pendiente = false;
+    const pintar = () => {
+      pendiente = false;
+      const vh = window.innerHeight;
+      const total = document.documentElement.scrollHeight - vh;
+      guia.style.setProperty('--p', Math.min(1, window.scrollY / Math.max(1, total)).toFixed(4));
+      const b = barrido?.getBoundingClientRect();
+      const enBarrido = !!b && b.top < vh * 0.5 && b.bottom > vh * 0.5;
+      const enCierre = !!cierre && cierre.getBoundingClientRect().top < vh * 0.6;
+      guia.classList.toggle('es-visible', window.scrollY > vh * 0.7 && !enBarrido && !enCierre);
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (pendiente) return;
+        pendiente = true;
+        requestAnimationFrame(pintar);
+      },
+      { passive: true }
+    );
+    pintar();
+  }
+</script>
