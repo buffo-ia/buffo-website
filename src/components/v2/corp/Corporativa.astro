@@ -10,7 +10,7 @@
 // del fundador según config/site.ts.
 import { Image } from 'astro:assets';
 import foto from '../../../assets/simon-espinoza.jpg';
-import { FOUNDER } from '../../../config/site';
+import { FOUNDER, SITE } from '../../../config/site';
 
 interface Props {
   parte: 'detras' | 'frases' | 'servicios' | 'metodo' | 'casos';
@@ -37,10 +37,19 @@ const FRASES = [
 ];
 const SERVICIOS = [
   {
+    // Línea nueva (Simón, 12-oct-2026). Sin página propia: no se crea slug sin
+    // su decisión, así que el enlace va a la reunión.
+    en: 'Business Intelligence Consulting',
+    nombre: 'Consultoría en inteligencia de negocios',
+    frase: 'Revisamos su negocio con mirada de gerencia: dónde se gana, dónde se pierde y qué tiene que cambiar para llegar al resultado.',
+    recibe: ['Revisión del estado de resultados, con cada cifra trazada a su origen', 'Rentabilidad por línea de negocio, producto, cliente y sucursal', 'Objetivos y ruta al EBITDA: qué tiene que pasar, mes a mes, para llegar a la meta', 'Presupuesto y seguimiento mensual con su gerencia'],
+    enlace: { texto: 'Agendar 30 minutos', href: SITE.calendly, cta: false, externo: true },
+  },
+  {
     en: 'Decision Solutions with AI',
     nombre: 'Decisiones de negocio con IA',
-    frase: 'Tomamos una decisión que hoy se toma con información incompleta y la dejamos resuelta con datos y criterio comercial.',
-    recibe: ['Diagnóstico de la decisión y de los datos disponibles', 'Caso de negocio con el retorno esperado', 'Modelo o herramienta de decisión para precio, surtido, metas o cobranza', 'Acompañamiento a su equipo en el uso'],
+    frase: 'Tomamos una decisión que se repite, como precio, surtido, metas o cobranza, y la dejamos resuelta con un modelo que su equipo usa todos los meses.',
+    recibe: ['Diagnóstico de la decisión y de los datos disponibles', 'Caso de negocio con el retorno esperado', 'Modelo o herramienta de decisión, construido con sus datos', 'Acompañamiento a su equipo en el uso'],
     enlace: { texto: 'Empezar por el diagnóstico', href: '/diagnostico', cta: true },
   },
   {
@@ -62,8 +71,13 @@ const METODO = [
   { t: 'Diagnóstico', d: 'Definimos qué decisión se quiere mejorar y cuánto vale. Si la IA no hace falta, lo decimos.' },
   { t: 'Caso de negocio', d: 'Estimamos el retorno, el costo y el plazo antes de construir. Usted decide con esa información.' },
   { t: 'Piloto con sus datos', d: 'Probamos con datos reales de su empresa, no con una demostración. Lo que no funciona se ve temprano y cuesta poco.' },
-  { t: 'Operación y acompañamiento', d: 'Lo que se construye queda funcionando y seguimos con su equipo. El estándar es que se siga usando el mes doce.' },
+  { t: 'Implementación acompañada', d: 'Lo que se construye queda funcionando y seguimos con su gerencia y su equipo. El estándar es que se siga usando el mes doce.' },
 ];
+const ACOMPANA = {
+  texto:
+    'Implementar IA no es instalar una herramienta. Es decidir dónde usarla, con qué datos y quién responde por el resultado. Por eso no entregamos y nos vamos: acompañamos a su gerencia y a su equipo durante la implementación.',
+  puntos: ['Hoja de ruta de IA, priorizada por retorno', 'Selección de casos de uso y de herramientas', 'Adopción con su equipo: quién usa qué y cómo', 'Seguimiento mensual con su gerencia'],
+};
 const CASOS = [
   { rubro: 'Cobranza', t: 'La cobranza dejó de revisarse a fin de mes: el equipo ve cada día qué cuentas necesitan una gestión.' },
   { rubro: 'Resultados', t: 'El estado de resultados del mes se carga una vez y queda leído contra presupuesto, sin rearmar planillas.' },
@@ -140,9 +154,10 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
       <div class="v2-marco">
         <div class="v2-cabeza v2-e-sube" data-v2-entra>
           <p class="v2-indice">Servicios</p>
-          <h2 class="v2-titulo">Tres líneas de servicio. <em>Un criterio: el negocio primero.</em></h2>
+          <h2 class="v2-titulo">Acompañamiento estratégico en inteligencia de negocios <em>e implementación de IA.</em></h2>
+          <p class="v2-parrafo">Cuatro líneas de servicio. Un criterio: el negocio primero.</p>
         </div>
-        <div class="v2-rejilla" data-v2-entra="0.75">
+        <div class="v2-rejilla v2-rejilla--cuatro" data-v2-entra="0.75">
           {SERVICIOS.map((s, k) => (
             <article class="v2-celda v2-pieza v2-oferta" style={`--r:${(k * 0.14).toFixed(2)}`}>
               <p class="v2-celda__rotulo" lang="en">{String(k + 1).padStart(2, '0')} · {s.en}</p>
@@ -150,12 +165,22 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
               <p class="v2-oferta__frase">{s.frase}</p>
               <p class="v2-celda__rotulo">Qué recibe</p>
               <ul>{s.recibe.map((r) => <li>{r}</li>)}</ul>
-              <a href={s.enlace.href} class="v2-enlace" data-cta-diagnostico={s.enlace.cta ? 'lineas' : undefined}>
+              <a href={s.enlace.href} class="v2-enlace" data-cta-diagnostico={s.enlace.cta ? 'lineas' : undefined} target={s.enlace.externo ? '_blank' : undefined} rel={s.enlace.externo ? 'noopener noreferrer' : undefined}>
                 {s.enlace.texto}
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </a>
             </article>
           ))}
+        </div>
+        <div class="v2-acompana" data-v2-entra="0.7">
+          <div class="v2-pieza" style="--r:0">
+            <p class="v2-celda__rotulo">En todas las líneas</p>
+            <h3>Acompañamiento en implementación de IA</h3>
+            <p>{ACOMPANA.texto}</p>
+          </div>
+          <ul>
+            {ACOMPANA.puntos.map((t, k) => <li class="v2-pieza" style={`--r:${(0.15 + k * 0.12).toFixed(2)}`}><span>{t}</span></li>)}
+          </ul>
         </div>
       </div>
     </section>

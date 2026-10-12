@@ -27,6 +27,9 @@ const TEXTO = {
   nota: 'Sin costo · 12 preguntas · el informe llega por escrito',
   lineas: ['Decision Solutions with AI', 'Business Analytics with AI', 'Agentic Workflows for Business'],
 };
+// La versión corporativa (pages/corporativa.astro) cambia la segunda frase de
+// la bajada y suma una cuarta línea al pie. El H1 es siempre la primera frase.
+const { bajadaResto = TEXTO.bajadaResto, lineas = TEXTO.lineas } = Astro.props;
 ---
 
 <section class="v2-portada">
@@ -45,7 +48,7 @@ const TEXTO = {
       </p>
       <div class="v2-bajada v2-sube" style="--i:3">
         <h1>{TEXTO.bajada}</h1>
-        <p>{TEXTO.bajadaResto}</p>
+        <p>{bajadaResto}</p>
       </div>
       <div class="v2-botones v2-sube" style="--i:4">
         <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
@@ -64,9 +67,9 @@ const TEXTO = {
     </div>
   </div>
 
-  <ul class="v2-lineas" lang="en">
+  <ul class="v2-lineas" lang="en" style={`--cols:${lineas.length}`}>
     {
-      TEXTO.lineas.map((linea, i) => (
+      lineas.map((linea, i) => (
         <li class="v2-sube" style={`--i:${7 + i}`}>
           <b>{String(i + 1).padStart(2, '0')}</b>
           {linea}
