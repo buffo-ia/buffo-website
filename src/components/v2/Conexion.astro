@@ -11,11 +11,6 @@
 // las tiene Simón: cuando las dé, van acá.
 import MapaIntegraciones from '../MapaIntegraciones.astro';
 
-const CIFRAS = [
-  { n: '0', de: 'sistemas que cambiar' },
-  { n: '0', de: 'líneas de código de su lado' },
-  { n: '3', unidad: 'min', de: 'para saber por dónde partir' },
-];
 const PUNTOS = [
   'Su ERP, sus planillas y su base de datos',
   'Nadie exporta ni pega nada a mano',
@@ -33,16 +28,8 @@ const PUNTOS = [
         Su ERP, sus planillas, la base de datos y las campañas hablan idiomas distintos.
         Los leemos donde están y como están, y encima ponemos la lectura.
       </p>
-      <dl class="v2-cifras">
-        {
-          CIFRAS.map((c) => (
-            <div>
-              <dd>{c.n}{c.unidad && <small>{c.unidad}</small>}</dd>
-              <dt>{c.de}</dt>
-            </div>
-          ))
-        }
-      </dl>
+      {/* Las cifras «0 / 0 / 3 min» que iban acá pasaron a la sección
+          «Lo que cambia, en números» (Prueba.astro), el 12-oct-2026. */}
       <ul class="v2-puntos">
         {PUNTOS.map((t) => <li>{t}</li>)}
       </ul>

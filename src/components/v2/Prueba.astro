@@ -1,0 +1,118 @@
+---
+// «Lo que cambia, en números»: las cuatro ideas de cifras de la revisión en
+// vivo (12-oct-2026), juntas en una cuadrícula de líneas finas (Framer):
+//   · la comparación «Hoy / Con Buffo», barra contra punto (Better Stack);
+//   · dos celdas que son solo una cifra con su contexto (Better Stack, Framer);
+//   · la calculadora con deslizadores (Qatalog).
+//
+// ⚠️ SOBRE LAS CIFRAS. Simón pidió verlas armadas antes de dar los datos
+// («hazlas, veamos cómo queda»), así que:
+//   · «día 10» sale de un texto que el sitio ya publicaba («cuando el reporte
+//     llega el día 10…»); «día 1» es un EJEMPLO, no un resultado medido. La
+//     celda lo dice y hay que cambiarlo por un caso real antes de publicar.
+//   · «0» y «3 min» son las cifras que el sitio ya afirma (preguntas
+//     frecuentes y diagnóstico). Por eso salieron de la sección del mapa.
+//   · la calculadora no promete nada: multiplica lo que el visitante mueve.
+const CALC = {
+  personas: { min: 1, max: 20, inicio: 4 },
+  horas: { min: 1, max: 20, inicio: 6 },
+  semanasAlAnio: 52,
+  // Para traducir horas a «meses de una persona»: jornada de 44 h semanales.
+  horasPorMes: 190,
+};
+---
+
+<section class="v2-seccion v2-prueba">
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">La diferencia</p>
+      <h2 class="v2-titulo">Lo que cambia, <em>en números.</em></h2>
+    </div>
+
+    <div class="v2-rejilla v2-e-sube" data-v2-entra="0.7">
+      <!-- Hoy / Con Buffo -->
+      <div class="v2-celda v2-celda--ancha">
+        <p class="v2-celda__rotulo">El informe de gestión del mes</p>
+        <div class="v2-compara">
+          <div class="v2-compara__fila">
+            <span>Hoy</span>
+            <i class="v2-compara__barra"></i>
+            <b>día 10</b>
+          </div>
+          <div class="v2-compara__fila v2-compara__fila--buffo">
+            <span>Con Buffo</span>
+            <i class="v2-compara__punto"></i>
+            <b>día 1</b>
+          </div>
+        </div>
+        <p class="v2-celda__chica">
+          Ejemplo ilustrativo. El plazo real depende de sus sistemas; lo que no cambia es que el
+          informe deja de armarse a mano.
+        </p>
+      </div>
+
+      <div class="v2-celda v2-celda--cifra">
+        <p class="v2-celda__rotulo">Sistemas que cambiar</p>
+        <p class="v2-celda__numero">0</p>
+        <p class="v2-celda__chica">Construimos encima de lo que ya usa: su ERP, sus planillas, su base de datos.</p>
+      </div>
+
+      <!-- Calculadora -->
+      <div class="v2-celda v2-celda--ancha v2-calc" data-v2-calc data-semanas={CALC.semanasAlAnio} data-mes={CALC.horasPorMes}>
+        <p class="v2-celda__rotulo">¿Cuánto tiempo se va hoy en armar reportes?</p>
+        <div class="v2-calc__cuerpo">
+          <div class="v2-calc__controles">
+            <label>
+              <span>Personas que arman reportes <b data-ver="personas">{CALC.personas.inicio}</b></span>
+              <input type="range" data-campo="personas" min={CALC.personas.min} max={CALC.personas.max} value={CALC.personas.inicio} />
+            </label>
+            <label>
+              <span>Horas a la semana, cada una <b data-ver="horas">{CALC.horas.inicio}</b></span>
+              <input type="range" data-campo="horas" min={CALC.horas.min} max={CALC.horas.max} value={CALC.horas.inicio} />
+            </label>
+          </div>
+          <div class="v2-calc__resultado">
+            <p class="v2-celda__numero"><span data-salida="horas">{(CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio).toLocaleString('es-CL')}</span><small>horas al año</small></p>
+            <p class="v2-celda__chica">Son <span data-salida="meses">{((CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio) / CALC.horasPorMes).toFixed(1).replace('.', ',')}</span> meses de trabajo de una persona.</p>
+          </div>
+        </div>
+        <a href="/diagnostico" data-cta-diagnostico="calculadora" class="v2-enlace">
+          Ver cuánto de eso se puede recuperar
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <div class="v2-celda v2-celda--cifra">
+        <p class="v2-celda__rotulo">Para saber por dónde partir</p>
+        <p class="v2-celda__numero">3<small>min</small></p>
+        <p class="v2-celda__chica">El diagnóstico: doce preguntas, gratis, y el informe llega por escrito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const calc = document.querySelector<HTMLElement>('[data-v2-calc]');
+  if (calc) {
+    const semanas = Number(calc.dataset.semanas);
+    const horasPorMes = Number(calc.dataset.mes);
+    const campo = (n: string) => calc.querySelector<HTMLInputElement>(`[data-campo="${n}"]`)!;
+    const poner = (sel: string, v: string) => (calc.querySelector<HTMLElement>(sel)!.textContent = v);
+    const calcular = () => {
+      const personas = Number(campo('personas').value);
+      const horas = Number(campo('horas').value);
+      const total = personas * horas * semanas;
+      poner('[data-ver="personas"]', String(personas));
+      poner('[data-ver="horas"]', String(horas));
+      poner('[data-salida="horas"]', total.toLocaleString('es-CL'));
+      poner('[data-salida="meses"]', (total / horasPorMes).toFixed(1).replace('.', ','));
+      // El tramo recorrido del deslizador se pinta con una variable.
+      for (const n of ['personas', 'horas']) {
+        const c = campo(n);
+        c.style.setProperty('--lleno', `${((Number(c.value) - Number(c.min)) / (Number(c.max) - Number(c.min))) * 100}%`);
+      }
+    };
+    calc.addEventListener('input', calcular);
+    calcular();
+  }
+</script>
