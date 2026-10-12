@@ -3,17 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, SERVICES } from '../config/site';
 import Cintas from '../components/v2/Cintas.astro';
 import Portada from '../components/v2/Portada.astro';
-import Flujo from '../components/v2/Flujo.astro';
-import Demo from '../components/v2/Demo.astro';
-import Stack from '../components/v2/Stack.astro';
-import Frase from '../components/v2/Frase.astro';
-import Tablero from '../components/v2/Tablero.astro';
-import Nodos from '../components/v2/Nodos.astro';
+import Corporativa from '../components/v2/corp/Corporativa.astro';
 import Guia from '../components/v2/Guia.astro';
-import Lineas from '../components/v2/Lineas.astro';
 import Prueba from '../components/v2/Prueba.astro';
 import Conexion from '../components/v2/Conexion.astro';
-import Construimos from '../components/v2/Construimos.astro';
 import Preguntas from '../components/v2/Preguntas.astro';
 import Cierre from '../components/v2/Cierre.astro';
 import Aparecer from '../components/v2/Aparecer.astro';
@@ -43,6 +36,10 @@ const FAQ_HOME = [
   {
     q: '¿Por dónde empiezo si todavía no sé qué necesito?',
     a: 'Por el diagnóstico: doce preguntas sobre cómo se mueve hoy su información y un informe con lo que detectamos y qué conviene resolver primero.',
+  },
+  {
+    q: '¿Buffo reemplaza a mi equipo de TI o a mi área de control de gestión?',
+    a: 'No. Trabajamos con ellos: TI mantiene los sistemas y control de gestión mantiene el criterio. Buffo conecta, construye y acompaña.',
   },
 ];
 
@@ -77,33 +74,27 @@ const serviceSchema = {
 ---
 
 <BaseLayout schema={[serviceSchema, faqSchema]} heroAncla entrada>
-  <!-- PORTADA DEL SITIO 2.0 (11 y 12-oct-2026).
-       Todo va dentro de `.v2`, que es el bloque negro con las cintas de luz de
-       fondo. Cada sección es un componente de src/components/v2/ y sus estilos
-       están en src/styles/sitio2.css.
-
-       El orden sigue el borrador de Comercial: portada, el flujo, las tres
-       líneas con sus productos, las cifras con el mapa, y el cierre. Faltan a
-       propósito «casos» y «cómo se parte»: necesitan datos que da Simón.
-
-       ⛔ La portada tiene que seguir siendo la primera <section> de <main> y el
-       cierre la última: la barra del diagnóstico en celular las busca así para
-       saber cuándo aparecer y cuándo retirarse. -->
+  <!-- Home del sitio 2.0, versión corporativa (Simón, 12-oct-2026: «quedémonos
+       con esta versión»). Vende un servicio de consultoría, no un producto.
+       El texto es de Comercial: S-Lab/Buffo Consulting/Sitio 2.0/
+       HOME_version_corporativa_borrador.md. La portada debe seguir siendo la
+       primera sección y el cierre la última (BarraDiagnostico depende de eso). -->
   <div class="v2">
     <Cintas /><Guia />
-    <Portada />
-    <Flujo />
-    <Demo /><Nodos />
-    <Stack />
-    <Frase /><Tablero />
-    <Lineas />
-    <Prueba />
-    <Conexion />
-    <Construimos />
+    <Portada
+      bajadaResto="Acompañamos a su gerencia de manera estratégica: desde entender dónde se gana y dónde se pierde, hasta implementar IA en la operación con su equipo."
+      lineas={['Business Intelligence Consulting', 'Decision Solutions with AI', 'Business Analytics with AI', 'Agentic Workflows for Business']}
+    />
+    <Corporativa parte="detras" />
+    <Corporativa parte="frases" />
+    <Corporativa parte="servicios" />
+    <Corporativa parte="metodo" />
+    <Prueba retorno />
+    <Corporativa parte="casos" />
+    <Conexion corto />
     <Preguntas preguntas={FAQ_HOME} />
     <Cierre />
   </div>
-
   <Aparecer />
   <MedirCtaDiagnostico />
 </BaseLayout>

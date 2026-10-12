@@ -25,7 +25,7 @@
   --c-hairline: 255 255 255;
   --hairline-a: 0.1;
 
-  --v2-serif: 'Instrument Serif', 'Times New Roman', serif;
+  --v2-serif: Inter, system-ui, sans-serif;
   --v2-mono: 'IBM Plex Mono', ui-monospace, monospace;
   --v2-suave: cubic-bezier(0.2, 0.7, 0.2, 1);
 
@@ -2278,24 +2278,26 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
 
 
 /* ============================================================
-   VERSIÓN CORPORATIVA (pages/corporativa.astro)
+   VERSIÓN CORPORATIVA (pages/index.astro) y letras del sitio 2.0
    ============================================================ */
 /* Letras (Simón, 12-oct-2026: «las distintas letras del sitio nos juegan en
    contra, no las animaciones»). Inter en todo; la letra de terminal solo
    dentro de la ventana del agente. El énfasis de los titulares va en turquesa. */
-.v2--formal { --v2-mono: Inter, system-ui, sans-serif; --v2-serif: Inter, system-ui, sans-serif; }
-.v2--formal .v2-term { --v2-mono: 'IBM Plex Mono', ui-monospace, monospace; }
+.v2 { --v2-mono: Inter, system-ui, sans-serif; --v2-serif: Inter, system-ui, sans-serif; }
+.v2 .v2-term { --v2-mono: 'IBM Plex Mono', ui-monospace, monospace; }
 /* El titular de la portada tampoco lleva cursiva con serifa (Comercial, 12-oct:
    recomendación a Simón; si él prefiere la cursiva, se devuelve acá). */
-.v2--formal :is(.v2-titular em, .v2-titulo em, .v2-cierre__frase em, .v2-cita em) {
+.v2 :is(.v2-titular em, .v2-titulo em, .v2-cierre__frase em, .v2-cita em) {
   font-style: normal;
   font-weight: inherit;
   font-size: 1em;
   letter-spacing: inherit;
   color: rgb(var(--c-primary));
 }
-.v2--formal :is(.v2-celda__numero small, .v2-linea__numero, .v2-decisiones li) { font-style: normal; }
-.v2--formal :is(.v2-indice, .v2-celda__rotulo, .v2-tablero__nota, .v2-cejilla, .v2-nota) { font-weight: 500; }
+.v2 :is(.v2-celda__numero small, .v2-linea__numero, .v2-decisiones li, .v2-producto__dolor, .v2-cifras dd small, .v2-paso__n, .v2-franja__pregunta, .v2-palabra--cursiva) { font-style: normal; }
+.v2 :is(.v2-servicio__h1 em, .v2-barrido__texto em) { font-style: normal; font-weight: inherit; font-size: 1em; letter-spacing: inherit; }
+.v2 .v2-servicio__h1 em { color: rgb(var(--c-primary)); }
+.v2 :is(.v2-indice, .v2-celda__rotulo, .v2-tablero__nota, .v2-cejilla, .v2-nota) { font-weight: 500; }
 
 /* Quién está detrás */
 .v2-detras__grilla { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
