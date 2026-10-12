@@ -413,9 +413,13 @@
   overflow: hidden;
   background: rgb(0 0 0 / 0.66);
 }
+/* La ventana del agente va a la IZQUIERDA y los pasos a la derecha (Simón,
+   12-oct-2026): en la portada la ventana está a la derecha, y acá se alterna
+   para que la página no repita el mismo lado dos veces seguidas. */
+.v2-flujo__grilla .v2-term { order: -1; }
 .v2-flujo__grilla {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: clamp(2.5rem, 6vw, 6rem);
   align-items: center;
 }
