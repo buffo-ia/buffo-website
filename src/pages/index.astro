@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, SERVICES } from '../config/site';
 import Cintas from '../components/v2/Cintas.astro';
 import Portada from '../components/v2/Portada.astro';
+import VideoDemo from '../components/v2/VideoDemo.astro';
 import Corporativa from '../components/v2/corp/Corporativa.astro';
 import Guia from '../components/v2/Guia.astro';
 import Prueba from '../components/v2/Prueba.astro';
@@ -87,6 +88,7 @@ const serviceSchema = {
     />
     <Corporativa parte="detras" />
     <Corporativa parte="frases" />
+    <VideoDemo archivo="home" rotulo="Dónde se genera el resultado y dónde se pierde." />
     <Corporativa parte="servicios" />
     <Corporativa parte="metodo" />
     <Prueba retorno />

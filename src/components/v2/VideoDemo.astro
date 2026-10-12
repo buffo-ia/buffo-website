@@ -1,0 +1,76 @@
+---
+// Un video corto de una solución operando (Simón, 12-oct-2026: «que todos los
+// mockup sean pequeños videos donde se vea cómo opera, hagan zoom a la
+// pantalla, se mueva el cursor»). Reemplaza a las maquetas dibujadas.
+//
+// Los videos se graban con scripts/videos/ sobre la demo de datos simulados;
+// el guion y el rótulo de cada uno son de Comercial.
+//
+// Peso y velocidad: el video no se descarga hasta que el bloque se acerca a la
+// pantalla (preload="none" y la fuente se pone por script). Mientras tanto se
+// ve el póster, que tiene el alto reservado, así nada salta. Con movimiento
+// reducido no se reproduce solo: queda el póster con los controles.
+interface Props {
+  archivo: string; // nombre sin extensión, en public/videos/
+  rotulo: string;
+  indice?: string;
+  suelto?: boolean; // sin la sección alrededor, para meterlo dentro de otra
+}
+const { archivo, rotulo, indice = 'En operación', suelto = false } = Astro.props;
+const Marco = suelto ? 'div' : 'section';
+---
+
+<Marco class:list={['v2-video', !suelto && 'v2-seccion']}>
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">{indice}</p>
+      <h2 class="v2-titulo v2-video__rotulo">{rotulo}</h2>
+    </div>
+    <figure class="v2-video__caja v2-e-panel" data-v2-entra="0.5">
+      <video
+        muted
+        loop
+        playsinline
+        preload="none"
+        width="1280"
+        height="720"
+        poster={`/videos/${archivo}.jpg`}
+        data-v2-video={`/videos/${archivo}.mp4`}
+        aria-label={rotulo}></video>
+      <figcaption>Ejemplo ilustrativo. Las cifras no son de un cliente.</figcaption>
+    </figure>
+  </div>
+</Marco>
+
+<script>
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLVideoElement>('video[data-v2-video]').forEach((v) => {
+    const cargar = () => {
+      if (!v.src) v.src = v.dataset.v2Video!;
+    };
+    if (quieto) {
+      v.controls = true;
+      v.addEventListener('play', cargar, { once: true });
+      v.addEventListener('click', cargar, { once: true });
+      return;
+    }
+    // Se carga un poco antes de entrar y se reproduce solo mientras está a la vista.
+    new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) cargar();
+      },
+      { rootMargin: '60% 0px' }
+    ).observe(v);
+    new IntersectionObserver(
+      ([e]) => {
+        // La fuente primero: si este aviso llega antes que el de carga,
+        // reproducir sin fuente no hace nada y el video queda detenido.
+        if (e.isIntersecting) {
+          cargar();
+          v.play().catch(() => {});
+        } else v.pause();
+      },
+      { threshold: 0.35 }
+    ).observe(v);
+  });
+</script>
