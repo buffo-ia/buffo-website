@@ -5,7 +5,9 @@ import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 const require = createRequire('/Users/simon-angel/Dev/buffo-platform-3/');
 const { chromium } = require('playwright');
-export const SRC = 'file:///Users/simon-angel/Library/CloudStorage/OneDrive-Personal/S-Lab/Buffo Consulting/Distribuye/Distribuye.html';
+// La demo que se graba. Por defecto, la copia preparada para los videos (fecha al
+// día, catálogo y proveedores genéricos); DEMO=/ruta/Distribuye.html usa otra.
+export const SRC = 'file://' + (process.env.DEMO || '/Users/simon-angel/Library/CloudStorage/OneDrive-Personal/S-Lab/Buffo Consulting/Sitio 2.0/demo-videos/Distribuye.html');
 export const W = 1280, H = 720;
 const real = (ms) => new Promise((r) => setTimeout(r, ms));
 export const FPS = 30;
