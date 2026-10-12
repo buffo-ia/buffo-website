@@ -19,7 +19,7 @@ const { parte } = Astro.props;
 
 const DETRAS = {
   texto:
-    'Buffo nació en áreas comerciales. Por eso cada proyecto parte de una decisión de negocio y de su retorno, y recién después elige la tecnología.',
+    'Cada proyecto parte de un objetivo de negocio y de su retorno esperado. La tecnología se elige después, en función de ese objetivo.',
   // ⚠️ El borrador decía «Ingeniero Comercial y MBA de la Universidad del
   // Desarrollo». En config/site.ts el título de Ingeniero Comercial es de la
   // Universidad Central y el MBA de la UDD: se escribe así hasta que Simón diga.
@@ -32,7 +32,7 @@ const DETRAS = {
 const FRASES = [
   { q: 'No tengo la foto de cómo va el negocio', a: 'Los datos existen, pero están repartidos. Se parte por conectar las fuentes y acordar una sola definición de cada número.' },
   { q: 'Mis datos son un desorden', a: 'Ordenar todo no es el primer paso. Se ordena lo que hace falta para la primera decisión, y desde ahí se amplía.' },
-  { q: 'Me entero tarde de los problemas', a: 'El problema no es la falta de reportes, es que nadie los está mirando a tiempo. Ahí un agente de IA sí justifica su costo.' },
+  { q: 'Me entero tarde de los problemas', a: 'El problema no es la falta de reportes, es la oportunidad de la información. Ahí un agente de IA justifica la inversión.' },
   { q: 'Mi equipo pierde horas en tareas repetitivas', a: 'Se mide cuántas horas son y se automatiza primero el proceso que más libera.' },
 ];
 const SERVICIOS = [
@@ -41,7 +41,7 @@ const SERVICIOS = [
     // su decisión, así que el enlace va a la reunión.
     en: 'Business Intelligence Consulting',
     nombre: 'Consultoría en inteligencia de negocios',
-    frase: 'Revisamos su negocio con mirada de gerencia: dónde se gana, dónde se pierde y qué tiene que cambiar para llegar al resultado.',
+    frase: 'Revisamos su negocio con mirada estratégica y foco en el ROI: dónde se genera el resultado, dónde se pierde y qué priorizar.',
     recibe: ['Revisión del estado de resultados, con cada cifra trazada a su origen', 'Rentabilidad por línea de negocio, producto, cliente y sucursal', 'Objetivos y ruta al EBITDA: qué tiene que pasar, mes a mes, para llegar a la meta', 'Presupuesto y seguimiento mensual con su gerencia'],
     enlace: { texto: 'Agendar 30 minutos', href: SITE.calendly, cta: false, externo: true },
   },
@@ -68,14 +68,14 @@ const SERVICIOS = [
   },
 ];
 const METODO = [
-  { t: 'Diagnóstico', d: 'Definimos qué decisión se quiere mejorar y cuánto vale. Si la IA no hace falta, lo decimos.' },
+  { t: 'Diagnóstico', d: 'Definimos el objetivo de negocio y el retorno esperado. La IA se recomienda solo donde es la mejor inversión.' },
   { t: 'Caso de negocio', d: 'Estimamos el retorno, el costo y el plazo antes de construir. Usted decide con esa información.' },
-  { t: 'Piloto con sus datos', d: 'Probamos con datos reales de su empresa, no con una demostración. Lo que no funciona se ve temprano y cuesta poco.' },
-  { t: 'Implementación acompañada', d: 'Lo que se construye queda funcionando y seguimos con su gerencia y su equipo. El estándar es que se siga usando el mes doce.' },
+  { t: 'Piloto con sus datos', d: 'Validamos con datos reales de su empresa. Los riesgos se identifican antes de escalar la inversión.' },
+  { t: 'Implementación acompañada', d: 'La solución queda en operación y seguimos con su gerencia y su equipo, con indicadores de adopción y de retorno.' },
 ];
 const ACOMPANA = {
   texto:
-    'Implementar IA no es instalar una herramienta. Es decidir dónde usarla, con qué datos y quién responde por el resultado. Por eso no entregamos y nos vamos: acompañamos a su gerencia y a su equipo durante la implementación.',
+    'Implementar IA no es instalar una herramienta. Es decidir dónde usarla, con qué datos y quién responde por el resultado. Acompañamos a su gerencia y a su equipo durante toda la implementación, con objetivos y retorno medidos.',
   puntos: ['Hoja de ruta de IA, priorizada por retorno', 'Selección de casos de uso y de herramientas', 'Adopción con su equipo: quién usa qué y cómo', 'Seguimiento mensual con su gerencia'],
 };
 const CASOS = [
@@ -92,7 +92,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
       <div class="v2-marco">
         <div class="v2-cabeza v2-e-sube" data-v2-entra>
           <p class="v2-indice">Quién está detrás</p>
-          <h2 class="v2-titulo">Una consultora que viene del negocio, <em>no de la tecnología.</em></h2>
+          <h2 class="v2-titulo">Dirección estratégica, <em>con foco en el retorno.</em></h2>
           <p class="v2-parrafo">{DETRAS.texto}</p>
         </div>
         <div class="v2-detras__grilla">
@@ -193,7 +193,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
       <div class="v2-marco">
         <div class="v2-cabeza v2-e-sube" data-v2-entra>
           <p class="v2-indice">Cómo trabajamos</p>
-          <h2 class="v2-titulo">Primero el problema, <em>después la tecnología.</em></h2>
+          <h2 class="v2-titulo">Primero la estrategia y el retorno. <em>Después la tecnología.</em></h2>
         </div>
         <ol class="v2-metodo__pasos" data-v2-entra="0.8">
           <li class="v2-metodo__riel" aria-hidden="true"><i class="v2-l" style="--r:0.05;--v:1.3" /></li>
