@@ -59,12 +59,34 @@ export async function abrir({ acento = '#20C2BC', dsf = 2 } = {}) {
     #lateral,.superior{display:none!important}
     .principal{margin-left:0!important}
     .contenido{transform-origin:0 0;}
+    /* Aviso emergente del agente (Simón, 12-oct-2026: «un pop up con el mensaje de
+       alertas del agente de Buffo», solo en los videos donde el contexto lo pide).
+       Va fuera de la cámara: no se agranda con ella. Letra grande a propósito,
+       para que se lea con el video al ancho de un teléfono. */
+    #aviso{position:fixed;right:34px;bottom:34px;width:610px;z-index:99990;pointer-events:none;opacity:0;
+      background:#fff;border:1px solid #DDE3EA;border-left:6px solid #20C2BC;border-radius:20px;padding:24px 26px 22px;
+      box-shadow:0 4px 10px rgba(16,24,40,.08),0 34px 70px -22px rgba(16,24,40,.45);font-family:var(--fuente)}
+    #aviso .av-cab{display:flex;align-items:center;gap:14px}
+    #aviso .av-ico{width:52px;height:52px;border-radius:14px;background:#0B0F12;display:grid;place-items:center;flex:0 0 52px}
+    #aviso .av-ico img{width:34px;height:34px;object-fit:contain}
+    #aviso .av-cab b{font-size:23px;font-weight:720;color:#101828;letter-spacing:-.01em;display:block}
+    #aviso .av-cab span{font-size:17px;color:#667085;display:block;margin-top:1px}
+    #aviso .av-punto{margin-left:auto;width:12px;height:12px;border-radius:50%;background:#20C2BC;box-shadow:0 0 0 6px rgba(32,194,188,.2)}
+    #aviso p{margin:16px 0 0;font-size:24px;line-height:1.34;color:#1D2939;font-weight:500}
+    #aviso p strong{font-weight:720}
+    #aviso .av-bot{display:flex;gap:12px;margin-top:20px}
+    #aviso .av-bot span{font-size:19px;font-weight:650;padding:11px 20px;border-radius:12px;border:1px solid #D0D5DD;color:#344054}
+    #aviso .av-bot span:first-child{background:#20C2BC;border-color:#20C2BC;color:#062a29}
     #cur{position:fixed;left:0;top:0;z-index:99999;pointer-events:none;width:26px;height:26px;transform:translate(-200px,-200px);filter:drop-shadow(0 2px 3px rgba(0,0,0,.28))}
   ` });
   await p.evaluate(() => {
     const c = document.createElement('div'); c.id = 'cur';
     c.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2.5v17l4.6-4.3 3 6.6 2.9-1.3-3-6.5h6.3z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>';
     document.body.appendChild(c);
+    const av = document.createElement('div'); av.id = 'aviso'; document.body.appendChild(av);
+    window.avisoPon = (d) => { av.innerHTML = `<div class="av-cab"><div class="av-ico"><img src="${MARCA.colibri}" alt=""></div><div><b>Agente Buffo</b><span>${d.tema}</span></div><i class="av-punto"></i></div><p>${d.texto}</p><div class="av-bot">${d.botones.map((x) => `<span>${x}</span>`).join('')}</div>`; };
+    window.avisoEntra = (e) => { av.style.opacity = e; av.style.transform = `translateY(${(1 - e) * 46}px) scale(${0.96 + 0.04 * e})`; };
+    window.avisoSale = (e) => window.avisoEntra(1 - e);
     addEventListener('mousemove', (e) => { c.style.transform = `translate(${e.clientX - 4}px,${e.clientY - 2}px)`; }, true);
     // El punto medio entre frases no va en el sitio: se cambia por coma en lo que se ve.
     const limpiar = (n) => { const w = document.createTreeWalker(n, NodeFilter.SHOW_TEXT); let t; while ((t = w.nextNode())) if (t.nodeValue.includes(' · ')) t.nodeValue = t.nodeValue.replaceAll(' · ', ', '); };
@@ -125,6 +147,9 @@ export async function abrir({ acento = '#20C2BC', dsf = 2 } = {}) {
       const r = await p.evaluate((s) => { const a = document.querySelector(s).getBoundingClientRect(); return { x: a.left, y: a.top, w: a.width, h: a.height }; }, sel);
       await api.cursor(r.x + r.w * fx, r.y + r.h * fy, ms, curva);
     },
+    // Aviso emergente del agente: { tema, texto (admite <strong>), botones: [principal, segundo] }.
+    async aviso(d, ms = 520) { await p.evaluate((d) => avisoPon(d), d); api.anima('avisoEntra', ms); },
+    avisoFuera(ms = 300) { api.anima('avisoSale', ms); },
     // Llama a window[f](avance) en cada cuadro durante `ms` de video.
     anima(f, ms) { G.ani = { f, n0: G.n, pasos: Math.max(1, Math.round(ms / (1000 / FPS))) }; },
     async fundido(on, espera = true, ms = 360) {

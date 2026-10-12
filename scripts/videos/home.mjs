@@ -50,7 +50,11 @@ await grabar(a, sal, async () => {
   // 10 a 14: acercamiento a la primera fila y su etiqueta.
   await a.cam(['#tb-mg-cli thead th:nth-child(3)', '#tb-mg-cli tbody tr:nth-child(3) td:nth-child(9)'], { pad: 34, ms: 1100 });
   await a.cursorA('#tb-mg-cli tbody tr:nth-child(1) td:nth-child(9) .pill', { fx: 0.55, fy: 0.8, ms: 900 });
-  await esperar(2200);
+  await esperar(900);
+  // El agente avisa: propone, y la decisión queda en una persona.
+  await a.aviso({ tema: 'Alerta de margen', texto: 'Su cliente de mayor venta deja <strong>13,3% de margen</strong>, bajo el promedio de 14,8%. Preparé la revisión de sus descuentos.', botones: ['Revisar propuesta', 'Más tarde'] });
+  await esperar(3300);
+  a.avisoFuera(300);
   await a.fundido(false);
 });
 await a.b.close();
