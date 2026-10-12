@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import AgentMockup from '../../components/AgentMockup.astro';
 import Servicio from '../../components/v2/Servicio.astro';
 import Demo from '../../components/v2/Demo.astro';
 import Flujo from '../../components/v2/Flujo.astro';
@@ -68,7 +67,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
     <Fragment slot="maqueta">
       {service.slug === 'modelamiento-predictivo' && <VideoDemo solo archivo="modelamiento" rotulo="La proyección de los próximos seis meses, ajustable por su equipo." />}
       {service.slug === 'automatizacion-procesos' && <VideoDemo solo archivo="automatizacion" rotulo="La cartera por cobrar, actualizada cada mañana sin planillas." />}
-      {service.slug === 'agentes-ia' && <AgentMockup />}
+      {service.slug === 'agentes-ia' && <VideoDemo solo archivo="agentes-portada" rotulo="El agente avisa en la plataforma y en su teléfono. Una persona aprueba." />}
     </Fragment>
     {/* La terminal del agente y la demostración con cursores salieron del home corporativo (12-oct-2026) y viven acá. */}
     {service.slug === 'agentes-ia' && <Flujo corto slot="extra" />}
