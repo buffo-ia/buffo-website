@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import DashboardMockup from '../../components/DashboardMockup.astro';
 import Servicio from '../../components/v2/Servicio.astro';
-import Tablero from '../../components/v2/Tablero.astro';
+import VideoDemo from '../../components/v2/VideoDemo.astro';
 import { SITE } from '../../config/site';
 import { SERVICES_CONTENT } from '../../data/services';
 
@@ -66,7 +65,7 @@ const NIVELES = ['Venta total de la compañía', 'Por canal / sucursal', 'Por ve
     pregunta="¿Sus indicadores se arman a mano cada semana?"
     cierre="¿Quiere ver cómo se vería con los datos de su empresa?"
   >
-    <DashboardMockup slot="maqueta" />
+    <VideoDemo slot="maqueta" solo archivo="dashboards" rotulo="El cumplimiento de la meta, al día de hoy y por vendedor." />
 
     <section slot="extra" class="v2-seccion">
       <div class="v2-marco v2-conexion__grilla">
@@ -90,6 +89,5 @@ const NIVELES = ['Venta total de la compañía', 'Por canal / sucursal', 'Por ve
         </ol>
       </div>
     </section>
-    <Tablero slot="extra" />
   </Servicio>
 </BaseLayout>

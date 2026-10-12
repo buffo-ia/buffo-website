@@ -14,6 +14,7 @@ await p.addStyleTag({ content: `
   #p-cobranza{max-width:900px}
   #s-cb-antiguedad{margin-top:300px}
   #s-cb-antiguedad .seccion-tit, #pag-cb-cli{display:none}
+  #tb-cb-clientes :is(th,td):is(:nth-child(2),:nth-child(5),:nth-child(6),:nth-child(7),:nth-child(10)){display:none}
   #cb-kpis > *{transition:transform .7s ease, box-shadow .7s ease, border-color .7s ease!important}
   #fuentes{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:99980;display:flex;align-items:center;gap:22px;
     background:#0F1417;color:#fff;border-radius:22px;padding:28px 38px;font-family:var(--fuente);box-shadow:0 30px 70px -20px rgba(16,24,40,.5)}
@@ -43,13 +44,13 @@ await grabar(a, process.argv[2], async () => {
   await esperar(1100);
   // 7 a 11: la deuda por cliente.
   await a.fundido(false);
-  await a.cam([`${T} thead`, `${T} tbody tr:nth-child(7)`], { pad: 22, ms: 0 });
+  await a.cam([`${T} thead`, `${T} tbody tr:nth-child(6)`], { pad: 22, ms: 0 });
   await a.fundido(true, false);
-  await a.cursorA(`${T} tbody tr:nth-child(1) td:nth-child(3)`, { ms: 800 });
-  for (const f of [3, 5]) await a.cursorA(`${T} tbody tr:nth-child(${f}) td:nth-child(3)`, { ms: 650, curva: 0.05 });
+  await a.cursorA(`${T} tbody tr:nth-child(1) td:nth-child(8)`, { ms: 800 });
+  for (const f of [3, 5]) await a.cursorA(`${T} tbody tr:nth-child(${f}) td:nth-child(8)`, { ms: 650, curva: 0.05 });
   await esperar(300);
   // 11 a 15: el botón Cobrar, sin clic, y el aviso del agente.
-  await a.cam([`${T} tbody tr:nth-child(1) td:nth-last-child(3)`, `${T} tbody tr:nth-child(3) td:last-child`], { pad: 34, ms: 1000 });
+  await a.cam([`${T} tbody tr:nth-child(1) td:nth-child(8)`, `${T} tbody tr:nth-child(3) td:last-child`], { pad: 34, ms: 1000 });
   await a.cursorA(`${T} tbody tr:nth-child(1) td:last-child .btn`, { fy: 0.6, ms: 800 });
   await esperar(700);
   await a.aviso({ tema: 'Cobranza', texto: 'Hay <strong>137 facturas vencidas</strong> por $229.140.647. Dejé listos los recordatorios de cobro para su aprobación.', botones: ['Revisar y aprobar', 'Más tarde'] });

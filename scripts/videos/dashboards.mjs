@@ -34,7 +34,7 @@ await grabar(a, process.argv[2], async () => {
   await a.cursorA(`${C(1)} .v-fila:last-child b`, { ms: 800 });
   await esperar(900);
   await a.fundido(false);
-  await a.cam(['#s-e-cartera .t-cab', '#tb-inactivos tbody tr:nth-child(6)'], { pad: 22, ms: 0 });
+  await a.cam(['#e-inactivos-sub', '#tb-inactivos tbody tr:nth-child(5)'], { pad: 26, ms: 0 });
   await a.fundido(true, false);
   await a.cursorA('#e-inactivos-sub', { fx: 0.2, ms: 800 });
   await esperar(900);

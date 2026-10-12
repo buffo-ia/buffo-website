@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ForecastMockup from '../../components/ForecastMockup.astro';
-import AutomationMockup from '../../components/AutomationMockup.astro';
 import AgentMockup from '../../components/AgentMockup.astro';
 import Servicio from '../../components/v2/Servicio.astro';
 import Demo from '../../components/v2/Demo.astro';
 import Flujo from '../../components/v2/Flujo.astro';
+import VideoDemo from '../../components/v2/VideoDemo.astro';
 import { SITE } from '../../config/site';
 import { SERVICES_CONTENT } from '../../data/services';
 import { STEPS } from '../../data/serviceSteps';
@@ -67,12 +66,13 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
     cierre="¿Quiere ver cómo aplicaría a su empresa?"
   >
     <Fragment slot="maqueta">
-      {service.slug === 'modelamiento-predictivo' && <ForecastMockup />}
-      {service.slug === 'automatizacion-procesos' && <AutomationMockup />}
+      {service.slug === 'modelamiento-predictivo' && <VideoDemo solo archivo="modelamiento" rotulo="La proyección de los próximos seis meses, ajustable por su equipo." />}
+      {service.slug === 'automatizacion-procesos' && <VideoDemo solo archivo="automatizacion" rotulo="La cartera por cobrar, actualizada cada mañana sin planillas." />}
       {service.slug === 'agentes-ia' && <AgentMockup />}
     </Fragment>
     {/* La terminal del agente y la demostración con cursores salieron del home corporativo (12-oct-2026) y viven acá. */}
     {service.slug === 'agentes-ia' && <Flujo corto slot="extra" />}
     {service.slug === 'agentes-ia' && <Demo slot="extra" />}
+    {service.slug === 'agentes-ia' && <VideoDemo slot="extra" archivo="agentes" rotulo="Qué comprar y cuándo: el sistema propone, su equipo decide." />}
   </Servicio>
 </BaseLayout>

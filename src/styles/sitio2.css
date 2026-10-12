@@ -2425,3 +2425,14 @@ body[data-sitio='v2'] #theme-toggle { display: none; }
     border-radius: 10px;
   }
 }
+
+.v2 .v2-video__caja--solo {
+  margin: 0;
+}
+.v2 .v2-video__caja--solo figcaption strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}

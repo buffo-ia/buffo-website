@@ -15,32 +15,44 @@ interface Props {
   rotulo: string;
   indice?: string;
   suelto?: boolean; // sin la sección alrededor, para meterlo dentro de otra
+  solo?: boolean; // solo el video con su pie: va en la portada de una página de servicio, donde estaba la maqueta
 }
-const { archivo, rotulo, indice = 'En operación', suelto = false } = Astro.props;
+const { archivo, rotulo, indice = 'En operación', suelto = false, solo = false } = Astro.props;
 const Marco = suelto ? 'div' : 'section';
 ---
 
-<Marco class:list={['v2-video', !suelto && 'v2-seccion']}>
-  <div class="v2-marco">
-    <div class="v2-cabeza v2-e-sube" data-v2-entra>
-      <p class="v2-indice">{indice}</p>
-      <h2 class="v2-titulo v2-video__rotulo">{rotulo}</h2>
-    </div>
-    <figure class="v2-video__caja v2-e-panel" data-v2-entra="0.5">
-      <video
-        muted
-        loop
-        playsinline
-        preload="none"
-        width="1280"
-        height="720"
-        poster={`/videos/${archivo}.jpg`}
-        data-v2-video={`/videos/${archivo}.mp4`}
-        aria-label={rotulo}></video>
-      <figcaption>Ejemplo ilustrativo. Las cifras no son de un cliente.</figcaption>
+{
+  solo ? (
+    <figure class="v2-video__caja v2-video__caja--solo">
+      <video muted loop playsinline preload="none" width="1280" height="720" poster={`/videos/${archivo}.jpg`} data-v2-video={`/videos/${archivo}.mp4`} aria-label={rotulo} />
+      <figcaption>
+        <strong>{rotulo}</strong> Ejemplo ilustrativo. Las cifras no son de un cliente.
+      </figcaption>
     </figure>
-  </div>
-</Marco>
+  ) : (
+    <Marco class:list={['v2-video', !suelto && 'v2-seccion']}>
+      <div class="v2-marco">
+        <div class="v2-cabeza v2-e-sube" data-v2-entra>
+          <p class="v2-indice">{indice}</p>
+          <h2 class="v2-titulo v2-video__rotulo">{rotulo}</h2>
+        </div>
+        <figure class="v2-video__caja v2-e-panel" data-v2-entra="0.5">
+          <video
+            muted
+            loop
+            playsinline
+            preload="none"
+            width="1280"
+            height="720"
+            poster={`/videos/${archivo}.jpg`}
+            data-v2-video={`/videos/${archivo}.mp4`}
+            aria-label={rotulo}></video>
+          <figcaption>Ejemplo ilustrativo. Las cifras no son de un cliente.</figcaption>
+        </figure>
+      </div>
+    </Marco>
+  )
+}
 
 <script>
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
