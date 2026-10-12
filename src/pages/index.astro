@@ -5,7 +5,6 @@ import Cintas from '../components/v2/Cintas.astro';
 import Portada from '../components/v2/Portada.astro';
 import VideoDemo from '../components/v2/VideoDemo.astro';
 import Corporativa from '../components/v2/corp/Corporativa.astro';
-import Guia from '../components/v2/Guia.astro';
 import Prueba from '../components/v2/Prueba.astro';
 import Conexion from '../components/v2/Conexion.astro';
 import Preguntas from '../components/v2/Preguntas.astro';
@@ -81,12 +80,11 @@ const serviceSchema = {
        HOME_version_corporativa_borrador.md. La portada debe seguir siendo la
        primera sección y el cierre la última (BarraDiagnostico depende de eso). -->
   <div class="v2">
-    <Cintas /><Guia />
+    <Cintas />
     <Portada
       bajadaResto="Acompañamos a su gerencia de manera estratégica: desde la definición de objetivos y retorno, hasta la implementación de IA en la operación."
       lineas={['Business Intelligence Consulting', 'Decision Solutions with AI', 'Business Analytics with AI', 'Agentic Workflows for Business']}
     />
-    <Corporativa parte="detras" />
     <Corporativa parte="frases" />
     <VideoDemo archivo="home" rotulo="De los datos de su empresa a una decisión aprobada por su equipo." />
     <Corporativa parte="servicios" />
