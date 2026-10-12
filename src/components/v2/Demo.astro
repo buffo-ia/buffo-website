@@ -1,0 +1,159 @@
+---
+// «Así se ve trabajando»: una demostración que corre sola, con el cursor
+// moviéndose. A la izquierda el tablero, a la derecha el agente que cuenta lo
+// que va haciendo, y al final la persona que aprueba.
+//
+// Simón la pidió el 12-oct-2026 mirando el video del agente de framer.com:
+// «es un video donde se va moviendo el cursor y como que muestra cómo se
+// trabaja... me parece tremenda idea». Acá NO es un video: es interfaz
+// reconstruida y un guion con temporizador, así pesa nada, se ve nítida en
+// cualquier pantalla y el texto se puede cambiar sin volver a grabar.
+//
+// Cómo funciona: el guion (GUION, abajo en el script) va sumando clases e1…e6
+// al escenario y el CSS muestra lo que corresponde a cada momento. Los cursores
+// se mueven hacia elementos reales (se mide dónde están), no a coordenadas
+// fijas, así el recorrido calza también en celular.
+//
+// ⚠️ CIFRAS Y NOMBRES ILUSTRATIVOS, provisorios hasta que Simón los confirme.
+const INDICADORES = [
+  { clave: 'ventas', rotulo: 'Ventas', valor: '$1.284M', nota: '12% sobre la meta' },
+  { clave: 'margen', rotulo: 'Margen', valor: '34,9%', nota: '−2,1 pts vs agosto' },
+  { clave: 'quiebres', rotulo: 'Quiebres', valor: '7', nota: 'productos sin stock' },
+];
+const CLIENTES = [
+  { nombre: 'Cliente A', ancho: 82, foco: false },
+  { nombre: 'Cliente B', ancho: 46, foco: true },
+  { nombre: 'Cliente C', ancho: 74, foco: false },
+  { nombre: 'Cliente D', ancho: 38, foco: true },
+  { nombre: 'Cliente E', ancho: 68, foco: false },
+];
+---
+
+<section class="v2-seccion v2-demo-sec">
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">Así se ve trabajando</p>
+      <h2 class="v2-titulo">Usted pregunta. <em>El agente muestra su trabajo.</em></h2>
+    </div>
+
+    <div class="v2-e-panel" data-v2-entra="0.75">
+      <div class="v2-demo" data-v2-demo aria-hidden="true">
+        <!-- El tablero -->
+        <div class="v2-demo__lienzo">
+          <p class="v2-demo__rotulo">Estado del negocio · septiembre</p>
+          <div class="v2-demo__indicadores">
+            {
+              INDICADORES.map((k) => (
+                <div class="v2-demo__kpi" data-kpi={k.clave}>
+                  <span>{k.rotulo}</span>
+                  <b>{k.valor}</b>
+                  <small>{k.nota}</small>
+                </div>
+              ))
+            }
+          </div>
+          <div class="v2-demo__tabla" data-tabla>
+            <p class="v2-demo__rotulo">Margen por cliente</p>
+            {
+              CLIENTES.map((c) => (
+                <div class:list={['v2-demo__fila', c.foco && 'es-foco']}>
+                  <span>{c.nombre}</span>
+                  <i><u style={`width:${c.ancho}%`}></u></i>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- El agente -->
+        <div class="v2-demo__agente">
+          <div class="v2-demo__pestanas"><span class="es-activa">Agente</span><span>Lectura</span></div>
+          <p class="v2-demo__pedido m1">¿Por qué cayó el margen en septiembre?</p>
+          <p class="v2-demo__meta m2">Pensó <span>4 s</span></p>
+          <p class="v2-demo__texto m2">Voy a abrir el margen por cliente y por costo.</p>
+          <p class="v2-demo__meta m3">Leyó 3 fuentes <span>6 s</span></p>
+          <p class="v2-demo__texto m3">Dos clientes explican el 70% de la caída: sus descuentos subieron en septiembre.</p>
+          <div class="v2-demo__propuesta m4">
+            <p>Revisar esos descuentos antes del cierre.</p>
+            <span class="v2-demo__aprobar" data-aprobar><b>Aprobar</b><b>Aprobado</b></span>
+          </div>
+          <p class="v2-demo__meta m5">Aprobado por el gerente comercial</p>
+        </div>
+
+        <!-- Los cursores: la persona y el agente -->
+        <div class="v2-cursor v2-cursor--persona" data-cursor="persona">
+          <svg viewBox="0 0 16 16"><path d="M2 1.5l11 5.2-4.6 1.5-1.6 4.6z" /></svg><span>Gerente</span>
+        </div>
+        <div class="v2-cursor v2-cursor--agente" data-cursor="agente">
+          <svg viewBox="0 0 16 16"><path d="M2 1.5l11 5.2-4.6 1.5-1.6 4.6z" /></svg><span>Agente</span>
+        </div>
+      </div>
+    </div>
+    <p class="v2-demo__pie">Demostración ilustrativa · las cifras no son de un cliente</p>
+  </div>
+</section>
+
+<script>
+  const escena = document.querySelector<HTMLElement>('[data-v2-demo]');
+  if (escena) {
+    const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cursor = {
+      persona: escena.querySelector<HTMLElement>('[data-cursor="persona"]')!,
+      agente: escena.querySelector<HTMLElement>('[data-cursor="agente"]')!,
+    };
+    const el = (q: string) => escena.querySelector<HTMLElement>(q)!;
+
+    // Lleva un cursor hasta un punto de un elemento (fx, fy van de 0 a 1).
+    const llevar = (quien: keyof typeof cursor, destino: HTMLElement, fx = 0.6, fy = 0.6) => {
+      const base = escena.getBoundingClientRect();
+      const r = destino.getBoundingClientRect();
+      cursor[quien].style.transform = `translate(${r.left - base.left + r.width * fx}px, ${r.top - base.top + r.height * fy}px)`;
+    };
+    const pulsar = (quien: keyof typeof cursor) => {
+      cursor[quien].classList.add('pulsa');
+      setTimeout(() => cursor[quien].classList.remove('pulsa'), 320);
+    };
+
+    // El guion: [segundo, qué pasa].
+    const GUION: [number, () => void][] = [
+      [0.0, () => { llevar('persona', el('[data-tabla]'), 0.75, 0.9); llevar('agente', el('.v2-demo__agente'), 0.1, 0.2); }],
+      [0.9, () => llevar('persona', el('[data-kpi="margen"]'), 0.62, 0.62)],
+      [1.9, () => { pulsar('persona'); escena.classList.add('e1'); }],
+      [2.7, () => escena.classList.add('e2')],
+      [3.3, () => { escena.classList.add('agente-visible'); llevar('agente', el('[data-tabla]'), 0.3, 0.35); }],
+      [5.2, () => { escena.classList.add('e3'); llevar('agente', el('.v2-demo__fila.es-foco'), 0.7, 0.6); }],
+      [7.4, () => { escena.classList.add('e4'); llevar('persona', el('[data-aprobar]'), 0.55, 0.6); }],
+      [9.3, () => { pulsar('persona'); escena.classList.add('e5'); }],
+      [13.5, () => {}],
+    ];
+    const ESTADOS = ['e1', 'e2', 'e3', 'e4', 'e5', 'agente-visible'];
+
+    if (quieto) {
+      // Sin movimiento: se muestra el final, quieto y sin cursores.
+      escena.classList.add(...ESTADOS, 'quieto');
+    } else {
+      let visible = false;
+      let relojes: number[] = [];
+      const correr = () => {
+        relojes.forEach(clearTimeout);
+        escena.classList.remove(...ESTADOS);
+        relojes = GUION.map(([seg, paso], i) =>
+          window.setTimeout(() => {
+            if (!visible) return;
+            paso();
+            if (i === GUION.length - 1) correr();
+          }, seg * 1000)
+        );
+      };
+      // Solo corre mientras está en pantalla; al volver, parte de nuevo.
+      new IntersectionObserver(
+        ([e]) => {
+          visible = e.isIntersecting;
+          if (visible) correr();
+          else relojes.forEach(clearTimeout);
+        },
+        { threshold: 0.35 }
+      ).observe(escena);
+    }
+  }
+</script>

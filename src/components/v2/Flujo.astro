@@ -18,17 +18,20 @@ const PASOS = [
   { paso: '02', titulo: 'Agentes que hacen el trabajo', texto: 'Vigilan, preparan y proponen dentro de sus procesos, todos los días.' },
   { paso: '03', titulo: 'Una persona que decide', texto: 'Cada flujo tiene a alguien de su equipo a cargo. La decisión sigue siendo suya.' },
 ];
-const FUENTES = [
-  { nombre: 'ERP · ventas', dato: '48.210 líneas' },
-  { nombre: 'Planilla de costos', dato: '312 productos' },
-  { nombre: 'CRM · condiciones', dato: '94 clientes' },
-  { nombre: 'Campañas', dato: '3 cuentas' },
-];
-const TAREAS = [
-  { verbo: 'Vigila', texto: 'El margen de septiembre salió del rango esperado.' },
-  { verbo: 'Prepara', texto: 'Desglose de la caída por cliente y por costo.' },
-  { verbo: 'Propone', texto: 'Revisar los descuentos de dos clientes antes del cierre.' },
-];
+// La conversación de la terminal. `paso` dice con qué paso aparece cada bloque
+// (0 datos, 1 agentes, 2 persona) y `orden` su turno dentro de ese paso.
+const TERMINAL = {
+  contexto: 'ERP · CRM · planilla de costos',
+  pedido: '¿Por qué cayó el margen en septiembre?',
+  bloques: [
+    { paso: 0, orden: 0, accion: 'Conectando las fuentes…', detalle: '', lineas: ['ERP · ventas: 48.210 líneas leídas.', 'CRM · condiciones: 94 clientes.'] },
+    { paso: 0, orden: 1, accion: 'Leer', detalle: '(planilla de costos)', lineas: ['312 productos, una sola definición de margen.'] },
+    { paso: 1, orden: 0, accion: 'Vigila', detalle: '(margen mensual)', lineas: ['Septiembre salió del rango esperado: −2,1 puntos.'] },
+    { paso: 1, orden: 1, accion: 'Prepara', detalle: '(desglose de la caída)', lineas: ['70% descuentos a dos clientes · 30% costo de importación.'] },
+    { paso: 1, orden: 2, accion: 'Propone', detalle: '', lineas: ['Revisar los descuentos de esos dos clientes antes del cierre.'] },
+    { paso: 2, orden: 0, accion: 'Propuesta enviada al gerente comercial.', detalle: '', lineas: ['La decisión es de una persona de su equipo.'] },
+  ],
+};
 ---
 
 <section class="v2-flujo" data-v2-flujo data-paso="0">
@@ -53,64 +56,54 @@ const TAREAS = [
         </ol>
       </div>
 
-      <!-- El panel fijo. Las tres vistas están apiladas y se muestra la del paso
-           en curso; es decorativo para un lector de pantalla, que ya tiene los
-           tres pasos escritos al lado. -->
-      <div class="v2-panel" aria-hidden="true">
-        <div class="v2-panel__cabeza">
-          <span class="v2-panel__punto"></span>
-          <span>Agente de margen</span>
-          <span class="v2-panel__estado">
-            <i data-n="0">Leyendo sistemas</i>
-            <i data-n="1">Trabajando</i>
-            <i data-n="2">Esperando decisión</i>
+      <!-- El panel fijo: una terminal de agente con la conversación en vivo
+           (Simón, 12-oct-2026, sobre el panel «framer-agent» de framer.com:
+           «los botones, la terminal tipo agente, una conversación en vivo…
+           deberíamos hacer esto»). Las líneas se van sumando con cada paso y
+           las de pasos anteriores quedan atenuadas, como un registro.
+           Es decorativo para un lector de pantalla, que ya tiene los tres
+           pasos escritos al lado. -->
+      <div class="v2-term" aria-hidden="true">
+        <div class="v2-term__barra">
+          <span class="v2-term__botones"><i></i><i></i><i></i></span>
+          <span class="v2-term__nombre">buffo-agent</span>
+        </div>
+        <div class="v2-term__pestanas">
+          <span class="es-activa">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" /></svg>
+            margen
           </span>
+          <span>cobranza</span>
+          <span>stock</span>
+          <span class="v2-term__mas">+</span>
         </div>
 
-        <div class="v2-panel__vistas">
-          <div class="v2-vista" data-n="0">
-            <p class="v2-vista__rotulo">Fuentes conectadas</p>
-            <ul class="v2-fuentes">
-              {
-                FUENTES.map((f, k) => (
-                  <li style={`--k:${k}`}>
-                    <span>{f.nombre}</span>
-                    <span class="v2-fuentes__barra"><i></i></span>
-                    <b>{f.dato}</b>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div class="v2-vista" data-n="1">
-            <p class="v2-vista__rotulo">Actividad de hoy</p>
-            <ul class="v2-tareas">
-              {
-                TAREAS.map((t, k) => (
-                  <li style={`--k:${k}`}>
-                    <b>{t.verbo}</b>
-                    <span>{t.texto}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div class="v2-vista" data-n="2">
-            <p class="v2-vista__rotulo">Propuesta para el gerente comercial</p>
-            <div class="v2-propuesta">
-              <p class="v2-propuesta__texto" style="--k:0">Revisar los descuentos de dos clientes antes del cierre de mes.</p>
-              <p class="v2-propuesta__base" style="--k:1">Explican siete de cada diez pesos de la caída del margen.</p>
-              <div class="v2-propuesta__botones" style="--k:2">
-                <span class="v2-propuesta__ok">Aprobar</span>
-                <span>Ajustar</span>
-                <span>Descartar</span>
+        <div class="v2-term__cuerpo">
+          <p class="v2-term__marco"><b>Agente de margen</b> · {TERMINAL.contexto}</p>
+          <p class="v2-term__pedido">{TERMINAL.pedido}</p>
+          {
+            TERMINAL.bloques.map((b, k) => (
+              <div class="v2-term__bloque" data-n={b.paso} style={`--k:${b.orden}`}>
+                <p><i class="v2-term__punto"></i><b>{b.accion}</b>{b.detalle && <span>{b.detalle}</span>}</p>
+                {b.lineas.map((l) => <p class="v2-term__sub">{l}</p>)}
               </div>
-            </div>
+            ))
+          }
+          <div class="v2-term__bloque v2-term__decision" data-n="2" style="--k:1">
+            <span class="v2-term__ok">Aprobar</span>
+            <span>Ajustar</span>
+            <span>Descartar</span>
           </div>
         </div>
-        <p class="v2-panel__pie">Ejemplo ilustrativo</p>
+
+        <div class="v2-term__pie">
+          <span class="v2-term__entrada">
+            <i data-n="0">Leyendo los sistemas…</i>
+            <i data-n="1">Preparando la propuesta…</i>
+            <i data-n="2">Esperando la decisión del gerente comercial</i>
+          </span>
+          <span class="v2-term__nota">Ejemplo ilustrativo</span>
+        </div>
       </div>
     </div>
   </div>

@@ -402,8 +402,7 @@
 .v2-pregunta__primero b { color: rgb(var(--c-primary)); }
 .v2-pregunta__primero span { font-size: 0.98rem; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; }
 .v2-pregunta .es-visible { opacity: 1; transform: none; filter: none; }
-.v2-pregunta__pie,
-.v2-panel__pie {
+.v2-pregunta__pie {
   font-family: var(--v2-mono);
   font-size: 0.62rem;
   letter-spacing: 0.06em;
@@ -519,164 +518,170 @@
 .v2-flujo[data-paso='1'] .v2-paso[data-n='1'],
 .v2-flujo[data-paso='2'] .v2-paso[data-n='2'] { opacity: 1; transform: none; }
 
-/* ----- El panel del agente ----- */
-.v2-panel {
+/* ----- La terminal del agente -----
+   Ventana con sus tres botones, pestañas, texto monoespaciado y la
+   conversación que avanza con el scroll. Los tres botones de colores son la
+   excepción al color único que Simón pidió expresamente (12-oct-2026). */
+.v2-term {
   border: 1px solid rgb(255 255 255 / 0.14);
-  border-radius: 18px;
-  background: rgb(8 8 8 / 0.86);
+  border-radius: 22px;
+  background: rgb(14 14 14 / 0.94);
+  font-family: var(--v2-mono);
   overflow: hidden;
+  box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
 }
-.v2-panel__cabeza {
+.v2-term__barra {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 1rem 1.3rem;
-  border-bottom: 1px solid rgb(255 255 255 / 0.1);
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  padding: 1rem 1.2rem 0.85rem;
 }
-.v2-panel__punto {
-  width: 0.5rem;
-  height: 0.5rem;
+.v2-term__botones { display: flex; gap: 0.5rem; }
+.v2-term__botones i { width: 0.78rem; height: 0.78rem; border-radius: 50%; background: #ff5f57; }
+.v2-term__botones i:nth-child(2) { background: #febc2e; }
+.v2-term__botones i:nth-child(3) { background: #28c840; }
+.v2-term__nombre {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgb(var(--c-on-surface) / 0.55);
+}
+.v2-term__pestanas {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 1rem;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.06);
+}
+.v2-term__pestanas span {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: rgb(var(--c-on-surface) / 0.45);
+}
+.v2-term__pestanas svg { width: 0.85rem; height: 0.85rem; }
+.v2-term__pestanas .es-activa { background: rgb(255 255 255 / 0.12); color: rgb(var(--c-on-surface)); font-weight: 600; }
+.v2-term__pestanas .v2-term__mas { flex: none; width: 2rem; padding: 0.45rem 0; }
+
+.v2-term__cuerpo {
+  height: clamp(20rem, 50vh, 24rem);
+  padding: 1.3rem 1.3rem 1rem;
+  margin-top: 0.9rem;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: rgb(var(--c-on-surface) / 0.86);
+  overflow: hidden;
+}
+/* El recuadro de arriba, como el encabezado de una sesión. */
+.v2-term__marco {
+  border: 1px solid rgb(var(--c-primary) / 0.55);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  text-align: center;
+  color: rgb(var(--c-on-surface) / 0.55);
+}
+.v2-term__marco b { font-weight: 500; color: rgb(var(--c-primary)); }
+.v2-term__pedido { margin: 1rem 0 0.9rem; color: rgb(var(--c-on-surface)); }
+.v2-term__bloque {
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  transform: translateY(6px);
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.35s ease, transform 0.4s var(--v2-suave), max-height 0.4s ease, margin 0.4s ease;
+  margin-bottom: 0;
+}
+.v2-term__bloque b { font-weight: 600; color: rgb(var(--c-on-surface)); }
+.v2-term__bloque span { color: rgb(var(--c-on-surface) / 0.6); }
+.v2-term__punto {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
   border-radius: 50%;
   background: rgb(var(--c-primary));
-  animation: v2-latido 2.4s ease-in-out infinite;
+  margin-right: 0.6rem;
+  vertical-align: 0.08em;
 }
-@keyframes v2-latido { 50% { opacity: 0.3; } }
-.v2-panel__estado {
+.v2-term__sub { padding-left: 1.05rem; color: rgb(var(--c-on-surface) / 0.7); }
+.v2-term__sub::before { content: '└ '; color: rgb(var(--c-on-surface) / 0.35); }
+/* Un bloque aparece cuando llega su paso y se queda; los de pasos anteriores
+   bajan de tono para que se lea cuál es el de ahora. */
+.v2-flujo[data-paso='0'] .v2-term__bloque[data-n='0'],
+.v2-flujo[data-paso='1'] .v2-term__bloque:not([data-n='2']),
+.v2-flujo[data-paso='2'] .v2-term__bloque {
+  opacity: 1;
+  transform: none;
+  max-height: 6rem;
+  margin-bottom: 0.75rem;
+  transition-delay: calc(0.1s + var(--k) * 0.28s);
+}
+.v2-flujo[data-paso='1'] .v2-term__bloque[data-n='0'],
+.v2-flujo[data-paso='2'] .v2-term__bloque[data-n='0'],
+.v2-flujo[data-paso='2'] .v2-term__bloque[data-n='1'] { opacity: 0.38; transition-delay: 0s; }
+/* Al llegar a la decisión, lo del primer paso se pliega: si no, el registro
+   no cabe y los botones quedan fuera del panel. */
+.v2-flujo[data-paso='2'] .v2-term__bloque[data-n='0'] { max-height: 0; margin-bottom: 0; opacity: 0; }
+
+.v2-term__decision { display: flex; flex-wrap: wrap; gap: 0.45rem; padding-left: 1.05rem; }
+.v2-term__decision span {
+  font-family: Inter, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 0.95rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  color: rgb(var(--c-on-surface) / 0.8);
+}
+.v2-term__decision .v2-term__ok { background: rgb(var(--c-primary)); border-color: rgb(var(--c-primary)); color: #000; }
+
+.v2-term__pie {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem 1rem;
+}
+.v2-term__entrada {
   position: relative;
-  margin-left: auto;
-  height: 1.2em;
-  min-width: 11rem;
-  font-family: var(--v2-mono);
-  font-weight: 400;
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgb(var(--c-on-surface) / 0.5);
+  flex: 1;
+  height: 2.6rem;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.03);
+  font-size: 0.76rem;
+  color: rgb(var(--c-on-surface) / 0.7);
 }
-.v2-panel__estado i {
+.v2-term__entrada i {
   position: absolute;
-  right: 0;
-  top: 0;
+  left: 0.9rem;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
   font-style: normal;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   opacity: 0;
   transition: opacity 0.35s ease;
 }
-.v2-panel__vistas { position: relative; height: clamp(17rem, 44vh, 21rem); }
-.v2-vista {
-  position: absolute;
-  inset: 0;
-  padding: 1.4rem 1.3rem;
-  opacity: 0;
-  transform: translateY(14px);
-  filter: blur(8px);
-  transition: opacity 0.45s ease, transform 0.5s var(--v2-suave), filter 0.45s ease;
-  pointer-events: none;
-}
-.v2-flujo[data-paso='0'] [data-n='0'].v2-vista,
-.v2-flujo[data-paso='1'] [data-n='1'].v2-vista,
-.v2-flujo[data-paso='2'] [data-n='2'].v2-vista { opacity: 1; transform: none; filter: none; }
-.v2-flujo[data-paso='0'] .v2-panel__estado [data-n='0'],
-.v2-flujo[data-paso='1'] .v2-panel__estado [data-n='1'],
-.v2-flujo[data-paso='2'] .v2-panel__estado [data-n='2'] { opacity: 1; }
-.v2-vista__rotulo {
-  font-family: var(--v2-mono);
-  font-size: 0.66rem;
+.v2-flujo[data-paso='0'] .v2-term__entrada [data-n='0'],
+.v2-flujo[data-paso='1'] .v2-term__entrada [data-n='1'],
+.v2-flujo[data-paso='2'] .v2-term__entrada [data-n='2'] { opacity: 1; }
+.v2-term__nota {
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgb(var(--c-on-surface) / 0.45);
-  margin-bottom: 1.1rem;
-}
-/* Lo de adentro de cada vista entra escalonado cuando le toca (--k). */
-.v2-vista li,
-.v2-propuesta > * {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.4s ease, transform 0.4s var(--v2-suave);
-}
-.v2-flujo[data-paso='0'] [data-n='0'].v2-vista li,
-.v2-flujo[data-paso='1'] [data-n='1'].v2-vista li,
-.v2-flujo[data-paso='2'] [data-n='2'].v2-vista .v2-propuesta > * {
-  opacity: 1;
-  transform: none;
-  transition-delay: calc(0.15s + var(--k) * 0.13s);
-}
-
-.v2-fuentes li {
-  display: grid;
-  grid-template-columns: 10.5rem 1fr auto;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid rgb(255 255 255 / 0.08);
-  font-size: 0.92rem;
-}
-.v2-fuentes b {
-  font-family: var(--v2-mono);
-  font-weight: 400;
-  font-size: 0.7rem;
-  color: rgb(var(--c-on-surface) / 0.5);
-}
-.v2-fuentes__barra { height: 2px; background: rgb(255 255 255 / 0.1); overflow: hidden; }
-.v2-fuentes__barra i {
-  display: block;
-  height: 100%;
-  background: rgb(var(--c-on-surface) / 0.75);
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 0.9s var(--v2-suave);
-}
-.v2-flujo[data-paso='0'] .v2-fuentes__barra i {
-  transform: scaleX(1);
-  transition-delay: calc(0.3s + var(--k) * 0.16s);
-}
-
-.v2-tareas li {
-  display: grid;
-  grid-template-columns: 5.2rem 1fr;
-  gap: 1rem;
-  align-items: baseline;
-  padding: 0.95rem 0;
-  border-bottom: 1px solid rgb(255 255 255 / 0.08);
-}
-.v2-tareas b {
-  font-family: var(--v2-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.35rem;
-  line-height: 1;
-}
-.v2-tareas span { font-size: 0.95rem; line-height: 1.45; color: rgb(var(--c-on-surface) / 0.8); }
-
-.v2-propuesta__texto {
-  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-}
-.v2-propuesta__base {
-  font-size: 0.93rem;
-  line-height: 1.5;
-  color: rgb(var(--c-on-surface) / 0.62);
-  margin-top: 0.8rem;
-}
-.v2-propuesta__botones { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
-.v2-propuesta__botones span {
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.6rem 1.05rem;
-  border-radius: 9999px;
-  border: 1px solid rgb(255 255 255 / 0.18);
-  color: rgb(var(--c-on-surface) / 0.75);
-}
-/* El único relleno turquesa del panel: la decisión de la persona. */
-.v2-propuesta__botones .v2-propuesta__ok {
-  background: rgb(var(--c-primary));
-  border-color: rgb(var(--c-primary));
-  color: #000;
+  color: rgb(var(--c-on-surface) / 0.3);
 }
 
 @media (max-width: 1023px) {
@@ -685,20 +690,19 @@
   .v2-flujo { height: 300vh; }
   .v2-flujo__escena { padding: 5.5rem 1.5rem 1.25rem; align-items: flex-start; }
   .v2-flujo__grilla { grid-template-columns: 1fr; gap: 1.25rem; }
-  .v2-flujo__grilla .v2-panel { order: -1; }
+  .v2-flujo__grilla .v2-term { order: -1; }
   .v2-flujo__izq .v2-indice { display: none; }
   .v2-flujo__titulo { font-size: 1.45rem; margin-bottom: 1rem; }
-  .v2-panel__vistas { height: 14.5rem; }
-  .v2-vista { padding: 1rem 1.1rem; }
-  .v2-vista__rotulo { margin-bottom: 0.6rem; }
-  .v2-panel__cabeza { padding: 0.8rem 1.1rem; }
-  .v2-panel__estado { min-width: 0; flex: 1; }
-  .v2-panel__pie { display: none; }
-  .v2-fuentes li { grid-template-columns: 8.5rem 1fr auto; gap: 0.7rem; padding: 0.6rem 0; font-size: 0.85rem; }
-  .v2-tareas li { grid-template-columns: 4.4rem 1fr; padding: 0.6rem 0; }
-  .v2-tareas span { font-size: 0.86rem; }
-  .v2-tareas b { font-size: 1.15rem; }
-  .v2-propuesta__botones { margin-top: 1rem; }
+  .v2-term__cuerpo { height: 15.5rem; padding: 0.9rem 1rem; font-size: 0.72rem; margin-top: 0.7rem; }
+  .v2-term__marco { display: none; }
+  .v2-term__pedido { margin-top: 0; }
+  .v2-term__barra { padding: 0.75rem 1rem 0.6rem; }
+  .v2-term__pestanas span:nth-child(n + 2):not(.v2-term__mas) { display: none; }
+  .v2-term__nota { display: none; }
+  /* En teléfono no cabe el registro entero: se ve solo lo del paso en curso. */
+  .v2-flujo[data-paso='1'] .v2-term__bloque[data-n='0'],
+  .v2-flujo[data-paso='2'] .v2-term__bloque[data-n='0'],
+  .v2-flujo[data-paso='2'] .v2-term__bloque[data-n='1'] { display: none; }
   .v2-paso { padding: 0.55rem 0 0.55rem 1.1rem; }
   .v2-paso h3 { font-size: 1.08rem; }
   .v2-paso p { display: none; font-size: 0.88rem; }
@@ -749,6 +753,8 @@ body[data-sitio='v2'] #theme-toggle { display: none; }
   .v2-flujo__escena { position: relative; height: auto; }
   .v2-cintas { display: none; }
   .v2-paso { opacity: 1; transform: none; }
+  .v2-term__bloque { opacity: 1 !important; transform: none; max-height: none; margin-bottom: 0.75rem; }
+  .v2-term__cuerpo { height: auto; }
   .v2-pasos__riel::after { transform: none; }
   .v2-pregunta__cursor { animation: none; }
   .v2-flujo__cabeza,
@@ -1527,4 +1533,163 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .v2-niveles li { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   LA DEMOSTRACIÓN CON CURSOR (Demo.astro)
+   El guion suma clases e1…e5 al escenario; acá se decide qué se ve en cada una.
+   ============================================================ */
+.v2-demo {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 21rem;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 22px;
+  background: rgb(10 10 10 / 0.94);
+  overflow: hidden;
+}
+.v2-demo__lienzo { padding: 1.75rem; border-right: 1px solid rgb(255 255 255 / 0.1); }
+.v2-demo__rotulo {
+  font-family: var(--v2-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--c-on-surface) / 0.45);
+  margin-bottom: 1rem;
+}
+.v2-demo__indicadores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.v2-demo__kpi {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 12px;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+}
+.v2-demo__kpi span { font-size: 0.78rem; color: rgb(var(--c-on-surface) / 0.55); }
+.v2-demo__kpi b { font-size: clamp(1.3rem, 2.4vw, 2rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+.v2-demo__kpi small { font-family: var(--v2-mono); font-size: 0.66rem; color: rgb(var(--c-on-surface) / 0.5); }
+/* e1: la persona elige el margen. */
+.v2-demo.e1 [data-kpi='margen'] {
+  border-color: rgb(var(--c-primary));
+  background: rgb(var(--c-primary) / 0.07);
+  box-shadow: 0 0 0 3px rgb(var(--c-primary) / 0.14);
+}
+.v2-demo__tabla {
+  margin-top: 1rem;
+  padding: 1.1rem 1.1rem 0.6rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 12px;
+}
+.v2-demo__fila {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem;
+  margin: 0 -0.5rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: rgb(var(--c-on-surface) / 0.7);
+  transition: background-color 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+}
+.v2-demo__fila i { height: 6px; border-radius: 3px; background: rgb(255 255 255 / 0.07); overflow: hidden; }
+.v2-demo__fila u { display: block; height: 100%; border-radius: 3px; background: rgb(var(--c-on-surface) / 0.45); transition: background-color 0.4s ease; }
+/* e3: el agente encontró dónde está la caída. */
+.v2-demo.e3 .v2-demo__fila:not(.es-foco) { opacity: 0.35; }
+.v2-demo.e3 .v2-demo__fila.es-foco { background: rgb(var(--c-primary) / 0.1); color: rgb(var(--c-on-surface)); }
+.v2-demo.e3 .v2-demo__fila.es-foco u { background: rgb(var(--c-primary)); }
+
+.v2-demo__agente { padding: 1.1rem 1.1rem 1.25rem; min-height: 26rem; }
+.v2-demo__pestanas { display: flex; gap: 0.25rem; margin-bottom: 1rem; }
+.v2-demo__pestanas span { font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.7rem; border-radius: 8px; color: rgb(var(--c-on-surface) / 0.45); }
+.v2-demo__pestanas .es-activa { background: rgb(255 255 255 / 0.09); color: rgb(var(--c-on-surface)); }
+.v2-demo__pedido {
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.v2-demo__meta { font-size: 0.8rem; color: rgb(var(--c-on-surface) / 0.45); margin-top: 0.9rem; }
+.v2-demo__meta span { color: rgb(var(--c-on-surface) / 0.28); margin-left: 0.25rem; }
+.v2-demo__texto { font-size: 0.88rem; font-weight: 500; line-height: 1.45; margin-top: 0.4rem; }
+.v2-demo__propuesta {
+  margin-top: 0.9rem;
+  padding: 0.9rem;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.03);
+}
+.v2-demo__propuesta p { font-size: 0.9rem; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; }
+.v2-demo__aprobar {
+  position: relative;
+  display: inline-grid;
+  margin-top: 0.8rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgb(var(--c-primary));
+  color: #000;
+  font-size: 0.82rem;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.v2-demo__aprobar b { grid-area: 1 / 1; font-weight: 600; transition: opacity 0.25s ease; }
+.v2-demo__aprobar b:last-child { opacity: 0; }
+.v2-demo.e5 .v2-demo__aprobar { background: transparent; color: rgb(var(--c-primary)); box-shadow: inset 0 0 0 1px rgb(var(--c-primary)); }
+.v2-demo.e5 .v2-demo__aprobar b:first-child { opacity: 0; }
+.v2-demo.e5 .v2-demo__aprobar b:last-child { opacity: 1; }
+/* Los mensajes del agente aparecen de a uno. */
+.v2-demo .m1, .v2-demo .m2, .v2-demo .m3, .v2-demo .m4, .v2-demo .m5 {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.45s var(--v2-suave);
+}
+.v2-demo.e1 .m1, .v2-demo.e2 .m2, .v2-demo.e3 .m3, .v2-demo.e4 .m4, .v2-demo.e5 .m5 { opacity: 1; transform: none; }
+.v2-demo.e2 .m2 + .m2, .v2-demo.e3 .m3 + .m3 { transition-delay: 0.5s; }
+
+.v2-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+  transition: transform 0.95s cubic-bezier(0.3, 0.7, 0.2, 1), opacity 0.4s ease;
+  will-change: transform;
+}
+.v2-cursor svg { width: 1.15rem; height: 1.15rem; fill: #fff; stroke: #000; stroke-width: 0.8; transition: transform 0.15s ease; }
+.v2-cursor span {
+  margin: 0.85rem 0 0 -0.15rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 9999px;
+  background: #fff;
+  color: #000;
+  font-size: 0.66rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.v2-cursor--agente svg { fill: rgb(var(--c-primary)); }
+.v2-cursor--agente span { background: rgb(var(--c-primary)); }
+.v2-cursor--agente { opacity: 0; }
+.v2-demo.agente-visible .v2-cursor--agente { opacity: 1; }
+.v2-cursor.pulsa svg { transform: scale(0.78); }
+.v2-demo.quieto .v2-cursor { display: none; }
+.v2-demo__pie {
+  font-family: var(--v2-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--c-on-surface) / 0.3);
+  margin-top: 1rem;
+}
+@media (max-width: 900px) {
+  .v2-demo { grid-template-columns: 1fr; }
+  .v2-demo__lienzo { padding: 1rem; border-right: 0; border-bottom: 1px solid rgb(255 255 255 / 0.1); }
+  .v2-demo__indicadores { gap: 0.4rem; }
+  .v2-demo__kpi { padding: 0.65rem 0.6rem; }
+  .v2-demo__kpi small { display: none; }
+  .v2-demo__fila:nth-child(n + 5) { display: none; }
+  .v2-demo__agente { min-height: 23.5rem; }
 }
