@@ -1,0 +1,212 @@
+---
+// Página de un servicio, en el formato del sitio 2.0. La usan las cuatro:
+// la plantilla [slug].astro y dashboards-ejecutivos.astro, que antes eran dos
+// copias casi iguales del mismo marcado.
+//
+// ⛔ Acá cambia la FORMA, no el contenido indexado. El H1, el lead, las
+// preguntas de fondo, los entregables y las preguntas frecuentes salen de
+// data/services.ts tal cual; el <title>, la descripción, el slug y los schemas
+// los arma cada página igual que antes. Lo único nuevo en texto es la cejilla
+// con la línea de servicio a la que pertenece el producto (provisoria, viene
+// del borrador de Comercial del 11-oct-2026).
+//
+// Las tres posiciones del botón al diagnóstico (hero, medio, cierre) se
+// conservan con sus mismos nombres: son las que ya se miden en GA4.
+import { SITE } from '../../config/site';
+import { SERVICES_CONTENT, type ServiceContent } from '../../data/services';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import Cintas from './Cintas.astro';
+import Preguntas from './Preguntas.astro';
+import Aparecer from './Aparecer.astro';
+import MedirCtaDiagnostico from '../MedirCtaDiagnostico.astro';
+
+interface Props {
+  service: ServiceContent;
+  pasos?: { title: string; steps: { title: string; body: string }[] };
+  pregunta: string;
+  cierre: string;
+}
+const { service, pasos, pregunta, cierre } = Astro.props;
+const path = `/servicios/${service.slug}`;
+const otros = SERVICES_CONTENT.filter((s) => s.slug !== service.slug);
+
+const LINEA: Record<string, string> = {
+  'dashboards-ejecutivos': 'Business Analytics with AI',
+  'modelamiento-predictivo': 'Business Analytics with AI',
+  'automatizacion-procesos': 'Agentic Workflows for Business',
+  'agentes-ia': 'Agentic Workflows for Business',
+};
+
+// El H1 se parte en dos solo para la tipografía: la segunda mitad va en
+// cursiva. El texto es el mismo, letra por letra.
+const corte = service.h1.includes(':') ? service.h1.indexOf(':') + 1 : service.h1.lastIndexOf(' para ');
+const h1 = corte > 0 ? [service.h1.slice(0, corte), service.h1.slice(corte)] : [service.h1, ''];
+
+const flecha = 'M3 8h10M9 4l4 4-4 4';
+---
+
+<div class="v2 v2-servicio">
+  <Cintas />
+
+  <section class="v2-servicio__portada">
+    <div class="v2-marco">
+      <div class="v2-servicio__migas"><Breadcrumbs items={[{ label: 'Servicios', href: '/servicios' }, { label: service.navTitle, href: path }]} /></div>
+      <div class="v2-servicio__grilla">
+        <div>
+          <p class="v2-cejilla v2-sube" style="--i:0" lang="en"><span>{LINEA[service.slug]}</span></p>
+          <h1 class="v2-servicio__h1 v2-sube" style="--i:1">{h1[0]}<em>{h1[1]}</em></h1>
+          <div class="v2-botones v2-sube" style="--i:2">
+            <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
+              Haz tu diagnóstico gratis · 3 min
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+            <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">Agenda una llamada de 30 min</a>
+          </div>
+          <p class="v2-servicio__lead v2-sube" style="--i:3">{service.lead}</p>
+        </div>
+        <div class="v2-servicio__maqueta v2-sube" style="--i:4">
+          <slot name="maqueta" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    service.examples && service.examples.length > 0 && (
+      <section class="v2-seccion">
+        <div class="v2-marco">
+          <div class="v2-cabeza v2-e-sube" data-v2-entra>
+            <p class="v2-indice">Ejemplos</p>
+            <h2 class="v2-titulo">¿Qué agentes <em>podemos construir?</em></h2>
+            <p class="v2-parrafo">Cada agente se diseña a la medida de un proceso real de su negocio. Estos son algunos de los más pedidos:</p>
+          </div>
+          <div class="v2-areas v2-areas--tres">
+            {service.examples.map((ex, i) => (
+              <div class="v2-area v2-e-sube" data-v2-entra>
+                <p class="v2-area__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+                <h3>{ex.title}</h3>
+                <p class="v2-area__texto">{ex.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    pasos && (
+      <section class="v2-seccion">
+        <div class="v2-marco">
+          <div class="v2-cabeza v2-e-sube" data-v2-entra>
+            <p class="v2-indice">Metodología</p>
+            <h2 class="v2-titulo">{pasos.title}</h2>
+          </div>
+          <div class="v2-areas v2-areas--tres">
+            {pasos.steps.map((s, i) => (
+              <div class="v2-area v2-e-sube" data-v2-entra>
+                <p class="v2-paso__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+                <h3>{s.title}</h3>
+                <p class="v2-area__texto">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <slot name="extra" />
+
+  <!-- Preguntas de fondo. Los encabezados van en pregunta a propósito: es lo
+       que piden los motores de respuesta y es como lo pregunta un cliente. -->
+  <section class="v2-seccion">
+    <div class="v2-marco">
+      {
+        service.sections.map((s) => (
+          <div class="v2-fondo v2-e-sube" data-v2-entra>
+            <h2>{s.heading}</h2>
+            <div>{s.body.map((p) => <p>{p}</p>)}</div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="v2-seccion">
+    <div class="v2-marco v2-preguntas__grilla">
+      <div class="v2-e-sube" data-v2-entra>
+        <p class="v2-indice">Qué entregamos</p>
+        <h2 class="v2-titulo">¿Qué incluye <em>el servicio?</em></h2>
+      </div>
+      <ol class="v2-entregables v2-e-sube" data-v2-entra>
+        {service.deliverables.map((d, i) => (
+          <li><b>{String(i + 1).padStart(2, '0')}</b>{d}</li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Diagnóstico al medio: justo después de lo que se entrega. -->
+  <section id="franja-diagnostico" class="v2-seccion v2-franja">
+    <div class="v2-marco v2-e-sube" data-v2-entra>
+      <p class="v2-franja__pregunta">{pregunta}</p>
+      <div class="v2-botones">
+        <a href="/diagnostico" data-cta-diagnostico="medio" class="v2-boton v2-boton--principal">
+          Haz tu diagnóstico gratis · 3 min
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </a>
+        <p class="v2-nota">Descúbrelo en 3 minutos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="v2-seccion">
+    <div class="v2-marco">
+      <div class="v2-cabeza v2-e-sube" data-v2-entra>
+        <p class="v2-indice">Para quién</p>
+        <h2 class="v2-titulo">¿Para quién es <em>este servicio?</em></h2>
+      </div>
+      <div class="v2-areas v2-areas--tres">
+        {service.forWhom.map((d, i) => (
+          <div class="v2-area v2-e-sube" data-v2-entra>
+            <p class="v2-area__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <p class="v2-area__grande">{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {service.faq.length > 0 && <Preguntas preguntas={service.faq} />}
+
+  <section class="v2-seccion">
+    <div class="v2-marco">
+      <p class="v2-indice">Otros servicios</p>
+      <div class="v2-otros">
+        {otros.map((o) => (
+          <a href={`/servicios/${o.slug}`}>
+            <span>{o.navTitle}</span>
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="v2-seccion v2-cierre">
+    <div class="v2-marco v2-e-sube" data-v2-entra="0.6">
+      <h2 class="v2-cierre__frase">{cierre}</h2>
+      <div class="v2-botones">
+        <a href="/diagnostico" data-cta-diagnostico="cierre" class="v2-boton v2-boton--principal">
+          Haz tu diagnóstico gratis · 3 min
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </a>
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">Agenda una llamada de 30 min</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<Aparecer />
+<MedirCtaDiagnostico />

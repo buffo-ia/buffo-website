@@ -16,8 +16,11 @@ const TEXTO = {
   cejilla: 'Business-First AI',
   lugar: 'Santiago de Chile',
   titular: { recto: 'Human-AI workflows for', cursiva: 'sharper business decisions.' },
-  bajada:
-    'Buffo es una consultora de inteligencia de negocios con IA para empresas en Chile. Conectamos los datos de su empresa y montamos flujos de trabajo con agentes de IA, para que su equipo decida más rápido y con mejor información.',
+  // El H1 es solo la primera frase (auditoría del jefe, 12-oct): un H1 de dos
+  // frases es un párrafo, no un encabezado. La segunda sigue al lado, como texto.
+  bajada: 'Buffo es una consultora de inteligencia de negocios con IA para empresas en Chile.',
+  bajadaResto:
+    'Conectamos los datos de su empresa y montamos flujos de trabajo con agentes de IA, para que su equipo decida más rápido y con mejor información.',
   botonPrincipal: 'Hacer el diagnóstico · 3 minutos',
   botonSegundo: 'Agendar 30 minutos',
   nota: 'Sin costo · 12 preguntas · el informe llega por escrito',
@@ -33,7 +36,10 @@ const TEXTO = {
     <p class="v2-titular v2-sube" style="--i:1" lang="en">
       {TEXTO.titular.recto} <em>{TEXTO.titular.cursiva}</em>
     </p>
-    <h1 class="v2-bajada v2-sube" style="--i:3">{TEXTO.bajada}</h1>
+    <div class="v2-bajada v2-sube" style="--i:3">
+      <h1>{TEXTO.bajada}</h1>
+      <p>{TEXTO.bajadaResto}</p>
+    </div>
     <div class="v2-botones v2-sube" style="--i:4">
       <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
         {TEXTO.botonPrincipal}
