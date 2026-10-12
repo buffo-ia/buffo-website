@@ -135,7 +135,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           {FRASES.map((f, k) => (
             <li class="v2-celda v2-pieza v2-frases__celda" style={`--r:${(k * 0.14).toFixed(2)}`}>
               <p class="v2-celda__rotulo">{String(k + 1).padStart(2, '0')}</p>
-              <h3>{f.q}</h3>
+              <h3>"{f.q}"</h3>
               <p class="v2-celda__chica">{f.a}</p>
             </li>
           ))}
