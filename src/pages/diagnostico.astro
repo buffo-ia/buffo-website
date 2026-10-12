@@ -315,8 +315,14 @@ const breadcrumbSchema = {
         la pantalla muestra el puntaje, las barras, el resumen y el primer
         hallazgo. El resto solo existe en el PDF, que es el entregable de verdad.
       -->
+      <!-- La portada del PDF va fuera del informe: ocupa la hoja completa y no
+           lleva los márgenes que se repiten en las hojas interiores. -->
+      <div id="portada-pdf" class="solo-imprimir"></div>
       <div id="paso-resultado" class="hidden">
-        <div id="portada-pdf" class="solo-imprimir"></div>
+        <!-- Márgenes de las hojas interiores del PDF: como cabecera y pie de una
+             tabla, el navegador los repite arriba y abajo de cada hoja. -->
+        <div class="margen-hoja margen-hoja--arriba solo-imprimir"><div></div></div>
+        <div class="margen-hoja margen-hoja--abajo solo-imprimir"><div></div></div>
         <div id="membrete" class="solo-imprimir"></div>
         <div id="resultado-encabezado"></div>
 
@@ -2160,30 +2166,37 @@ const breadcrumbSchema = {
          márgenes de las hojas interiores los dan dos espaciadores que la tabla
          repite arriba y abajo de cada hoja. */
       @page { size: A4; margin: 0; }
-      #paso-resultado { display: table !important; width: 100%; box-sizing: border-box; padding: 0 14mm; }
-      #paso-resultado::before { content: ''; display: table-header-group; height: 15mm; }
-      #paso-resultado::after { content: ''; display: table-footer-group; height: 16mm; }
-      #pie-impreso { margin-left: 14mm; margin-right: 14mm; }
+      #paso-resultado { display: table !important; width: 182mm; margin: 0 auto !important; table-layout: fixed; }
+      .margen-hoja--arriba { display: table-header-group !important; break-inside: avoid; }
+      .margen-hoja--abajo { display: table-footer-group !important; break-inside: avoid; }
+      .margen-hoja--arriba > div { height: 15mm; }
+      .margen-hoja--abajo > div { height: 14mm; }
+      /* El pie cierra la última hoja del informe en vez de abrir una propia. */
+      #pie-impreso { margin-top: 5mm !important; }
+      /* Nada alrededor del informe puede correrlo ni achicarlo. */
+      html, body, :has(#paso-resultado) { padding: 0 !important; margin: 0 !important; max-width: none !important; min-height: 0 !important; }
+      #portada-pdf:empty { display: none !important; }
+      /* Sin esto quedaba una hoja en blanco al final. */
+      html, body { height: auto !important; min-height: 0 !important; }
+      :has(> #paso-resultado) > :not(#paso-resultado):not(#portada-pdf),
+      body > :not(main):not(script):not(style) { display: none !important; }
+      #paso-resultado { break-after: avoid; }
       #paso-resultado, #paso-resultado *, #portada-pdf, #portada-pdf *, #membrete, #membrete *, #pie-impreso, #pie-impreso * { font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif !important; }
 
       /* Portada negra a hoja completa, con el colibrí de fondo. */
       #portada-pdf {
-        /* Ocupa el área útil de la primera hoja y la sombra negra, que no cuenta
-           como ancho, pinta los márgenes hasta el borde del papel. (Con una
-           portada de 210 mm o con @page :first sin margen, Chrome achica todo
-           el documento para que quepa.) */
-        position: relative; height: 266mm; box-sizing: border-box; margin: 0;
-        padding: 9mm 6mm 4mm;
-        /* Hacia abajo solo 16 mm (el espaciador del pie): más que eso manchaba la hoja 2. */
-        box-shadow: -32mm 0 0 #000, 32mm 0 0 #000, 0 -32mm 0 #000, -32mm -32mm 0 #000, 32mm -32mm 0 #000, 0 14.6mm 0 #000, -32mm 14.6mm 0 #000, 32mm 14.6mm 0 #000;
+        /* Hoja completa: la página va sin margen propio y la portada está
+           fuera del informe, así que mide exactamente una hoja A4. */
+        position: relative; width: 210mm; height: 296.5mm; box-sizing: border-box; margin: 0 !important;
+        padding: 24mm 20mm 20mm; break-after: page;
         background: #000 !important; color: #fff !important;
         justify-content: flex-start; overflow: hidden;
       }
       #portada-pdf * { color: inherit; }
       .portada-logo { position: static; width: 58mm; }
-      .portada-isotipo { display: block; position: absolute; right: -52mm; top: 62mm; width: 150mm; opacity: .09; }
+      .portada-isotipo { display: block; position: absolute; right: -38mm; top: 78mm; width: 150mm; opacity: .09; }
       /* La portada es un bloque (solo-imprimir fuerza display:block): el aire sobre el título va con margen. */
-      .portada-centro { margin-top: 78mm; position: relative; }
+      .portada-centro { margin-top: 84mm; position: relative; }
       #portada-pdf .eyebrow { font-size: 8.5pt; font-weight: 600; letter-spacing: .22em; color: #20C2BC !important; margin-bottom: 6mm; }
       #portada-pdf .eyebrow::before { display: none; }
       #portada-pdf .wordmark, #portada-pdf .wordmark-cliente { color: #fff !important; }
