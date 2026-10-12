@@ -1,6 +1,10 @@
 ---
 // Bloques propios de la versión corporativa del home (borrador de Comercial,
 // 12-oct-2026: S-Lab/Buffo Consulting/Sitio 2.0/HOME_version_corporativa_borrador.md).
+// Las cuadrículas usan data-v2-entra="0.32": todas sus piezas quedan a la
+// vista apenas el bloque asoma un tercio de pantalla (Simón, 12-oct-2026: «son
+// 4 cuadros y no se ven los últimos dos»). Con un tramo más largo, las últimas
+// seguían apagadas mientras el bloque estaba en la mitad inferior.
 // Enfoque pedido por Simón: vender un servicio de consultoría y no un
 // producto. Un archivo, un bloque por `parte`, para que el texto de los cinco
 // quede junto y sea fácil de corregir.
@@ -108,7 +112,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
               </a>
             </div>
           </div>
-          <ul class="v2-detras__datos" data-v2-entra="0.7">
+          <ul class="v2-detras__datos" data-v2-entra="0.32">
             {DETRAS.datos.map((d, k) => (
               <li class:list={['v2-pieza', d.pendiente && 'es-pendiente']} style={`--r:${(0.1 + k * 0.15).toFixed(2)}`}>
                 <b>{d.n}</b>
@@ -131,7 +135,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           <h2 class="v2-titulo">Cuatro frases que escuchamos <em>en la primera reunión.</em></h2>
           <p class="v2-parrafo">Casi ninguna empresa llega pidiendo inteligencia artificial. Llega con uno de estos problemas.</p>
         </div>
-        <ol class="v2-rejilla v2-rejilla--dos" data-v2-entra="0.75">
+        <ol class="v2-rejilla v2-rejilla--dos" data-v2-entra="0.32">
           {FRASES.map((f, k) => (
             <li class="v2-celda v2-pieza v2-frases__celda" style={`--r:${(k * 0.14).toFixed(2)}`}>
               <p class="v2-celda__rotulo">{String(k + 1).padStart(2, '0')}</p>
@@ -154,7 +158,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           <h2 class="v2-titulo">Acompañamiento estratégico en inteligencia de negocios <em>e implementación de IA.</em></h2>
           <p class="v2-parrafo">Cuatro líneas de servicio. Un criterio: el negocio primero.</p>
         </div>
-        <div class="v2-rejilla v2-rejilla--cuatro" data-v2-entra="0.75">
+        <div class="v2-rejilla v2-rejilla--cuatro" data-v2-entra="0.32">
           {SERVICIOS.map((s, k) => (
             <article class="v2-celda v2-pieza v2-oferta" style={`--r:${(k * 0.14).toFixed(2)}`}>
               <p class="v2-celda__rotulo" lang="en"><b>{String(k + 1).padStart(2, '0')}</b> {s.en}</p>
@@ -169,7 +173,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
             </article>
           ))}
         </div>
-        <div class="v2-acompana" data-v2-entra="0.7">
+        <div class="v2-acompana" data-v2-entra="0.32">
           <div class="v2-pieza" style="--r:0">
             <p class="v2-celda__rotulo">En todas las líneas</p>
             <h3>Acompañamiento en implementación de IA</h3>
@@ -192,7 +196,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           <p class="v2-indice">Cómo trabajamos</p>
           <h2 class="v2-titulo">Primero la estrategia y el retorno. <em>Después la tecnología.</em></h2>
         </div>
-        <ol class="v2-metodo__pasos" data-v2-entra="0.8">
+        <ol class="v2-metodo__pasos" data-v2-entra="0.32">
           <li class="v2-metodo__riel" aria-hidden="true"><i class="v2-l" style="--r:0.05;--v:1.3" /></li>
           {METODO.map((m, k) => (
             <li class="v2-pieza" style={`--r:${(0.08 + k * 0.17).toFixed(2)}`}>
@@ -215,7 +219,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           <p class="v2-indice">Casos</p>
           <h2 class="v2-titulo">Proyectos <em>en operación.</em></h2>
         </div>
-        <div class="v2-rejilla" data-v2-entra="0.75">
+        <div class="v2-rejilla" data-v2-entra="0.32">
           {CASOS.map((c, k) => (
             <div class="v2-celda v2-pieza v2-casos__celda" style={`--r:${(k * 0.14).toFixed(2)}`}>
               <p class="v2-celda__rotulo">{c.rubro}</p>
