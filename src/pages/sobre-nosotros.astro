@@ -10,25 +10,32 @@ const metaTitle = 'Sobre nosotros | Buffo IA Consulting';
 const metaDescription =
   'Buffo IA es una consultora chilena de inteligencia artificial nacida en las áreas comerciales. Conozca su origen, su forma de trabajar y a quién está detrás.';
 
-// Lead de respuesta directa (GEO/AEO) — 50-80 palabras.
+// Texto de Comercial (12-oct-2026, tono senior: estrategia y retorno; salen el
+// relato de origen, «software que trabaja solo» y «pymes»). Fuente:
+// S-Lab/Buffo Consulting/Sitio 2.0/SOBRE_NOSOTROS_borrador.md.
 const lead =
-  'Buffo IA Consulting es una consultora chilena de inteligencia artificial aplicada a la gestión comercial y operacional. A diferencia de las firmas que nacen en TI, Buffo nació en las áreas comerciales y consultorías: por eso habla el idioma del negocio —ventas, margen, canales, stock— y no el de la tecnología. Diseñamos dashboards, modelos de datos, automatizaciones y agentes que no solo muestran información, sino que orientan la decisión.';
+  'Buffo es una consultora chilena de inteligencia de negocios con IA. Acompañamos a gerencias y directorios en tres frentes: definir dónde está el retorno, ordenar la información para decidir y llevar la IA a la operación.';
+
+// Biografía que se VE en la página. FOUNDER.bio (config/site.ts) no se toca:
+// alimenta el schema Person, que es terreno de SEO.
+const bioVisible =
+  'Ingeniero Comercial de la Universidad Central y MBA de la Universidad del Desarrollo, con formación en IA aplicada a los negocios y análisis de datos. Más de diez años en áreas comerciales de retail y consumo masivo, y dos años en consultoría comercial, IA empresarial y automatización de procesos.';
 
 const principios = [
   {
-    icon: 'storefront',
-    title: 'Nacidos en el negocio, no en TI',
-    body: 'Buffo surge de la operación comercial real. Conocemos cómo decide un gerente porque venimos de ahí: por eso cada solución habla el idioma del negocio y no obliga a traducir tecnicismos.',
+    icon: 'flag',
+    title: 'Estrategia antes que tecnología',
+    body: 'Cada proyecto parte de un objetivo de negocio y de su retorno esperado. La tecnología se elige en función de ese objetivo.',
   },
   {
     icon: 'lightbulb',
-    title: 'Prescriptivos, no solo descriptivos',
-    body: 'No entregamos pantallas llenas de gráficos. Cada solución incorpora el criterio Buffo: señala qué está fuera de lo esperado y sugiere dónde actuar, con parámetros construidos sobre experiencia comercial real.',
+    title: 'Lectura, no solo información',
+    body: 'Cada entrega incluye la interpretación: qué se salió de lo esperado, qué priorizar y cuál es la acción recomendada.',
   },
   {
     icon: 'handshake',
-    title: 'El mes doce importa más que el primero',
-    body: 'Priorizamos por impacto y entregamos algo usable en las primeras semanas. Pero el estándar no es el lanzamiento: es que se siga abriendo cuando ya nadie está mirando.',
+    title: 'Implementación acompañada',
+    body: 'Avanzamos por etapas, con un resultado utilizable en cada una, y seguimos con su gerencia y su equipo hasta que la solución está en operación.',
   },
 ];
 
@@ -62,7 +69,7 @@ const aboutSchema = {
     <div class="max-w-4xl mx-auto">
       <p class="reveal text-primary text-[0.7rem] tracking-[0.2em] uppercase font-semibold mb-8">Sobre nosotros</p>
       <h1 class="reveal reveal-delay-1 text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em]">
-        Inteligencia que nace del negocio,<br /><span class="text-primary">no de la tecnología</span>.
+        Estrategia de negocio,<br /><span class="text-primary">inteligencia de datos e IA</span>.
       </h1>
       <p class="reveal reveal-delay-2 text-lg md:text-xl text-on-surface-variant leading-relaxed">
         {lead}
@@ -74,49 +81,40 @@ const aboutSchema = {
   <section class="px-8 md:px-12 py-20 bg-surface-container-low border-b border-on-surface/5">
     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
       <div class="reveal">
-        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Por qué existimos</p>
+        <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Nuestra tesis</p>
         <h2 class="text-[2rem] md:text-[2.4rem] font-display mb-6 leading-tight">
-          Buffo nació del otro lado del escritorio.
+          La IA es una decisión de inversión antes que una decisión de tecnología.
         </h2>
         <p class="text-on-surface-variant leading-relaxed mb-4">
-          Antes de Buffo hubo diez años en áreas comerciales de retail y consumo masivo. Diez años
-          preparando el reporte del mes, defendiendo un presupuesto y respondiendo en una reunión
-          por números que habían llegado tarde y desordenados. El problema no se veía desde afuera
-          como una falta de tecnología: se veía como llegar al lunes sin saber qué corregir primero.
-        </p>
-        <p class="text-on-surface-variant leading-relaxed mb-4">
-          Buffo IA existe para resolver eso desde donde se origina. No vendemos software ni
-          reemplazamos su ERP: construimos el copiloto de gestión que detecta, interpreta, sugiere el
-          siguiente paso y lo ejecuta.
+          La mayoría de las iniciativas de IA parten por la herramienta. Nosotros partimos por el
+          objetivo de negocio y por el retorno que se espera de él. Con eso definido, se decide qué
+          información hace falta, qué se automatiza y dónde un agente de IA aporta valor.
         </p>
         <p class="text-on-surface-variant leading-relaxed">
-          Damos un paso más con el desarrollo de <strong class="text-on-surface">agentes de IA</strong>:
-          software que trabaja solo, monitorea los datos y ejecuta tareas sin que se las pidan. Es la
-          forma en que potenciamos a las pymes chilenas: capacidades que antes solo estaban al alcance
-          de las grandes empresas, ahora puestas a trabajar en negocios que deciden con menos recursos
-          y necesitan que la tecnología les devuelva tiempo y foco.
+          El resultado no es un proyecto tecnológico aislado. Es una capacidad instalada en la
+          empresa: información confiable, decisiones mejor fundadas y un equipo que usa la IA en su
+          trabajo diario.
         </p>
       </div>
       <div class="reveal reveal-delay-1 gradient-border p-10">
         <span class="material-symbols-outlined text-primary/40 text-4xl mb-4 block">format_quote</span>
         <p class="text-xl md:text-2xl font-display leading-relaxed text-on-surface">
-          No hay un proyecto que se entrega y se acaba. Entramos, entendemos cómo decide la empresa
-          y nos quedamos construyendo con ella. Por eso lo que entregamos se sigue usando el mes
-          doce.
+          Trabajamos como socio estratégico de la gerencia. El avance se mide en resultado, adopción
+          y retorno.
         </p>
       </div>
     </div>
   </section>
 
   <!-- CÓMO TRABAJAMOS (principios) -->
-  <ServiceSteps eyebrow="Cómo trabajamos" title="Lo que nos hace distintos" steps={principios} />
+  <ServiceSteps eyebrow="Cómo trabajamos" title="Tres principios" steps={principios} />
 
   <!-- LÍDER VISIBLE -->
   <section class="px-8 md:px-12 py-20 bg-background">
     <div class="max-w-4xl mx-auto">
       <div class="mb-12 reveal">
         <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-3">Quién está detrás</p>
-        <h2 class="text-[2rem] md:text-[2.4rem] font-display">La experiencia que respalda a Buffo</h2>
+        <h2 class="text-[2rem] md:text-[2.4rem] font-display">Dirección estratégica, con foco en el retorno</h2>
       </div>
       <div class="reveal reveal-delay-1 bg-surface-container-low border border-on-surface/5 p-9 md:p-12 flex flex-col md:flex-row gap-9 items-start">
         <div class="flex-shrink-0">
@@ -132,7 +130,7 @@ const aboutSchema = {
         <div>
           <h3 class="font-display text-2xl mb-1">{FOUNDER.name}</h3>
           <p class="text-primary text-sm font-semibold mb-5">{FOUNDER.role}</p>
-          <p class="text-on-surface-variant leading-relaxed mb-6">{FOUNDER.bio}</p>
+          <p class="text-on-surface-variant leading-relaxed mb-6">{bioVisible}</p>
           <ul class="space-y-2 mb-7">
             {
               FOUNDER.education.map((e) => (
@@ -169,14 +167,14 @@ const aboutSchema = {
           ¿Con qué empresas trabajamos?
         </h2>
         <p class="text-on-surface-variant leading-relaxed">
-          Con pymes y con empresas grandes en Chile, en industrias donde la decisión comercial y
-          operacional pesa todos los días: retail, consumo masivo, distribución y servicios. El
-          punto en común no es el tamaño ni el rubro, sino que alguien tiene que responder por un
-          número y hoy lo recibe demasiado tarde.
+          Con empresas medianas y grandes en Chile, en industrias donde la decisión comercial y
+          operacional pesa todos los días: retail, consumo masivo, distribución, industria y
+          servicios. El punto en común es una gerencia que quiere decidir con mejor información y
+          medir el retorno de lo que invierte.
         </p>
         <p class="text-on-surface-variant leading-relaxed mt-4">
-          El trabajo es remoto de principio a fin, así que también trabajamos con empresas fuera
-          de Chile.
+          El trabajo se puede hacer de forma remota de principio a fin, así que también trabajamos
+          con empresas fuera de Chile.
         </p>
       </div>
       <div class="reveal reveal-delay-1">
@@ -184,14 +182,12 @@ const aboutSchema = {
           ¿Cómo es trabajar con nosotros?
         </h2>
         <p class="text-on-surface-variant leading-relaxed mb-4">
-          El proyecto parte de una conversación de negocio, no de un levantamiento técnico. Primero
-          se acuerda qué decisión hay que mejorar y con qué frecuencia se toma; recién después se
-          define qué construir. Ese orden evita el error más caro de estos proyectos, que es
-          instalar una herramienta correcta para un problema que nadie definió.
+          El proyecto parte de una conversación estratégica. Primero se acuerda el objetivo de
+          negocio y el retorno esperado, y después se define qué construir.
         </p>
         <p class="text-on-surface-variant leading-relaxed">
-          Después el trabajo avanza por etapas cortas, con algo utilizable en cada una. Si el
-          alcance cambia a mitad de camino —y suele cambiar— lo ya entregado sigue sirviendo.
+          El trabajo avanza por etapas cortas, con un resultado utilizable en cada una. Si el
+          alcance cambia en el camino, lo ya entregado sigue sirviendo.
         </p>
       </div>
     </div>
