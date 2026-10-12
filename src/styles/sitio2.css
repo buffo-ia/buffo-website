@@ -2250,3 +2250,28 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
   .v2-nodos__vista--alta { --lado: 19% !important; }
   .v2-nodos__texto { font-size: 11px; }
 }
+
+
+/* ============================================================
+   RECORTE DEL HOME (pages/recorte.astro) — variantes cortas
+   ============================================================ */
+.v2-flujo.v2-flujo--corto { height: 220vh; }
+.v2-barrido.es-escena.v2-barrido--corto { height: 190vh; }
+.v2-barrido__texto small {
+  display: block;
+  margin-top: 1.6rem;
+  font-family: var(--v2-mono);
+  font-weight: 400;
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.v2-rejilla--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.v2-lineas-sec--corta .v2-linea + .v2-linea { margin-top: clamp(1.5rem, 4vh, 2.5rem); }
+.v2-lineas-sec--corta .v2-cabeza { margin-bottom: clamp(1.5rem, 4vh, 2.5rem); }
+.v2-decisiones li a { color: inherit; }
+.v2-respaldo__pendiente { border-style: dashed; min-height: 13rem; }
+.v2-respaldo__pendiente .v2-celda__rotulo { color: rgb(var(--c-primary)); }
+@media (max-width: 767px) { .v2-rejilla--dos { grid-template-columns: 1fr; } }
+.v2-rejilla--dos .v2-calc { order: -1; }

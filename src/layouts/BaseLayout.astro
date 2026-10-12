@@ -25,9 +25,12 @@ export interface Props {
   /** true para mostrar la entrada con carga (colibrí + barrido). Solo la
       portada: en una página interior sería una espera sin motivo. */
   entrada?: boolean;
+  /** true en páginas de trabajo que no deben indexarse (p. ej. /recorte). */
+  noindex?: boolean;
 }
 
 const {
+  noindex = false,
   title = SITE.defaultTitle,
   description = SITE.defaultDescription,
   path = '/',
@@ -134,7 +137,7 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.name} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph -->

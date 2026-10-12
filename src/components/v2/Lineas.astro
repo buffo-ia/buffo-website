@@ -78,10 +78,13 @@ const LINEAS: { en: string; nombre: string; frase: string; reemplaza: string; pr
   },
 ];
 
+// `sinMaquetas`: las tres líneas en una sola pantalla, con enlaces a sus
+// páginas en vez de las maquetas (recorte del home, 12-oct-2026).
+const { sinMaquetas = false } = Astro.props;
 let orden = 0;
 ---
 
-<section class="v2-seccion v2-lineas-sec" id="services">
+<section class:list={['v2-seccion v2-lineas-sec', sinMaquetas && 'v2-lineas-sec--corta']} id="services">
   <div class="v2-marco">
     <div class="v2-cabeza v2-e-sube" data-v2-entra>
       <p class="v2-indice">Qué hacemos</p>
@@ -115,7 +118,21 @@ let orden = 0;
             </div>
           )}
 
-          {l.productos.map((slug) => {
+          {sinMaquetas && l.productos.length > 0 && (
+            <div class="v2-decisiones v2-e-sube" data-v2-entra>
+              <ul>
+                {l.productos.map((slug) => (
+                  <li><a href={`/servicios/${slug}`}>{PRODUCTOS[slug].nombre}</a></li>
+                ))}
+              </ul>
+              <a href={`/servicios/${l.productos[0]}`} class="v2-enlace">
+                Conocer más
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </a>
+            </div>
+          )}
+
+          {!sinMaquetas && l.productos.map((slug) => {
             const p = PRODUCTOS[slug];
             const Mock = p.Mock;
             const alReves = orden++ % 2 === 1;

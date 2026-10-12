@@ -4,6 +4,7 @@ import ForecastMockup from '../../components/ForecastMockup.astro';
 import AutomationMockup from '../../components/AutomationMockup.astro';
 import AgentMockup from '../../components/AgentMockup.astro';
 import Servicio from '../../components/v2/Servicio.astro';
+import Demo from '../../components/v2/Demo.astro';
 import { SITE } from '../../config/site';
 import { SERVICES_CONTENT } from '../../data/services';
 import { STEPS } from '../../data/serviceSteps';
@@ -69,5 +70,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
       {service.slug === 'automatizacion-procesos' && <AutomationMockup />}
       {service.slug === 'agentes-ia' && <AgentMockup />}
     </Fragment>
+    {/* La demostración con cursores vive acá además del home (recorte propuesto, 12-oct-2026). */}
+    {service.slug === 'agentes-ia' && <Demo slot="extra" />}
   </Servicio>
 </BaseLayout>

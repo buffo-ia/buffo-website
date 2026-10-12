@@ -32,9 +32,12 @@ const TERMINAL = {
     { paso: 2, orden: 0, accion: 'Propuesta enviada al gerente comercial.', detalle: '', lineas: ['La decisión es de una persona de su equipo.'] },
   ],
 };
+// `corto`: la escena dura cerca de dos pantallas en vez de tres (recorte del
+// home propuesto por Comercial, 12-oct-2026).
+const { corto = false } = Astro.props;
 ---
 
-<section class="v2-flujo" data-v2-flujo data-paso="0">
+<section class:list={['v2-flujo', corto && 'v2-flujo--corto']} data-v2-flujo data-paso="0">
   <div class="v2-flujo__escena">
     <div class="v2-marco v2-flujo__grilla">
       <div class="v2-flujo__izq">

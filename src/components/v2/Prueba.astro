@@ -22,6 +22,9 @@ const CALC = {
 };
 // Los diez días del informe, uno por segmento (medidor por tramos, como los
 // del video de referencia): hoy se encienden los diez; con Buffo, el primero.
+// `sinComparacion`: saca «Hoy día 10 / Con Buffo día 1» hasta tener un caso
+// real (recorte del home, 12-oct-2026).
+const { sinComparacion = false } = Astro.props;
 const DIAS = Array.from({ length: 10 }, (_, k) => k);
 ---
 
@@ -32,8 +35,9 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
       <h2 class="v2-titulo">Lo que cambia, <em>en números.</em></h2>
     </div>
 
-    <div class="v2-rejilla v2-e-sube" data-v2-entra="0.7">
-      <!-- Hoy / Con Buffo -->
+    <div class:list={['v2-rejilla v2-e-sube', sinComparacion && 'v2-rejilla--dos']} data-v2-entra="0.7">
+      {!sinComparacion && (
+      
       <div class="v2-celda v2-celda--ancha">
         <p class="v2-celda__rotulo">El informe de gestión del mes</p>
         <div class="v2-compara">
@@ -53,6 +57,7 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
           informe deja de armarse a mano.
         </p>
       </div>
+      )}
 
       <div class="v2-celda v2-celda--cifra">
         <p class="v2-celda__rotulo">Sistemas que cambiar</p>

@@ -15,18 +15,26 @@ import { getImage } from 'astro:assets';
 import isotipo from '../../assets/isotipo-buffo.png';
 
 const mascara = await getImage({ src: isotipo, width: 160, format: 'webp' });
+// `corto`: el barrido dura cerca de una pantalla, lleva la frase de cierre de
+// «Qué construimos» fundida debajo y no trae la nota aparte (recorte del home
+// propuesto por Comercial, 12-oct-2026).
+const { corto = false } = Astro.props;
 const FRASE = { recto: 'Su sistema le dice lo que pasó.', cursiva: 'Nosotros le decimos qué hacer.' };
 ---
 
-<section class="v2-barrido" data-v2-barrido style={`--isotipo:url('${mascara.src}')`}>
+<section class:list={['v2-barrido', corto && 'v2-barrido--corto']} data-v2-barrido style={`--isotipo:url('${mascara.src}')`}>
   <div class="v2-barrido__escena">
     <div class="v2-barrido__placa">
       <i class="v2-barrido__icono" aria-hidden="true"></i>
-      <h2 class="v2-barrido__texto">{FRASE.recto} <em>{FRASE.cursiva}</em></h2>
+      <h2 class="v2-barrido__texto">
+        {FRASE.recto} <em>{FRASE.cursiva}</em>
+        {corto && <small>No entregamos un número sin interpretación.</small>}
+      </h2>
     </div>
   </div>
 </section>
 
+{!corto && (
 <section class="v2-seccion v2-frase">
   <div class="v2-marco">
     <p class="v2-indice">El punto de partida</p>
@@ -37,6 +45,7 @@ const FRASE = { recto: 'Su sistema le dice lo que pasó.', cursiva: 'Nosotros le
     </p>
   </div>
 </section>
+)}
 
 <script>
   const seccion = document.querySelector<HTMLElement>('[data-v2-barrido]');

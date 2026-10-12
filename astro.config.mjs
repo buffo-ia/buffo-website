@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 // Sitio público de Buffo IA Consulting
 export default defineConfig({
   site: 'https://buffoconsulting.cl',
-  integrations: [tailwind(), sitemap()],
+  integrations: [tailwind(), sitemap({ filter: (pagina) => !pagina.includes('/recorte') })],
   // La barra de herramientas de Astro solo existe en desarrollo, pero ahí tapa
   // el centro inferior de la pantalla, justo donde Simón revisa las entregas.
   devToolbar: { enabled: false },
