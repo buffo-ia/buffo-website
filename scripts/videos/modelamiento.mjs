@@ -8,7 +8,8 @@ await p.addStyleTag({ content: `
   #p-forecast > .encabezado h1, #p-forecast > .encabezado p, #fc-subtitulo{display:none!important}
   #p-forecast > .seccion:not(#s-fc-proyeccion){display:none!important}
   #p-forecast{max-width:1040px}
-  #fc-kpis > *{transition:transform .7s ease, box-shadow .7s ease, border-color .7s ease!important}` });
+  #fc-kpis.foco > :not(:nth-child(2)){opacity:.16}
+  #fc-kpis > *{transition:opacity .12s, transform .7s ease, box-shadow .7s ease, border-color .7s ease!important}` });
 await a.js(() => { ir('forecast'); document.querySelector('.contenido').style.opacity = 0; }); await esperar(1200);
 await a.js(() => {
   const el = document.querySelector('#fc-ajuste');
@@ -22,6 +23,7 @@ await grabar(a, process.argv[2], async () => {
   await a.cursorA('#ch-fc', { fx: 0.82, fy: 0.4, ms: 900, curva: -0.1 });
   await esperar(500);
   // 3 a 7: el equipo ajusta la proyección; la cifra cambia.
+  await a.js(() => document.querySelector('#fc-kpis').classList.add('foco'));
   await a.cam(['#fc-ajuste', '#fc-kpis > :nth-child(2)'], { pad: 40, ms: 1000, espera: false });
   await esperar(500);
   await a.cursorA('#fc-ajuste', { fx: 0.5, ms: 800 });
@@ -33,6 +35,7 @@ await grabar(a, process.argv[2], async () => {
   await a.cursorA('#fc-kpis > :nth-child(2)', { fy: 0.5, ms: 800 });
   await esperar(1700);
   // 10 a 13: de pesos a unidades; el gráfico se redibuja.
+  await a.js(() => document.querySelector('#fc-kpis').classList.remove('foco'));
   await a.cam(['#fc-modo', '#ch-fc'], { pad: 22, ms: 1000, espera: false });
   await esperar(600);
   await a.cursorA('#fc-modo .chip:nth-child(2)', { ms: 800 });

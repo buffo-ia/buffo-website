@@ -53,7 +53,7 @@ await grabar(a, process.argv[2], async () => {
   await a.cam([`${T} tbody tr:nth-child(1) td:nth-child(8)`, `${T} tbody tr:nth-child(3) td:last-child`], { pad: 34, ms: 1000 });
   await a.cursorA(`${T} tbody tr:nth-child(1) td:last-child .btn`, { fy: 0.6, ms: 800 });
   await esperar(700);
-  await a.aviso({ tema: 'Cobranza', texto: 'Hay <strong>137 facturas vencidas</strong> por $229.140.647. Dejé listos los recordatorios de cobro para su aprobación.', botones: ['Revisar y aprobar', 'Más tarde'] });
+  await a.aviso({ tema: 'Cobranza', texto: 'Hay <strong>137 facturas vencidas</strong> por $229.140.647. Dejé listos los recordatorios de cobro para su aprobación.', botones: ['Revisar propuesta', 'Más tarde'] });
   await esperar(3300);
   a.avisoFuera(300);
   await a.fundido(false);

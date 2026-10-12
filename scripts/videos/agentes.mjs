@@ -30,7 +30,7 @@ await grabar(a, process.argv[2], async () => {
   await a.cam([`${T} tbody tr:nth-child(1) td:nth-last-child(6)`, `${T} tbody tr:nth-child(3) td:nth-last-child(3)`], { pad: 34, ms: 1000 });
   await a.cursorA(`${T} tbody tr:nth-child(1) .pill`, { fy: 0.7, ms: 800 });
   await esperar(700);
-  await a.aviso({ tema: 'Compras', texto: 'Hay <strong>24 órdenes para emitir</strong> ahora. Ordené la propuesta por fecha de quiebre; su equipo decide cuáles se emiten.', botones: ['Ver propuesta', 'Más tarde'] });
+  await a.aviso({ tema: 'Compras', texto: 'Hay <strong>24 órdenes para emitir</strong> ahora. Ordené la propuesta por fecha de quiebre. Su equipo decide cuáles se emiten.', botones: ['Revisar propuesta', 'Más tarde'] });
   await esperar(3300);
   a.avisoFuera(300);
   await a.fundido(false);
