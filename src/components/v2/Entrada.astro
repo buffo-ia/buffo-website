@@ -1,0 +1,17 @@
+---
+// Entrada con carga del sitio 2.0: el colibrí solo sobre negro, un barrido
+// turquesa de pantalla completa, y se abre el sitio. Toda la animación es CSS
+// (src/styles/sitio2.css); acá solo va la pieza y la forma del ícono.
+//
+// El colibrí se usa de MÁSCARA y no de imagen para poder pintarlo: turquesa
+// sobre el negro y negro cuando el barrido lo alcanza.
+import { getImage } from 'astro:assets';
+import isotipo from '../../assets/isotipo-buffo.png';
+
+const mascara = await getImage({ src: isotipo, width: 160, format: 'webp' });
+---
+
+<div class="v2-entrada" aria-hidden="true" style={`--isotipo:url('${mascara.src}')`}>
+  <div class="v2-entrada__barrido"></div>
+  <div class="v2-entrada__icono"></div>
+</div>

@@ -6,6 +6,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://buffoconsulting.cl',
   integrations: [tailwind(), sitemap()],
+  // La barra de herramientas de Astro solo existe en desarrollo, pero ahí tapa
+  // el centro inferior de la pantalla, justo donde Simón revisa las entregas.
+  devToolbar: { enabled: false },
   vite: {
     server: {
       // En local, /api lo atiende scripts/dev-api.mjs (Astro no sirve las

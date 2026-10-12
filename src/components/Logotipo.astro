@@ -29,8 +29,10 @@ interface Props {
    * 'claro' fija la palabra en negro. Lo usa el header, que es una barra blanca
    * en los dos temas, así que ahí el tema de la página no manda.
    * 'auto' sigue al tema, para donde el fondo sí cambia.
+   * 'oscuro' fija la palabra en blanco: es el header del sitio 2.0, que va
+   * sobre negro en los dos temas.
    */
-  fondo?: 'claro' | 'auto';
+  fondo?: 'claro' | 'auto' | 'oscuro';
   class?: string;
 }
 const { tamano = 'header', fondo = 'claro', class: clase = '' } = Astro.props;
@@ -43,7 +45,7 @@ const ANCHOS = [200, 340, 520];
 
 <span class:list={['logotipo', `logotipo-${tamano}`, `fondo-${fondo}`, clase]}>
   <Image
-    src={logoClaro}
+    src={fondo === 'oscuro' ? logoOscuro : logoClaro}
     alt={ALT}
     widths={ANCHOS}
     sizes="260px"

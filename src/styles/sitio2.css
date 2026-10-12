@@ -1,0 +1,583 @@
+/* ============================================================
+   SITIO 2.0 — portada y flujo (rama feat/sitio-2.0, 11-oct-2026)
+
+   Todo lo de acá vive bajo `.v2` o `body[data-sitio='v2']`: el resto del
+   sitio no se entera. La paleta es la del manual de marca 2026 — negro
+   #000000 y turquesa #20C2BC — y el turquesa se usa con disciplina: el
+   botón principal, la barra de avance y el nodo de la persona. Nada más.
+
+   Esto contradice a propósito tres reglas viejas del sitio (Inter sin
+   serif en titulares, tema claro por defecto, turquesa #19D3C5). Simón
+   lo decidió el 11-oct-2026; ver ENCARGO_sitio_2.0.md.
+   ============================================================ */
+
+.v2 {
+  /* Los mismos tokens del sitio, redefinidos en local: las clases de
+     Tailwind (text-primary, bg-primary, text-on-surface…) siguen sirviendo. */
+  --c-primary: 32 194 188;
+  --c-on-primary: 0 0 0;
+  --c-background: 0 0 0;
+  --c-surface: 12 12 12;
+  --c-on-surface: 244 246 246;
+  --c-on-surface-variant: 156 166 166;
+  --c-outline: 110 120 120;
+  --c-outline-variant: 44 48 48;
+  --c-hairline: 255 255 255;
+  --hairline-a: 0.1;
+
+  --v2-serif: 'Instrument Serif', 'Times New Roman', serif;
+  --v2-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --v2-suave: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  position: relative;
+  isolation: isolate;
+  background: #000;
+  color: rgb(var(--c-on-surface));
+  /* `clip` y no `hidden`: con hidden este bloque pasaría a ser el contenedor
+     de scroll de sus hijos y los `position: sticky` de adentro dejan de pegar.
+     Y en los DOS ejes: el lienzo de las cintas tiene margen negativo, así que
+     sin recorte vertical se sale por abajo y pinta sobre la sección siguiente. */
+  overflow: clip;
+  border-radius: 0 0 36px 36px;
+}
+@media (max-width: 640px) {
+  .v2 { border-radius: 0 0 24px 24px; }
+}
+
+/* ----- Cintas de luz -----
+   El lienzo se queda pegado a la pantalla mientras se recorre todo el bloque
+   negro; el margen negativo le devuelve al flujo el alto que ocupa. */
+.v2-cintas {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  z-index: 0;
+  pointer-events: none;
+}
+.v2-cintas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+@media (max-width: 767px) {
+  /* En celular el texto ocupa todo el ancho y la cinta le pasa por detrás:
+     se baja para que acompañe sin pelear con la lectura. */
+  .v2-cintas canvas { opacity: 0.9; }
+}
+
+/* ----- Entrada con carga -----
+   Solo CSS: ícono solo → barrido turquesa → se abre el sitio. Dura 1,3 s y
+   se muestra una vez por sesión (lo decide el script inline del <head>, que
+   pone data-entrada='no' en las visitas siguientes y con movimiento reducido).
+   `--entrada-espera` es lo que esperan las piezas de la portada para entrar. */
+:root { --entrada-espera: 1.05s; }
+:root[data-entrada='no'] { --entrada-espera: 0s; }
+
+.v2-entrada {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  animation: v2-entrada-sale 0.5s var(--v2-suave, cubic-bezier(0.7, 0, 0.2, 1)) 0.9s forwards;
+}
+:root[data-entrada='no'] .v2-entrada { display: none; }
+
+.v2-entrada__barrido {
+  position: absolute;
+  inset: 0;
+  background: #20c2bc;
+  transform: translateY(101%);
+  animation: v2-entrada-barrido 0.42s cubic-bezier(0.7, 0, 0.2, 1) 0.45s forwards;
+}
+.v2-entrada__icono {
+  position: relative;
+  width: 3.4rem;
+  aspect-ratio: 1018 / 1177;
+  background: #20c2bc;
+  -webkit-mask: var(--isotipo) center / contain no-repeat;
+  mask: var(--isotipo) center / contain no-repeat;
+  animation:
+    v2-entrada-icono 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both,
+    v2-entrada-icono-negro 0.2s linear 0.55s forwards;
+}
+@keyframes v2-entrada-icono {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes v2-entrada-icono-negro {
+  to { background: #000; }
+}
+@keyframes v2-entrada-barrido {
+  to { transform: translateY(0); }
+}
+@keyframes v2-entrada-sale {
+  to { transform: translateY(-100%); visibility: hidden; }
+}
+
+/* ----- Piezas que entran de a una -----
+   Suben desde el desenfoque, escalonadas con --i. Es animación CSS con `both`,
+   no una clase que ponga JavaScript: si el script falla, el texto igual llega. */
+.v2-sube {
+  animation: v2-sube 0.9s var(--v2-suave) both;
+  animation-delay: calc(var(--entrada-espera) + var(--i, 0) * 90ms);
+}
+@keyframes v2-sube {
+  from { opacity: 0; transform: translateY(26px); filter: blur(12px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* ============================================================
+   PORTADA
+   ============================================================ */
+.v2-portada {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  /* Avance del scroll, de 0 a 1. Lo escribe el script de Portada.astro. */
+  --p: 0;
+  /* El header es fijo y mide 94 px (84 en celular): no bajar de esto. */
+  padding: 8.5rem 3rem 0;
+}
+/* Velo: protege la lectura del lado del texto sin apagar la cinta. */
+.v2-portada::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #000 0%, rgb(0 0 0 / 0.82) 34%, rgb(0 0 0 / 0) 68%);
+  pointer-events: none;
+}
+.v2-portada__contenido {
+  width: 100%;
+  max-width: 76rem;
+  margin: auto;
+  /* Atado al scroll: al bajar, la portada se aleja y se desenfoca. */
+  opacity: calc(1 - var(--p) * 1.5);
+  transform: translateY(calc(var(--p) * -70px)) scale(calc(1 - var(--p) * 0.05));
+  filter: blur(calc(var(--p) * 14px));
+  transform-origin: 30% 50%;
+  will-change: transform, opacity, filter;
+}
+
+.v2-cejilla {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--v2-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--c-on-surface) / 0.72);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 6px;
+  padding: 0.45rem 0.7rem;
+  margin-bottom: 2rem;
+}
+.v2-cejilla i {
+  width: 1px;
+  height: 0.8rem;
+  background: rgb(255 255 255 / 0.25);
+}
+.v2-cejilla span:last-child { color: rgb(var(--c-on-surface) / 0.45); }
+
+.v2-titular {
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.7rem, 6.6vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  max-width: 13.5em;
+  text-wrap: balance;
+  margin-bottom: 2rem;
+}
+.v2-titular em,
+.v2-titulo em {
+  font-family: var(--v2-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  /* La serif tiene el ojo más chico que Inter: sin esto se ve encogida al lado. */
+  font-size: 1.1em;
+  line-height: 0.9;
+}
+
+.v2-bajada {
+  font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+  line-height: 1.6;
+  font-weight: 400;
+  color: rgb(var(--c-on-surface) / 0.7);
+  max-width: 37rem;
+  margin-bottom: 2.4rem;
+}
+
+.v2-botones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+}
+.v2-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: -0.01em;
+  padding: 1.05rem 1.7rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  transition: transform 0.25s var(--v2-suave), background-color 0.25s ease, border-color 0.25s ease;
+}
+.v2-boton--principal {
+  background: rgb(var(--c-primary));
+  color: #000;
+}
+.v2-boton--principal:hover { transform: translateY(-2px); background: #3fd6d0; }
+.v2-boton--principal svg { transition: transform 0.25s var(--v2-suave); }
+.v2-boton--principal:hover svg { transform: translateX(3px); }
+.v2-boton--segundo {
+  border: 1px solid rgb(255 255 255 / 0.2);
+  color: rgb(var(--c-on-surface));
+  background: rgb(255 255 255 / 0.03);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.v2-boton--segundo:hover { border-color: rgb(255 255 255 / 0.5); }
+
+.v2-nota {
+  font-family: var(--v2-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: rgb(var(--c-on-surface) / 0.42);
+  margin-top: 1.4rem;
+}
+
+/* Las tres líneas, al pie de la portada. Es índice, no botonera. */
+.v2-lineas {
+  width: 100%;
+  max-width: 76rem;
+  margin: 3.5rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+  opacity: calc(1 - var(--p) * 1.5);
+}
+.v2-lineas li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  padding: 1.3rem 1.5rem 1.8rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgb(var(--c-on-surface) / 0.82);
+}
+.v2-lineas li + li {
+  padding-left: 1.5rem;
+  border-left: 1px solid rgb(255 255 255 / 0.12);
+}
+.v2-lineas b {
+  font-family: var(--v2-mono);
+  font-weight: 400;
+  font-size: 0.72rem;
+  color: rgb(var(--c-on-surface) / 0.4);
+}
+
+@media (max-width: 767px) {
+  .v2-portada { padding: 7.25rem 1.5rem 0; }
+  .v2-portada::before {
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0.78) 45%, rgb(0 0 0 / 0.3) 100%);
+  }
+  .v2-titular { margin-bottom: 1.5rem; }
+  .v2-botones { flex-direction: column; align-items: stretch; }
+  .v2-lineas { grid-template-columns: 1fr; margin-top: 2.75rem; }
+  .v2-lineas li { padding: 0.95rem 0; }
+  .v2-lineas li + li {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+  .v2-lineas li:last-child { padding-bottom: 1.6rem; }
+  /* El desenfoque de pantalla completa es caro en un teléfono: allá la
+     portada se va con opacidad y movimiento, y el blur queda en la entrada. */
+  .v2-portada__contenido { filter: none; }
+}
+
+/* ============================================================
+   EL FLUJO — escena pegada, atada al scroll
+   La sección mide varias pantallas y la escena se queda fija mientras se
+   recorre: el avance (--p, de 0 a 1) lo escribe el script de Flujo.astro.
+   Cada etapa recibe su propio --a (0 apagada → 1 encendida).
+   ============================================================ */
+.v2-flujo {
+  position: relative;
+  z-index: 1;
+  height: 320vh;
+  --p: 0;
+}
+.v2-flujo__escena {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6.5rem 3rem 3rem;
+  overflow: hidden;
+}
+.v2-flujo__escena::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(0 0 0 / 0.62);
+}
+.v2-flujo__marco {
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.v2-indice {
+  font-family: var(--v2-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--c-on-surface) / 0.45);
+  margin-bottom: 1.2rem;
+}
+.v2-titulo {
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 4.3vw, 3.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: 16em;
+  text-wrap: balance;
+}
+/* El titular de la escena entra desde el desenfoque con el primer tramo. */
+.v2-flujo__cabeza {
+  --e: clamp(0, calc(var(--p) * 9 + 0.35), 1);
+  opacity: var(--e);
+  filter: blur(calc((1 - var(--e)) * 14px));
+  transform: translateY(calc((1 - var(--e)) * 30px));
+  margin-bottom: clamp(2rem, 6vh, 4.5rem);
+}
+
+.v2-etapas {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+/* El riel: una línea gris de punta a punta y, encima, la barra turquesa que
+   avanza con el scroll. Es la única barra de color de la página. */
+.v2-riel {
+  position: absolute;
+  left: 0;
+  /* Termina en el nodo de la persona, que es donde termina el flujo: dos de
+     las tres columnas (con su separación) más medio nodo. */
+  width: calc((100% + 2.5rem) * 2 / 3 + 1.75rem);
+  top: 1.75rem;
+  height: 1px;
+  background: rgb(255 255 255 / 0.14);
+}
+.v2-riel::after {
+  content: '';
+  position: absolute;
+  inset: -0.5px 0;
+  background: rgb(var(--c-primary));
+  transform-origin: left center;
+  /* Mismo tramo que los umbrales del script: la barra llega a cada nodo
+     cuando esa etapa termina de encenderse. */
+  transform: scaleX(clamp(0, calc((var(--p) - 0.1) / 0.76), 1));
+}
+
+.v2-etapa {
+  --a: 0;
+  position: relative;
+  opacity: calc(0.22 + var(--a) * 0.78);
+  filter: blur(calc((1 - var(--a)) * 7px));
+  transform: translateY(calc((1 - var(--a)) * 22px));
+  will-change: opacity, filter, transform;
+}
+.v2-nodo {
+  position: relative;
+  z-index: 1;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #0b0b0b;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  color: rgb(var(--c-on-surface) / 0.85);
+  margin-bottom: 1.6rem;
+}
+.v2-nodo svg { width: 1.4rem; height: 1.4rem; }
+/* La persona es el único nodo relleno: es donde termina el flujo. */
+.v2-etapa--persona .v2-nodo {
+  background: rgb(var(--c-primary));
+  border-color: rgb(var(--c-primary));
+  color: #000;
+  box-shadow: 0 0 0 calc(var(--a) * 7px) rgb(var(--c-primary) / 0.16);
+}
+.v2-etapa__paso {
+  font-family: var(--v2-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--c-on-surface) / 0.42);
+  margin-bottom: 0.55rem;
+}
+.v2-etapa h3 {
+  font-size: clamp(1.25rem, 1.9vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+}
+.v2-etapa p {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: rgb(var(--c-on-surface) / 0.62);
+  max-width: 21rem;
+}
+.v2-fichas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+.v2-fichas li {
+  font-family: var(--v2-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: rgb(var(--c-on-surface) / 0.7);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 5px;
+  padding: 0.28rem 0.5rem;
+  background: rgb(255 255 255 / 0.03);
+}
+
+.v2-flujo__pie {
+  --e: clamp(0, calc((var(--p) - 0.82) * 8), 1);
+  opacity: var(--e);
+  transform: translateY(calc((1 - var(--e)) * 16px));
+  margin-top: clamp(1.75rem, 5vh, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+}
+.v2-flujo__pie p {
+  font-size: 0.95rem;
+  color: rgb(var(--c-on-surface) / 0.6);
+}
+
+@media (max-width: 767px) {
+  .v2-flujo { height: 300vh; }
+  .v2-flujo__escena { padding: 5.75rem 1.5rem 1.5rem; justify-content: flex-start; }
+  .v2-flujo__cabeza { margin-bottom: 1.6rem; }
+  .v2-etapas { grid-template-columns: 1fr; gap: 1.35rem; }
+  /* En celular el flujo baja. El riel de punta a punta no sirve —seguiría de
+     largo bajo el último nodo—, así que cada etapa dibuja el tramo que la une
+     con la siguiente, y ese tramo se llena con el encendido de la que viene
+     (--b, que lo escribe el mismo script). */
+  .v2-riel { display: none; }
+  .v2-etapa:not(:last-child)::before,
+  .v2-etapa:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 1.375rem;
+    top: 2.75rem;
+    height: calc(100% - 2.75rem + 1.35rem);
+    width: 1px;
+    background: rgb(255 255 255 / 0.14);
+  }
+  .v2-etapa:not(:last-child)::after {
+    width: 2px;
+    margin-left: -0.5px;
+    background: rgb(var(--c-primary));
+    transform-origin: center top;
+    transform: scaleY(var(--b, 0));
+  }
+  .v2-etapa {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    column-gap: 1rem;
+    filter: none;
+  }
+  .v2-nodo { width: 2.75rem; height: 2.75rem; border-radius: 10px; margin-bottom: 0; grid-row: span 4; }
+  .v2-nodo svg { width: 1.15rem; height: 1.15rem; }
+  .v2-etapa__paso { margin-bottom: 0.3rem; }
+  .v2-etapa h3 { margin-bottom: 0.35rem; }
+  .v2-etapa p { font-size: 0.9rem; line-height: 1.45; }
+  .v2-fichas { margin-top: 0.6rem; }
+  /* A la derecha queda libre el lugar del botón flotante de WhatsApp. */
+  .v2-flujo__pie { margin-top: 1.4rem; padding-right: 4.5rem; }
+  .v2-flujo__pie p { display: none; }
+}
+/* Pantallas bajas (un teléfono chico, un notebook de 13" con la barra abierta):
+   se suelta lo accesorio antes que dejar que la escena se corte. */
+@media (max-width: 767px) and (max-height: 720px) {
+  .v2-fichas { display: none; }
+}
+
+/* ============================================================
+   HEADER SOBRE EL NEGRO
+   En el resto del sitio la barra es blanca porque el logotipo de palabra
+   negra lo necesita. Acá va el logotipo de palabra blanca, así que la barra
+   puede ser aire arriba y vidrio oscuro al bajar.
+   ============================================================ */
+body[data-sitio='v2'] .site-header {
+  --c-background: 0 0 0;
+  --c-surface: 18 18 18;
+  --c-on-surface: 244 246 246;
+  --c-on-surface-variant: 156 166 166;
+  --c-primary: 32 194 188;
+  --c-on-primary: 0 0 0;
+  --c-outline-variant: 44 48 48;
+  --c-hairline: 255 255 255;
+  --hairline-a: 0.12;
+  background-color: transparent;
+  box-shadow: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+body[data-sitio='v2'] .site-header.is-scrolled {
+  background-color: rgb(0 0 0 / 0.62);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.08);
+}
+body[data-sitio='v2'] .site-header .nav-pill {
+  background-color: rgb(255 255 255 / 0.04);
+  border-color: rgb(255 255 255 / 0.1);
+}
+body[data-sitio='v2'] .accent-line { display: none; }
+/* El cambio de tema no hace nada sobre el bloque negro; se esconde acá para
+   no ofrecer un botón que parece roto. */
+body[data-sitio='v2'] #theme-toggle { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-sube { animation: none; }
+  .v2-portada__contenido { opacity: 1; transform: none; filter: none; }
+  .v2-flujo { height: auto; }
+  .v2-flujo__escena { position: relative; height: auto; }
+  .v2-flujo__cabeza,
+  .v2-etapa,
+  .v2-flujo__pie { opacity: 1; filter: none; transform: none; }
+  .v2-etapa::after { transform: none !important; }
+  .v2-riel::after { transform: none; }
+}

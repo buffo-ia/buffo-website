@@ -1,0 +1,89 @@
+---
+// Portada del sitio 2.0.
+//
+// ⚠️ TEXTO PROVISORIO. Sale del borrador de Comercial del 11-oct-2026
+// (S-Lab/Buffo Consulting/Sitio 2.0/MENSAJE_sitio_2.0_borrador.md). Simón
+// todavía no elige titular (va el A, el recomendado) ni aprobó los nombres de
+// las tres líneas. Los textos están juntos acá arriba para cambiarlos sin
+// tocar el marcado.
+//
+// ⛔ El titular en inglés es un <p>, NO el H1. El H1 es la bajada en español:
+// así Google sigue leyendo «consultora… con IA… en Chile» en el encabezado
+// principal, que es lo que protege la regla del 4-sep-2026.
+import { SITE } from '../../config/site';
+
+const TEXTO = {
+  cejilla: 'Business-First AI',
+  lugar: 'Santiago de Chile',
+  titular: { recto: 'Human-AI workflows for', cursiva: 'sharper business decisions.' },
+  bajada:
+    'Buffo es una consultora de inteligencia de negocios con IA para empresas en Chile. Conectamos los datos de su empresa y montamos flujos de trabajo con agentes de IA, para que su equipo decida más rápido y con mejor información.',
+  botonPrincipal: 'Hacer el diagnóstico · 3 minutos',
+  botonSegundo: 'Agendar 30 minutos',
+  nota: 'Sin costo · 12 preguntas · el informe llega por escrito',
+  lineas: ['Decision Solutions with AI', 'Business Analytics with AI', 'Agentic Workflows for Business'],
+};
+---
+
+<section class="v2-portada">
+  <div class="v2-portada__contenido">
+    <p class="v2-cejilla v2-sube" style="--i:0">
+      <span>{TEXTO.cejilla}</span><i></i><span>{TEXTO.lugar}</span>
+    </p>
+    <p class="v2-titular v2-sube" style="--i:1" lang="en">
+      {TEXTO.titular.recto} <em>{TEXTO.titular.cursiva}</em>
+    </p>
+    <h1 class="v2-bajada v2-sube" style="--i:3">{TEXTO.bajada}</h1>
+    <div class="v2-botones v2-sube" style="--i:4">
+      <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
+        {TEXTO.botonPrincipal}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+      <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">
+        {TEXTO.botonSegundo}
+      </a>
+    </div>
+    <p class="v2-nota v2-sube" style="--i:5">{TEXTO.nota}</p>
+  </div>
+
+  <ul class="v2-lineas" lang="en">
+    {
+      TEXTO.lineas.map((linea, i) => (
+        <li class="v2-sube" style={`--i:${7 + i}`}>
+          <b>{String(i + 1).padStart(2, '0')}</b>
+          {linea}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<script>
+  // La portada se aleja al bajar: se escribe el avance (0 a 1) en --p y el CSS
+  // hace el resto. Un solo cálculo por cuadro, y solo mientras está en pantalla.
+  const contenido = document.querySelector<HTMLElement>('.v2-portada');
+  if (contenido && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let pendiente = false;
+    const pintar = () => {
+      pendiente = false;
+      // En celular la portada es más alta que la pantalla: no empieza a irse
+      // hasta que se llegó a su borde inferior, o los botones se apagarían
+      // mientras todavía están a la vista.
+      const inicio = Math.max(0, contenido.offsetHeight - window.innerHeight);
+      const p = Math.min(1, Math.max(0, window.scrollY - inicio) / (window.innerHeight * 0.75));
+      contenido.style.setProperty('--p', p.toFixed(3));
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (pendiente || window.scrollY > contenido.offsetHeight * 1.2) return;
+        pendiente = true;
+        requestAnimationFrame(pintar);
+      },
+      { passive: true }
+    );
+    pintar();
+  }
+</script>

@@ -7,6 +7,11 @@ import ForecastMockup from '../components/ForecastMockup.astro';
 import AutomationMockup from '../components/AutomationMockup.astro';
 import AgentMockup from '../components/AgentMockup.astro';
 import VentanaNavegador from '../components/VentanaNavegador.astro';
+import Cintas from '../components/v2/Cintas.astro';
+import Portada from '../components/v2/Portada.astro';
+import Flujo from '../components/v2/Flujo.astro';
+import MedirCtaDiagnostico from '../components/MedirCtaDiagnostico.astro';
+import '../styles/sitio2.css';
 
 // Mapeo slug → mockup animado, para el escaparate de servicios.
 const MOCKS: Record<string, any> = {
@@ -120,95 +125,19 @@ const serviceSchema = {
 };
 ---
 
-<BaseLayout schema={[serviceSchema, faqSchema]} heroAncla>
-  <!-- HERO -->
-  <!-- ⛔ NO BAJAR EL PADDING SUPERIOR DE ESTE HERO por debajo de pt-24 / md:pt-28.
-       El header es `position: fixed` en las páginas de hero oscuro —a propósito,
-       para que el contenido le pase por detrás— y por eso NO reserva su espacio.
-       Mide 94 px en escritorio y 84 en celular: todo lo que esté más arriba que
-       eso queda tapado.
-       Pasó el 4-sep-2026 apretando la página: se bajó a pt-16 y la cejilla quedó
-       13 px debajo del header en escritorio y 19 en celular.
-       El padding INFERIOR sí se puede apretar; ahí no hay nada encima. -->
-  <section class="bloque-ancla resplandor forma-suelta relative px-8 md:px-12 pt-24 pb-14 md:pt-28 md:pb-16">
-    <div class="relative z-10 max-w-5xl mx-auto text-center">
-      <!-- La cejilla ya NO repite "aplicada a la gestión": esa frase subió al
-           H1, que es donde se lee. Acá queda el contexto geográfico, que es lo
-           que pide el plan de Perplexity y no estaba en ninguna parte visible.
-
-           ⭐ 4-sep-2026: el acento en inglés entra ACÁ y no como segunda cejilla.
-           Se probó con una línea propia arriba y quedaban DOS cejillas apiladas,
-           con el mismo tratamiento tipográfico: se anulaban entre ellas. Es un
-           KICKER, no un titular — el H1, el <title>, la meta description y el
-           areaServed siguen en español y no se tocan, que es donde vive el SEO
-           de "consultoría IA Chile". El inglés lo lee el visitante, no Google.
-
-           El claim va PRIMERO y el descriptor después: puesto al final se leía
-           como un tercer dato de la enumeración en vez de como el claim. El
-           separador es una barra y no un punto medio por lo mismo — marca que
-           son dos cosas distintas, no una lista.
-
-           ⚠️ Y NO van con el mismo peso (Simón, 4-sep: "debe verse fuerte, no
-           débil"). Puestos iguales el ojo los leía como una sola tira de texto
-           chico y el claim desaparecía dentro del descriptor. El claim va más
-           grande, en negrita y a color pleno; el descriptor baja a 55% — sigue
-           ahí para el AEO, pero deja de competir. -->
-      <p
-        class="reveal text-[0.7rem] tracking-[0.2em] uppercase mb-7"
-      >
-        <span class="text-primary text-[0.82rem] tracking-[0.26em] font-bold">Business-First AI</span>
-        <span class="hidden md:inline text-primary/30 mx-2">/</span>
-        <span class="block md:inline mt-2 md:mt-0 text-primary/55 font-semibold">Consultora de IA para gestión comercial · Santiago de Chile</span>
-      </p>
-      <!-- Antes el H1 decía "Inteligencia Artificial" a secas: más amplio que
-           el negocio real, y ni siquiera coincidía con el <title>, que ya
-           prometía "aplicada a la gestión".
-           Va "gestión EMPRESARIAL", no "gestión" a secas: en Chile "una
-           gestión" es un trámite, así que la frase corta se puede leer como
-           que ayudamos con papeleo.
-           ⚠️ Queda una diferencia con el <title> y la meta description, que
-           siguen diciendo "aplicada a la gestión". Es deliberado por ahora:
-           ese texto está indexado y el título ya se pasa de largo (79 car.).
-           Ver el pendiente de acortarlo. -->
-      <!-- prettier-ignore -->
-      <h1
-        class="reveal reveal-delay-1 text-[2.4rem] md:text-[4.1rem] font-display leading-[1.06] md:leading-[1.03] tracking-[-0.025em]"
-      >
-        Consultoría en<br /><span class="text-primary md:whitespace-nowrap">Inteligencia Artificial</span><br />aplicada a la gestión empresarial
-      </h1>
-      <p class="reveal reveal-delay-1 text-lg md:text-xl font-display text-on-surface mt-4 mb-5" style="font-weight:600; letter-spacing:-0.01em;">
-        Cuando el dato llega, la decisión ya se tomó.
-      </p>
-      <p
-        class="reveal reveal-delay-2 text-base md:text-lg text-on-surface-variant max-w-2xl mx-auto mb-8 leading-relaxed"
-      >
-        Consultora especializada en modelamiento de datos, dashboards ejecutivos, automatización de
-        procesos y agentes de inteligencia artificial.
-      </p>
-      <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href="/diagnostico"
-          class="btn-glow bg-primary text-on-primary px-10 py-5 font-semibold text-base text-center"
-        >
-          Diagnóstico gratis · 12 preguntas · 3 minutos
-        </a>
-        <a
-          href={SITE.calendly}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="border border-outline-variant bg-surface-container-highest/20 backdrop-blur-sm text-on-surface px-10 py-5 font-semibold text-base text-center hover:bg-surface-container-highest/40 hover:border-primary/25 transition-all"
-        >
-          <!-- El botón dice lo que el visitante SE LLEVA, no lo que tiene que
-               dar. "Agendar 30 minutos" pide tiempo; la segunda línea promete
-               un entregable, que es lo que mueve la conversión. -->
-          <span class="block">Agendar 30 minutos</span>
-          <span class="block text-xs font-normal text-on-surface-variant mt-1">
-            30 minutos, 3 ideas concretas para su negocio
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
+<BaseLayout schema={[serviceSchema, faqSchema]} heroAncla sitio2>
+  <!-- SITIO 2.0 — el bloque negro: portada y flujo.
+       Primera entrega del rediseño (11-oct-2026). De acá hacia abajo la página
+       sigue siendo la anterior, a propósito: Simón quiere ver esto funcionando
+       antes de rehacer el resto. El detalle de cada pieza está en su componente
+       y en src/styles/sitio2.css.
+       ⛔ La portada tiene que seguir siendo la primera <section> de <main>: la
+       barra del diagnóstico en celular la busca así para saber cuándo aparecer. -->
+  <div class="v2">
+    <Cintas />
+    <Portada />
+    <Flujo />
+  </div>
 
   <!-- STACK TECNOLÓGICO (marquee) -->
   <section class="bg-surface py-7 px-8 md:px-12 overflow-hidden">
@@ -602,4 +531,6 @@ const serviceSchema = {
       </p>
     </div>
   </section>
+
+  <MedirCtaDiagnostico />
 </BaseLayout>

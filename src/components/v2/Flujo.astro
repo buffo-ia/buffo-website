@@ -1,0 +1,135 @@
+---
+// El flujo, dibujado: datos de la empresa → agentes de IA → la persona que
+// decide. Es la segunda sección del sitio 2.0 y la que prueba el titular: acá
+// el detalle operativo se MUESTRA en vez de decirse.
+//
+// La escena queda pegada a la pantalla y el scroll la va encendiendo etapa por
+// etapa (el riel turquesa avanza y cada etapa sale del desenfoque).
+//
+// ⚠️ TEXTO PROVISORIO (borrador de Comercial, 11-oct-2026). Dos cuidados que
+// vienen de ahí y no son de estilo:
+//  · los agentes «vigilan, preparan y proponen»: el sitio no afirma más
+//    autonomía que la que hoy corre en producción;
+//  · no hay cifras, porque las que venden (integraciones, días al primer
+//    resultado) solo las tiene Simón y no se inventan.
+
+const ETAPAS = [
+  {
+    clave: 'datos',
+    paso: '01 · Datos',
+    titulo: 'Los datos de su empresa',
+    texto: 'Conectados donde ya están, con una sola definición de cada número.',
+    fichas: ['ERP', 'Planillas', 'CRM', 'Campañas'],
+  },
+  {
+    clave: 'agentes',
+    paso: '02 · Agentes de IA',
+    titulo: 'Agentes que hacen el trabajo',
+    texto: 'Vigilan, preparan y proponen dentro de sus procesos, todos los días.',
+    fichas: ['Vigilan', 'Preparan', 'Proponen'],
+  },
+  {
+    clave: 'persona',
+    paso: '03 · Su equipo',
+    titulo: 'Una persona que decide',
+    texto: 'Cada flujo tiene a alguien de su equipo a cargo. La decisión sigue siendo suya.',
+    fichas: ['Aprueba', 'Ajusta', 'Decide'],
+  },
+];
+---
+
+<section class="v2-flujo" data-v2-flujo>
+  <div class="v2-flujo__escena">
+    <div class="v2-flujo__marco">
+      <div class="v2-flujo__cabeza">
+        <p class="v2-indice">Cómo trabajamos</p>
+        <h2 class="v2-titulo">Los agentes hacen el trabajo. <em>Las personas deciden.</em></h2>
+      </div>
+
+      <ol class="v2-etapas">
+        <li class="v2-riel" aria-hidden="true"></li>
+        {
+          ETAPAS.map((e) => (
+            <li class:list={['v2-etapa', `v2-etapa--${e.clave}`]} data-v2-etapa>
+              <div class="v2-nodo">
+                {e.clave === 'datos' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <ellipse cx="12" cy="6" rx="7" ry="2.6" />
+                    <path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6" />
+                  </svg>
+                )}
+                {e.clave === 'agentes' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="2.6" />
+                    <path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21M5.6 5.6l2.5 2.5M15.9 15.9l2.5 2.5M18.4 5.6l-2.5 2.5M8.1 15.9l-2.5 2.5" />
+                  </svg>
+                )}
+                {e.clave === 'persona' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                  </svg>
+                )}
+              </div>
+              <p class="v2-etapa__paso">{e.paso}</p>
+              <h3>{e.titulo}</h3>
+              <p>{e.texto}</p>
+              <ul class="v2-fichas">
+                {e.fichas.map((f) => <li>{f}</li>)}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="v2-flujo__pie">
+        <a href="/diagnostico" data-cta-diagnostico="flujo" class="v2-boton v2-boton--segundo">
+          Ver por dónde partir
+        </a>
+        <p>Tres minutos, sin costo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Avance del scroll por la sección (0 a 1) → --p en la sección, y un --a por
+  // etapa. Los umbrales dicen en qué punto del recorrido se enciende cada una.
+  const seccion = document.querySelector<HTMLElement>('[data-v2-flujo]');
+  const etapas = seccion ? Array.from(seccion.querySelectorAll<HTMLElement>('[data-v2-etapa]')) : [];
+  const UMBRALES = [0.1, 0.4, 0.7];
+  const TRAMO = 0.16;
+
+  if (seccion && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let pendiente = false;
+    const pintar = () => {
+      pendiente = false;
+      const r = seccion.getBoundingClientRect();
+      const recorrido = Math.max(1, r.height - window.innerHeight);
+      const p = Math.min(1, Math.max(0, -r.top / recorrido));
+      // El riel llega a cada nodo justo cuando esa etapa termina de encenderse.
+      seccion.style.setProperty('--p', p.toFixed(3));
+      const encendido = UMBRALES.map((u) => Math.min(1, Math.max(0, (p - u) / TRAMO)));
+      etapas.forEach((el, i) => {
+        el.style.setProperty('--a', encendido[i].toFixed(3));
+        // --b es el encendido de la etapa siguiente: en celular llena el tramo
+        // de riel que baja hacia ella.
+        el.style.setProperty('--b', (encendido[i + 1] ?? 0).toFixed(3));
+      });
+    };
+    const alScroll = () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(pintar);
+    };
+    // Solo se escucha el scroll mientras la sección está cerca de la pantalla.
+    new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) window.addEventListener('scroll', alScroll, { passive: true });
+        else window.removeEventListener('scroll', alScroll);
+        pintar();
+      },
+      { rootMargin: '20% 0px' }
+    ).observe(seccion);
+    pintar();
+  }
+</script>
