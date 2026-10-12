@@ -92,14 +92,14 @@ const PREGUNTAS = [
             <ul class="text-on-surface-variant leading-relaxed mb-6 space-y-2 list-disc pl-5">
               {l.recibe.map((r) => <li>{r}</li>)}
             </ul>
-            <div class="flex flex-col items-start gap-2">
+            <div class="flex flex-wrap items-start gap-3 pt-2">
               {
                 ENLACES[i].map((e) => (
                   <a
                     href={e.href}
                     target={e.externo ? '_blank' : undefined}
                     rel={e.externo ? 'noopener noreferrer' : undefined}
-                    class="text-primary text-sm font-semibold hover:underline"
+                    class="inline-flex items-center gap-2 rounded-full border border-primary/60 px-5 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary hover:text-black"
                   >
                     {e.texto} →
                   </a>
