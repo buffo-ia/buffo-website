@@ -58,7 +58,7 @@ export const FOUNDER = {
     'Universidad del Desarrollo',
   ],
   linkedin: 'https://www.linkedin.com/in/simón-andrés-espinoza/',
-  bio: 'Ingeniero Comercial con MBA de la Universidad del Desarrollo y formación especializada en inteligencia artificial y análisis de datos. Cuenta con más de diez años de experiencia en retail y consumo masivo, en áreas comerciales de grandes marcas, y dos años en consultoría comercial, IA empresarial y automatización de procesos. Esa combinación —negocio y tecnología— es el origen de la mirada de Buffo: la inteligencia artificial al servicio de decisiones de negocio, no de la tecnología por sí misma.',
+  bio: 'Ingeniero Comercial de la Universidad Central y MBA de la Universidad del Desarrollo, con formación en IA aplicada a los negocios y análisis de datos. Más de diez años en áreas comerciales de retail y consumo masivo, y dos años en consultoría comercial, IA empresarial y automatización de procesos.',
 };
 
 // El formulario de contacto envía a la función serverless /api/contacto.js,

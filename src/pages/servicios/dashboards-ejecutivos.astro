@@ -12,18 +12,18 @@ const path = '/servicios/dashboards-ejecutivos';
 const steps = [
   {
     icon: 'target',
-    title: 'Definimos los KPI que importan',
-    body: 'Partimos de las decisiones que toma, no de los gráficos. Identificamos los indicadores críticos de su negocio aplicando un enfoque top-down: primero la foto ejecutiva, luego el detalle.',
+    title: 'Definimos los indicadores a partir de las decisiones',
+    body: 'Partimos de las decisiones que toma su gerencia y de los objetivos del negocio. Primero la vista ejecutiva, después el detalle.',
   },
   {
     icon: 'account_tree',
-    title: 'Diseñamos el drill-down',
-    body: 'Cada número se puede abrir hacia su origen: de la venta total al canal, al vendedor, al SKU. Navegas del resumen al dato fino sin salir del dashboard ni pedir otro reporte.',
+    title: 'Diseñamos el recorrido del resumen al detalle',
+    body: 'Cada cifra se abre hacia su origen: de la venta total al canal, al vendedor y al producto, sin pedir otro reporte.',
   },
   {
     icon: 'lightbulb',
-    title: 'Incorporamos el criterio Buffo',
-    body: 'El dashboard no solo muestra: señala lo que está fuera de lo esperado y sugiere dónde actuar, con parámetros construidos sobre experiencia comercial real y las mejores escuelas de negocios.',
+    title: 'Incorporamos la lectura',
+    body: 'Cada vista señala lo que está fuera de lo esperado y la prioridad recomendada.',
   },
 ];
 
@@ -63,7 +63,7 @@ const NIVELES = ['Venta total de la compañía', 'Por canal / sucursal', 'Por ve
   <Servicio
     service={service}
     pasos={{ title: 'Cómo construimos su dashboard', steps }}
-    pregunta="¿Tus indicadores se arman a mano cada semana?"
+    pregunta="¿Sus indicadores se arman a mano cada semana?"
     cierre="¿Quiere ver cómo se vería con los datos de su empresa?"
   >
     <DashboardMockup slot="maqueta" />

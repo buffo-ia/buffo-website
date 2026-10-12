@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { SITE, SERVICE_PAINS } from '../../config/site';
+import Acompana from '../../components/v2/Acompana.astro';
+import { SITE } from '../../config/site';
 import { SERVICES_CONTENT } from '../../data/services';
+import { LINEAS } from '../../data/lineas';
 
 const title = 'Servicios de Inteligencia Artificial para Empresas | Buffo IA';
 const description =
@@ -18,6 +20,41 @@ const itemListSchema = {
     url: new URL(`/servicios/${s.slug}`, SITE.url).href,
   })),
 };
+
+// Las cuatro líneas son las del home (data/lineas.ts). Acá cambian los enlaces:
+// las líneas 03 y 04 llevan a sus dos páginas de servicio. La 01 no tiene
+// página propia, así que va a la reunión.
+const pagina = (slug: string) => ({
+  texto: SERVICES_CONTENT.find((s) => s.slug === slug)!.navTitle,
+  href: `/servicios/${slug}`,
+  externo: false,
+});
+const ENLACES = [
+  [{ texto: 'Agendar 30 minutos', href: SITE.calendly, externo: true }],
+  [{ texto: 'Hacer el diagnóstico en 3 minutos', href: '/diagnostico', externo: false }],
+  [pagina('dashboards-ejecutivos'), pagina('modelamiento-predictivo')],
+  [pagina('agentes-ia'), pagina('automatizacion-procesos')],
+];
+
+// Preguntas de quien todavía no sabe por cuál línea partir.
+const PREGUNTAS = [
+  {
+    q: '¿Por dónde conviene partir?',
+    a: 'Por la prioridad de negocio. Si la pregunta es dónde está el retorno, se parte por la consultoría. Si la decisión ya está definida y falta información, por la analítica. Si la información existe y el costo está en el trabajo manual, por los flujos con agentes.',
+  },
+  {
+    q: '¿Hay que contratar las cuatro líneas?',
+    a: 'No. Lo habitual es partir por una. Cada etapa deja definida la siguiente, y con frecuencia esa siguiente es más acotada porque la información ya está ordenada.',
+  },
+  {
+    q: '¿Hay que cambiar los sistemas actuales?',
+    a: 'No. Todo se construye sobre el ERP, las planillas y las herramientas que su empresa ya usa.',
+  },
+  {
+    q: '¿Cómo se mide el resultado?',
+    a: 'Cada proyecto parte con un objetivo y un retorno esperado, y se revisa contra ellos con su gerencia.',
+  },
+];
 ---
 
 <BaseLayout title={title} description={description} path="/servicios" schema={itemListSchema} heroAncla>
@@ -28,119 +65,74 @@ const itemListSchema = {
       </div>
       <p class="text-primary tracking-widest uppercase text-xs font-semibold mb-4">Servicios</p>
       <h1 class="text-[2.5rem] md:text-[3.4rem] font-display leading-[1.08] mb-7 tracking-[-0.02em] max-w-4xl">
-        Inteligencia artificial aplicada a la gestión de su empresa
+        Servicios de consultoría en inteligencia de negocios e IA para empresas
       </h1>
       <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-3xl">
-        Cada una entra por un dolor distinto. La mayoría de las empresas tiene los cuatro a la vez;
-        lo que cambia es cuál duele hoy. Todas se diseñan para la realidad de empresas en Chile, con
-        la mirada de quien conoce el negocio por dentro — no solo la tecnología.
+        Acompañamos a su gerencia de manera estratégica, desde la definición de objetivos y retorno
+        hasta la implementación de IA en la operación. Cuatro líneas de servicio, que se combinan
+        según la prioridad de su empresa.
       </p>
     </div>
   </section>
 
+  <!-- La tarjeta dejó de ser un enlace entero: las líneas 03 y 04 llevan a dos
+       páginas cada una, y un enlace no puede ir dentro de otro. -->
   <section class="px-8 md:px-12 py-20 bg-background">
     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-on-surface/5 border border-on-surface/5">
       {
-        SERVICES_CONTENT.map((s) => (
-          <a
-            href={`/servicios/${s.slug}`}
-            class="bg-surface-container-low p-12 card-hover border border-transparent group block"
-          >
-            <span class="material-symbols-outlined text-primary text-4xl mb-6 block group-hover:scale-110 transition-transform duration-300">
-              {s.icon}
-            </span>
-            <p class="text-on-surface-variant/70 text-[0.7rem] tracking-[0.17em] uppercase font-semibold mb-2">
-              {SERVICE_PAINS[s.slug]}
+        LINEAS.map((l, i) => (
+          <div class="bg-surface-container-low p-12 border border-transparent">
+            <p class="text-primary text-4xl font-display mb-6" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <h2 class="text-2xl font-display mb-2">{l.nombre}</h2>
+            <span class="acento-en mb-4" lang="en">{l.en}</span>
+            <p class="text-on-surface-variant leading-relaxed mb-6">{l.frase}</p>
+            <p class="text-on-surface-variant/70 text-[0.7rem] tracking-[0.17em] uppercase font-semibold mb-3">
+              Qué recibe
             </p>
-            <h2 class="text-2xl font-display mb-2">{s.navTitle}</h2>
-            {/* El acento en inglés faltaba justo acá, que es LA página donde se
-                habla de los cuatro productos juntos. Mismo badge que el home y
-                que la cabecera de cada servicio. */}
-            <span class="acento-en mb-4">{s.nameEn}</span>
-            <p class="text-on-surface-variant leading-relaxed mb-6">{s.lead}</p>
-            <span class="text-primary text-sm font-semibold">Conocer más →</span>
-          </a>
+            <ul class="text-on-surface-variant leading-relaxed mb-6 space-y-2 list-disc pl-5">
+              {l.recibe.map((r) => <li>{r}</li>)}
+            </ul>
+            <div class="flex flex-col items-start gap-2">
+              {
+                ENLACES[i].map((e) => (
+                  <a
+                    href={e.href}
+                    target={e.externo ? '_blank' : undefined}
+                    rel={e.externo ? 'noopener noreferrer' : undefined}
+                    class="text-primary text-sm font-semibold hover:underline"
+                  >
+                    {e.texto} →
+                  </a>
+                ))
+              }
+            </div>
+          </div>
         ))
       }
     </div>
   </section>
 
+  <!-- La franja es del sitio 2.0: se envuelve en .v2 para que tome sus colores.
+       Sin el motor de entradas (Aparecer) queda siempre a la vista. -->
+  <section class="v2 px-8 md:px-12 pb-20">
+    <div class="max-w-5xl mx-auto">
+      <Acompana suelta />
+    </div>
+  </section>
+
   <!-- PREGUNTAS DE FONDO
-       La página madre era casi solo un índice de cuatro tarjetas: 398 palabras
-       contra las 800 que pide el plan. Estos bloques responden lo que se
-       pregunta alguien que todavía no sabe qué servicio le corresponde, que es
-       exactamente la intención de búsqueda con la que se llega acá. -->
+       Responden lo que se pregunta alguien que todavía no sabe qué servicio le
+       corresponde, que es la intención de búsqueda con la que se llega acá. -->
   <section class="px-8 md:px-12 py-20 bg-background border-t border-on-surface/5">
     <div class="max-w-3xl mx-auto space-y-14">
-      <div class="reveal">
-        <h2 class="text-[1.6rem] md:text-[2rem] font-display leading-tight mb-5">
-          ¿En qué orden conviene abordarlos?
-        </h2>
-        <p class="text-on-surface-variant leading-relaxed mb-4">
-          Casi siempre en este: primero ver, después entender, después delegar. Un dashboard muestra
-          lo que está pasando; el modelamiento explica por qué y permite proyectarlo; la
-          automatización saca del medio el trabajo manual que sostenía todo eso; y un agente vigila
-          el negocio cuando nadie está mirando.
-        </p>
-        <p class="text-on-surface-variant leading-relaxed">
-          Ese orden no es un dogma. Si el dolor de hoy es que el cierre de mes se arma a mano
-          durante tres días, conviene empezar por automatizar aunque no haya un tablero todavía. La
-          secuencia la manda el problema, no el catálogo.
-        </p>
-      </div>
-
-      <div class="reveal reveal-delay-1">
-        <h2 class="text-[1.6rem] md:text-[2rem] font-display leading-tight mb-5">
-          ¿Hay que contratar los cuatro?
-        </h2>
-        <p class="text-on-surface-variant leading-relaxed mb-4">
-          No. Lo habitual es partir por uno y ver qué queda a la vista. Cada proyecto deja a la vista el
-          siguiente cuello de botella, y con frecuencia ese siguiente paso es más acotado de lo que
-          parecía al principio porque el trabajo de ordenar los datos ya está hecho.
-        </p>
-        <p class="text-on-surface-variant leading-relaxed">
-          Tampoco hace falta reemplazar los sistemas que la empresa ya tiene. Los cuatro servicios
-          se construyen encima del ERP, las planillas y las herramientas que hoy están en uso.
-        </p>
-      </div>
-
-      <div class="reveal reveal-delay-1">
-        <h2 class="text-[1.6rem] md:text-[2rem] font-display leading-tight mb-5">
-          ¿Esto es para una pyme o para una empresa grande?
-        </h2>
-        <p class="text-on-surface-variant leading-relaxed mb-4">
-          Para las dos, con alcances distintos. En una empresa grande el problema suele ser que la
-          información existe repartida en demasiados sistemas y nadie tiene la vista completa. En
-          una pyme suele ser que la información existe en la cabeza de dos o tres personas y en
-          planillas que solo ellas saben actualizar.
-        </p>
-        <p class="text-on-surface-variant leading-relaxed">
-          En ambos casos el diagnóstico es el mismo: la decisión se toma tarde o se toma a ciegas.
-          Lo que cambia es el tamaño del proyecto, no el enfoque.
-        </p>
-      </div>
-
-      <div class="reveal reveal-delay-2">
-        <h2 class="text-[1.6rem] md:text-[2rem] font-display leading-tight mb-5">
-          ¿Qué hace distinta a una consultora de IA con origen comercial?
-        </h2>
-        <p class="text-on-surface-variant leading-relaxed mb-4">
-          Que la conversación parte de la decisión que hay que mejorar y no de la herramienta que
-          hay que instalar. Buffo IA nació en áreas comerciales, así que el vocabulario es el del
-          negocio: canal, vendedor, presupuesto, margen, quiebre de stock.
-        </p>
-        <p class="text-on-surface-variant leading-relaxed mb-4">
-          En la práctica eso significa que cada entrega viene con la lectura puesta: no solo el
-          número, también qué está fuera de lo esperado y qué conviene revisar primero. Es la
-          diferencia entre un sistema que informa y uno que orienta.
-        </p>
-        <p class="text-on-surface-variant leading-relaxed">
-          También cambia con quién se conversa. El interlocutor natural de estos proyectos es la
-          gerencia general o comercial, no el área de sistemas, porque la pregunta de fondo no es
-          qué herramienta instalar sino qué decisión se está tomando tarde. Cuando eso queda claro,
-          la parte técnica se vuelve una consecuencia y no el punto de partida.
-        </p>
-      </div>
+      {
+        PREGUNTAS.map((f) => (
+          <div class="reveal">
+            <h2 class="text-[1.6rem] md:text-[2rem] font-display leading-tight mb-5">{f.q}</h2>
+            <p class="text-on-surface-variant leading-relaxed">{f.a}</p>
+          </div>
+        ))
+      }
 
       <!-- Acotar el alcance es lo que mas confianza da, y los motores de
            respuesta premian la respuesta directa. Va aca y no en la home
@@ -158,9 +150,9 @@ const itemListSchema = {
         <p class="text-on-surface-variant leading-relaxed">
           Lo que sí hacemos es aplicar inteligencia artificial a la gestión comercial y operacional:
           ventas, margen, presupuesto, stock, cobranza y reportería. Cuando uno de esos problemas se
-          resuelve mejor con un modelo predictivo —proyectar la demanda, anticipar un quiebre— lo
-          construimos, con criterio comercial y con los supuestos a la vista. La técnica es el medio;
-          la decisión de negocio es el objetivo.
+          resuelve mejor con un modelo predictivo, como proyectar la demanda o anticipar un quiebre,
+          lo construimos, con criterio comercial y con los supuestos a la vista. La técnica es el
+          medio; la decisión de negocio es el objetivo.
         </p>
       </div>
     </div>
@@ -173,7 +165,7 @@ const itemListSchema = {
       </h2>
       <p class="text-on-surface-variant mb-8 leading-relaxed">
         Es la pregunta más común y tiene respuesta en tres minutos. Doce preguntas sobre cómo se
-        mueve hoy su información, y le decimos por dónde partir — con el informe por escrito, sin
+        mueve hoy su información, y le decimos por dónde partir, con el informe por escrito, sin
         llamada de por medio.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -181,7 +173,7 @@ const itemListSchema = {
           href="/diagnostico"
           class="btn-glow bg-primary text-on-primary px-12 py-5 font-semibold text-base inline-block"
         >
-          Empezar el diagnóstico · 3 minutos
+          Hacer el diagnóstico en 3 minutos
         </a>
         <a
           href={SITE.calendly}
@@ -189,7 +181,7 @@ const itemListSchema = {
           rel="noopener noreferrer"
           class="border border-outline-variant text-on-surface px-12 py-5 font-semibold text-base inline-block hover:border-primary/30 transition-all"
         >
-          O conversemos 30 minutos
+          Agendar 30 minutos
         </a>
       </div>
     </div>

@@ -43,7 +43,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     metaTitle: 'Dashboards Ejecutivos en Chile | Buffo IA Consulting',
     metaDescription:
       'Diseñamos dashboards ejecutivos para empresas en Chile: sus ventas, finanzas y operación en tiempo real, sin reportería manual. Visualizaciones para decidir, no solo para mirar.',
-    lead: 'Un dashboard ejecutivo es un tablero que reúne los indicadores clave de su empresa en una sola vista y en tiempo real. En Buffo IA los diseñamos para gerentes en Chile que necesitan decidir rápido: en vez de esperar el reporte del mes, ve el estado del negocio cuando lo necesita y sabe dónde actuar primero.',
+    lead: 'Inteligencia de Gestión entrega a su gerencia una vista única y actualizada del negocio: ventas, margen, presupuesto y stock, con la lectura de lo que se salió de lo esperado. La información deja de depender del cierre de mes y la decisión se toma con el dato del día.',
     sections: [
       {
         heading: '¿Por qué el reporte siempre llega tarde?',
@@ -59,7 +59,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
         heading: '¿Qué datos necesita y de dónde salen?',
         body: [
           'Los que ya tiene. Lo habitual es partir con lo que existe: el sistema de ventas, el ERP, las planillas de control de gestión, la base del punto de venta. No hace falta un proyecto de datos previo ni cambiar de software para empezar a ver resultados.',
-          'Cuando las fuentes no coinciden entre sí —y casi nunca coinciden— esa diferencia se resuelve como parte del trabajo: se acuerdan definiciones únicas para cada indicador, de modo que "venta" signifique lo mismo en comercial que en finanzas. Ese acuerdo es la mitad del valor del proyecto, aunque no se vea en la pantalla.',
+          'Cuando las fuentes no coinciden entre sí, y casi nunca coinciden, esa diferencia se resuelve como parte del trabajo: se acuerdan definiciones únicas para cada indicador, de modo que "venta" signifique lo mismo en comercial que en finanzas. Ese acuerdo es la mitad del valor del proyecto, aunque no se vea en la pantalla.',
         ],
       },
       {
@@ -72,8 +72,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Qué lo hace distinto de comprar una herramienta de BI?',
         body: [
-          'Buffo IA nació en las áreas comerciales, no en TI. Eso significa que el dashboard habla el idioma del negocio: vendedores, canales, presupuesto, quiebres de stock, margen. No tiene que traducir tecnicismos para entenderlo.',
-          'Una licencia de una herramienta de visualización le entrega un lienzo en blanco y el problema sigue siendo suyo: qué medir, cómo definirlo y qué hacer cuando el número se sale de rango. Acá lo que se entrega es el criterio, y la herramienta es solo el medio.',
+          'Una herramienta entrega gráficos. Este servicio entrega una definición acordada de cada indicador, la integración de sus fuentes y una lectura orientada a la decisión. La herramienta es el medio. El resultado es una gerencia que decide con la misma información.',
         ],
       },
     ],
@@ -88,7 +87,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     forWhom: [
       'Gerentes generales que necesitan una vista única del negocio',
       'Gerentes comerciales y de ventas que siguen metas y equipos',
-      'Pymes y grandes empresas que hoy consolidan reportes a mano',
+      'Empresas medianas y grandes que hoy consolidan reportes a mano',
     ],
     faq: [
       {
@@ -100,8 +99,8 @@ export const SERVICES_CONTENT: ServiceContent[] = [
         a: 'Las primeras visualizaciones pueden estar operativas en pocos días. Proyectos con varias fuentes se diseñan por etapas para entregar valor desde el inicio.',
       },
       {
-        q: '¿Sirve para una pyme o es solo para empresas grandes?',
-        a: 'Sirve para ambas, y en una pyme suele notarse antes. Mientras menos personas hay para consolidar información a mano, más pesa cada hora que se libera. El alcance se ajusta al tamaño: una empresa pequeña parte con una vista y crece desde ahí.',
+        q: '¿Para qué tamaño de empresa es?',
+        a: 'Para empresas medianas y grandes. El alcance se ajusta a la complejidad: se parte por la vista de mayor impacto y se amplía por etapas.',
       },
       {
         q: '¿Puedo verlo desde el celular?',
@@ -109,7 +108,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       },
       {
         q: '¿Quién lo mantiene después de la implementación?',
-        a: 'Una vez conectadas las fuentes, el dashboard se actualiza solo y no requiere trabajo manual del equipo. Los cambios posteriores —un indicador nuevo, una vista distinta cuando cambia la estructura comercial— se acuerdan como mantención.',
+        a: 'Una vez conectadas las fuentes, el dashboard se actualiza solo y no requiere trabajo manual del equipo. Los cambios posteriores, como un indicador nuevo o una vista distinta cuando cambia la estructura comercial, se acuerdan como mantención.',
       },
       {
         q: '¿Y si mi información está toda en Excel?',
@@ -126,7 +125,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     metaTitle: 'Modelamiento de Datos y Forecasting en Chile | Buffo IA',
     metaDescription:
       'Conectamos y estructuramos las fuentes de datos de su empresa en Chile para generar inteligencia accionable: forecasting de ventas, presupuestos y alertas. Del caos de planillas a decisiones.',
-    lead: 'El modelamiento de datos consiste en conectar las distintas fuentes de su empresa y darles una estructura coherente para poder analizarlas y proyectarlas. En Buffo IA transformamos el caos de planillas dispersas en un modelo único que permite forecasting de ventas, preparación de presupuestos y alertas tempranas, pensado para la realidad de las empresas en Chile.',
+    lead: 'Modelamiento de Datos integra las fuentes de su empresa en un modelo único, con definiciones acordadas, sobre el que se puede analizar, presupuestar y proyectar. Es la base que hace confiable cualquier decisión posterior, incluida la IA.',
     sections: [
       {
         heading: '¿Por qué las cifras no cuadran entre sistemas?',
@@ -139,7 +138,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Cómo se construye un modelo de datos?',
         body: [
-          'Integramos sus fuentes — ventas, inventario, finanzas, marketing — y las estructuramos para que la información fluya hacia la rentabilidad. Sobre esa base construimos proyecciones de demanda, presupuestos y modelos de quiebre de stock.',
+          'Integramos sus fuentes, como ventas, inventario, finanzas y marketing, y las estructuramos para que la información fluya hacia la rentabilidad. Sobre esa base construimos proyecciones de demanda, presupuestos y modelos de quiebre de stock.',
           'No es estadística por la estadística: cada modelo se construye con criterio comercial, de modo que las proyecciones tengan sentido para quien toma las decisiones.',
         ],
       },
@@ -161,7 +160,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Qué lo hace distinto?',
         body: [
-          'Combinamos la técnica con la experiencia de negocio. Un forecast no sirve si el gerente no puede explicarlo ni confiar en él; por eso traducimos el modelo a parámetros que el equipo entiende y puede defender.',
+          'Cada modelo se construye en función de una decisión y de su retorno. Las proyecciones se entregan con sus supuestos a la vista y se contrastan cada período contra el resultado real.',
         ],
       },
     ],
@@ -210,12 +209,12 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     metaTitle: 'Automatización de Procesos con IA en Chile | Buffo IA',
     metaDescription:
       'Automatizamos tareas repetitivas en empresas de Chile: reportería, consolidación de datos y flujos manuales. Libera el tiempo de su equipo para lo que genera valor.',
-    lead: 'La automatización de procesos consiste en delegar a un sistema las tareas repetitivas que hoy consumen el tiempo de su equipo: consolidar planillas, armar reportes, mover datos entre sistemas. En Buffo IA diseñamos estos flujos para empresas en Chile, de modo que el trabajo manual desaparezca y las personas se enfoquen en lo que sí genera valor.',
+    lead: 'Automatización de Procesos traslada a flujos automáticos las tareas repetitivas que hoy consume su equipo: consolidar planillas, preparar informes y mover datos entre sistemas. El resultado se mide en horas recuperadas, menos errores y menor dependencia de personas clave.',
     sections: [
       {
-        heading: '¿Cuánto tiempo se va en tareas que no requieren talento?',
+        heading: '¿Cuánto cuesta hoy el trabajo manual?',
         body: [
-          'Mucho talento se pierde en tareas que no requieren talento: copiar y pegar entre planillas, descargar reportes, rearmar el mismo informe cada semana. Es trabajo necesario, pero invisible y agotador.',
+          'Una parte relevante del tiempo de un equipo calificado se va en copiar entre planillas, descargar reportes y rearmar el mismo informe cada semana. Es trabajo necesario, pero invisible y agotador.',
           'Automatizar esos flujos no solo ahorra horas: reduce errores y libera a las personas para pensar, no para operar.',
           'El costo mayor rara vez son las horas. Es que el proceso depende de una persona: cuando esa persona se enferma, sale de vacaciones o cambia de trabajo, el informe simplemente no sale. Automatizar es también sacar ese riesgo de encima del equipo.',
         ],
@@ -238,14 +237,14 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         heading: '¿Qué pasa si un flujo automático falla?',
         body: [
-          'Se diseña asumiendo que va a fallar alguna vez, porque los sistemas de los que depende cambian. Cada flujo avisa cuando algo no corrió como debía, en vez de quedarse callado — un proceso automático que falla en silencio es peor que uno manual.',
+          'Se diseña asumiendo que va a fallar alguna vez, porque los sistemas de los que depende cambian. Cada flujo avisa cuando algo no corrió como debía, en vez de quedarse callado. Un proceso automático que falla en silencio es peor que uno manual.',
           'Y siempre queda la vía manual disponible. La automatización se hace encima de las herramientas que la empresa ya usa, así que ante un problema el equipo puede seguir operando como antes mientras se corrige.',
         ],
       },
       {
         heading: '¿Qué lo hace distinto?',
         body: [
-          'No automatizamos por automatizar. Cada flujo se elige por su retorno en tiempo y calidad, con la mirada de quien conoce cómo opera realmente un área comercial o financiera.',
+          'Cada flujo se prioriza por su retorno en tiempo y calidad. Se parte por el proceso de mayor impacto y se mide el resultado contra la situación inicial.',
         ],
       },
     ],
@@ -269,15 +268,15 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       },
       {
         q: '¿Qué diferencia hay con los Agentes IA?',
-        a: 'La automatización ejecuta un flujo definido. Un agente IA además decide y monitorea de forma autónoma. Muchas veces se combinan.',
+        a: 'La automatización ejecuta un flujo definido. Un agente de IA además hace seguimiento continuo, detecta lo relevante y prepara una propuesta para la persona responsable. Muchas veces se combinan.',
       },
       {
         q: '¿Mi equipo tiene que aprender a programar?',
         a: 'No. Los flujos quedan corriendo solos y el equipo sigue trabajando con las mismas herramientas de siempre. Lo que cambia es que el archivo aparece listo en vez de tener que armarlo.',
       },
       {
-        q: '¿Esto significa que voy a despedir gente?',
-        a: 'No es el objetivo ni lo que ocurre en la práctica. Lo que se automatiza son las horas que hoy nadie quiere hacer y que no aportan criterio. En equipos pequeños —el caso más común en Chile— esas horas se reinvierten en trabajo comercial o de análisis que estaba postergado.',
+        q: '¿Qué pasa con las personas que hoy hacen ese trabajo?',
+        a: 'Las horas recuperadas se reasignan a análisis y gestión. El objetivo es elevar el aporte del equipo, no reducirlo.',
       },
       {
         q: '¿Cómo sé cuánto tiempo estoy ganando realmente?',
@@ -294,27 +293,26 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     metaTitle: 'Agentes IA para Empresas en Chile | Buffo IA Consulting',
     metaDescription:
       'Desarrollamos agentes de IA para empresas en Chile: software que trabaja solo, monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pidan. IA proactiva, no reactiva.',
-    lead: 'Un agente de IA es un software que trabaja por su cuenta: monitorea sus datos de forma continua, detecta lo que importa y ejecuta tareas sin que nadie se lo pida. A diferencia de un asistente que solo responde cuando usted le pregunta, un agente actúa de manera proactiva. En Buffo IA los desarrollamos para empresas en Chile sobre infraestructura propia y segura.',
+    lead: 'Un agente de IA es un sistema que hace seguimiento continuo de un proceso de su negocio, detecta lo relevante y prepara una propuesta para la persona responsable. En Buffo diseñamos e implementamos agentes para tareas concretas, con una persona de su equipo a cargo de cada uno.',
     sections: [
       {
         heading: '¿Qué diferencia hay entre un asistente y un agente?',
         body: [
-          'Un asistente espera su pregunta para responder. Un agente, en cambio, vigila el negocio todo el tiempo y se adelanta: revisa el pipeline comercial cada mañana, detecta una cobranza en riesgo, alerta de un quiebre de stock antes de que ocurra o prepara un resumen sin que nadie lo pida.',
-          'Ese cambio —de reactivo a proactivo— es lo que convierte la IA en un miembro más del equipo que nunca se distrae.',
+          'Un asistente responde cuando se le pregunta. Un agente hace seguimiento continuo y se anticipa: revisa el pipeline cada mañana, detecta una cobranza en riesgo o anticipa un quiebre de stock, y lo presenta a quien corresponde.',
         ],
       },
       {
         heading: '¿Cómo se construye un agente?',
         body: [
-          'Diseñamos cada agente alrededor de una tarea concreta y de alto valor: monitoreo, alertas, resúmenes o ejecución de acciones. El agente corre solo —por horario o ante un evento— y avisa por el canal que su equipo ya usa.',
+          'Diseñamos cada agente alrededor de una tarea concreta y de alto valor: monitoreo, alertas, resúmenes o ejecución de acciones. El agente opera por horario o ante un evento y avisa por el canal que su equipo ya usa.',
           'Lo construimos sobre la infraestructura de Buffo, con los datos de cada empresa aislados y bajo control. No es una demo: es software en operación.',
-          'Un agente que hace una cosa bien vale más que uno que promete hacerlo todo. Por eso el alcance se define estrecho al principio y se amplía cuando el equipo ya confía en lo que el agente hace sin supervisión.',
+          'Un agente que hace una cosa bien vale más que uno que promete hacerlo todo. Por eso el alcance se define estrecho al principio y se amplía cuando el equipo ya confía en lo que el agente prepara.',
         ],
       },
       {
         heading: '¿Qué decide solo y qué consulta antes de actuar?',
         body: [
-          'Eso se define al principio y queda explícito, porque es la pregunta que de verdad importa. Hay acciones que un agente puede ejecutar sin preguntar —armar un resumen, avisar de un indicador fuera de rango— y otras que siempre pasan por una persona, como enviar algo a un cliente o mover una cifra en un sistema.',
+          'Eso se define al principio y queda explícito, porque es la pregunta que de verdad importa. Hay acciones que un agente puede ejecutar sin preguntar, como armar un resumen o avisar de un indicador fuera de rango, y otras que siempre pasan por una persona, como enviar algo a un cliente o mover una cifra en un sistema.',
           'El criterio que usamos es simple: mientras más difícil sea deshacer una acción, más arriba está el permiso que necesita. Un aviso interno equivocado se corrige con otro aviso; un correo enviado a un cliente por error, no.',
         ],
       },
@@ -337,7 +335,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       'Agentes de monitoreo continuo de indicadores',
       'Alertas proactivas (cobranza, stock, pipeline, metas)',
       'Resúmenes y reportes generados automáticamente',
-      'Ejecución autónoma de tareas por horario o por evento',
+      'Ejecución de tareas por horario o por evento, con una persona a cargo',
       'Notificaciones en el canal que su equipo ya usa',
       'Agentes a medida según el proceso de su negocio',
     ],
@@ -372,32 +370,32 @@ export const SERVICES_CONTENT: ServiceContent[] = [
       {
         icon: 'request_quote',
         title: 'Agente de cotizaciones',
-        desc: 'Recibe una solicitud, arma la cotización y la envía al cliente.',
+        desc: 'Recibe la solicitud y prepara la cotización para aprobación.',
       },
       {
         icon: 'payments',
         title: 'Agente de cobranza',
-        desc: 'Detecta facturas por vencer y envía el recordatorio automáticamente.',
+        desc: 'Detecta facturas por vencer y propone la gestión de cada cuenta.',
       },
       {
         icon: 'monitoring',
         title: 'Agente de pipeline',
-        desc: 'Revisa las oportunidades cada mañana y avisa cuáles están frías.',
+        desc: 'Revisa las oportunidades cada día y señala las que requieren acción.',
       },
       {
         icon: 'inventory',
         title: 'Agente de stock',
-        desc: 'Alerta un quiebre antes de que ocurra y sugiere la reposición.',
+        desc: 'Anticipa quiebres y propone la reposición.',
       },
       {
         icon: 'summarize',
         title: 'Agente de reportes',
-        desc: 'Arma el resumen de resultados del día y lo deja en el chat del equipo.',
+        desc: 'Prepara el resumen de resultados y lo entrega a su equipo.',
       },
       {
         icon: 'notification_important',
         title: 'Agente de alertas',
-        desc: 'Vigila sus KPI y avisa solo cuando un indicador se sale de lo esperado.',
+        desc: 'Hace seguimiento a sus indicadores y avisa cuando uno se sale del rango esperado.',
       },
     ],
   },

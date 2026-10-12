@@ -1493,24 +1493,10 @@ body[data-sitio='v2'] #theme-toggle { display: none; }
 }
 
 /* ----- Botón de WhatsApp -----
-   Su verde era el único color ajeno a la paleta en toda la página, y en
-   celular tapaba contenido. En el sitio 2.0 va en negro con filo claro, sin el
-   latido, y más chico en teléfono. */
-body[data-sitio='v2'] .boton-whatsapp {
-  background-color: rgb(12 12 12 / 0.85);
-  border: 1px solid rgb(255 255 255 / 0.22);
-  color: rgb(244 246 246);
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-body[data-sitio='v2'] .boton-whatsapp:hover { border-color: rgb(255 255 255 / 0.6); }
-body[data-sitio='v2'] .boton-whatsapp::before,
-body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
-@media (max-width: 639px) {
-  body[data-sitio='v2'] .boton-whatsapp { width: 2.9rem; height: 2.9rem; }
-  body[data-sitio='v2'] .boton-whatsapp svg { width: 1.35rem; height: 1.35rem; }
-}
+   Se queda como en el sitio publicado: verde de WhatsApp y con su latido
+   (Simón, 12-oct-2026: «deja el botón como lo tenemos actualmente… con el
+   color de WhatsApp y como que vibre»). El 2.0 lo había pasado a negro y sin
+   animación; esa regla se quitó y mandan los estilos de BotonWhatsApp.astro. */
 
 @media (prefers-reduced-motion: reduce) {
   .v2-niveles li { opacity: 1; transform: none; }
@@ -2406,3 +2392,8 @@ body[data-sitio='v2'] .boton-whatsapp::after { display: none; }
    growth.») es más largo que el anterior: un punto menos de tamaño y cortes de
    línea parejos, para que los botones sigan en la primera pantalla. */
 .v2 .v2-titular { font-size: clamp(2.1rem, 3.9vw, 3.7rem); text-wrap: balance; }
+
+/* La franja de acompañamiento fuera del home (páginas de servicio y
+   /servicios): ahí no va pegada bajo la rejilla, así que recupera su borde
+   superior. */
+.v2-acompana--suelta { border-top: 1px solid rgb(var(--c-primary) / 0.45); }

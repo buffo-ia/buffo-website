@@ -27,9 +27,9 @@ const stepData = STEPS[service.slug];
 
 // Pregunta de la franja al diagnóstico, por servicio
 const preguntaDiagnostico: Record<string, string> = {
-  'modelamiento-predictivo': '¿Tus proyecciones dependen de una planilla y de la intuición?',
-  'automatizacion-procesos': '¿Tu equipo pierde horas pasando datos a mano entre planillas y sistemas?',
-  'agentes-ia': '¿Tu equipo responde una y otra vez las mismas consultas?',
+  'modelamiento-predictivo': '¿Sus proyecciones dependen de una planilla y de la intuición?',
+  'automatizacion-procesos': '¿Su equipo pierde horas pasando datos a mano entre planillas y sistemas?',
+  'agentes-ia': '¿Su equipo responde una y otra vez las mismas consultas?',
 };
 
 const serviceSchema = {
@@ -63,7 +63,7 @@ const schema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
   <Servicio
     service={service}
     pasos={stepData}
-    pregunta={preguntaDiagnostico[service.slug] ?? '¿Tus datos te ayudan a decidir o solo a reportar?'}
+    pregunta={preguntaDiagnostico[service.slug] ?? '¿Sus datos le ayudan a decidir o solo a reportar?'}
     cierre="¿Quiere ver cómo aplicaría a su empresa?"
   >
     <Fragment slot="maqueta">

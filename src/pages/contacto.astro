@@ -29,9 +29,8 @@ const contactSchema = {
           Conversemos sobre su empresa
         </h1>
         <p class="reveal reveal-delay-2 text-lg text-on-surface-variant leading-relaxed">
-          Cuéntenos de qué se está enterando demasiado tarde. La primera conversación es sin costo
-          y sirve para entender si Buffo IA es lo que su negocio necesita — si no lo es, se lo
-          decimos.
+          La primera conversación es sin costo. Sirve para entender su prioridad de negocio y
+          definir si Buffo es el socio adecuado para abordarla.
         </p>
       </div>
     </div>
@@ -99,7 +98,7 @@ const contactSchema = {
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">fact_check</span>
             <h3 class="font-display text-lg mb-1">Diagnóstico en 3 minutos</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Doce preguntas y recibe el informe por correo. Sin llamada, sin compromiso.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Doce preguntas y un informe por escrito en su correo.</p>
           </a>
           <a
             href={SITE.calendly} target="_blank" rel="noopener noreferrer"
@@ -107,7 +106,7 @@ const contactSchema = {
           >
             <span class="material-symbols-outlined text-primary text-3xl mb-4 block group-hover:scale-110 transition-transform">event_available</span>
             <h3 class="font-display text-lg mb-1">Agenda en línea</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Reserve una llamada de 30 minutos con Google Meet incluido.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Reserve una reunión de 30 minutos por Google Meet.</p>
           </a>
           <a
             href={`mailto:${SITE.email}`}
@@ -132,7 +131,7 @@ const contactSchema = {
           >
             <IconoRed red="linkedin" class="text-primary w-7 h-7 mb-4 block group-hover:scale-110 transition-transform" />
             <h3 class="font-display text-lg mb-1">LinkedIn</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Conéctese con nosotros.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Síganos en LinkedIn.</p>
           </a>
           <a
             href={SITE.instagram} target="_blank" rel="noopener noreferrer"
@@ -140,7 +139,7 @@ const contactSchema = {
           >
             <IconoRed red="instagram" class="text-primary w-7 h-7 mb-4 block group-hover:scale-110 transition-transform" />
             <h3 class="font-display text-lg mb-1">Instagram</h3>
-            <p class="text-on-surface-variant text-sm leading-relaxed">Lo que vamos publicando.</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Publicaciones de Buffo.</p>
           </a>
           <!-- Lleva al mapa, como las otras cinco llevan a algo. Era la única
                tarjeta muerta de la grilla: se veía idéntica a sus vecinas y al
@@ -196,10 +195,10 @@ const contactSchema = {
           // Solo cuando el backend confirmó el envío: un error de Resend no es un lead.
           medir('contacto_enviado');
         } else {
-          show('No pudimos enviar el mensaje. Intenta de nuevo o escríbanos por correo.', false);
+          show('No pudimos enviar el mensaje. Intente de nuevo o escríbanos por correo.', false);
         }
       } catch {
-        show('No pudimos enviar el mensaje. Intenta de nuevo o escríbanos por correo.', false);
+        show('No pudimos enviar el mensaje. Intente de nuevo o escríbanos por correo.', false);
       } finally {
         btn.disabled = false;
         btn.textContent = original;

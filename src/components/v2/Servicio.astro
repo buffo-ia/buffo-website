@@ -17,6 +17,7 @@ import { SERVICES_CONTENT, type ServiceContent } from '../../data/services';
 import Breadcrumbs from '../Breadcrumbs.astro';
 import Cintas from './Cintas.astro';
 import Preguntas from './Preguntas.astro';
+import Acompana from './Acompana.astro';
 import Aparecer from './Aparecer.astro';
 import MedirCtaDiagnostico from '../MedirCtaDiagnostico.astro';
 
@@ -57,10 +58,10 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
           <h1 class="v2-servicio__h1 v2-sube" style="--i:1">{h1[0]}<em>{h1[1]}</em></h1>
           <div class="v2-botones v2-sube" style="--i:2">
             <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
-              Haz tu diagnóstico gratis · 3 min
+              Hacer el diagnóstico en 3 minutos
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
-            <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">Agenda una llamada de 30 min</a>
+            <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">Agendar 30 minutos</a>
           </div>
           <p class="v2-servicio__lead v2-sube" style="--i:3">{service.lead}</p>
         </div>
@@ -153,10 +154,10 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
       <p class="v2-franja__pregunta">{pregunta}</p>
       <div class="v2-botones">
         <a href="/diagnostico" data-cta-diagnostico="medio" class="v2-boton v2-boton--principal">
-          Haz tu diagnóstico gratis · 3 min
+          Hacer el diagnóstico en 3 minutos
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
         </a>
-        <p class="v2-nota">Descúbrelo en 3 minutos.</p>
+        <p class="v2-nota">Descúbralo en 3 minutos.</p>
       </div>
     </div>
   </section>
@@ -194,15 +195,23 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
     </div>
   </section>
 
+  <!-- La misma franja del home, antes del cierre: el acompañamiento va con
+       cualquiera de los cuatro servicios. -->
+  <section class="v2-seccion">
+    <div class="v2-marco">
+      <Acompana suelta />
+    </div>
+  </section>
+
   <section class="v2-seccion v2-cierre">
     <div class="v2-marco v2-e-sube" data-v2-entra="0.6">
       <h2 class="v2-cierre__frase">{cierre}</h2>
       <div class="v2-botones">
         <a href="/diagnostico" data-cta-diagnostico="cierre" class="v2-boton v2-boton--principal">
-          Haz tu diagnóstico gratis · 3 min
+          Hacer el diagnóstico en 3 minutos
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d={flecha} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
         </a>
-        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">Agenda una llamada de 30 min</a>
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">Agendar 30 minutos</a>
       </div>
     </div>
   </section>

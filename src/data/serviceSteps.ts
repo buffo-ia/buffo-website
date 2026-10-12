@@ -21,8 +21,8 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
       },
       {
         icon: 'insights',
-        title: 'Proyectamos con criterio',
-        body: 'Construimos forecasting de ventas, presupuestos y alertas con sentido comercial — modelos que el gerente entiende y puede defender.',
+        title: 'Proyectamos con criterio de negocio',
+        body: 'Construimos proyecciones de venta, presupuestos y alertas con supuestos explícitos, que su gerencia puede revisar y sostener.',
       },
     ],
   },
@@ -51,18 +51,18 @@ export const STEPS: Record<string, { title: string; steps: Step[] }> = {
     steps: [
       {
         icon: 'target',
-        title: 'Definimos la misión',
-        body: 'Cada agente nace alrededor de una tarea concreta y de alto valor: monitorear cobranza, vigilar el pipeline, alertar quiebres o resumir resultados.',
+        title: 'Definimos el objetivo',
+        body: 'Cada agente se diseña para una tarea concreta, de alto valor y con retorno medible.',
       },
       {
         icon: 'radar',
-        title: 'Lo ponemos a vigilar',
-        body: 'El agente corre solo, de forma continua, sobre infraestructura controlada por Buffo con los datos de su empresa aislados y seguros.',
+        title: 'Lo implementamos con una persona a cargo',
+        body: 'El agente opera sobre los datos de su empresa, con accesos acotados y un responsable de su equipo.',
       },
       {
         icon: 'notifications_active',
-        title: 'Actúa y le avisa',
-        body: 'Cuando detecta algo relevante, ejecuta la acción y notifica por el canal que su equipo ya usa. Sin inundarlo: avisa cuando de verdad hay que actuar.',
+        title: 'Propone y deja registro',
+        body: 'Cuando detecta algo relevante, prepara la propuesta y la envía por el canal que su equipo ya usa. Cada acción queda registrada.',
       },
     ],
   },

@@ -15,6 +15,8 @@
 import { Image } from 'astro:assets';
 import foto from '../../../assets/simon-espinoza.jpg';
 import { FOUNDER, SITE } from '../../../config/site';
+import { LINEAS } from '../../../data/lineas';
+import Acompana from '../Acompana.astro';
 
 interface Props {
   parte: 'detras' | 'frases' | 'servicios' | 'metodo' | 'casos';
@@ -39,49 +41,23 @@ const FRASES = [
   { q: 'Me entero tarde de los problemas', a: 'El problema no es la falta de reportes, es la oportunidad de la información. Ahí un agente de IA justifica la inversión.' },
   { q: 'Mi equipo pierde horas en tareas repetitivas', a: 'Se mide cuántas horas son y se automatiza primero el proceso que más libera.' },
 ];
-const SERVICIOS = [
-  {
-    // Línea nueva (Simón, 12-oct-2026). Sin página propia: no se crea slug sin
-    // su decisión, así que el enlace va a la reunión.
-    en: 'Business Intelligence Consulting',
-    nombre: 'Consultoría en inteligencia de negocios',
-    frase: 'Revisamos su negocio con mirada estratégica y foco en el ROI: dónde se genera el resultado, dónde se pierde y qué priorizar.',
-    recibe: ['Revisión del estado de resultados, con cada cifra trazada a su origen', 'Rentabilidad por línea de negocio, producto, cliente y sucursal', 'Objetivos y ruta al EBITDA, con seguimiento mensual junto a su gerencia'],
-    enlace: { texto: 'Agendar 30 minutos', href: SITE.calendly, cta: false, externo: true },
-  },
-  {
-    en: 'Decision Solutions with AI',
-    nombre: 'Decisiones de negocio con IA',
-    frase: 'Tomamos una decisión que se repite, como precio, surtido, metas o cobranza, y la dejamos resuelta con un modelo que su equipo usa todos los meses.',
-    recibe: ['Diagnóstico de la decisión y de los datos disponibles', 'Caso de negocio con el retorno esperado', 'Modelo o herramienta de decisión, construido con sus datos'],
-    enlace: { texto: 'Empezar por el diagnóstico', href: '/diagnostico', cta: true },
-  },
-  {
-    en: 'Business Analytics with AI',
-    nombre: 'Analítica de negocio con IA',
-    frase: 'El negocio completo en un solo lugar, con una sola definición de cada número y con la lectura de qué atender primero.',
-    recibe: ['Integración de sus fuentes de datos sin cambiar sistemas', 'Modelo de datos con definiciones acordadas con su equipo', 'Informes de gestión que se actualizan solos, con la lectura de lo que se salió de lo esperado'],
-    enlace: { texto: 'Conocer más', href: '/servicios/dashboards-ejecutivos', cta: false },
-  },
-  {
-    en: 'Agentic Workflows for Business',
-    nombre: 'Flujos de trabajo con agentes',
-    frase: 'Diseñamos e implementamos flujos donde agentes de IA apoyan a su equipo en tareas de seguimiento, preparación y alerta.',
-    recibe: ['Levantamiento del proceso y de dónde se pierden las horas', 'Diseño del flujo, con un responsable de su equipo en cada uno', 'Implementación y operación sobre sus sistemas actuales'],
-    enlace: { texto: 'Conocer más', href: '/servicios/agentes-ia', cta: false },
-  },
+// El texto de las cuatro líneas vive en data/lineas.ts (lo comparte /servicios).
+// Acá solo van los enlaces del home, en el mismo orden.
+// La línea 01 es nueva (Simón, 12-oct-2026) y no tiene página propia: no se
+// crea slug sin su decisión, así que el enlace va a la reunión.
+const ENLACES = [
+  { texto: 'Agendar 30 minutos', href: SITE.calendly, cta: false, externo: true },
+  { texto: 'Empezar por el diagnóstico', href: '/diagnostico', cta: true },
+  { texto: 'Conocer más', href: '/servicios/dashboards-ejecutivos', cta: false },
+  { texto: 'Conocer más', href: '/servicios/agentes-ia', cta: false },
 ];
+const SERVICIOS = LINEAS.map((l, k) => ({ ...l, enlace: ENLACES[k] as { texto: string; href: string; cta: boolean; externo?: boolean } }));
 const METODO = [
   { t: 'Diagnóstico', d: 'Definimos el objetivo de negocio y el retorno esperado.' },
   { t: 'Caso de negocio', d: 'Estimamos retorno, costo y plazo antes de construir.' },
   { t: 'Piloto con sus datos', d: 'Validamos con datos reales de su empresa antes de escalar la inversión.' },
   { t: 'Implementación acompañada', d: 'La solución queda en operación, con indicadores de adopción y de retorno.' },
 ];
-const ACOMPANA = {
-  texto:
-    'Implementar IA no es instalar una herramienta. Es decidir dónde usarla, con qué datos y quién responde por el resultado. Acompañamos a su gerencia y a su equipo durante toda la implementación, con objetivos y retorno medidos.',
-  puntos: ['Hoja de ruta de IA, priorizada por retorno', 'Selección de casos de uso y de herramientas', 'Adopción con su equipo: quién usa qué y cómo', 'Seguimiento mensual con su gerencia'],
-};
 const CASOS = [
   { rubro: 'Cobranza', t: 'La cobranza dejó de revisarse a fin de mes: el equipo ve cada día qué cuentas necesitan una gestión.' },
   { rubro: 'Resultados', t: 'El estado de resultados del mes se carga una vez y queda leído contra presupuesto, sin rearmar planillas.' },
@@ -173,16 +149,7 @@ const flecha = 'M3 8h10M9 4l4 4-4 4';
             </article>
           ))}
         </div>
-        <div class="v2-acompana" data-v2-entra="0.32">
-          <div class="v2-pieza" style="--r:0">
-            <p class="v2-celda__rotulo">En todas las líneas</p>
-            <h3>Acompañamiento en implementación de IA</h3>
-            <p>{ACOMPANA.texto}</p>
-          </div>
-          <ul>
-            {ACOMPANA.puntos.map((t, k) => <li class="v2-pieza" style={`--r:${(0.15 + k * 0.12).toFixed(2)}`}><span>{t}</span></li>)}
-          </ul>
-        </div>
+        <Acompana />
       </div>
     </section>
   )

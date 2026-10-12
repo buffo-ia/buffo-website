@@ -8,18 +8,13 @@ import founderPhoto from '../assets/simon-espinoza.jpg';
 const path = '/sobre-nosotros';
 const metaTitle = 'Sobre nosotros | Buffo IA Consulting';
 const metaDescription =
-  'Buffo IA es una consultora chilena de inteligencia artificial nacida en las áreas comerciales. Conozca su origen, su forma de trabajar y a quién está detrás.';
+  'Buffo es una consultora chilena de inteligencia de negocios con IA. Acompañamos a gerencias en estrategia, información para decidir e implementación de IA.';
 
 // Texto de Comercial (12-oct-2026, tono senior: estrategia y retorno; salen el
 // relato de origen, «software que trabaja solo» y «pymes»). Fuente:
 // S-Lab/Buffo Consulting/Sitio 2.0/SOBRE_NOSOTROS_borrador.md.
 const lead =
   'Buffo es una consultora chilena de inteligencia de negocios con IA. Acompañamos a gerencias y directorios en tres frentes: definir dónde está el retorno, ordenar la información para decidir y llevar la IA a la operación.';
-
-// Biografía que se VE en la página. FOUNDER.bio (config/site.ts) no se toca:
-// alimenta el schema Person, que es terreno de SEO.
-const bioVisible =
-  'Ingeniero Comercial de la Universidad Central y MBA de la Universidad del Desarrollo, con formación en IA aplicada a los negocios y análisis de datos. Más de diez años en áreas comerciales de retail y consumo masivo, y dos años en consultoría comercial, IA empresarial y automatización de procesos.';
 
 const principios = [
   {
@@ -129,7 +124,7 @@ const aboutSchema = {
         <div>
           <h3 class="font-display text-2xl mb-1">{FOUNDER.name}</h3>
           <p class="text-primary text-sm font-semibold mb-5">{FOUNDER.role}</p>
-          <p class="text-on-surface-variant leading-relaxed mb-6">{bioVisible}</p>
+          <p class="text-on-surface-variant leading-relaxed mb-6">{FOUNDER.bio}</p>
           <ul class="space-y-2 mb-7">
             {
               FOUNDER.education.map((e) => (

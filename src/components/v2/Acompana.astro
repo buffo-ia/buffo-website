@@ -1,0 +1,30 @@
+---
+// Franja "Acompañamiento en implementación de IA". Es la misma en el home, en
+// /servicios y en las cuatro páginas de servicio: el texto vive acá para que no
+// haya tres copias que se desalineen.
+//
+// En el home va pegada bajo la rejilla de las cuatro líneas, y por eso la regla
+// .v2-acompana no trae borde superior. `suelta` se lo devuelve cuando la franja
+// va sola en una sección.
+interface Props {
+  suelta?: boolean;
+}
+const { suelta = false } = Astro.props;
+
+const ACOMPANA = {
+  texto:
+    'Implementar IA no es instalar una herramienta. Es decidir dónde usarla, con qué datos y quién responde por el resultado. Acompañamos a su gerencia y a su equipo durante toda la implementación, con objetivos y retorno medidos.',
+  puntos: ['Hoja de ruta de IA, priorizada por retorno', 'Selección de casos de uso y de herramientas', 'Adopción con su equipo: quién usa qué y cómo', 'Seguimiento mensual con su gerencia'],
+};
+---
+
+<div class:list={['v2-acompana', suelta && 'v2-acompana--suelta']} data-v2-entra="0.32">
+  <div class="v2-pieza" style="--r:0">
+    <p class="v2-celda__rotulo">En todas las líneas</p>
+    <h3>Acompañamiento en implementación de IA</h3>
+    <p>{ACOMPANA.texto}</p>
+  </div>
+  <ul>
+    {ACOMPANA.puntos.map((t, k) => <li class="v2-pieza" style={`--r:${(0.15 + k * 0.12).toFixed(2)}`}><span>{t}</span></li>)}
+  </ul>
+</div>
