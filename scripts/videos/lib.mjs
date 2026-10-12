@@ -31,6 +31,12 @@ async function cuadro() {
     await G.p.evaluate((o) => { document.querySelector('.contenido').style.opacity = o; }, f.de + (f.a - f.de) * t);
     if (t >= 1) G.fun = null;
   }
+  // Animaciones propias del guion: una función de la página que recibe el avance (0 a 1).
+  if (G.ani) {
+    const an = G.ani, t = Math.min(1, (G.n + 1 - an.n0) / an.pasos);
+    await G.p.evaluate(({ f, e }) => window[f](e), { f: an.f, e: 1 - Math.pow(1 - t, 3) });
+    if (t >= 1) G.ani = null;
+  }
   const { data } = await G.cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 93 });
   fs.writeFileSync(`${G.dir}/${String(G.n++).padStart(5, '0')}.jpg`, Buffer.from(data, 'base64'));
   if (process.env.TRAZA) console.log(G.n, Date.now() - t1);
@@ -119,6 +125,8 @@ export async function abrir({ acento = '#20C2BC', dsf = 2 } = {}) {
       const r = await p.evaluate((s) => { const a = document.querySelector(s).getBoundingClientRect(); return { x: a.left, y: a.top, w: a.width, h: a.height }; }, sel);
       await api.cursor(r.x + r.w * fx, r.y + r.h * fy, ms, curva);
     },
+    // Llama a window[f](avance) en cada cuadro durante `ms` de video.
+    anima(f, ms) { G.ani = { f, n0: G.n, pasos: Math.max(1, Math.round(ms / (1000 / FPS))) }; },
     async fundido(on, espera = true, ms = 360) {
       const a = on ? 1 : 0;
       if (!G.cdp) { await p.evaluate((o) => { document.querySelector('.contenido').style.opacity = o; }, a); return; }
@@ -134,7 +142,7 @@ export async function grabar(api, salida, guion) {
   const { p } = api, dir = salida + '_cuadros';
   fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
   const cdp = await p.context().newCDPSession(p);
-  Object.assign(G, { cdp, dir, n: 0, resto: 0, p, cam: null, fun: null });
+  Object.assign(G, { cdp, dir, n: 0, resto: 0, p, cam: null, fun: null, ani: null });
   const t0 = Date.now();
   await guion(api);
   G.cdp = null;

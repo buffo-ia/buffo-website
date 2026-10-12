@@ -15,11 +15,13 @@ await p.addStyleTag({ content: `
   /* Ventas parte en las seis cifras: sin título, filtros ni fecha (Comercial, 12-oct). */
   #p-ventas > .encabezado, #v-filtros, #p-ventas > .seccion:not(#s-v-resumen){display:none!important}
   #v-kpis{max-width:820px}
-  #v-kpis > *{transition:opacity .12s}
+  #v-kpis > *{transition:opacity .12s, transform .7s ease, box-shadow .7s ease, border-color .7s ease!important}
   #v-kpis.foco > :not(:nth-child(3)){opacity:.18}` });
 await a.js(() => { ir('margen'); }); await esperar(900);
 await a.js(() => { ir('ventas'); document.querySelector('.contenido').style.opacity = 0; }); await esperar(900);
 await a.cam('#v-kpis', { pad: 30, ms: 0 });
+// La aguja del medidor sube de cero al valor durante el acercamiento.
+await a.js(() => { window.aguja = (e) => { const k = document.querySelector('#v-kpis > :nth-child(3)'); k.outerHTML = htmlCumplimiento(window.__cumpl.c * e, window.__cumpl.sub, window.__cumpl.c); }; });
 await grabar(a, sal, async () => {
   // 0 a 3: las seis cifras; el cursor las recorre.
   await a.js(() => { alPintar.ventas && alPintar.ventas(); });
@@ -30,9 +32,10 @@ await grabar(a, sal, async () => {
   await esperar(350);
   // 3 a 6: acercamiento al cumplimiento.
   await a.js(() => document.querySelector('#v-kpis').classList.add('foco'));
-  await a.cam('#v-kpis > :nth-child(3)', { pad: 40, ms: 1000, ancho: 560, espera: false });
+  await a.cam('#v-kpis > :nth-child(3)', { pad: 36, ms: 1000, espera: false });
+  a.anima('aguja', 1500);
   await esperar(500);
-  await a.cursorA('#v-kpis > :nth-child(3)', { fx: 0.62, fy: 0.34, ms: 700 });
+  await a.cursorA('#v-kpis > :nth-child(3)', { fx: 0.8, fy: 0.62, ms: 700 });
   await esperar(1900);
   // 6 a 10: cambio a rentabilidad por cliente.
   await a.fundido(false);
