@@ -18,6 +18,8 @@ await p.addStyleTag({ content: `
   #v-kpis > *{transition:opacity .12s, transform .7s ease, box-shadow .7s ease, border-color .7s ease!important}
   #v-kpis.foco > :not(:nth-child(3)){opacity:.18}` });
 await a.js(() => { ir('margen'); }); await esperar(900);
+// Ordenada por venta: el cliente que más compra queda arriba.
+await a.js(() => { document.querySelector('#tb-mg-cli')._orden = { col: 2, desc: true }; mgTablaClientes(); });
 await a.js(() => { ir('ventas'); document.querySelector('.contenido').style.opacity = 0; }); await esperar(900);
 await a.cam('#v-kpis', { pad: 30, ms: 0 });
 // La aguja del medidor sube de cero al valor durante el acercamiento.
@@ -52,7 +54,7 @@ await grabar(a, sal, async () => {
   await a.cursorA('#tb-mg-cli tbody tr:nth-child(1) td:nth-child(9) .pill', { fx: 0.55, fy: 0.8, ms: 900 });
   await esperar(900);
   // El agente avisa: propone, y la decisión queda en una persona.
-  await a.aviso({ tema: 'Alerta de margen', texto: 'Su cliente de mayor venta deja <strong>13,3% de margen</strong>, bajo el promedio de 14,8%. Preparé una revisión de los descuentos de ese cliente.', botones: ['Revisar propuesta', 'Más tarde'] });
+  await a.aviso({ tema: 'Alerta de margen', texto: 'Su cliente de mayor venta deja <strong>8,3% de margen</strong>, bajo el promedio de 9,7%. Preparé una revisión de los descuentos de ese cliente.', botones: ['Revisar propuesta', 'Más tarde'] });
   await esperar(3300);
   a.avisoFuera(300);
   await a.fundido(false);

@@ -20,18 +20,18 @@ await grabar(a, process.argv[2], async () => {
   // 0 a 4: las tarjetas por vendedor; el cursor recorre dos.
   await a.fundido(true, false);
   await a.cursorA(C(3), { fy: 0.3, ms: 900 });
-  await a.cursorA(C(2), { fy: 0.34, ms: 800, curva: -0.1 });
-  await a.cursorA(C(1), { fy: 0.3, ms: 800, curva: -0.1 });
+  await a.cursorA(C(1), { fy: 0.34, ms: 800, curva: -0.1 });
+  await a.cursorA(C(2), { fy: 0.3, ms: 800, curva: 0.1 });
   await esperar(500);
   // 4 a 8: acercamiento al medidor de la vendedora bajo la meta y a lo que le tocaba.
-  await a.cam([`${C(1)} .v-top`, `${C(1)} .v-ref`], { pad: 22, ms: 1100, espera: false });
+  await a.cam([`${C(2)} .v-top`, `${C(2)} .v-ref`], { pad: 22, ms: 1100, espera: false });
   await esperar(600);
-  await a.cursorA(`${C(1)} .v-ref`, { fx: 0.3, fy: 0.6, ms: 800 });
+  await a.cursorA(`${C(2)} .v-ref`, { fx: 0.3, fy: 0.6, ms: 800 });
   await esperar(1900);
   // 8 a 12: baja a los clientes sin comprar y abre la cartera en riesgo.
-  await a.cam([`${C(1)} .v-ref`, `${C(1)} .v-fila:last-child`], { pad: 24, ms: 900, espera: false });
+  await a.cam([`${C(2)} .v-ref`, `${C(2)} .v-fila:last-child`], { pad: 24, ms: 900, espera: false });
   await esperar(500);
-  await a.cursorA(`${C(1)} .v-fila:last-child b`, { ms: 800 });
+  await a.cursorA(`${C(2)} .v-fila:last-child b`, { ms: 800 });
   await esperar(900);
   await a.fundido(false);
   await a.cam(['#e-inactivos-sub', '#tb-inactivos tbody tr:nth-child(5)'], { pad: 26, ms: 0 });
