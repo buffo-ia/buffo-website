@@ -1,103 +1,126 @@
 ---
-// El flujo, dibujado: datos de la empresa → agentes de IA → la persona que
-// decide. Es la segunda sección del sitio 2.0 y la que prueba el titular: acá
-// el detalle operativo se MUESTRA en vez de decirse.
+// Cómo trabajamos: datos de la empresa → agentes de IA → la persona que decide.
 //
-// La escena queda pegada a la pantalla y el scroll la va encendiendo etapa por
-// etapa (el riel turquesa avanza y cada etapa sale del desenfoque).
+// Formato del 12-oct-2026 (referencia: Framer): los pasos van a la izquierda y
+// a la derecha queda FIJO un panel del agente que cambia con cada paso. El
+// paso inactivo queda apagado y se enciende al entrar. La escena está pegada a
+// la pantalla y el scroll decide en qué paso va.
 //
-// ⚠️ TEXTO PROVISORIO (borrador de Comercial, 11-oct-2026). Dos cuidados que
-// vienen de ahí y no son de estilo:
+// El panel cuenta la misma historia que la barra de la portada (la caída del
+// margen): leer los sistemas, preparar la propuesta, y una persona que aprueba.
+//
+// ⚠️ TEXTO Y CIFRAS PROVISORIOS E ILUSTRATIVOS. Dos cuidados que no son de estilo:
 //  · los agentes «vigilan, preparan y proponen»: el sitio no afirma más
 //    autonomía que la que hoy corre en producción;
-//  · no hay cifras, porque las que venden (integraciones, días al primer
-//    resultado) solo las tiene Simón y no se inventan.
-
-const ETAPAS = [
-  {
-    clave: 'datos',
-    paso: '01 · Datos',
-    titulo: 'Los datos de su empresa',
-    texto: 'Conectados donde ya están, con una sola definición de cada número.',
-    fichas: ['ERP', 'Planillas', 'CRM', 'Campañas'],
-  },
-  {
-    clave: 'agentes',
-    paso: '02 · Agentes de IA',
-    titulo: 'Agentes que hacen el trabajo',
-    texto: 'Vigilan, preparan y proponen dentro de sus procesos, todos los días.',
-    fichas: ['Vigilan', 'Preparan', 'Proponen'],
-  },
-  {
-    clave: 'persona',
-    paso: '03 · Su equipo',
-    titulo: 'Una persona que decide',
-    texto: 'Cada flujo tiene a alguien de su equipo a cargo. La decisión sigue siendo suya.',
-    fichas: ['Aprueba', 'Ajusta', 'Decide'],
-  },
+//  · quien decide es siempre una persona del equipo del cliente.
+const PASOS = [
+  { paso: '01', titulo: 'Los datos de su empresa', texto: 'Conectados donde ya están, con una sola definición de cada número.' },
+  { paso: '02', titulo: 'Agentes que hacen el trabajo', texto: 'Vigilan, preparan y proponen dentro de sus procesos, todos los días.' },
+  { paso: '03', titulo: 'Una persona que decide', texto: 'Cada flujo tiene a alguien de su equipo a cargo. La decisión sigue siendo suya.' },
+];
+const FUENTES = [
+  { nombre: 'ERP · ventas', dato: '48.210 líneas' },
+  { nombre: 'Planilla de costos', dato: '312 productos' },
+  { nombre: 'CRM · condiciones', dato: '94 clientes' },
+  { nombre: 'Campañas', dato: '3 cuentas' },
+];
+const TAREAS = [
+  { verbo: 'Vigila', texto: 'El margen de septiembre salió del rango esperado.' },
+  { verbo: 'Prepara', texto: 'Desglose de la caída por cliente y por costo.' },
+  { verbo: 'Propone', texto: 'Revisar los descuentos de dos clientes antes del cierre.' },
 ];
 ---
 
-<section class="v2-flujo" data-v2-flujo>
+<section class="v2-flujo" data-v2-flujo data-paso="0">
   <div class="v2-flujo__escena">
-    <div class="v2-flujo__marco">
-      <div class="v2-flujo__cabeza">
+    <div class="v2-marco v2-flujo__grilla">
+      <div class="v2-flujo__izq">
         <p class="v2-indice">Cómo trabajamos</p>
-        <h2 class="v2-titulo">Los agentes hacen el trabajo. <em>Las personas deciden.</em></h2>
+        <h2 class="v2-titulo v2-flujo__titulo">Los agentes hacen el trabajo. <em>Las personas deciden.</em></h2>
+        <ol class="v2-pasos">
+          <li class="v2-pasos__riel" aria-hidden="true"></li>
+          {
+            PASOS.map((p, i) => (
+              <li class="v2-paso" data-n={i}>
+                <b>{p.paso}</b>
+                <div>
+                  <h3>{p.titulo}</h3>
+                  <p>{p.texto}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
       </div>
 
-      <ol class="v2-etapas">
-        <li class="v2-riel" aria-hidden="true"></li>
-        {
-          ETAPAS.map((e) => (
-            <li class:list={['v2-etapa', `v2-etapa--${e.clave}`]} data-v2-etapa>
-              <div class="v2-nodo">
-                {e.clave === 'datos' && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                    <ellipse cx="12" cy="6" rx="7" ry="2.6" />
-                    <path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6" />
-                  </svg>
-                )}
-                {e.clave === 'agentes' && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="2.6" />
-                    <path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21M5.6 5.6l2.5 2.5M15.9 15.9l2.5 2.5M18.4 5.6l-2.5 2.5M8.1 15.9l-2.5 2.5" />
-                  </svg>
-                )}
-                {e.clave === 'persona' && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M5 12.5l4.5 4.5L19 7.5" />
-                  </svg>
-                )}
-              </div>
-              <p class="v2-etapa__paso">{e.paso}</p>
-              <h3>{e.titulo}</h3>
-              <p>{e.texto}</p>
-              <ul class="v2-fichas">
-                {e.fichas.map((f) => <li>{f}</li>)}
-              </ul>
-            </li>
-          ))
-        }
-      </ol>
+      <!-- El panel fijo. Las tres vistas están apiladas y se muestra la del paso
+           en curso; es decorativo para un lector de pantalla, que ya tiene los
+           tres pasos escritos al lado. -->
+      <div class="v2-panel" aria-hidden="true">
+        <div class="v2-panel__cabeza">
+          <span class="v2-panel__punto"></span>
+          <span>Agente de margen</span>
+          <span class="v2-panel__estado">
+            <i data-n="0">Leyendo sistemas</i>
+            <i data-n="1">Trabajando</i>
+            <i data-n="2">Esperando decisión</i>
+          </span>
+        </div>
 
-      <div class="v2-flujo__pie">
-        <a href="/diagnostico" data-cta-diagnostico="flujo" class="v2-boton v2-boton--segundo">
-          Ver por dónde partir
-        </a>
-        <p>Tres minutos, sin costo.</p>
+        <div class="v2-panel__vistas">
+          <div class="v2-vista" data-n="0">
+            <p class="v2-vista__rotulo">Fuentes conectadas</p>
+            <ul class="v2-fuentes">
+              {
+                FUENTES.map((f, k) => (
+                  <li style={`--k:${k}`}>
+                    <span>{f.nombre}</span>
+                    <span class="v2-fuentes__barra"><i></i></span>
+                    <b>{f.dato}</b>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="v2-vista" data-n="1">
+            <p class="v2-vista__rotulo">Actividad de hoy</p>
+            <ul class="v2-tareas">
+              {
+                TAREAS.map((t, k) => (
+                  <li style={`--k:${k}`}>
+                    <b>{t.verbo}</b>
+                    <span>{t.texto}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="v2-vista" data-n="2">
+            <p class="v2-vista__rotulo">Propuesta para el gerente comercial</p>
+            <div class="v2-propuesta">
+              <p class="v2-propuesta__texto" style="--k:0">Revisar los descuentos de dos clientes antes del cierre de mes.</p>
+              <p class="v2-propuesta__base" style="--k:1">Explican siete de cada diez pesos de la caída del margen.</p>
+              <div class="v2-propuesta__botones" style="--k:2">
+                <span class="v2-propuesta__ok">Aprobar</span>
+                <span>Ajustar</span>
+                <span>Descartar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="v2-panel__pie">Ejemplo ilustrativo</p>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  // Avance del scroll por la sección (0 a 1) → --p en la sección, y un --a por
-  // etapa. Los umbrales dicen en qué punto del recorrido se enciende cada una.
+  // Avance del scroll por la sección (0 a 1) → --p (el riel) y data-paso (qué
+  // paso y qué vista del panel están encendidos).
   const seccion = document.querySelector<HTMLElement>('[data-v2-flujo]');
-  const etapas = seccion ? Array.from(seccion.querySelectorAll<HTMLElement>('[data-v2-etapa]')) : [];
-  const UMBRALES = [0.1, 0.4, 0.7];
-  const TRAMO = 0.16;
+  const CORTES = [0.34, 0.67];
 
   if (seccion && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     let pendiente = false;
@@ -106,15 +129,9 @@ const ETAPAS = [
       const r = seccion.getBoundingClientRect();
       const recorrido = Math.max(1, r.height - window.innerHeight);
       const p = Math.min(1, Math.max(0, -r.top / recorrido));
-      // El riel llega a cada nodo justo cuando esa etapa termina de encenderse.
       seccion.style.setProperty('--p', p.toFixed(3));
-      const encendido = UMBRALES.map((u) => Math.min(1, Math.max(0, (p - u) / TRAMO)));
-      etapas.forEach((el, i) => {
-        el.style.setProperty('--a', encendido[i].toFixed(3));
-        // --b es el encendido de la etapa siguiente: en celular llena el tramo
-        // de riel que baja hacia ella.
-        el.style.setProperty('--b', (encendido[i + 1] ?? 0).toFixed(3));
-      });
+      const paso = p < CORTES[0] ? 0 : p < CORTES[1] ? 1 : 2;
+      if (seccion.dataset.paso !== String(paso)) seccion.dataset.paso = String(paso);
     };
     const alScroll = () => {
       if (pendiente) return;

@@ -21,6 +21,7 @@ const PRODUCTOS = {
     en: 'AI Business Analytics',
     url: 'app.buffoconsulting.cl/dashboard',
     desc: 'Sus ventas, su margen y su avance contra presupuesto en una pantalla que se actualiza sola. Con la lectura puesta: qué está fuera de lo esperado y dónde mirar primero.',
+    lectura: 'La venta va 12% sobre la meta, pero hay 7 productos en quiebre. Eso primero.',
     Mock: DashboardMockup,
   },
   'modelamiento-predictivo': {
@@ -28,6 +29,7 @@ const PRODUCTOS = {
     en: 'Data Modeling & Integration',
     url: 'app.buffoconsulting.cl/proyeccion',
     desc: 'Cada área guarda lo suyo a su manera y las cifras no cuadran entre sistemas. Conectamos las fuentes una vez, con definiciones únicas. Recién ahí se puede proyectar, presupuestar y anticipar un quiebre.',
+    lectura: 'Con la demanda proyectada, el stock se quiebra en 11 días.',
     Mock: ForecastMockup,
   },
   'automatizacion-procesos': {
@@ -35,6 +37,7 @@ const PRODUCTOS = {
     en: 'Process Automation',
     url: 'app.buffoconsulting.cl/flujos',
     desc: 'Copiar y pegar entre planillas, rearmar el mismo informe cada lunes. Trabajo necesario, pero que no aprovecha el criterio de su equipo. Lo dejamos corriendo solo, empezando por el proceso que más horas libera.',
+    lectura: 'El informe semanal deja de costar 6 horas de trabajo manual.',
     Mock: AutomationMockup,
   },
   'agentes-ia': {
@@ -42,6 +45,7 @@ const PRODUCTOS = {
     en: 'AI Agents',
     url: 'app.buffoconsulting.cl/agentes',
     desc: 'Un agente vigila el negocio de forma continua: revisa el pipeline cada mañana, detecta la cobranza en riesgo, avisa del quiebre de stock antes de que ocurra. No lo inunda: le avisa cuando hay que actuar.',
+    lectura: 'De 142 cuentas revisadas hoy, 3 necesitan una decisión.',
     Mock: AgentMockup,
   },
 } as const;
@@ -121,10 +125,18 @@ let orden = 0;
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
                   </a>
                 </div>
-                <div class="v2-producto__maqueta v2-e-panel" data-v2-entra="0.7">
-                  <VentanaNavegador url={p.url} pestana={p.nombre}>
-                    <Mock />
-                  </VentanaNavegador>
+                <div class="v2-producto__maqueta">
+                  {/* La lectura va ARRIBA de la pantalla: primero la conclusión.
+                      Las cifras son las de la maqueta de abajo, ilustrativas. */}
+                  <p class="v2-lectura v2-e-sube" data-v2-entra>
+                    <b>Lectura</b>
+                    <span>{p.lectura}</span>
+                  </p>
+                  <div class="v2-e-panel" data-v2-entra="0.75">
+                    <VentanaNavegador url={p.url} pestana={p.nombre}>
+                      <Mock />
+                    </VentanaNavegador>
+                  </div>
                 </div>
               </div>
             );

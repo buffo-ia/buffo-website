@@ -1,0 +1,130 @@
+---
+// La barra de la portada: una pregunta de gerente se escribe sola y aparece la
+// respuesta, citando de qué sistema salió cada dato. Es la pieza «viva» que
+// muestra el producto sin describirlo (referencia: Qatalog, 12-oct-2026).
+//
+// ⚠️ PREGUNTAS Y CIFRAS PROVISORIAS E ILUSTRATIVAS. Las confirma Simón. No son
+// de ningún cliente, y por eso la pieza lo dice al pie.
+//
+// Sin librerías: un temporizador escribe letra por letra. Se detiene cuando la
+// portada sale de pantalla, y con movimiento reducido muestra la primera
+// pregunta ya respondida, quieta. El alto es fijo para que nada salte al
+// cambiar de pregunta.
+const CASOS = [
+  {
+    pregunta: '¿Por qué cayó el margen en septiembre?',
+    lineas: [
+      { texto: 'El margen bajó 2,1 puntos frente a agosto.', fuente: 'ERP · ventas' },
+      { texto: 'Siete de cada diez pesos de la caída vienen de descuentos a dos clientes.', fuente: 'CRM · condiciones' },
+      { texto: 'El costo de importación subió 4% y no se traspasó a precio.', fuente: 'Planilla de costos' },
+    ],
+    primero: 'Revisar los descuentos de esos dos clientes antes del cierre.',
+  },
+  {
+    pregunta: '¿Llegamos a la meta de ventas del mes?',
+    lineas: [
+      { texto: 'Van 82% de la meta con 68% del mes transcurrido.', fuente: 'ERP · ventas' },
+      { texto: 'Dos zonas van atrasadas; el resto compensa.', fuente: 'Metas por vendedor' },
+      { texto: 'Hay tres pedidos grandes por cerrar esta semana.', fuente: 'CRM · pipeline' },
+    ],
+    primero: 'Hablar hoy con los vendedores de las dos zonas atrasadas.',
+  },
+  {
+    pregunta: '¿Qué clientes están comprando menos?',
+    lineas: [
+      { texto: 'Doce clientes bajaron su compra más de 20% en el trimestre.', fuente: 'ERP · ventas' },
+      { texto: 'Cuatro de ellos tienen facturas vencidas.', fuente: 'Cobranza' },
+      { texto: 'Ninguno recibió visita en los últimos 45 días.', fuente: 'CRM · visitas' },
+    ],
+    primero: 'Partir por los cuatro con deuda: ahí hay venta y cobranza en juego.',
+  },
+];
+---
+
+<div class="v2-pregunta v2-sube" style="--i:5" data-v2-pregunta data-casos={JSON.stringify(CASOS)}>
+  <div class="v2-pregunta__barra">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path>
+    </svg>
+    <p><span data-texto>{CASOS[0].pregunta}</span><i class="v2-pregunta__cursor" aria-hidden="true"></i></p>
+  </div>
+
+  <div class="v2-pregunta__respuesta" aria-live="off">
+    <ul data-lineas>
+      {
+        CASOS[0].lineas.map((l) => (
+          <li class="es-visible">
+            <span>{l.texto}</span>
+            <b>{l.fuente}</b>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="v2-pregunta__primero es-visible" data-primero>
+      <b>Qué revisar primero</b>
+      <span>{CASOS[0].primero}</span>
+    </p>
+  </div>
+  <p class="v2-pregunta__pie">Ejemplo ilustrativo</p>
+</div>
+
+<script>
+  const caja = document.querySelector<HTMLElement>('[data-v2-pregunta]');
+  if (caja && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    type Caso = { pregunta: string; lineas: { texto: string; fuente: string }[]; primero: string };
+    const casos: Caso[] = JSON.parse(caja.dataset.casos || '[]');
+    const texto = caja.querySelector<HTMLElement>('[data-texto]')!;
+    const lista = caja.querySelector<HTMLElement>('[data-lineas]')!;
+    const primero = caja.querySelector<HTMLElement>('[data-primero]')!;
+
+    const RITMO = { letra: 38, pensar: 450, linea: 520, leer: 4200, borrar: 14 };
+    let visible = true;
+    let turno = 0;
+    const espera = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    // Si la portada salió de pantalla, se queda esperando en vez de seguir.
+    const mientrasVisible = async () => {
+      while (!visible || document.hidden) await espera(400);
+    };
+
+    const mostrar = async (c: Caso) => {
+      caja.classList.add('escribiendo');
+      lista.querySelectorAll('li').forEach((li) => li.classList.remove('es-visible'));
+      primero.classList.remove('es-visible');
+      await espera(350);
+      lista.innerHTML = c.lineas.map((l) => `<li><span>${l.texto}</span><b>${l.fuente}</b></li>`).join('');
+      primero.querySelector('span')!.textContent = c.primero;
+
+      texto.textContent = '';
+      for (const letra of c.pregunta) {
+        texto.textContent += letra;
+        await espera(RITMO.letra + Math.random() * 30);
+      }
+      caja.classList.remove('escribiendo');
+      await espera(RITMO.pensar);
+      for (const li of Array.from(lista.children)) {
+        li.classList.add('es-visible');
+        await espera(RITMO.linea);
+      }
+      primero.classList.add('es-visible');
+    };
+
+    const ciclo = async () => {
+      // La primera pregunta ya viene escrita en el HTML: se deja leer y recién
+      // después empieza a rotar.
+      await espera(RITMO.leer + 1500);
+      for (;;) {
+        await mientrasVisible();
+        for (let n = texto.textContent!.length; n > 0; n -= 2) {
+          texto.textContent = texto.textContent!.slice(0, Math.max(0, n - 2));
+          await espera(RITMO.borrar);
+        }
+        turno = (turno + 1) % casos.length;
+        await mostrar(casos[turno]);
+        await espera(RITMO.leer);
+      }
+    };
+
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(caja);
+    if (casos.length > 1) ciclo();
+  }
+</script>

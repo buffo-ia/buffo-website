@@ -11,6 +11,7 @@
 // así Google sigue leyendo «consultora… con IA… en Chile» en el encabezado
 // principal, que es lo que protege la regla del 4-sep-2026.
 import { SITE } from '../../config/site';
+import Pregunta from './Pregunta.astro';
 
 const TEXTO = {
   cejilla: 'Business-First AI',
@@ -36,22 +37,29 @@ const TEXTO = {
     <p class="v2-titular v2-sube" style="--i:1" lang="en">
       {TEXTO.titular.recto} <em>{TEXTO.titular.cursiva}</em>
     </p>
-    <div class="v2-bajada v2-sube" style="--i:3">
-      <h1>{TEXTO.bajada}</h1>
-      <p>{TEXTO.bajadaResto}</p>
+    <!-- Debajo del titular: a la izquierda la bajada y los botones, a la
+         derecha la barra donde se escribe sola una pregunta de gerente. -->
+    <div class="v2-portada__bajo">
+      <div>
+      <div class="v2-bajada v2-sube" style="--i:3">
+        <h1>{TEXTO.bajada}</h1>
+        <p>{TEXTO.bajadaResto}</p>
+      </div>
+      <div class="v2-botones v2-sube" style="--i:4">
+        <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
+          {TEXTO.botonPrincipal}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">
+          {TEXTO.botonSegundo}
+        </a>
+      </div>
+      <p class="v2-nota v2-sube" style="--i:5">{TEXTO.nota}</p>
+      </div>
+      <Pregunta />
     </div>
-    <div class="v2-botones v2-sube" style="--i:4">
-      <a href="/diagnostico" data-cta-diagnostico="hero" class="v2-boton v2-boton--principal">
-        {TEXTO.botonPrincipal}
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </a>
-      <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">
-        {TEXTO.botonSegundo}
-      </a>
-    </div>
-    <p class="v2-nota v2-sube" style="--i:5">{TEXTO.nota}</p>
   </div>
 
   <ul class="v2-lineas" lang="en">
