@@ -1,6 +1,9 @@
 ---
 // Cierre de la portada: la frase y los mismos dos botones del principio.
 import { SITE } from '../../config/site';
+
+// Provisorio: son los temas de decisión que ya nombra la línea 01.
+const OPCIONES = ['Precios', 'Margen', 'Metas de venta', 'Cobranza', 'Stock'];
 ---
 
 <section class="v2-seccion v2-cierre">
@@ -8,15 +11,26 @@ import { SITE } from '../../config/site';
     <h2 class="v2-cierre__frase">
       La próxima decisión importante ya está esperando <em>un dato que todavía no llega.</em>
     </h2>
-    <div class="v2-botones">
-      <a href="/diagnostico" data-cta-diagnostico="cierre" class="v2-boton v2-boton--principal">
-        Empezar el diagnóstico · 3 minutos
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-      </a>
-      <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-boton v2-boton--segundo">
-        Agendar 30 minutos
-      </a>
+    <!-- El cierre pregunta en vez de pedir (referencia: Framer, 12-oct-2026):
+         cada opción lleva al diagnóstico. Todas cuentan como la posición
+         «cierre» del evento clic_cta_diagnostico. -->
+    <div class="v2-elegir">
+      <p class="v2-elegir__pregunta">¿Qué decisión quiere mejorar?</p>
+      <div class="v2-elegir__opciones">
+        {
+          OPCIONES.map((o) => (
+            <a href="/diagnostico" data-cta-diagnostico="cierre">{o}</a>
+          ))
+        }
+        <a href="/diagnostico" data-cta-diagnostico="cierre" class="v2-elegir__ir">
+          Empezar el diagnóstico · 3 minutos
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </a>
+      </div>
     </div>
+    <p class="v2-cierre__otra">
+      ¿Prefiere conversarlo? <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" class="v2-enlace">Agendar 30 minutos</a>
+    </p>
     <p class="v2-nota">Sin costo y sin presentación de ventas. El informe llega a su correo apenas termina.</p>
   </div>
 </section>

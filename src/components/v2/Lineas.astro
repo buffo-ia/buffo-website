@@ -51,11 +51,14 @@ const PRODUCTOS = {
 } as const;
 type Slug = keyof typeof PRODUCTOS;
 
-const LINEAS: { en: string; nombre: string; frase: string; productos: Slug[]; decisiones?: string[] }[] = [
+// `reemplaza` viene de la revisión en vivo de Better Stack (12-oct-2026): una
+// línea bajo cada solución que dice qué deja de hacerse a mano. Provisorio.
+const LINEAS: { en: string; nombre: string; frase: string; reemplaza: string; productos: Slug[]; decisiones?: string[] }[] = [
   {
     en: 'Decision Solutions with AI',
     nombre: 'Decisiones de negocio con IA',
     frase: 'Tomamos una decisión que hoy se toma a ciegas y la dejamos resuelta con datos y criterio comercial.',
+    reemplaza: 'Decidir por intuición, planillas de escenarios, reuniones donde cada uno trae su número',
     productos: [],
     decisiones: ['Precio', 'Surtido', 'Metas', 'Cobranza'],
   },
@@ -63,12 +66,14 @@ const LINEAS: { en: string; nombre: string; frase: string; productos: Slug[]; de
     en: 'Business Analytics with AI',
     nombre: 'Analítica de negocio con IA',
     frase: 'Sus sistemas, conectados y con una sola definición de cada número, para ver el negocio completo sin armar planillas.',
+    reemplaza: 'Excel, reportes armados a mano, correos pidiendo cifras',
     productos: ['dashboards-ejecutivos', 'modelamiento-predictivo'],
   },
   {
     en: 'Agentic Workflows for Business',
     nombre: 'Flujos de trabajo con agentes',
     frase: 'Agentes de IA que vigilan, preparan y proponen dentro de sus procesos, con una persona de su equipo a cargo de cada uno.',
+    reemplaza: 'Tareas repetitivas, recordatorios, revisiones manuales',
     productos: ['agentes-ia', 'automatizacion-procesos'],
   },
 ];
@@ -92,7 +97,10 @@ let orden = 0;
               <p class="v2-linea__en" lang="en">{l.en}</p>
               <h3 class="v2-linea__nombre">{l.nombre}</h3>
             </div>
-            <p class="v2-linea__frase">{l.frase}</p>
+            <div>
+              <p class="v2-linea__frase">{l.frase}</p>
+              <p class="v2-linea__reemplaza"><b>Reemplaza</b>{l.reemplaza}</p>
+            </div>
           </header>
 
           {l.decisiones && (

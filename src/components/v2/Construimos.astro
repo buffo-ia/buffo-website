@@ -33,18 +33,31 @@ const AREAS = [
       </p>
     </div>
 
-    <div class="v2-areas">
-      {
-        AREAS.map((a, i) => (
-          <div class="v2-area v2-e-sube" data-v2-entra style={`--retraso:${i}`}>
-            <p class="v2-area__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
-            <h3>{a.area}</h3>
-            <ul>
-              {a.items.map((x) => <li>{x}</li>)}
+    <!-- Pestañas por área que rotan solas cada 5 s, con una línea de progreso
+         de 1 px (medido en Qatalog, 12-oct-2026). Al tocar una, la rotación
+         se detiene: desde ahí manda el visitante. Sin JavaScript se ve la
+         primera área y las pestañas igual funcionan como lista. -->
+    <div class="v2-tabs v2-e-sube" data-v2-entra data-v2-tabs>
+      <div class="v2-tabs__lista" role="tablist" aria-label="Áreas del negocio">
+        {
+          AREAS.map((a, i) => (
+            <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} class:list={['v2-tab', i === 0 && 'es-activa']} data-i={i}>
+              <b>{String(i + 1).padStart(2, '0')}</b>
+              <span>{a.area}</span>
+              <i aria-hidden="true"></i>
+            </button>
+          ))
+        }
+      </div>
+      <div class="v2-tabs__paneles">
+        {
+          AREAS.map((a, i) => (
+            <ul class:list={['v2-tabs__panel', i === 0 && 'es-activa']} data-i={i} role="tabpanel">
+              {a.items.map((x, k) => <li style={`--k:${k}`}>{x}</li>)}
             </ul>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
 
     <blockquote class="v2-cita v2-e-sube" data-v2-entra>
@@ -58,3 +71,44 @@ const AREAS = [
     </blockquote>
   </div>
 </section>
+
+<script>
+  const caja = document.querySelector<HTMLElement>('[data-v2-tabs]');
+  if (caja) {
+    const tabs = Array.from(caja.querySelectorAll<HTMLElement>('.v2-tab'));
+    const paneles = Array.from(caja.querySelectorAll<HTMLElement>('.v2-tabs__panel'));
+    const CADA = 5000;
+    let actual = 0;
+    let reloj = 0;
+    let visible = false;
+    let manual = false;
+
+    const activar = (i: number) => {
+      actual = i;
+      tabs.forEach((t, k) => {
+        t.classList.toggle('es-activa', k === i);
+        t.setAttribute('aria-selected', String(k === i));
+      });
+      paneles.forEach((p, k) => p.classList.toggle('es-activa', k === i));
+    };
+    const rotar = () => {
+      clearInterval(reloj);
+      if (manual || !visible || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      caja.classList.add('rotando');
+      reloj = window.setInterval(() => activar((actual + 1) % tabs.length), CADA);
+    };
+    tabs.forEach((t, i) =>
+      t.addEventListener('click', () => {
+        manual = true;
+        clearInterval(reloj);
+        caja.classList.remove('rotando');
+        activar(i);
+      })
+    );
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible) rotar();
+      else clearInterval(reloj);
+    }, { threshold: 0.3 }).observe(caja);
+  }
+</script>
