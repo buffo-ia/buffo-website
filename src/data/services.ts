@@ -124,7 +124,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Modelamiento y análisis de datos para empresas en Chile',
     metaTitle: 'Modelamiento de Datos y Forecasting en Chile | Buffo IA',
     metaDescription:
-      'Conectamos y estructuramos las fuentes de datos de su empresa en Chile para generar inteligencia accionable: forecasting de ventas, presupuestos y alertas. Del caos de planillas a decisiones.',
+      'Conectamos y estructuramos las fuentes de datos de su empresa en Chile para generar inteligencia accionable: forecasting de ventas, presupuestos y alertas. De planillas dispersas a decisiones con respaldo.',
     lead: 'Modelamiento de Datos integra las fuentes de su empresa en un modelo único, con definiciones acordadas, sobre el que se puede analizar, presupuestar y proyectar. Es la base que hace confiable cualquier decisión posterior, incluida la IA.',
     sections: [
       {
@@ -208,7 +208,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Automatización de procesos con IA para empresas en Chile',
     metaTitle: 'Automatización de Procesos con IA en Chile | Buffo IA',
     metaDescription:
-      'Automatizamos tareas repetitivas en empresas de Chile: reportería, consolidación de datos y flujos manuales. Libera el tiempo de su equipo para lo que genera valor.',
+      'Automatizamos tareas repetitivas en empresas de Chile: reportería, consolidación de datos y flujos manuales. Su equipo recupera tiempo para el trabajo de mayor valor.',
     lead: 'Automatización de Procesos traslada a flujos automáticos las tareas repetitivas que hoy consume su equipo: consolidar planillas, preparar informes y mover datos entre sistemas. El resultado se mide en horas recuperadas, menos errores y menor dependencia de personas clave.',
     sections: [
       {
@@ -292,7 +292,7 @@ export const SERVICES_CONTENT: ServiceContent[] = [
     h1: 'Agentes de Negocio: agentes de inteligencia artificial para empresas en Chile',
     metaTitle: 'Agentes IA para Empresas en Chile | Buffo IA Consulting',
     metaDescription:
-      'Desarrollamos agentes de IA para empresas en Chile: software que trabaja solo, monitorea sus datos, detecta lo importante y ejecuta tareas sin que se las pidan. IA proactiva, no reactiva.',
+      'Diseñamos e implementamos agentes de IA para empresas en Chile: hacen seguimiento continuo de sus datos, detectan lo relevante y preparan propuestas para la persona responsable.',
     lead: 'Un agente de IA es un sistema que hace seguimiento continuo de un proceso de su negocio, detecta lo relevante y prepara una propuesta para la persona responsable. En Buffo diseñamos e implementamos agentes para tareas concretas, con una persona de su equipo a cargo de cada uno.',
     sections: [
       {
