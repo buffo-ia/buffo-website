@@ -8,6 +8,8 @@ import Analytics from '@vercel/analytics/astro';
 import Medicion from '../components/Medicion.astro';
 import Entrada from '../components/v2/Entrada.astro';
 import '../styles/global.css';
+// Va DESPUÉS de global.css: redefine sus tokens de color para todo el sitio.
+import '../styles/sitio2.css';
 
 export interface Props {
   title?: string;
@@ -20,9 +22,9 @@ export interface Props {
       necesita saberlo: arriba del todo no puede usar los colores del tema,
       o en claro quedaría texto oscuro sobre azul noche. */
   heroAncla?: boolean;
-  /** true en las páginas del sitio 2.0 (fondo negro): activa la entrada con
-      carga y el header oscuro. Por ahora solo la portada. */
-  sitio2?: boolean;
+  /** true para mostrar la entrada con carga (colibrí + barrido). Solo la
+      portada: en una página interior sería una espera sin motivo. */
+  entrada?: boolean;
 }
 
 const {
@@ -31,7 +33,7 @@ const {
   path = '/',
   schema,
   heroAncla = false,
-  sitio2 = false,
+  entrada = false,
 } = Astro.props;
 
 const canonical = new URL(path, SITE.url).href;
@@ -93,30 +95,20 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---
 
 <!doctype html>
-<html lang="es-CL" data-theme="light" style="color-scheme: light">
+<html lang="es-CL" data-theme="dark" class="dark" style="color-scheme: dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Tema: se aplica ANTES del primer pintado. Si esto se moviera al final
-         del body, el visitante vería un parpadeo antes del tema correcto.
-         El claro es el predeterminado (decisión de Simón, 2026-08-15): solo se
-         cambia si el visitante ya eligió el oscuro con el botón del header. -->
-    <script is:inline>
-      (function () {
-        try {
-          var t = localStorage.getItem('buffo-theme') === 'dark' ? 'dark' : 'light';
-          document.documentElement.dataset.theme = t;
-          document.documentElement.classList.toggle('dark', t === 'dark');
-          document.documentElement.style.colorScheme = t;
-        } catch (e) {}
-      })();
-    </script>
+    <!-- Tema: desde el sitio 2.0 (12-oct-2026) el sitio es negro y no hay
+         tema claro. Antes un script leía acá la preferencia guardada; se
+         retiró junto con el botón del header. El claro sobrevive solo al
+         imprimir, para el informe del diagnóstico (ver global.css). -->
     {
       /* Entrada con carga del sitio 2.0: una vez por sesión, y nunca con
          movimiento reducido. Se decide ANTES del primer pintado; si se
          resolviera después, la portada parpadearía debajo de la cortina. */
-      sitio2 && (
+      entrada && (
         <script is:inline>
           (function () {
             try {
@@ -187,10 +179,10 @@ const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <!-- GA4 + Google Ads. Los identificadores viven en src/config/analytics.ts -->
     <Medicion />
   </head>
-  <body class="bg-background text-on-surface selection:bg-primary/30" data-hero={heroAncla ? 'ancla' : undefined} data-sitio={sitio2 ? 'v2' : undefined}>
-    {sitio2 && <Entrada />}
+  <body class="bg-background text-on-surface selection:bg-primary/30" data-hero={heroAncla ? 'ancla' : undefined} data-sitio="v2">
+    {entrada && <Entrada />}
     <div class="h-px w-full accent-line"></div>
-    <Header oscuro={sitio2} />
+    <Header />
     <main>
       <slot />
     </main>

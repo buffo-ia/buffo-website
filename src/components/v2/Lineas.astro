@@ -1,0 +1,136 @@
+---
+// Las tres líneas de servicio: la propuesta de valor nueva, y debajo de cada
+// una los productos que agrupa, presentados con su maqueta.
+//
+// ⚠️ TEXTO PROVISORIO (borrador de Comercial, 11-oct-2026). Falta el OK de
+// Simón a los nombres de las líneas y a «Decision Solutions with AI».
+//
+// ⛔ Los productos conservan su nombre en español, su slug y su enlace: son las
+// páginas que Google ya posiciona. El titular de cada uno sigue siendo el DOLOR
+// con que el cliente llega (SERVICE_PAINS, fuente única con el diagnóstico).
+import { SERVICE_PAINS } from '../../config/site';
+import DashboardMockup from '../DashboardMockup.astro';
+import ForecastMockup from '../ForecastMockup.astro';
+import AutomationMockup from '../AutomationMockup.astro';
+import AgentMockup from '../AgentMockup.astro';
+import VentanaNavegador from '../VentanaNavegador.astro';
+
+const PRODUCTOS = {
+  'dashboards-ejecutivos': {
+    nombre: 'Inteligencia de Gestión',
+    en: 'AI Business Analytics',
+    url: 'app.buffoconsulting.cl/dashboard',
+    desc: 'Sus ventas, su margen y su avance contra presupuesto en una pantalla que se actualiza sola. Con la lectura puesta: qué está fuera de lo esperado y dónde mirar primero.',
+    Mock: DashboardMockup,
+  },
+  'modelamiento-predictivo': {
+    nombre: 'Modelamiento de Datos',
+    en: 'Data Modeling & Integration',
+    url: 'app.buffoconsulting.cl/proyeccion',
+    desc: 'Cada área guarda lo suyo a su manera y las cifras no cuadran entre sistemas. Conectamos las fuentes una vez, con definiciones únicas. Recién ahí se puede proyectar, presupuestar y anticipar un quiebre.',
+    Mock: ForecastMockup,
+  },
+  'automatizacion-procesos': {
+    nombre: 'Automatización de Procesos',
+    en: 'Process Automation',
+    url: 'app.buffoconsulting.cl/flujos',
+    desc: 'Copiar y pegar entre planillas, rearmar el mismo informe cada lunes. Trabajo necesario, pero que no aprovecha el criterio de su equipo. Lo dejamos corriendo solo, empezando por el proceso que más horas libera.',
+    Mock: AutomationMockup,
+  },
+  'agentes-ia': {
+    nombre: 'Agentes de Negocio',
+    en: 'AI Agents',
+    url: 'app.buffoconsulting.cl/agentes',
+    desc: 'Un agente vigila el negocio de forma continua: revisa el pipeline cada mañana, detecta la cobranza en riesgo, avisa del quiebre de stock antes de que ocurra. No lo inunda: le avisa cuando hay que actuar.',
+    Mock: AgentMockup,
+  },
+} as const;
+type Slug = keyof typeof PRODUCTOS;
+
+const LINEAS: { en: string; nombre: string; frase: string; productos: Slug[]; decisiones?: string[] }[] = [
+  {
+    en: 'Decision Solutions with AI',
+    nombre: 'Decisiones de negocio con IA',
+    frase: 'Tomamos una decisión que hoy se toma a ciegas y la dejamos resuelta con datos y criterio comercial.',
+    productos: [],
+    decisiones: ['Precio', 'Surtido', 'Metas', 'Cobranza'],
+  },
+  {
+    en: 'Business Analytics with AI',
+    nombre: 'Analítica de negocio con IA',
+    frase: 'Sus sistemas, conectados y con una sola definición de cada número, para ver el negocio completo sin armar planillas.',
+    productos: ['dashboards-ejecutivos', 'modelamiento-predictivo'],
+  },
+  {
+    en: 'Agentic Workflows for Business',
+    nombre: 'Flujos de trabajo con agentes',
+    frase: 'Agentes de IA que vigilan, preparan y proponen dentro de sus procesos, con una persona de su equipo a cargo de cada uno.',
+    productos: ['agentes-ia', 'automatizacion-procesos'],
+  },
+];
+
+let orden = 0;
+---
+
+<section class="v2-seccion v2-lineas-sec" id="services">
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">Qué hacemos</p>
+      <h2 class="v2-titulo">Tres líneas de servicio. <em>Un criterio: el negocio primero.</em></h2>
+    </div>
+
+    {
+      LINEAS.map((l, i) => (
+        <article class="v2-linea">
+          <header class="v2-linea__cabeza v2-e-sube" data-v2-entra>
+            <span class="v2-linea__numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <p class="v2-linea__en" lang="en">{l.en}</p>
+              <h3 class="v2-linea__nombre">{l.nombre}</h3>
+            </div>
+            <p class="v2-linea__frase">{l.frase}</p>
+          </header>
+
+          {l.decisiones && (
+            <div class="v2-decisiones v2-e-sube" data-v2-entra>
+              <ul>
+                {l.decisiones.map((d) => <li>{d}</li>)}
+              </ul>
+              <a href="/diagnostico" data-cta-diagnostico="lineas" class="v2-enlace">
+                Empezar por el diagnóstico
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </a>
+            </div>
+          )}
+
+          {l.productos.map((slug) => {
+            const p = PRODUCTOS[slug];
+            const Mock = p.Mock;
+            const alReves = orden++ % 2 === 1;
+            return (
+              <div class:list={['v2-producto', alReves && 'v2-producto--reves']}>
+                <div class="v2-producto__texto v2-e-sube" data-v2-entra>
+                  <p class="v2-producto__ceja">
+                    <span>{p.nombre}</span>
+                    <span lang="en">{p.en}</span>
+                  </p>
+                  <h4 class="v2-producto__dolor">«{SERVICE_PAINS[slug]}»</h4>
+                  <p class="v2-producto__desc">{p.desc}</p>
+                  <a href={`/servicios/${slug}`} class="v2-enlace">
+                    Conocer más
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  </a>
+                </div>
+                <div class="v2-producto__maqueta v2-e-panel" data-v2-entra="0.7">
+                  <VentanaNavegador url={p.url} pestana={p.nombre}>
+                    <Mock />
+                  </VentanaNavegador>
+                </div>
+              </div>
+            );
+          })}
+        </article>
+      ))
+    }
+  </div>
+</section>

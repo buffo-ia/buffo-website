@@ -1,0 +1,55 @@
+---
+// Motor de las entradas atadas al scroll del sitio 2.0.
+//
+// Cualquier elemento con `data-v2-entra` recibe una variable --e que va de 0
+// (recién asoma por abajo) a 1 (ya entró). El CSS decide qué hacer con ella:
+// subir desde el desenfoque, enderezar una maqueta, encender palabras.
+// El valor del atributo es qué fracción de la pantalla dura la entrada
+// (por defecto 0.45; más alto = entrada más larga).
+//
+// --e vale 1 por defecto en el CSS: sin JavaScript, o con movimiento reducido,
+// todo está a la vista y nada depende de que este script corra.
+---
+
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const todos = Array.from(document.querySelectorAll<HTMLElement>('[data-v2-entra]'));
+    const activos = new Set<HTMLElement>();
+    let pendiente = false;
+
+    const pintar = () => {
+      pendiente = false;
+      const vh = window.innerHeight;
+      activos.forEach((el) => {
+        const tramo = vh * (parseFloat(el.dataset.v2Entra || '') || 0.45);
+        const e = Math.min(1, Math.max(0, (vh - el.getBoundingClientRect().top) / tramo));
+        el.style.setProperty('--e', e.toFixed(3));
+      });
+    };
+    const alScroll = () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(pintar);
+    };
+
+    // Solo se calculan los que están cerca de la pantalla. Los que ya pasaron
+    // quedan en 1 y los que no han llegado, en 0.
+    const vigia = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((x) => {
+          const el = x.target as HTMLElement;
+          if (x.isIntersecting) activos.add(el);
+          else {
+            activos.delete(el);
+            el.style.setProperty('--e', x.boundingClientRect.top < 0 ? '1' : '0');
+          }
+        });
+        pintar();
+      },
+      { rootMargin: '15% 0px' }
+    );
+    todos.forEach((el) => vigia.observe(el));
+    window.addEventListener('scroll', alScroll, { passive: true });
+    window.addEventListener('resize', alScroll);
+  }
+</script>

@@ -1,0 +1,31 @@
+---
+// Preguntas frecuentes de la portada. El texto llega desde index.astro, que es
+// donde además se arma el FAQPage schema: una sola fuente para lo que se ve y
+// lo que lee Google.
+interface Props {
+  preguntas: { q: string; a: string }[];
+}
+const { preguntas } = Astro.props;
+---
+
+<section class="v2-seccion v2-preguntas">
+  <div class="v2-marco v2-preguntas__grilla">
+    <div class="v2-e-sube" data-v2-entra>
+      <p class="v2-indice">Antes de partir</p>
+      <h2 class="v2-titulo">Preguntas <em>frecuentes</em></h2>
+    </div>
+    <div class="v2-preguntas__lista v2-e-sube" data-v2-entra>
+      {
+        preguntas.map((f) => (
+          <details>
+            <summary>
+              <h3>{f.q}</h3>
+              <span aria-hidden="true" />
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

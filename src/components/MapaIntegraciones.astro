@@ -79,7 +79,7 @@ type Nodo = {
 const NODOS: Nodo[] = [
   // arriba
   { nombre: 'SAP', logo: 'sap', hex: '#0FAAFF', x: 176, y: 70, d: 'M 205 70 H 268 V 254' },
-  { nombre: 'Defontana', inicial: 'D', hex: '#19D3C5', x: 330, y: 62, d: 'M 330 91 V 254' },
+  { nombre: 'Defontana', inicial: 'D', hex: '#20C2BC', x: 330, y: 62, d: 'M 330 91 V 254' },
   { nombre: 'Odoo', logo: 'odoo', hex: '#A16B93', x: 484, y: 70, d: 'M 455 70 H 392 V 254' },
 
   // derecha
@@ -90,7 +90,7 @@ const NODOS: Nodo[] = [
   // abajo
   { nombre: 'Excel', glifo: 'planilla', hex: '#21A366', x: 484, y: 590, d: 'M 455 590 H 392 V 406' },
   { nombre: 'SQL Server', glifo: 'base', hex: '#E14B49', x: 330, y: 598, d: 'M 330 569 V 406' },
-  { nombre: 'Bsale', inicial: 'B', hex: '#19D3C5', x: 176, y: 590, d: 'M 205 590 H 268 V 406' },
+  { nombre: 'Bsale', inicial: 'B', hex: '#20C2BC', x: 176, y: 590, d: 'M 205 590 H 268 V 406' },
 
   // izquierda
   { nombre: 'Meta Ads', logo: 'meta', hex: '#0081FB', x: 78, y: 454, d: 'M 107 454 H 200 V 368 H 254' },
@@ -114,18 +114,18 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
          aria-label="Los sistemas que su empresa ya usa, conectados a Buffo">
       <defs>
         <radialGradient id="mi-fondo" cx="50%" cy="48%" r="72%">
-          <stop offset="0%" stop-color="#0C3A52" />
-          <stop offset="55%" stop-color="#082A3F" />
-          <stop offset="100%" stop-color="#04151F" />
+          <stop offset="0%" stop-color="#0E1616" />
+          <stop offset="55%" stop-color="#070909" />
+          <stop offset="100%" stop-color="#000000" />
         </radialGradient>
         <linearGradient id="mi-hub" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#2BE8D8" />
-          <stop offset="55%" stop-color="#19D3C5" />
-          <stop offset="100%" stop-color="#0E8FA6" />
+          <stop offset="0%" stop-color="#4FDAD4" />
+          <stop offset="55%" stop-color="#20C2BC" />
+          <stop offset="100%" stop-color="#12918C" />
         </linearGradient>
         <linearGradient id="mi-borde" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#19D3C5" stop-opacity="0.34" />
-          <stop offset="100%" stop-color="#19D3C5" stop-opacity="0.10" />
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16" />
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05" />
         </linearGradient>
         <filter id="mi-brillo" x="-70%" y="-70%" width="240%" height="240%">
           <feGaussianBlur stdDeviation="15" />
@@ -141,18 +141,18 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
       <rect x="1" y="1" width={W - 2} height={H - 2} rx="24"
             fill="url(#mi-fondo)" stroke="url(#mi-borde)" stroke-width="1.5" />
 
-      <g fill="none" stroke="#19D3C5" stroke-opacity="0.20" stroke-width="1.2"
+      <g class="cables" fill="none" stroke="#20C2BC" stroke-opacity="0.26" stroke-width="1.2"
          stroke-linecap="round" stroke-linejoin="round">
-        {rutas.map((r) => <path d={r.d} />)}
+        {rutas.map((r) => <path d={r.d} pathLength="1" />)}
       </g>
 
       <!-- el pulso: un guion corto recorriendo el MISMO cable hacia el centro -->
-      <g class="pulsos" fill="none" stroke="#4FF3E4" stroke-width="2.4" stroke-linecap="round">
+      <g class="pulsos" fill="none" stroke="#7FE9E4" stroke-width="2.4" stroke-linecap="round">
         {rutas.map((r, i) => <path d={r.d} style={`animation-delay:${(i * 0.47).toFixed(2)}s`} />)}
       </g>
 
       {rutas.map((r, i) => (
-        <g class="nodo" style={`--turno:${(i * TURNO).toFixed(2)}s`}>
+        <g class="nodo" style={`--turno:${(i * TURNO).toFixed(2)}s;--n:${i}`}>
           {/* El realce que va pasando de sistema en sistema. En la referencia era
               UNO fijo; Simón lo quiso rotando, y así además dice algo: no es un
               adorno, es "ahora estoy leyendo este". */}
@@ -161,7 +161,7 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
           <rect class="halo-cerca" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
                 fill="none" stroke="#FFFFFF" stroke-width="3" filter="url(#mi-realce-cerca)" />
           <rect class="marco" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
-                fill="#07222F" stroke="#19D3C5" stroke-opacity="0.18" stroke-width="1.2" />
+                fill="#0A0C0C" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2" />
           <rect class="marco-vivo" x={r.x - R} y={r.y - R} width={LADO} height={LADO} rx="16"
                 fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1.4" />
           {r.trazo ? (
@@ -181,11 +181,13 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
       ))}
 
       <!-- el hub: su resplandor debajo, y encima la pieza con el colibrí -->
-      <rect x={BI} y={BA} width={HUB} height={HUB} rx="37"
-            fill="#19D3C5" opacity="0.42" filter="url(#mi-brillo)" />
-      <rect x={BI} y={BA} width={HUB} height={HUB} rx="37" fill="url(#mi-hub)" />
-      <image href={isotipo} x={CX - 27} y={BA + 28} width="54" height="54" preserveAspectRatio="xMidYMid meet" />
-      <image href={logotipo} x={CX - 46} y={BA + 94} width="92" height="25" preserveAspectRatio="xMidYMid meet" />
+      <g class="hub">
+        <rect x={BI} y={BA} width={HUB} height={HUB} rx="37"
+              fill="#20C2BC" opacity="0.42" filter="url(#mi-brillo)" />
+        <rect x={BI} y={BA} width={HUB} height={HUB} rx="37" fill="url(#mi-hub)" />
+        <image href={isotipo} x={CX - 27} y={BA + 28} width="54" height="54" preserveAspectRatio="xMidYMid meet" />
+        <image href={logotipo} x={CX - 46} y={BA + 94} width="92" height="25" preserveAspectRatio="xMidYMid meet" />
+      </g>
     </svg>
   </div>
 
@@ -198,7 +200,31 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
   /* Tope de ancho: el mapa es CUADRADO, así que cada píxel de ancho es un píxel
      de alto. Sin tope se comía 608 px de alto en pantalla grande, que es de
      donde salía buena parte de lo "infinito hacia abajo". */
-  .mapa { margin: 0 auto; max-width: 520px; }
+  .mapa { margin: 0 auto; max-width: 600px; }
+
+  /* ── Se arma con el scroll (sitio 2.0) ──────────────────────────────────
+     --e lo escribe el contenedor que lleve data-v2-entra (0 → 1). Primero el
+     centro, después los cables, y los sistemas de a uno según su orden --n.
+     Donde nadie lo define vale 1, así que el mapa se ve entero: es el caso de
+     /diagnostico, que también lo usa. */
+  .hub {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(calc(0.55 + clamp(0, calc(var(--e, 1) * 2.5), 1) * 0.45));
+    opacity: clamp(0, calc(var(--e, 1) * 3), 1);
+  }
+  .cables path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(clamp(0, calc(var(--e, 1) * 1.7 - 0.2), 1) - 1);
+  }
+  .nodo {
+    transform-box: fill-box;
+    transform-origin: center;
+    --v: clamp(0, calc(var(--e, 1) * 2.6 - 0.5 - var(--n) * 0.09), 1);
+    opacity: var(--v);
+    transform: scale(calc(0.7 + var(--v) * 0.3));
+  }
+  .pulsos { opacity: clamp(0, calc(var(--e, 1) * 4 - 3), 1); }
 
   .riel { border-radius: 24px; }
 
@@ -209,7 +235,7 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
     width: 100%;
     height: auto;
     border-radius: 24px;
-    box-shadow: 0 0 80px -24px rgb(25 211 197 / 0.30), 0 20px 50px -28px rgb(4 21 31 / 0.7);
+    box-shadow: 0 0 90px -28px rgb(32 194 188 / 0.34);
   }
   /* En celular el mapa queda a ~la mitad de su tamaño (viewBox de 660 en
      ~330 px): los rótulos se agrandan en unidades del SVG para que en pantalla
@@ -226,7 +252,7 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
     stroke-dasharray: 12 620;
     stroke-dashoffset: 632;
     animation: correr 5s linear infinite;
-    filter: drop-shadow(0 0 4px rgb(79 243 228 / 0.85));
+    filter: drop-shadow(0 0 4px rgb(79 218 212 / 0.85));
   }
   @keyframes correr { to { stroke-dashoffset: 0; } }
 
@@ -256,7 +282,7 @@ const CICLO = (rutas.length * TURNO).toFixed(1);
     0.7%, 7.2% { opacity: 0.95; }
   }
 
-  .rotulo { fill: #BCD6E0; font-size: 13px; font-weight: 500; }
+  .rotulo { fill: #A9B3B3; font-size: 13px; font-weight: 500; }
   .inicial { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
 
   figcaption {

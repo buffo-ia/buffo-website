@@ -1,0 +1,25 @@
+---
+// La cinta de tecnologías, en versión sitio 2.0: una banda fina entre dos
+// líneas, con el rótulo a la izquierda y las marcas pasando. Simón pidió
+// conservarla (11-oct-2026).
+//
+// Los SVG van de MÁSCARA (clase .stack-logo de global.css): traen el relleno
+// blanco quemado adentro y así el color lo pone el sitio.
+import { STACK } from '../../config/site';
+---
+
+<section class="v2-stack" aria-label="Tecnología con la que trabajamos">
+  <p class="v2-stack__rotulo">Construido sobre</p>
+  <div class="marquee-mask v2-stack__cinta">
+    <div class="marquee-track">
+      {
+        [...STACK, ...STACK].map((t, i) => (
+          <div class="v2-stack__marca" aria-hidden={i >= STACK.length ? 'true' : undefined}>
+            <span class="stack-logo" style={`--logo:url('${t.src}')`} aria-hidden="true" />
+            <span>{t.name}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

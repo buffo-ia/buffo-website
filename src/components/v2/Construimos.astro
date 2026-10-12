@@ -1,0 +1,60 @@
+---
+// «¿Qué construimos exactamente?» — lo mismo que las líneas, visto por área
+// del negocio. Sin cifras, sin nombres de clientes y sin precios.
+// En el sitio anterior eran cuatro tarjetas; acá son cuatro columnas separadas
+// por líneas finas, que es como la referencia ordena las listas.
+const AREAS = [
+  {
+    area: 'Comercial y ventas',
+    items: ['Reportería de ventas automatizada', 'Seguimiento por vendedor, canal o zona', 'Avance real contra presupuesto', 'Tendencias por categoría y por marca', 'Alertas de quiebre de stock'],
+  },
+  {
+    area: 'Marketing',
+    items: ['Análisis de Google Ads y Meta Ads', 'Costo real de adquisición por canal', 'Retorno de la pauta por campaña', 'Conexión por API, sin descargas manuales', 'Un solo tablero para todos los canales'],
+  },
+  {
+    area: 'Finanzas',
+    items: ['Estado de resultados por unidad de negocio', 'Flujo de caja proyectado', 'Cobranza con semáforo de mora', 'Rentabilidad por cliente y por producto', 'Cierre mensual generado, no tipeado'],
+  },
+  {
+    area: 'Operaciones y abastecimiento',
+    items: ['Proyección de demanda por producto', 'Qué reponer, cuánto y cuándo', 'Semanas de inventario por código', 'Trazabilidad del costo de adquisición', 'Consolidación automática entre sistemas'],
+  },
+];
+---
+
+<section class="v2-seccion v2-construimos" id="portfolio">
+  <div class="v2-marco">
+    <div class="v2-cabeza v2-e-sube" data-v2-entra>
+      <p class="v2-indice">Por área del negocio</p>
+      <h2 class="v2-titulo">¿Qué construimos, <em>exactamente?</em></h2>
+      <p class="v2-parrafo">
+        Casi ningún proyecto usa una sola línea: se combinan según lo que duela primero.
+      </p>
+    </div>
+
+    <div class="v2-areas">
+      {
+        AREAS.map((a, i) => (
+          <div class="v2-area v2-e-sube" data-v2-entra style={`--retraso:${i}`}>
+            <p class="v2-area__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <h3>{a.area}</h3>
+            <ul>
+              {a.items.map((x) => <li>{x}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <blockquote class="v2-cita v2-e-sube" data-v2-entra>
+      <p>
+        No entregamos un número <em>sin interpretación.</em>
+      </p>
+      <footer>
+        Cada solución llega con la sugerencia puesta: qué mirar primero, y qué haría alguien que
+        ya tuvo que responder por ese número frente a un directorio.
+      </footer>
+    </blockquote>
+  </div>
+</section>

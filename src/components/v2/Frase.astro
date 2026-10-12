@@ -1,0 +1,33 @@
+---
+// El argumento, en grande: «Su sistema le dice lo que pasó. Nosotros le decimos
+// qué hacer.» Es la frase mejor escrita del sitio anterior (venía en la tarjeta
+// «La Respuesta») y acá se queda sola en pantalla.
+//
+// Las palabras se encienden de a una con el scroll: cada una lleva su turno en
+// --w (0 a 1) y se compara contra el avance --e del bloque.
+const PARTES = [
+  { texto: 'Su sistema le dice lo que pasó.', cursiva: false },
+  { texto: 'Nosotros le decimos qué hacer.', cursiva: true },
+];
+const palabras = PARTES.flatMap((p) => p.texto.split(' ').map((t) => ({ t, cursiva: p.cursiva })));
+---
+
+<section class="v2-seccion v2-frase">
+  <div class="v2-marco">
+    <p class="v2-indice">El punto de partida</p>
+    <h2 class="v2-frase__texto" data-v2-entra="0.85" aria-label={PARTES.map((p) => p.texto).join(' ')}>
+      {
+        palabras.map((p, i) => (
+          <span class:list={['v2-palabra', p.cursiva && 'v2-palabra--cursiva']} style={`--w:${(i / palabras.length).toFixed(3)}`} aria-hidden="true">
+            {p.t}{' '}
+          </span>
+        ))
+      }
+    </h2>
+    <p class="v2-frase__nota v2-e-sube" data-v2-entra>
+      No reemplazamos sus sistemas: los leemos, y a cada número le ponemos la lectura encima.
+      Qué se salió de rango y qué revisar primero, con el criterio de quien tuvo que responder
+      por esos números.
+    </p>
+  </div>
+</section>
