@@ -89,6 +89,7 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
               <label class="v2-calc__costo">
                 <span>Costo mensual promedio de esas personas</span>
                 <input type="text" inputmode="numeric" data-campo="costo" value={'$ ' + CALC.costoInicio.toLocaleString('es-CL')} placeholder="$ 1.500.000" autocomplete="off" />
+                <small class="v2-calc__nota">Valor de referencia. Puede cambiarlo.</small>
               </label>
             )}
           </div>
@@ -97,7 +98,7 @@ const DIAS = Array.from({ length: 10 }, (_, k) => k);
             {retorno ? (
               <Fragment>
                 <p class="v2-celda__numero v2-calc__plata"><span data-salida="pesos">{'$' + Math.round(((CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio) / CALC.horasPorMes) * CALC.costoInicio).toLocaleString('es-CL')}</span><small>al año</small></p>
-                <p class="v2-celda__chica">Son <span data-salida="horas">{(CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio).toLocaleString('es-CL')}</span> horas al año, <span data-salida="meses">{((CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio) / CALC.horasPorMes).toFixed(1).replace('.', ',')}</span> meses de trabajo de una persona.</p>
+                <p class="v2-celda__chica">Son <span data-salida="horas">{(CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio).toLocaleString('es-CL')}</span> horas al año, el equivalente a <span data-salida="meses">{((CALC.personas.inicio * CALC.horas.inicio * CALC.semanasAlAnio) / CALC.horasPorMes).toFixed(1).replace('.', ',')}</span> meses de trabajo de una persona.</p>
               </Fragment>
             ) : (
               <Fragment>

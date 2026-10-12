@@ -2445,3 +2445,10 @@ body[data-sitio='v2'] #theme-toggle { display: none; }
 .v2 .v2-calc__plata small {
   white-space: nowrap;
 }
+
+.v2 .v2-calc__nota {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
